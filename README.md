@@ -61,7 +61,7 @@
   </tr>
   <tr>
     <td><b>Team-Leader</b></td>
-    <td><b>Assistant-Manager</b></td>
+    <td><b>sub-manager</b></td>
     <td><b>DB-Master</b></td>
     <td><b>ENV-Master</b></td>
     <td><b>Git-Master</b></td>
