@@ -6,9 +6,10 @@ const reviewList = `SELECT
         stars,
         review_date,
         member_code
+
+        from review
          `;
 
 module.exports = {
   reviewList,
-  //ㅇㅇㅇ
 };
