@@ -14,7 +14,7 @@
 <div class="container-fluid py-5">
   <div class="container py-5">
       <form action="#">
-          <div class="row g-5">
+          <div class="row g-5 center">
               <div class="col-md-12 col-lg-6 col-xl-7">
                   <div class="row">
                       <div class="col-md-12 col-lg-6">
@@ -70,8 +70,11 @@
                   <div class="form-item">
                       <textarea name="text" class="form-control" spellcheck="false" cols="30" rows="11" placeholder="Oreder Notes (Optional)"></textarea>
                   </div>
+                  <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+                      <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">가입신청</button>
+                  </div>
               </div>
-              <div class="col-md-12 col-lg-6 col-xl-5">
+              <!-- <div class="col-md-12 col-lg-6 col-xl-5">
                   <div class="table-responsive">
                       <table class="table">
                           <thead>
@@ -205,7 +208,7 @@
                   <div class="row g-4 text-center align-items-center justify-content-center pt-4">
                       <button type="button" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place Order</button>
                   </div>
-              </div>
+              </div> -->
           </div>
       </form>
   </div>
