@@ -1,15 +1,18 @@
 const reviewList = `SELECT
-        r.review_code,
-        r.detail_code,
-        r.review_title,
-        r.review_content,
-        r.stars,
-        r.review_date,
-        member_code
+review_code,
+detail_code,
+review_title,
+review_content,
+stars,
+review_date,
+member_code
+FROM review
+  `;
 
-        FROM review
-         `;
+const reviewInsert = `INSERT INTO review
+  SET ?`;
 
 module.exports = {
   reviewList,
+  reviewInsert,
 };

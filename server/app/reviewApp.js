@@ -3,9 +3,10 @@ const app = express();
 const db = require("../db.js");
 const sql = require("../db/sql.js");
 
+// app.use(express.json());
 //전체조회
-app.get("/review", async (request, response) => {
-  let result = db
+app.get("/", async (request, response) => {
+  let result = await db
     .connection(sql.reviewsql.reviewList)
     .then((result) => {
       response.send(result);
@@ -16,10 +17,16 @@ app.get("/review", async (request, response) => {
 });
 
 //등록
-router.post("/", async (req, res) => {
-  let data = req.body.param;
-  let result = await mysql.query("qnaInsert", data);
-  res.send(result);
+app.post("/", async (request, response) => {
+  let data = request.body.param;
+  let result = await db
+    .connection(sql.reviewsql.reviewInsert, data)
+    .then((result) => {
+      response.send(result);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 module.exports = app;
