@@ -33,9 +33,18 @@ app.post('/', async (req, res) => {
 });
 
 // 수정
-app.put("/:product_code", async (req, res) => {
+app.put('/:product_code', async (req, res) => {
     let data = [req.body.param, req.params.product_code];
     let result = db.connection(sql.productsql.productUpdate, data).then(result => {
+        res.send(result);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
+// 카테고리 리스트
+app.get('/category', async (req, res) => {
+    let result = db.connection(sql.productsql.categoryList).then(result => {
         res.send(result);
     }).catch(err => {
         console.log(err);
