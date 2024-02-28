@@ -26,7 +26,7 @@ const db = require("./db.js");
 
 // app.use('/admin', adminRouter);
 // app.use('/inquiry', inquiryRouter);
-app.use('/member', memberRouter);
+// app.use('/member', memberRouter);
 // app.use('/product', productRouter);
 app.use('/notice', noticeRouter);
 // app.use('/order', orderRouter);
