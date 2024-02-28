@@ -24,10 +24,10 @@ app.listen(3000, () => {
 
 const db = require("./db.js");
 
-app.use('/admin', adminRouter);
-app.use('/inquiry', inquiryRouter);
-app.use('/member', memberRouter);
-app.use('/product', productRouter);
+// app.use('/admin', adminRouter);
+// app.use('/inquiry', inquiryRouter);
+// app.use('/member', memberRouter);
+// app.use('/product', productRouter);
 app.use('/notice', noticeRouter);
-app.use('/order', orderRouter);
-app.use('/review', reviewRouter);
+// app.use('/order', orderRouter);
+// app.use('/review', reviewRouter);

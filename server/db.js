@@ -14,7 +14,7 @@ const dbPool = mysql.createPool(dbInfo);
 
 module.exports = {
      connection(alias, param = []) {
-      return new Promise((resolve, reject) => dbPool.query(sql[alias], param, (error, results) => {
+      return new Promise((resolve, reject) => dbPool.query(alias, param, (error, results) => {
         if (error) {         
           reject({
             error
