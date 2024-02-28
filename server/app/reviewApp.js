@@ -15,4 +15,11 @@ app.get("/review", async (request, response) => {
     });
 });
 
+//등록
+router.post("/", async (req, res) => {
+  let data = req.body.param;
+  let result = await mysql.query("qnaInsert", data);
+  res.send(result);
+});
+
 module.exports = app;
