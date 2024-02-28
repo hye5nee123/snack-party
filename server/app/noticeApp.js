@@ -1,7 +1,7 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const db = require('../db.js');
-const sql = require('../db/sql.js');
+const db = require("../db.js");
+const sql = require("../db/sql.js");
 
 // //전체조회
 // app.get("/", async (request, response) => {
