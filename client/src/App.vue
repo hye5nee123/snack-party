@@ -1,24 +1,4 @@
+<!-- 회원 / 관리자 화면 보여주는 역할 -->
 <template>
-  <div>
-  <Header />
-  <router-view />
-    <Footer />
-  </div>
+  <router-view/>
 </template>
-
-<script>
-import Header from './layout/Header.vue'
-import Footer from './layout/Footer.vue'
-
-export default {
-  name: "App",
-  components: {
-    Header,
-    Footer
-  }
-};
-</script>
-
-<style>
-@import "./assets/css/style.css";
-</style>

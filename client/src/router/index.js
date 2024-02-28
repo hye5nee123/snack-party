@@ -1,20 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import ProCard from '../components/ProductCard.vue' //상품기본컴포넌트
+import admin from './admin.js';
+import user from './user.js';
 
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/proCard',
-    name: 'proCard',
-    component: ProCard
-
-  }
+  admin,
+  user
 ]
 
 const router = createRouter({
