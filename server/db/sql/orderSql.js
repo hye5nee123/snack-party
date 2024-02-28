@@ -19,14 +19,17 @@ const cartInsert =
 //장바구니 삭제
 const cartDeleteAll =
 `DELETE FROM cart
-WHERE cart_code = ?`
+WHERE member_code = (select member_code
+                     FROM member
+                     WHERE member_id = ?)`
+
 //선택
 // const cartCheck =
 
 
 
 //< orders >
-const orderInsert =
+// const orderInsert =
 
 
 module.exports = {
