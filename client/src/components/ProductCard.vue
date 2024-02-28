@@ -54,7 +54,7 @@ export default {
 </script>
 
 <style>
-@import '../assets/css/fruitstyle.css';
+/* @import '../assets/css/style.css'; */
 
 .active {
   color: red;
