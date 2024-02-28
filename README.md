@@ -136,15 +136,12 @@
 
 ### 커밋 메시지
 > Type
-- 구현 기능, 부족한 부분 적기(프로젝트 진행을 위한 진도 파악 위해서)
+- yyyyMMdd[name],[기능 구현] (실제 적을 때는 모든 기호는 빼고 작성합니다)
 
 
 ### PR 규칙.
 ```
-• (생략가능)9:00에 전원 개인 브랜치 commit > push 후 develop에 PR 요청(충돌 사항 잔디에 공유) 후 develop에서 pull 받아 run as 실행
-• mapper.xml 파일은 위아래 띄어쓰기 없음
-• 각자 Controller만 건드리기(ex)Controller 뒤에 A,B,C를 붙여 개인별로 따로 사용하고 배포 전
-  main Controller로 취합(git과 Eclipse 오류,충돌을 줄이고자 회의 후 결정)
+• (생략가능)9:00에 전원 개인 브랜치 commit > push 후 develop에 PR 요청(충돌 사항 잔디에 공유) 후 develop에서 pull 받아 node app(server)/npm run serve(client )실행
 • 개인 작업후 18:00에 개인 브랜치 commit > push 후 develop에 PR 요청.
 ```
   # 🥺 그외
@@ -154,4 +151,4 @@
 
   ### 실행 안 될때
 ```
-- project > clean 2번정도 부탁드립니다.
+- npm update 등등... 너무 많은 오류 메세지로 인해...구글링 부탁 🙏
