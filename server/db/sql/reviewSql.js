@@ -10,4 +10,5 @@ const reviewList = `SELECT
 
 module.exports = {
   reviewList,
+  //ㅇㅇㅇ
 };
