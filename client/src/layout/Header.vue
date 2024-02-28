@@ -10,9 +10,9 @@
                             class="text-white">Email@Example.com</a></small>
                 </div>
                 <div class="top-link pe-2">
-                    <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
-                    <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
-                    <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
+                    <a href="#" class="text-white"><small class="text-white mx-2">로그인</small>/</a>
+                    <a href="#" class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
+                    <a href="#" class="text-white"><small class="text-white ms-2">보유적립금</small></a>
                 </div>
             </div>
         </div>

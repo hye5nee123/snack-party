@@ -1,13 +1,14 @@
 import UserMain from '../views/UserMain.vue';
 import Main from '../views/ShopMain.vue';
 import ProductList from '../views/ProductList.vue';
+import SignUp from '../views/SignUp.vue';
 
 export default {
 
   path: '/',
   name: 'home',
   component: UserMain,
-  redirect : '/main/main',
+  redirect : '/main',
   children : [
     {
       path : 'main',
@@ -18,6 +19,11 @@ export default {
       path : 'list',
       name : 'ProductList',
       component : ProductList
+    },
+    {
+      path : 'signup',
+      name : 'SignUp',
+      component : SignUp
     }
   ]
 }
