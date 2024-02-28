@@ -1,16 +1,23 @@
 import UserMain from '../views/UserMain.vue';
-import MainView from '../views/MainView.vue';
+import Main from '../views/ShopMain.vue';
+import ProductList from '../views/ProductList.vue';
 
 export default {
 
   path: '/',
   name: 'home',
   component: UserMain,
-  children: [
+  redirect : '/main/main',
+  children : [
     {
-    path: '/main',
-    name: 'userMain',
-    component: MainView
+      path : 'main',
+      name : 'Main',
+      component : Main,
+    },
+    {
+      path : 'list',
+      name : 'ProductList',
+      component : ProductList
     }
   ]
 }
