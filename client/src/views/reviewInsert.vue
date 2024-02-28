@@ -58,7 +58,8 @@
         <button type="reset" class="btn btn-danger mt-2">취소</button>
         </div>
     </div>
-</template><script>
+</template>
+<script>
 import axios from "axios";
 import Swal from "sweetalert2";
 
