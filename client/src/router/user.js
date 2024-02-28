@@ -1,6 +1,7 @@
 import UserMain from '../views/UserMain.vue';
 import Main from '../views/ShopMain.vue';
 import ProductList from '../views/ProductList.vue';
+import SignUp from '../views/SignUp.vue';
 
 export default {
 
@@ -18,6 +19,11 @@ export default {
       path : 'productlist',
       name : 'ProductList',
       component : ProductList
+    },
+    {
+      path : 'signup',
+      name : 'SignUp',
+      component : SignUp
     }
   ]
 }
