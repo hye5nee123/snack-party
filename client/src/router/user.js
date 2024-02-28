@@ -1,9 +1,23 @@
 import UserMain from '../views/UserMain.vue';
+import Main from '../views/ShopMain.vue';
+import ProductList from '../views/ProductList.vue';
 
 export default {
 
   path: '/',
   name: 'home',
-  component: UserMain
-
+  component: UserMain,
+  redirect : '/main',
+  children : [
+    {
+      path : 'main',
+      name : 'Main',
+      component : Main,
+    },
+    {
+      path : 'productlist',
+      name : 'ProductList',
+      component : ProductList
+    }
+  ]
 }
