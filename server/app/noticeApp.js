@@ -1,7 +1,7 @@
-const express = require("express");
+const express = require('express');
 const app = express();
-const db = require("../db.js");
-const sql = require("../db/sql.js");
+const db = require('../db.js');
+const sql = require('../db/sql.js');
 
 // //전체조회
 // app.get("/notice", async (request, response) => {
@@ -9,18 +9,15 @@ const sql = require("../db/sql.js");
 //   response.send(result);
 // });
 console.log(sql);
-console.log(sql["noticesql"]["noticeList"]);
+console.log(sql['noticesql']['noticeList']);
 
 //전체조회
 app.get("/notice", async (request, response) => {
-  let result = db
-    .connection(sql.noticesql.noticeList)
-    .then((result) => {
-      response.send(result);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  let result = db.connection(sql.noticesql.noticeList).then ( result => {
+    response.send(result);
+  }).catch ( err => {
+    console.log(err);
+  });
 });
 
 module.exports = app;
