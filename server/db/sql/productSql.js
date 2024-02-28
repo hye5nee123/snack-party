@@ -8,7 +8,8 @@ const productList =
         , stock_cnt
         , register_date
         , product_display
-FROM product`;
+FROM product
+ORDER BY 1`;
 
 const productInfo =
 `SELECT product_code

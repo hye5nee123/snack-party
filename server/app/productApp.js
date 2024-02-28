@@ -1,11 +1,25 @@
 const express = require('express');
-const productRouter = express.Router();
+const app = express();
 const db = require('../db.js');
+const sql = require('../db/sql.js');
 
 // 전체조회
-app.get('/product', async(req, res)=>{
-    let list = await db.connection('productList',data);
-    res.send(list);
+app.get('/productlist', async (req, res) => {
+    let result = db.connection(sql.productsql.productList).then(result => {
+        res.send(result);
+    }).catch(err => {
+        console.log(err);
+    });
 });
 
-module.exports = productRouter;
+//단건조회
+app.get('/productinfo/:product_code', async (req, res) => {
+    let data = req.params.product_code;
+    let result = db.connection(sql.productsql.productInfo, data).then(result => {
+        res.send(result);
+    }).catch(err => {
+        console.log(err);
+    });
+});
+
+module.exports = app;
