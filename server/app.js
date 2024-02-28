@@ -11,18 +11,16 @@ const orderRouter = require('./app/orderApp.js');
 // const reviewRouter = require('./app/reviewApp.js');
 
 app.use(
-    express.json({
-      limit: "50mb",
-    })
+  express.json({
+    limit: "50mb",
+  })
 );
 
 app.use(express.urlencoded({ extended: false }));
 
 app.listen(3000, () => {
-    console.log("Server started. port 3000.");
+  console.log("Server started. port 3000.");
 });
-
-const db = require("./db.js");
 
 // app.use('/admin', adminRouter);
 // app.use('/inquiry', inquiryRouter);

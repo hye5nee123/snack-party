@@ -15,7 +15,7 @@ export default {
       component : Main,
     },
     {
-      path : 'list',
+      path : 'productlist',
       name : 'ProductList',
       component : ProductList
     }

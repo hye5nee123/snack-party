@@ -3,7 +3,7 @@
 const membersql = require('./sql/memberSql.js');
 const noticesql = require('./sql/noticeSql.js');
 // const ordersql = require('./sql/orderSql.js');
-// const productsql = require('./sql/productSql.js');
+const productsql = require('./sql/productSql.js');
 // const reviewsql = require('./sql/reviewSql.js');
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     membersql,
     // noticesql,
     // ordersql,
-    // productsql,
+    productsql,
     // reviewsql
     noticesql
 }
