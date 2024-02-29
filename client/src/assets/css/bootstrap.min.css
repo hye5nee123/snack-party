@@ -12611,3 +12611,9 @@ fieldset:disabled .btn {
 sup {
     color: red
 }
+
+/* 이효진 생성 */
+.sort-text-align{
+    text-align: right;
+    display: block !important;
+}

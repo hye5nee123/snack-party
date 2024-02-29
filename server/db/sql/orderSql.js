@@ -29,6 +29,7 @@ FROM cart
 WHERE member_code = ?
 AND product_code = ?`
 
+
 // //전체선택(주문)
 // // const cartAllUpdate =
 // // `UPDATE cart
@@ -87,16 +88,11 @@ WHERE member_code = (select member_code
 // WHERE order_code = ?`
 
 
-
-
-
-
 module.exports = {
   cartList,
   cartInsert,
   cartCheck,
   cartDeleteAll,
-
 //   orderInsert,
 //   detailInsert,
 //   orderList,
