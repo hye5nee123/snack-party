@@ -28,10 +28,6 @@ AND product_code = ?`
 // `UPDATE cart
 // SET `
 
-
-
-
-
 //삭제
 const cartDeleteAll =
 `DELETE FROM cart
@@ -71,8 +67,9 @@ FROM orders
 WHERE order_code = ?`
 
 //주문상세 목록
+const detailList=
 `SELECT detail_code
-	    , detail_price
+	, detail_price
       , product_code
       , order_code
       , order_cnt
@@ -81,16 +78,11 @@ FROM detail
 WHERE order_code = ?`
 
 
-
-
-
-
 module.exports = {
   cartList,
   cartInsert,
   cartCheck,
   cartDeleteAll,
-
   orderInsert,
   detailInsert,
   orderList,
