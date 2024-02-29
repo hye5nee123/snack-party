@@ -70,7 +70,7 @@
 }
 
 .btn.border-secondary:hover {
-    background: var(--bs-secondary) !important;
+    background: var(--bs-orange) !important;
     color: var(--bs-white) !important;
 }
 
@@ -107,7 +107,7 @@
 }
 
 .topbar .top-link a small:hover {
-    color: var(--bs-secondary) !important;
+    color: var(--bs-gray-dark) !important;
     transition: 0.5s;
 }
 
