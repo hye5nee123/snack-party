@@ -31,9 +31,16 @@ const productUpdate =
 SET ?
 WHERE product_code = ?`;
 
+const categoryList = 
+`SELECT sub_codename
+        , sub_code
+FROM sub
+WHERE common_code = '0E'`;
+
 module.exports = {
     productList,
     productInfo,
     productInsert,
-    productUpdate
+    productUpdate,
+    categoryList
 }
