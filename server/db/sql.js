@@ -4,7 +4,7 @@
 const noticesql = require("./sql/noticeSql.js");
 const ordersql = require('./sql/orderSql.js');
 const productsql = require('./sql/productSql.js');
-// const reviewsql = require('./sql/reviewSql.js');
+const reviewsql = require('./sql/reviewSql.js');
 
 module.exports = {
     // adminsql,
@@ -13,6 +13,5 @@ module.exports = {
     // noticesql,
     ordersql,
     productsql,
-    // reviewsql
-    noticesql
+    reviewsql
 }

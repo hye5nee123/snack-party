@@ -28,4 +28,4 @@ app.listen(3000, () => {
 app.use('/product', productRouter);
 app.use('/notice', noticeRouter);
 app.use('/order', orderRouter);
-// app.use('/review', reviewRouter);
+app.use('/review', reviewRouter);
