@@ -22,9 +22,9 @@ app.listen(3000, () => {
   console.log("Server started. port 3000.");
 });
 
-// app.use('/admin', adminRouter);
-// app.use('/inquiry', inquiryRouter);
-// app.use('/member', memberRouter);
+app.use('/admin', adminRouter);
+app.use('/inquiry', inquiryRouter);
+app.use('/member', memberRouter);
 app.use('/product', productRouter);
 app.use('/notice', noticeRouter);
 app.use('/order', orderRouter);

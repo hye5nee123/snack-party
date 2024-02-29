@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const db = require('../db.js');
 const sql = require('../db/sql.js');
+// const fs = 
 
 
 //장바구니 조회
@@ -14,7 +15,7 @@ app.get('/carts/:userId', async(request, response) => {
   }) 
 });
 
-//장바구니 추가
+//장바구니 담기
 app.post('/carts', async(request, response) => {
   let data = request.body.param;
   let result = db.connection(sql.ordersql.cartInsert, data).then(result => {
@@ -23,17 +24,31 @@ app.post('/carts', async(request, response) => {
     console.log(err);
   })
 });
-//장바구니 상품 중복체크
-app.get('/carts/:ucode', async(request, response) => {
+
+//장바구니 담기 전 상품 중복체크
+app.get('/carts/:ucode/:pcode', async(request, response) => {
   let data = [request.params.ucode, request.params.pcode];
-  let result = db.connection(sql.ordersql.cartCheck, data).then(result => {
+  let result = await db.connection(sql.ordersql.cartCheck, data).then(result => {
     response.send(result);
   }).catch(err => {
     console.log(err);
   })
 });
-//장바구니 전체선택(주문,삭제)
+
+//장바구니 전체선택(주문)
 //수량
+
+
+//장바구니 삭제
+app.delete('/carts/:userId', async(request, response) => {
+  let data = request.params.userId;
+  let result = db.connection(sql.ordersql.cartDeleteAll, data).then(result => {
+    response.send(result);
+  }).catch(err => {
+    console.log(err);
+  }) 
+});
+
 
 //=================================
 //< orders >
