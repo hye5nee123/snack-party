@@ -1,5 +1,4 @@
 const mysql = require('mysql');
-const sql = require('./db/sql.js');
 
 const dbInfo = {
     connetionLimit : process.env.MYSQL_LIMIT,
@@ -11,7 +10,7 @@ const dbInfo = {
 }
 
 const dbPool = mysql.createPool(dbInfo);
-// 유미 교수님
+
 module.exports = {
      connection(alias, param = []) {
       return new Promise((resolve, reject) => dbPool.query(alias, param, (error, results) => {
@@ -23,17 +22,3 @@ module.exports = {
       }));
     }
   };
-
-// 최승민
-//   module.exports = {
-//     connection(table, alias, param = []) {
-//      return new Promise((resolve, reject) => dbPool.query(sql[table][alias], param, (error, results) => {
-//        if (error) {         
-//          reject({
-//            error
-//          });
-//        } else resolve(results);
-//      }));
-//    }
-//  };
-
