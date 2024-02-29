@@ -7,6 +7,7 @@ const productsql = require('./sql/productSql.js');
 // const reviewsql = require('./sql/reviewSql.js');
 const commonsql = require("./sql/commonSql.js");
 
+
 module.exports = {
     // adminsql,
     // inquirysql,
@@ -17,4 +18,5 @@ module.exports = {
     // reviewsql
     noticesql,
     commonsql
+
 }
