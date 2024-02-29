@@ -1,48 +1,54 @@
-// //< cart >
-// //목록 -- 상품이미지 추가해야 됨
-// const cartList = 
-// `SELECT p.product_name
-// 	    , c.cart_cnt
-//       , p.product_price
-// 	    , c.member_code
-// 	    , c.product_code
-// FROM cart c JOIN product p
-// 			ON c.product_code = p.product_code
-// WHERE member_code = (SELECT member_code
-//                      FROM MEMBER
-//                      WHERE member_id = ?)`
+/* < cart > */
 
-// //담기
-// const cartInsert = //확인 cart_code = 'cart'+cart_seq.nextval
-// `INSERT INTO cart 
-// SET ?`
-// //중복확인
-// const cartCheck =
+//장바구니 목록 -- 상품이미지 추가해야 됨
+const cartList = 
+`SELECT p.product_name
+	, c.cart_cnt
+      , p.product_price
+	, c.member_code
+	, c.product_code
+FROM cart c JOIN product p
+			ON c.product_code = p.product_code
+WHERE member_code = (SELECT member_code
+                     FROM member
+                     WHERE member_id = ?)`
+
+// const cartList =
 // `SELECT *
-// FROM cart
-// WHERE member_code = ?
-// AND product_code = ?`
+// FROM cart`
 
-// //전체선택(주문,삭제)
+//장바구니 담기
+const cartInsert = //확인 cart_code = 'cart'+cart_seq.nextval lpad
+`INSERT INTO cart 
+SET ?`
+
+//장바구니 담기 전 중복확인
+const cartCheck =
+`SELECT *
+FROM cart
+WHERE member_code = ?
+AND product_code = ?`
+
+// //전체선택(주문)
 // // const cartAllUpdate =
 // // `UPDATE cart
 // // SET `
 
 
 
-
-
-// //삭제
-// const cartDeleteAll =
-// `DELETE FROM cart
-// WHERE member_code = (select member_code
-//                      FROM member
-//                      WHERE member_id = ?)`
+//전체삭제
+const cartDeleteAll =
+`DELETE FROM cart
+WHERE member_code = (select member_code
+                     FROM member
+                     WHERE member_id = ?)`
 
 
 
 // //====================================================
-// //< orders >
+
+/* < orders > */
+
 // //주문 등록
 // const orderInsert =
 // `INSERT INTO orders
@@ -85,14 +91,14 @@
 
 
 
-// module.exports = {
-//   cartList,
-//   cartInsert,
-//   cartCheck,
-//   cartDeleteAll,
+module.exports = {
+  cartList,
+  cartInsert,
+  cartCheck,
+  cartDeleteAll,
 
 //   orderInsert,
 //   detailInsert,
 //   orderList,
 //   detailList,
-// }
+}
