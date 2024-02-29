@@ -6,10 +6,11 @@ const dbInfo = {
     port: process.env.MYSQL_PORT,
     database : process.env.MYSQL_DATABASE,    
     user : process.env.MYSQL_USERNAME,
-    password : process.env.MYSQL_PASSWORD
+    password : process.env.MYSQL_PASSWORD,
 }
 
 const dbPool = mysql.createPool(dbInfo);
+// const file = process.env.FILE_PATH;
 
 module.exports = {
      connection(alias, param = []) {
