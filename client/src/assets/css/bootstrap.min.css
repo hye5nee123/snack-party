@@ -12598,3 +12598,16 @@ fieldset:disabled .btn {
         display: none !important
     }
 }
+
+/* 신혜원 생성 */
+.icon {
+    color: #45595b
+}
+
+.center {
+    justify-content: center
+}
+
+sup {
+    color: red
+}
