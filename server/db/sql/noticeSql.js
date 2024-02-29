@@ -18,10 +18,14 @@ const noticeInsert =
 `INSERT INTO notice
 SET ? `;
 
+const noticeDelete = 
+`DELETE FROM notice
+WHERE notice_code = ?`
 
 
 module.exports = {
   noticeList,
   noticeInfo,
-  noticeInsert
+  noticeInsert,
+  noticeDelete
 }

@@ -38,4 +38,13 @@ app.post("/", async (request, response)=>{
   });
 });
 
+// 삭제
+app.delete("/:no", async (request, response)=>{
+  let data = request.params.no; // { param : { .. } }
+  let result = await db.connection(sql.noticesql.noticeDelete, data).then ( result => {
+    response.send(result);
+  }).catch ( err => {
+    console.log(err);
+  });
+});
 module.exports = app;
