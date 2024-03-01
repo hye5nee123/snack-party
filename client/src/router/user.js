@@ -5,7 +5,6 @@ import MemberInsert from '../views/MemberInsert.vue';
 import Cart from '../views/order/CartView.vue';
 
 export default {
-
   path: '/',
   name: 'home',
   component: UserMain,

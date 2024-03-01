@@ -45,9 +45,9 @@
                                         <h4>카테고리</h4>
                                         <ul class="list-unstyled fruite-categorie" :key="i"
                                             v-for="(category, i) in categoryList">
-                                            <li @click="getCategoryProductList(category.sub_code)">
+                                            <li>
                                                 <div class="d-flex justify-content-between fruite-name">
-                                                    <a><i class="fa-solid fa-cookie"></i> {{ category.sub_codename }}</a>
+                                                    <a @click="selectCategory(category.sub_code)"><i class="fa-solid fa-cookie"></i> {{ category.sub_codename }}</a>
                                                 </div>
                                             </li>
                                         </ul>
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
                         </div>
-                        <CategoryProductList />
+                        <CategoryProductList :cateProps="scategory"/>
                     </div>
                 </div>
             </div>
@@ -66,16 +66,17 @@
 
 <script>
 import CategoryProductList from '@/components/CategoryProductList.vue';
-import router from '@/router';
 import axios from 'axios';
 
 export default {
     name: 'ProductList',
-    components: { CategoryProductList },
+    components: {
+        CategoryProductList
+    },
     data() {
         return {
             categoryList: [],
-            
+            scategory: ''
         };
     },
     created() {
@@ -87,8 +88,11 @@ export default {
                 .catch(err => console.log(err));
             this.categoryList = result.data;
         },
-        getCategoryProductList(category) {
-            this.$router.push({ path: '/productlist', query: { 'category': category } });
+        // getCategoryProductList(category) {
+        //     this.$router.push({ path: '/productlist', query: { 'category': category } });
+        // }
+        selectCategory(category){
+            this.scategory = category;
         }
     }
 }
