@@ -2,38 +2,56 @@
 
 const productList =
 `SELECT product_code
-        , category
-        , product_name
-        , product_price
-        , stock_cnt
-        , register_date
-        , product_display
-FROM product
-ORDER BY 1`;
+      , category
+      , product_name
+      , product_price
+      , stock_cnt
+      , register_date
+      , product_display
+   FROM product
+  ORDER BY 1`;
 
 const productInfo =
 `SELECT product_code
-        , category
-        , product_name
-        , product_price
-        , stock_cnt
-        , register_date
-        , product_display
-FROM product
-WHERE product_code = ?`;
+      , category
+      , product_name
+      , product_price
+      , stock_cnt
+      , register_date
+      , product_display
+   FROM product
+  WHERE product_code = ?`;
 
 const productInsert =
 `INSERT INTO product
-SET ?`;
+    SET ?`;
 
 const productUpdate =
 `UPDATE product
-SET ?
-WHERE product_code = ?`;
+    SET ?
+  WHERE product_code = ?`;
+
+const categoryProductList =
+`SELECT p.product_code
+      , p.category
+      , p.product_name
+      , p.product_price
+      , p.stock_cnt
+      , p.register_date
+      , p.product_display
+      , f.save_name
+      , f.extension
+      , f.thumbnail
+      , f.path
+   FROM product p LEFT OUTER 
+   JOIN file f
+     ON p.product_code = f.board_code
+  WHERE category = ?`;
 
 module.exports = {
     productList,
     productInfo,
     productInsert,
-    productUpdate
+    productUpdate,
+    categoryProductList
 }

@@ -11,7 +11,7 @@
                 </div>
                 <div class="top-link pe-2">
                     <a href="#" class="text-white"><small class="text-white mx-2">로그인</small>/</a>
-                    <a href="#" class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
+                    <a href="/MemberInsert" class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
                     <a href="#" class="text-white"><small class="text-white ms-2">보유적립금</small></a>
                 </div>
             </div>
@@ -27,31 +27,35 @@
                 </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
-                        <a href="/main" class="nav-item nav-link active">Home</a>
-                        <a href="/productlist" class="nav-item nav-link">Shop</a>
-                        <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
+                        <a href="/main" class="nav-item nav-link active">메인화면</a>
+                        <a href="/productlist" class="nav-item nav-link">전체상품</a>
+                        <a href="/" class="nav-item nav-link">과자</a>
+                        <a href="/" class="nav-item nav-link">비스킷/크래커</a>
+                        <a href="/" class="nav-item nav-link">쿠키/파이</a>
+                        <a href="/" class="nav-item nav-link">초콜릿</a>
+                        <a href="/" class="nav-item nav-link">젤리/캐러멜</a>
+                        <a href="shop-detail.html" class="nav-item nav-link">상품상세</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <a href="cart.html" class="dropdown-item">Cart</a>
+                                <a href="/cart" class="dropdown-item">Cart</a>
                                 <a href="chackout.html" class="dropdown-item">Chackout</a>
                                 <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                                 <a href="404.html" class="dropdown-item">404 Page</a>
                             </div>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
                     </div>
                     <div class="d-flex m-3 me-0">
                         <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
                             data-bs-toggle="modal" data-bs-target="#searchModal"><i
                                 class="fas fa-search text-primary"></i></button>
-                        <a href="#" class="position-relative me-4 my-auto">
+                        <a href="/cart" class="position-relative me-4 my-auto icon">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
                                 style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
                         </a>
-                        <a href="#" class="my-auto">
+                        <a href="#" class="my-auto icon">
                             <i class="fas fa-user fa-2x"></i>
                         </a>
                     </div>
