@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+const sql = require('./db/sql.js')
 
 const dbInfo = {
     connetionLimit : process.env.MYSQL_LIMIT,
@@ -13,13 +14,16 @@ const dbPool = mysql.createPool(dbInfo);
 // const file = process.env.FILE_PATH;
 
 module.exports = {
-     connection(alias, param = []) {
-      return new Promise((resolve, reject) => dbPool.query(alias, param, (error, results) => {
-        if (error) {         
-          reject({
-            error
-          });
-        } else resolve(results);
-      }));
+  connection(table, alias, param = []) {
+    return new Promise((resolve, reject) => dbPool.query(sql[table][alias], param, (error, results) => {
+      if (error) {         
+        reject({
+          error
+        });
+      } else { 
+      resolve(results);
+      console.log(results)
     }
-  };
+    }));
+  }
+};
