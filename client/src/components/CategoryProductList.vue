@@ -1,7 +1,7 @@
 <!-- <template>
     <div class="col-lg-9">
         <div class="row g-4 justify-content-center">
-            <div class="col-md-6 col-lg-6 col-xl-4"  v-for="(product, i) in productList">
+            <div class="col-md-6 col-lg-6 col-xl-4" :key="i" v-for="(product, i) in productList">
                 <ProductCard />
             </div>
         </div>
