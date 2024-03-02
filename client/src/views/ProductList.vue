@@ -47,7 +47,7 @@
                                             v-for="(category, i) in categoryList">
                                             <li>
                                                 <div class="d-flex justify-content-between fruite-name">
-                                                    <a @click="selectCategory(category.sub_code)"><i class="fa-solid fa-cookie"></i> {{ category.sub_codename }}</a>
+                                                    <a @click="selectCategory(category.sub_code), getCategoryProductList(category.sub_code)"><i class="fa-solid fa-cookie"></i> {{ category.sub_codename }}</a>
                                                 </div>
                                             </li>
                                         </ul>
@@ -55,7 +55,8 @@
                                 </div>
                             </div>
                         </div>
-                        <CategoryProductList :cateProps="scategory"/>
+                        <!-- <CategoryProductList :cateProps="scategory"/> -->
+                        <router-view />
                     </div>
                 </div>
             </div>
@@ -65,14 +66,14 @@
 </template>
 
 <script>
-import CategoryProductList from '@/components/CategoryProductList.vue';
+// import CategoryProductList from '@/components/CategoryProductList.vue';
 import axios from 'axios';
 
 export default {
     name: 'ProductList',
-    components: {
-        CategoryProductList
-    },
+    // components: {
+    //     CategoryProductList
+    // },
     data() {
         return {
             categoryList: [],
@@ -88,9 +89,9 @@ export default {
                 .catch(err => console.log(err));
             this.categoryList = result.data;
         },
-        // getCategoryProductList(category) {
-        //     this.$router.push({ path: '/productlist', query: { 'category': category } });
-        // }
+        getCategoryProductList(category) {
+            this.$router.push({ path: '/productlist/category', query: { 'category': category } });
+        },
         selectCategory(category){
             this.scategory = category;
         }

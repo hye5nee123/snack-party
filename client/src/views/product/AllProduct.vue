@@ -19,9 +19,11 @@
         </div>
     </div>
 </template>
+
 <script>
-import axios from 'axios';
+// import CategoryProduct from '@/CategoryProduct.vue';
 import ProductCard from '@/components/ProductCard.vue'
+import axios from 'axios';
 
 export default {
     props: ['cateProps'],
@@ -37,8 +39,8 @@ export default {
         // let category = this.$route.query.category;
         this.getProductList(this.cateProps);
     },
-    watch : {
-        cateProps(){
+    watch: {
+        cateProps() {
             this.getProductList(this.cateProps);
         }
     },
