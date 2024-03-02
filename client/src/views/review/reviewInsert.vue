@@ -60,7 +60,6 @@
     </div>
 </template><script>
 import axios from "axios";
-import Swal from "sweetalert2";
 
 export default {
 data() {
@@ -132,6 +131,7 @@ data() {
             icon: "success",
             title: "정상 처리",
             text: "정상적으로 처리되었습니다.",
+            //바뀌지마
           });
         } else {
           Swal.fire({
