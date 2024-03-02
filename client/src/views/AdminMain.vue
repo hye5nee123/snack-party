@@ -27,4 +27,4 @@ export default {
   @import "../assets/css/page-icons.css";
   @import "../assets/css/page-misc.css";
   @import "../assets/css/theme-default.css";
-</style>
+</style> 
