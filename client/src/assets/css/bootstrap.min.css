@@ -2268,9 +2268,10 @@ progress {
 .form-control:focus {
     color: #747d88;
     background-color: #fff;
-    border-color: #c0e284;
+    border-color: #ffc107;
     outline: 0;
-    box-shadow: 0 0 0 .25rem rgba(129, 196, 8, .25)
+    /* box-shadow: 0 0 0 .25rem rgba(129, 196, 8, .25) */
+    box-shadow: 0 0 0 .25rem rgba(255, 224, 188, 25)
 }
 
 .form-control::-webkit-date-and-time-value {
@@ -3127,7 +3128,7 @@ textarea.form-control.is-invalid {
 .btn-check:focus+.btn,
 .btn:focus {
     outline: 0;
-    box-shadow: 0 0 0 .25rem rgba(129, 196, 8, .25)
+    box-shadow: 0 0 0 .25rem rgba(255, 224, 188, 25)
 }
 
 .btn:disabled,
@@ -3503,14 +3504,14 @@ fieldset:disabled .btn {
 }
 
 .btn-outline-primary:hover {
-    color: #000;
-    background-color: #ffc107;
-    border-color: #ffc107
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
 }
 
 .btn-check:focus+.btn-outline-primary,
 .btn-outline-primary:focus {
-    box-shadow: 0 0 0 .25rem rgba(129, 196, 8, .5)
+    box-shadow: 0 0 0 .25rem rgba(255, 224, 188, 25);
 }
 
 .btn-check:checked+.btn-outline-primary,
@@ -3518,9 +3519,9 @@ fieldset:disabled .btn {
 .btn-outline-primary:active,
 .btn-outline-primary.active,
 .btn-outline-primary.dropdown-toggle.show {
-    color: #000;
-    background-color: #ffc107;
-    border-color: #ffc107
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
 }
 
 .btn-check:checked+.btn-outline-primary:focus,
@@ -12610,6 +12611,15 @@ fieldset:disabled .btn {
 
 sup {
     color: red
+}
+
+.bold {
+    font-weight: 700;
+    margin-bottom: .5rem;
+}
+
+.margin-right {
+    margin-right: 0.5rem;
 }
 
 /* 이효진 생성 */
