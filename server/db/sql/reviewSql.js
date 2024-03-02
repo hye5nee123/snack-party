@@ -21,6 +21,6 @@ reviewImgInsert: `insert into file set board_code = ?`,
   (module.exports = {
     reviewList,
     reviewInsert,
-    reviewDelete,
-    reviewImgInsert,
+    // reviewDelete,
+    // reviewImgInsert,
   });
