@@ -1,4 +1,4 @@
-const qnaList: `SELECT`
+// const qnaList: `SELECT`
 
 
 
