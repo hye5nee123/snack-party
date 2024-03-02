@@ -1,27 +1,29 @@
-import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3000';
-axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8';
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
+import axios from "axios";
+// axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.headers.post["Content-Type"] = "application/json;charset=utf-8";
+axios.defaults.headers.post["Access-Control-Allow-Origin"] = "*";
 
 export default {
   methods: {
     async $api(url, data) {
-      return (await axios({
-        method: 'post',
-        url,
-        data
-      }).catch(e => {
-        console.log(e);
-      })).data;
+      return (
+        await axios({
+          method: "post",
+          url,
+          data,
+        }).catch((e) => {
+          console.log(e);
+        })
+      ).data;
     },
-    $currencyFormat(value, format = '#,###') {
+    $currencyFormat(value, format = "#,###") {
       if (value == 0 || value == null) return 0;
 
       var currency = format.substring(0, 1);
-      if (currency === '$' || currency === '₩') {
+      if (currency === "$" || currency === "₩") {
         format = format.substring(1, format.length);
       } else {
-        currency = '';
+        currency = "";
       }
 
       var groupingSeparator = ",";
@@ -57,7 +59,10 @@ export default {
         v = v.substring(1);
       }
 
-      if (maxFractionDigits > 0 && format.substring(format.length - 1, format.length) == '0') {
+      if (
+        maxFractionDigits > 0 &&
+        format.substring(format.length - 1, format.length) == "0"
+      ) {
         v = String(parseFloat(v).toFixed(maxFractionDigits));
       }
 
@@ -70,10 +75,10 @@ export default {
       v = v.replace(regExp, "");
       var r = /(\d+)(\d{3})/;
       while (r.test(v)) {
-        v = v.replace(r, '$1' + groupingSeparator + '$2');
+        v = v.replace(r, "$1" + groupingSeparator + "$2");
       }
 
       return prefix + currency + String(v) + String(d);
-    }
-  }
-}
+    },
+  },
+};
