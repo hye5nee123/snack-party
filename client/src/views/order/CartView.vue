@@ -1,153 +1,247 @@
 <template>
   <!-- Single Page Header start -->
   <div class="container-fluid page-header py-5">
-  <h1 class="text-center text-white display-6">장바구니</h1>
-  <ol class="breadcrumb justify-content-center mb-0">
+    <h1 class="text-center text-white display-6">장바구니</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
       <li class="breadcrumb-item"><a href="/productlist">Product</a></li>
       <!-- <li class="breadcrumb-item"><a href="#">Pages</a></li> -->
       <li class="breadcrumb-item active text-white">Cart</li>
-  </ol>
-</div>
-<!-- Single Page Header End -->
-
-
-<!-- Cart Page Start -->
-<div class="container-fluid py-5">
-  <div class="container py-5">
-      <div class="table-responsive">
-          <table class="table table-center">
-              <thead class="text-center">
-                <tr>
-                  <th><input type="checkbox"></th>
-                  <th scope="col">이미지</th>
-                  <th scope="col">상품명</th>
-                  <th scope="col" colspan="2">수량</th>
-                  <th scope="col">가격</th>
-                  <th scope="col">삭제</th>
-                </tr>
-              </thead>
-              <tbody>
-                  <tr v-for="(cart, i) in cartList" :key="i">
-                      <td><input type="checkbox"></td>
-                      <td><img src="../../assets/apple.jpg" width="100px"></td>
-                      <td>{{ cart.product_name }}</td>
-                      <td>
-                          <div class="input-group quantity mt-4" style="width: 100px;">
-                              <div class="input-group-btn">
-                                  <button class="btn btn-sm btn-minus rounded-circle bg-light border" @click="cart.cart_cnt--">
-                                  <i class="fa fa-minus"></i>
-                                  </button>
-                              </div>
-                              <input type="text" style="background: #fff" class="form-control form-control-sm text-center border-0" min="1" v-model="cart.cart_cnt" readonly>
-                              <div class="input-group-btn">
-                                  <button class="btn btn-sm btn-plus rounded-circle bg-light border" @click="cart.cart_cnt++">
-                                      <i class="fa fa-plus"></i>
-                                  </button>
-                              </div>
-                          </div>
-                        </td>
-                        <td><button @click="updateCnt(cart)">변경</button></td>
-                      <td>
-                          <p class="mb-0 mt-4">{{ cart.cart_cnt * cart.product_price}}원</p>
-                      </td>
-                      <td>
-                          <!-- <button class="btn btn-md rounded-circle bg-light border mt-4" >
-                              <i class="fa fa-times text-danger"></i>
-                          </button> -->
-                          <button @click="delCartOne(cart)" >삭제</button>
-                      </td>
-                  </tr>
-              </tbody>
-          </table>
-      </div>
-      <br>
-      <div class="container-fluid py-5">
-          <table id="total" class="table">
-              <tr>
-                  <th>총 상품금액</th>
-                  <th>배송비</th>
-                  <th>결제예정금액</th>
-              </tr>
-              <tr>
-                  <td>{{ allProPrice() }}원</td>
-                  <td v-if="allProPrice() >= 30000">+ {{delieveryFee=0}}원</td>
-                  <td v-else>+ {{ delieveryFee }}원</td>
-                  <td>= {{ allProPrice() + delieveryFee }}원</td>
-              </tr>
-          </table>
-      </div>
-      <div class="container-center">
-          <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 ordBtn" type="button">주문하기</button>
-          <button class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">장바구니 비우기</button>
-      </div>
+    </ol>
   </div>
-</div>
-<!-- Cart Page End -->
+  <!-- Single Page Header End -->
+
+  <!-- Cart Page Start -->
+  <div class="container-fluid py-5">
+    <div class="container py-5">
+      <div class="table-responsive">
+        <table class="table cart-list-table">
+          <thead>
+            {{selectList}}
+            <tr>
+              <th><input type="checkbox" v-model="selectAll" /></th>
+              <th scope="col">이미지</th>
+              <th scope="col">상품명</th>
+              <th scope="col">수량</th>
+              <th scope="col">가격</th>
+              <th scope="col">삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(cart, i) in cartList" :key="i">
+              <td>
+                <input type="checkbox" v-model="selectList" :value="cart" />
+              </td>
+              <td><img src="../../assets/apple.jpg" width="100px" /></td>
+              <td><p class="mb-0 mt-4">{{ cart.product_name }}</p></td>
+              <td>
+                <div class="input-group quantity mt-4" style="width: 150px">
+                  <div class="input-group-btn">
+                    <button
+                      class="btn btn-sm btn-minus rounded-circle bg-light border"
+                      @click="
+                        cart.cart_cnt <= 1 ? cart.cart_cnt : cart.cart_cnt--
+                      "
+                    >
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                  <input
+                    type="text"
+                    style="background: #fff"
+                    class="form-control form-control-sm text-center border-0"
+                    min="1"
+                    v-model="cart.cart_cnt"
+                    readonly
+                  />
+                  <div class="input-group-btn">
+                    <button
+                      class="btn btn-sm btn-plus rounded-circle bg-light border"
+                      @click="cart.cart_cnt++"
+                      v-bind:disabled="
+                        cart.stock_cnt <= cart.cart_cnt || cart.stock_cnt == 0
+                      "
+                    >
+                      <i class="fa fa-plus"></i>
+                    </button>
+                    </div>
+                    <div style="padding-left: 10px;">
+                    <button type="button" class="cnt-update-btn btn-sm" @click="updateCnt(cart)">수정</button>
+                                          <!--  class=btn-secondary 없앰 색깔 주황색버튼  -->
+                  </div>
+                </div>
+              </td>
+              <td>
+                <p class="mb-0 mt-4">
+                  {{ cart.cart_cnt * cart.product_price }}원
+                </p>
+              </td>
+              <td>
+                <button
+                  @click="delCartOne(cart)"
+                  class="btn btn-md rounded-circle bg-light border mt-4"
+                >
+                  <i class="fa fa-times text-danger"></i>
+                </button>
+                <!-- <button @click="delCartOne(cart)" >삭제</button> -->
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <br />
+      <div class="container-fluid py-5">
+        <table id="total" class="table">
+          <tr>
+            <th>총 상품금액</th>
+            <th>배송비</th>
+            <th>결제예정금액</th>
+          </tr>
+          <tr>
+            <td>{{ allProPrice() }}원</td>
+            <td>+ {{ delieveryFee }}원</td>
+            <td>= {{ allProPrice() + delieveryFee }}원</td>
+          </tr>
+        </table>
+      </div>
+      <div class="button-center">
+        <button @click="goToCheckOut()" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 ordBtn">
+          주문하기
+        </button>
+        <button
+          @click="deleteSelected()"
+          class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
+          type="button"
+        >
+          장바구니 비우기
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- Cart Page End -->
 </template>
 <script>
-import axios from 'axios'
+import axios from 'axios';
 
 export default {
   data() {
-  return {
-  cartList: [],
-  delieveryFee: 3000,
-  }
+    return {
+      cartList: [],
+      totalPrice: 0,
+      selectList: [],
+    };
   },
-  created() {
-  // let searchNo = this.$route.query.userId;
-  this.getCartList('user001');
-  },
-  computed: {
 
+  created() {
+    // let searchNo = this.$route.query.userId;
+    this.getCartList('user001');
   },
-  methods: {
-    async getCartList(userId) {
-    let result = await axios.get('/apiorder/carts/'+ userId)
-                    .catch(err => console.log(err));
-    let list = result.data;
-    this.cartList = list;                    
+
+  computed: {
+    delieveryFee() {
+      return this.totalPrice >= 30000 ? 0 : 3000;
     },
 
-    async updateCnt(cart) { //수량
-      await axios.put(`/apiorder/carts/${cart.cart_cnt}/${cart.cart_code}`)
-            .catch(err => console.log(err));                  
+    selectAll: {
+      get: function () {
+        //getter
+        return this.cartList.length == this.selectList.length;
+      },
+      set(checked) {
+        this.selectList = checked ? this.cartList : [];
+      },
+    },
+  },
+
+  methods: {
+    async getCartList(userId) {
+      let result = await axios
+        .get('/apiorder/carts/' + userId)
+        .catch((err) => console.log(err));
+      console.log('result : ', result);
+      let list = result.data;
+      this.cartList = list;
+    },
+
+    async updateCnt(cart) {
+      //수량
+      if (cart.stock_cnt >= cart.cart_cnt) {
+        let result = await axios
+          .put(`/apiorder/carts/${cart.cart_cnt}/${cart.cart_code}`)
+          .catch((err) => console.log(err));
+        // console.log(`cart_cnt : ${cart.cart_cnt}, cart_code : ${cart.cart_code}`);
+        let info = result.data.changedRows;
+        if (info > 0) {
+          alert('수정되었습니다.');
+        }
+      } else if (cart.stock_cnt == 0) {
+        alert('품절된 상품으로 주문이 불가합니다.');
+        cart.cart_cnt = cart.stock_cnt;
+      } // else {
+      //   alert(cart.product_name + '의 재고량이 부족합니다. 주문가능한 수량은 ' + cart.stock_cnt + '개 입니다.');
+      //   cart.cart_cnt = cart.stock_cnt;
+      // }
     },
 
     allProPrice() { //총 상품금액
-    let allProPrice = 0;
-    for (let pro of this.cartList) {
-      allProPrice += pro.product_price * pro.cart_cnt;
-    }
-    return allProPrice;
+      let allProPrice = 0;
+      for (let pro of this.cartList) {
+        allProPrice += pro.product_price * pro.cart_cnt;
+      }
+      return (this.totalPrice = allProPrice);
     },
 
-    async delCartOne(cartOne) {
-      await axios.delete(`/apiorder/carts/${cartOne}`)
-      .catch(err => console.log(err));  
-    }
+    async delCartOne(cartOne) { //단건삭제
+      await axios
+        .delete(`/apiorder/carts/${cartOne.cart_code}`)
+        .catch((err) => console.log(err));
+      this.$router.go(0);
+    },
 
-  }
-}
+    async deleteSelected() { //선택삭제
+      for (let selected of this.selectList) {
+        await axios
+          .delete(`/apiorder/carts/${selected.cart_code}`)
+          .catch((err) => console.log(err));
+      }
+      alert('삭제되었습니다.');
+      this.$router.go(0); //페이지새로고침
+    },
+    
+    goToCheckOut() {
+      this.$router.push({path:'/checkout', query: {carts: JSON.stringify(this.selectList)}})
+    }
+  },
+
+
+};
 </script>
 
-<!-- <style scoped> -->
-<style>
-.table-center > tr{
-text-item: center
+<style scoped>
+.cart-list-table th,td {
+  font-size: 17px;
 }
-#total tr,td {
-border: 1px solid #eee;
-padding: 35px;
-text-align: center;
-font-size: 18px
-
+#total {
+  border: 1px solid #ccc;
 }
 #total th {
-padding: 20px
+  text-align: center;
+  padding: 20px;
+  font-size: 17px;
 }
-.container-center {
-text-align: center
+#total td {
+  text-align: center;
+  padding: 35px;
+  font-size: 19px;
+}
+
+.button-center {
+  text-align: center;
+}
+.cnt-update-btn {
+  background-color: #fff;
+  border: 1px solid #8299ff;
+  color: #5a5a5a;
+  font-weight: bold;
 }
 
 </style>
