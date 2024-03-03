@@ -6,7 +6,7 @@
                 <div class="row g-4">
                     <div class="col-lg-3">
                         <a href="/main" class="navbar-brand">
-                            <img src="../assets/img/과자파티_투명배경.png" />
+                            <img src="../assets/img/과자파티_배경색.png" />
                         </a>
                     </div>
                     <!-- <div class="col-lg-6">

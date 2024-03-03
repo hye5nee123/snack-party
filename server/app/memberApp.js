@@ -12,7 +12,7 @@ app.get("/", async(request, response) => {
 // 단건조회
 app.get("/:member_code", async(request, response) => {
     let data = request.params.member_code;
-    let result = await db.connection('membersql', 'memberInfo', data);
+    let result = (await db.connection('membersql', 'memberInfo', data))[0];
     response.send(result);
 })
 

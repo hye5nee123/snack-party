@@ -1643,7 +1643,7 @@ progress {
 
     .col-xl-7 {
         flex: 0 0 auto;
-        width: 58.3333333333%
+        width: 52%
     }
 
     .col-xl-8 {
@@ -12601,25 +12601,10 @@ fieldset:disabled .btn {
 }
 
 /* 신혜원 생성 */
-.icon {
-    color: #45595b
-}
-
-.center {
-    justify-content: center
-}
-
-sup {
-    color: red
-}
-
-.bold {
-    font-weight: 700;
-    margin-bottom: .5rem;
-}
-
-.margin-right {
-    margin-right: 0.5rem;
+.btn-primary2{
+    color: #fff;
+    background-color: #fd7e14;
+    border-color: #fd7e14;
 }
 
 /* 이효진 생성 */
