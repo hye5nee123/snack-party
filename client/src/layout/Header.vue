@@ -29,11 +29,17 @@
                     <div class="navbar-nav mx-auto">
                         <a href="/main" class="nav-item nav-link active">메인화면</a>
                         <a href="/productlist" class="nav-item nav-link">전체상품</a>
-                        <a href="/" class="nav-item nav-link">과자</a>
-                        <a href="/" class="nav-item nav-link">비스킷/크래커</a>
-                        <a href="/" class="nav-item nav-link">쿠키/파이</a>
-                        <a href="/" class="nav-item nav-link">초콜릿</a>
-                        <a href="/" class="nav-item nav-link">젤리/캐러멜</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">카테고리별 상품</a>
+                            <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                                <a href="/productlist?category=e01" class="nav-item nav-link">과자</a>
+                                <a href="/productlist?category=e02" class="nav-item nav-link">비스킷/크래커</a>
+                                <a href="/productlist?category=e03" class="nav-item nav-link">쿠키/파이</a>
+                                <a href="/productlist?category=e04" class="nav-item nav-link">유기농/전통과자</a>
+                                <a href="/productlist?category=e05" class="nav-item nav-link">초콜릿</a>
+                                <a href="/productlist?category=e06" class="nav-item nav-link">젤리/캐러멜</a>
+                            </div>
+                        </div>
                         <a href="shop-detail.html" class="nav-item nav-link">상품상세</a>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
@@ -46,7 +52,8 @@
                         </div>
                     </div>
                     <div class="d-flex m-3 me-0">
-                        <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
+                        <button
+                            class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
                             data-bs-toggle="modal" data-bs-target="#searchModal"><i
                                 class="fas fa-search text-primary"></i></button>
                         <a href="/cart" class="position-relative me-4 my-auto icon">

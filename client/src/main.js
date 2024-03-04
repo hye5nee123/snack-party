@@ -10,3 +10,5 @@ const app = createApp(App);
 app.use(router);
 app.mixin(mixins);
 app.mount("#app");
+
+app.config.globalProperties.url="http://localhost:3000";
