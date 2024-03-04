@@ -5,6 +5,7 @@ import SignUp from '../views/member/SignUp.vue';
 import LoginView from '../views/member/LoginView.vue';
 import Cart from '../views/order/CartView.vue';
 import CheckOut from '../views/order/CheckOutView.vue';
+import CheckOutTest from '../views/order/CheckOutTestView.vue';
 
 export default {
 
@@ -42,6 +43,11 @@ export default {
       path : 'checkout',
       name : 'CheckOut',
       component : CheckOut
+    },
+    {
+      path : 'checkouttest',
+      name : 'CheckOutTest',
+      component : CheckOutTest
     }
   ]
 }
