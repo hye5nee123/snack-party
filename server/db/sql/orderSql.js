@@ -58,6 +58,12 @@ const detailInsert =
 SET detail_code = snack.nextval('DET')
     , ?`
 
+//배송정보 등록
+const deliveryInsert =
+`INSERT INTO delivery
+SET delivery_code = snack.nextval('DEL')
+    , ?`
+
 //전체 주문 목록
 const orderListAll =
 `SELECT order_code
@@ -112,6 +118,9 @@ module.exports = {
 //2)주문하기  
   orderInsert,
   detailInsert,
+  deliveryInsert,
+
+
   orderList,
   detailList,
 

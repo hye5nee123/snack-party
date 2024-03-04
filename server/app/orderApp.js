@@ -53,12 +53,16 @@ app.post('/', async(request, response) => {
 //주문상세등록
 app.post('/details', async(request, response) => {
   let data = request.body.param;
-  let result = db.connection('ordersql', 'detailInsert', data);
+  let result = await db.connection('ordersql', 'detailInsert', data);
   response.send(result);
 });
 
 //배송지등록
-app.post('');
+app.post('/delivery', async(request, response) => {
+  let data = request.body.param;
+  let result = await db.connection('ordersql', 'deliveryInsert', data);
+  response.send(result);
+});
 
 //---------------------
 //주문전체조회
