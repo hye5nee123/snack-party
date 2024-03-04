@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const db = require('../db.js');
 const sql = require('../db/sql.js');
-const url = require('url')
+const url = require('url');
 
 // 전체조회
 app.get('/', async (req, res) => {
