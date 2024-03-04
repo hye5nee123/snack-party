@@ -11,7 +11,7 @@ app.get('/', async (req, res) => {
     var queryData = url.parse(req.url, true).query;
     let category = queryData.category;
     let keyword = queryData.keyword;
-    let order = queryData.order;
+    let sort = queryData.sort;
     //키워드가 있을 경우
     if (keyword) {
         where += " AND product_name LIKE ?"
@@ -25,7 +25,7 @@ app.get('/', async (req, res) => {
     }
 
     //페이징이 있을 경우
-    if (order == 'new') {
+    if (sort == 'new') {
         where += " ORDER BY register_date"
     } else {
         where += " ORDER BY product_name"

@@ -25,24 +25,28 @@ import axios from 'axios';
 import ProductCard from '@/components/ProductCard.vue'
 
 export default {
-    props: ['cateProps', 'keyProps'],
+    props: ['cateProps'],
     components: {
         ProductCard
     },
     data() {
         return {
-            productList: []
+            productList: [],
+            keyword: ''
         };
     },
     created() {
-        this.getProductList(this.cateProps, this.keyProps);
+        if(this.$route.query.keyword){
+            this.keyword = this.$route.query.keyword;
+        }
+        this.getProductList(this.cateProps, this.keyword);
     },
     watch: {
         cateProps() {
-            this.getProductList(this.cateProps, this.keyProps);
+            this.getProductList(this.cateProps, this.keyword);
         },
-        keyProps(){
-            this.getProductList(this.cateProps, this.keyProps);
+        keyword (){
+            this.getProductList(this.cateProps, this.keyword);
         }
     },
     methods: {

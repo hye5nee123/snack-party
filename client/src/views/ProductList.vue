@@ -16,7 +16,7 @@
                         <div class="col-xl-3">
                             <div class="input-group w-100 mx-auto d-flex">
                                 <input type="search" class="form-control p-3" placeholder="keywords"
-                                    aria-describedby="search-icon-1" v-model="sproduct">
+                                    aria-describedby="search-icon-1" v-model="skeyword" @keyup.enter="findProduct">
                                 <span id="search-icon-1" class="input-group-text p-3" @click="findProduct"><i class="fa fa-search"></i></span>
                             </div>
                         </div>
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
                         </div>
-                        <CategoryProductList :cateProps="scategory" :keyProps="sproduct" />
+                        <CategoryProductList :cateProps="scategory" />
                     </div>
                 </div>
             </div>
@@ -73,7 +73,7 @@ export default {
         return {
             categoryList: [],
             scategory: '',
-            sproduct: ''
+            skeyword: ''
         };
     },
     created() {
@@ -94,10 +94,10 @@ export default {
             this.scategory = category;
             this.$router.push({path: 'productlist', query: {category: category}})
         },
-        findProduct(e){
-            e.preventDefault();
+        findProduct(){
             console.log(this.sproduct);
-            this.$router.push({path: 'productlist', query:{category: this.scategory, keyword: this.sproduct}})
+                this.$router.push({path: 'productlist', query:{keyword: this.skeyword}})
+                this.skeyword='';
         }
     }
 }
