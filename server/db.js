@@ -13,17 +13,6 @@ const dbInfo = {
 const dbPool = mysql.createPool(dbInfo);
 // const file = process.env.FILE_PATH;
 
-// module.exports = {
-//      connection(alias, param = []) {
-//       return new Promise((resolve, reject) => dbPool.query(alias, param, (error, results) => {
-//         if (error) {         
-//           reject({
-//             error
-//           });
-//         } else resolve(results);
-//       }));
-//     }
-//   };
 module.exports = {
   connection(table, alias, param = []) {
     return new Promise((resolve, reject) => dbPool.query(sql[table][alias], param, (error, results) => {
