@@ -4,6 +4,7 @@ import ProductList from '../views/ProductList.vue';
 import SignUp from '../views/member/SignUp.vue';
 import LoginView from '../views/member/LoginView.vue';
 import Cart from '../views/order/CartView.vue';
+import CheckOut from '../views/order/CheckOutView.vue';
 
 export default {
 
@@ -36,6 +37,11 @@ export default {
       path : 'cart',
       name : 'Cart',
       component : Cart
+    },
+    {
+      path : 'checkout',
+      name : 'CheckOut',
+      component : CheckOut
     }
   ]
 }
