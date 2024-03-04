@@ -1,8 +1,10 @@
 import UserMain from '../views/UserMain.vue';
 import Main from '../views/ShopMain.vue';
 import ProductList from '../views/ProductList.vue';
-import MemberInsert from '../views/MemberInsert.vue';
+import SignUp from '../views/member/SignUp.vue';
+import LoginView from '../views/member/LoginView.vue';
 import Cart from '../views/order/CartView.vue';
+import CheckOut from '../views/order/CheckOutView.vue';
 
 export default {
 
@@ -22,14 +24,24 @@ export default {
       component : ProductList
     },
     {
-      path : 'memberinsert',
-      name : 'MemberInsert',
-      component : MemberInsert
+      path : 'signup',
+      name : 'SignUp',
+      component : SignUp
+    },
+    {
+      path : 'login',
+      name : 'LoginView',
+      component : LoginView
     },
     {
       path : 'cart',
       name : 'Cart',
       component : Cart
+    },
+    {
+      path : 'checkout',
+      name : 'CheckOut',
+      component : CheckOut
     }
   ]
 }

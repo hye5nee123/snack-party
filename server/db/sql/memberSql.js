@@ -42,7 +42,8 @@ WHERE member_code = ?`;
 
 const memberInsert =
 `INSERT INTO member
-SET ?`
+SET member_code = snack.nextval('MEM')
+, ?`
 
 const memberUpdate =
 `UPDATE member

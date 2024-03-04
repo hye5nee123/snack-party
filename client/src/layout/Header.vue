@@ -10,8 +10,8 @@
                             class="text-white">Email@Example.com</a></small>
                 </div>
                 <div class="top-link pe-2">
-                    <a href="#" class="text-white"><small class="text-white mx-2">로그인</small>/</a>
-                    <a href="/MemberInsert" class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
+                    <a href="/login" class="text-white"><small class="text-white mx-2">로그인</small>/</a>
+                    <a href="/signup" class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
                     <a href="#" class="text-white"><small class="text-white ms-2">보유적립금</small></a>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3</span>
+                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3<!--로그인정보필요(장바구니개수)--></span>
                         </a>
                         <a href="#" class="my-auto icon">
                             <i class="fas fa-user fa-2x"></i>
@@ -68,6 +68,13 @@
 
 <script>
 export default {
-    name: "header_part"
+    name: "header_part",
+
 }
 </script>
+
+<style>
+.icon {
+    color: #45595b
+}
+</style>

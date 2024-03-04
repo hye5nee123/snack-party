@@ -655,7 +655,7 @@ progress {
     }
 }
 
-@media(min-width: 768px) {
+@media(min-width: 300px) {
 
     .container-md,
     .container-sm,
