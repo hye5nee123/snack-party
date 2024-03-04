@@ -38,7 +38,7 @@ const memberInfo =
         , quit_date
         , token
 FROM member
-WHERE member_code = ?`;
+WHERE member_id = ?`;
 
 const memberInsert =
 `INSERT INTO member
