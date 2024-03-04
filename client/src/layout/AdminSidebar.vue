@@ -100,14 +100,15 @@
         </li>
       </ul>
     </li>
+
     <!-- Components -->
-    <li class="menu-header small text-uppercase"><span class="menu-header-text">Components</span></li>
+    <li class="menu-header small text-uppercase"><span class="menu-header-text">주문관리</span></li>
     <!-- Cards -->
     <li class="menu-item">
-      <a href="cards-basic.html" class="menu-link">
+      <router-link to="/admin/order" class="menu-link menu-toggle">
         <i class="menu-icon tf-icons bx bx-collection"></i>
-        <div data-i18n="Basic">Cards</div>
-      </a>
+        <div data-i18n="Basic">주문조회</div>
+      </router-link>
     </li>
     <!-- User interface -->
     <li class="menu-item">

@@ -1,14 +1,14 @@
 <template>
-  <h1>NoticeManage.vue</h1>
-  <AdminNoticeList />
+  <h1>OrderManage.vue</h1>
+  <AdminOrderList />
 </template>
 <script>
-import AdminNoticeList from '../../components/AdminNoticeList.vue';
+import AdminOrderList from '../../components/AdminOrderList.vue';
 
 export default{ 
   name:'NoticeManage',
   components:{
-    AdminNoticeList
+    AdminOrderList
   },
   data(){
     return{

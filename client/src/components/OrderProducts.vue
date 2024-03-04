@@ -11,59 +11,38 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr v-for="(checkout, i) in checkOutList" :key="i">
           <th scope="row">
             <div class="d-flex align-items-center mt-2">
-              <img
+              <!-- <img
                 src="img/vegetable-item-2.jpg"
                 class="img-fluid rounded-circle"
                 style="width: 90px; height: 90px"
                 alt=""
-              />
+              /> -->
+              <img src="../assets/apple.jpg" width="80px" />
             </div>
           </th>
-          <td class="py-5">Awesome Brocoli</td>
-          <td class="py-5">$69.00</td>
-          <td class="py-5">2</td>
-          <td class="py-5">$138.00</td>
+          <td class="py-5">{{ checkout.product_name}}</td>
+          <td class="py-5">{{ checkout.product_price}}원</td>
+          <td class="py-5">{{ checkout.cart_cnt}}개</td>
+          <td class="py-5">{{ checkout.product_price * checkout.cart_cnt}}원</td>
         </tr>
-        <tr>
-          <th scope="row">
-            <div class="d-flex align-items-center mt-2">
-              <img
-                src="img/vegetable-item-5.jpg"
-                class="img-fluid rounded-circle"
-                style="width: 90px; height: 90px"
-                alt=""
-              />
-            </div>
-          </th>
-          <td class="py-5">Potatoes</td>
-          <td class="py-5">$69.00</td>
-          <td class="py-5">2</td>
-          <td class="py-5">$138.00</td>
-        </tr>
-        <tr>
-          <th scope="row">
-            <div class="d-flex align-items-center mt-2">
-              <img
-                src="img/vegetable-item-3.png"
-                class="img-fluid rounded-circle"
-                style="width: 90px; height: 90px"
-                alt=""
-              />
-            </div>
-          </th>
-          <td class="py-5">Big Banana</td>
-          <td class="py-5">$69.00</td>
-          <td class="py-5">2</td>
-          <td class="py-5">$138.00</td>
-        </tr>
+
 
         
       </tbody>
     </table>
   </div>
 </template>
+
+<script>
+export default {
+  // props: ['checkOutList'],
+  props: {
+    checkOutList: Array,
+  }
+}
+</script>
 
 
