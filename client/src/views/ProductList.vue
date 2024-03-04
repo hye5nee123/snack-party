@@ -47,17 +47,16 @@
                                             v-for="(category, i) in categoryList">
                                             <li>
                                                 <div class="d-flex justify-content-between fruite-name">
-                                                    <a @click="selectCategory(category.sub_code), getCategoryProductList(category.sub_code)"><i class="fa-solid fa-cookie"></i> {{ category.sub_codename }}</a>
+                                                    <a><i class="fa-solid fa-cookie"></i> {{ category.sub_codename }}</a>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- <CategoryProductList :cateProps="scategory"/> -->
-                        <router-view />
+                        </div>                        
                     </div>
+                    <router-view />
                 </div>
             </div>
         </div>
@@ -90,7 +89,7 @@ export default {
             this.categoryList = result.data;
         },
         getCategoryProductList(category) {
-            this.$router.push({ path: '/productlist/category', query: { 'category': category } });
+            this.$router.push({ path: '/productlist', query: { 'category': category } });
         },
         selectCategory(category){
             this.scategory = category;

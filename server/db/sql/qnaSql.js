@@ -1,5 +1,3 @@
-const qnaList: `SELECT`
-
 
 
 

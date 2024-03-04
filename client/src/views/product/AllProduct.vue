@@ -21,7 +21,6 @@
 </template>
 
 <script>
-// import CategoryProduct from '@/CategoryProduct.vue';
 import ProductCard from '@/components/ProductCard.vue'
 import axios from 'axios';
 
