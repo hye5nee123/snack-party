@@ -1,5 +1,3 @@
-import product from './product.js';
-
 import UserMain from '../views/UserMain.vue';
 import Main from '../views/ShopMain.vue';
 import ProductList from '../views/ProductList.vue';

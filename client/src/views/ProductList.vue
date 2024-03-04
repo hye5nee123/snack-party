@@ -42,7 +42,7 @@
                                             v-for="(category, i) in categoryList">
                                             <li @click="selectCategory(category.sub_code)">
                                                 <div class="d-flex justify-content-between fruite-name">
-                                                    <a @click="selectCategory(category.sub_code), getCategoryProductList(category.sub_code)"><i class="fa-solid fa-cookie"></i> {{ category.sub_codename }}</a>
+                                                    <a><i class="fa-solid fa-cookie"></i> {{ category.sub_codename }}</a>
                                                 </div>
                                             </li>
                                         </ul>
@@ -66,9 +66,9 @@ import axios from 'axios';
 
 export default {
     name: 'ProductList',
-    // components: {
-    //     CategoryProductList
-    // },
+    components: {
+        CategoryProductList
+    },
     data() {
         return {
             categoryList: [],
