@@ -98,8 +98,8 @@
           </tr>
           <tr>
             <td>{{ allProPrice() }}원</td>
-            <td>+ {{ delieveryFee }}원</td>
-            <td>= {{ allProPrice() + delieveryFee }}원</td>
+            <td>+ {{ deliveryFee }}원</td>
+            <td>= {{ allProPrice() + deliveryFee }}원</td>
           </tr>
         </table>
       </div>
@@ -133,11 +133,11 @@ export default {
 
   created() {
     // let searchNo = this.$route.query.userId;
-    this.getCartList('user001');
+    this.getCartList('user002');
   },
 
   computed: {
-    delieveryFee() {
+    deliveryFee() {
       return this.totalPrice >= 30000 ? 0 : 3000;
     },
 
@@ -208,7 +208,8 @@ export default {
     },
     
     goToCheckOut() {
-      this.$router.push({path:'/checkout', query: {carts: JSON.stringify(this.selectList)}})
+      sessionStorage.setItem("carts", JSON.stringify(this.selectList))
+      this.$router.push({path:'/checkout'})
     }
   },
 

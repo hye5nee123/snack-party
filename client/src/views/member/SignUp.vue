@@ -78,7 +78,10 @@
                       </div>
                       <div class="col-md-12 col-lg-6">
                           <div class="form-item w-100"><br><br>
-                              <button type="button" class="btn border-secondary px-4 text-primary" @click="openPostcode()">우편번호 검색</button>
+                            <div>
+                                <OpenPostcode @postcode="getCode" />
+                            </div>
+                            <!-- <button type="button" class="btn border-secondary px-4 text-primary" @click="openPostcode()">우편번호 검색</button> -->
                           </div>
                       </div>
                   </div>
@@ -115,6 +118,7 @@
 
 <script>
 import axios from 'axios';
+import OpenPostcode from '../../components/OpenPostcode.vue';
 
 export default {
     name: 'SignUp',
@@ -137,11 +141,15 @@ export default {
                 quit_date : null,
                 token : ''
             },
-            memberList : []
+            memberList : [],
+            check : false
         };
     },
     created() {
         this.getMemberList();
+    },
+    components : {
+        OpenPostcode
     },
     methods : {
         async memberInsert() {
@@ -170,6 +178,7 @@ export default {
             let info = result.data.affectedRows;
             if(info > 0) {
                 alert('회원가입이 완료되었습니다.');
+                this.$router.push({path : '/'})
             }
         },
         validation() {
@@ -217,22 +226,24 @@ export default {
                 alert('비밀번호가 일치하지 않습니다.');
                 return false;
             }
-            if(!this.checkID()) {
+            if(!this.check) {
                 alert('아이디 중복확인을 해주세요.');
                 return false;
             }
 
-            
-    
             return true;
         },
-        openPostcode() {
-            new window.daum.Postcode({
-                oncomplete : (data) => {
-                    this.memberInfo.postcode = data.zonecode;
-                    this.memberInfo.address = data.roadAddress;
-                }
-            }).open();
+        // openPostcode() {
+        //     new window.daum.Postcode({
+        //         oncomplete : (data) => {
+        //             this.memberInfo.postcode = data.zonecode;
+        //             this.memberInfo.address = data.roadAddress;
+        //         }
+        //     }).open();
+        // },
+        getCode(zonecode, roadAddress) {
+            this.memberInfo.postcode = zonecode;
+            this.memberInfo.address = roadAddress;
         },
         async getMemberList() {
             let result = await axios.get('/api/member')
@@ -251,6 +262,7 @@ export default {
                     }
                 }
                 alert('사용 가능한 아이디입니다.');
+                this.check = true;
                 return true;
             }
         }
