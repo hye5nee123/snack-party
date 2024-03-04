@@ -1,6 +1,7 @@
 require("dotenv").config({ path: "./db/db.env" });
 const express = require("express");
 const app = express();
+const cors = require('cors'); //결제api초기설정
 
 // const adminRouter = require('./app/adminApp.js');
 // const inquiryRouter = require('./app/inquiryApp.js');
@@ -17,6 +18,17 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
+
+
+//CORS 허용
+app.use(cors({ 
+  origin(origin, callback) {
+    callback(null, true)
+  },
+  credentials : true 
+}));
+
+
 
 app.listen(3000, () => {
   console.log("Server started. port 3000.");
