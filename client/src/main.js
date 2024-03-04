@@ -11,6 +11,7 @@ const app = createApp(App);
 app.use(router);
 app.use(store);
 app.mixin(mixins);
+app.use(store);
 app.mount("#app");
 
 // client 전역변수 선언
