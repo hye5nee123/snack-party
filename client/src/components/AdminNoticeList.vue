@@ -37,17 +37,14 @@ export default{
       noticeList : []
     };
   },
-  setup(){},
   created(){
     this.getNoticeList();
   },
-  mounted(){},
-  unmounted(){},
   methods:{
     async getNoticeList() {
         let result = await axios.get('/api/notice')
                                 .catch(err => console.log(err));
-        console.log(result);
+        console.log('result : ', result);
         let list = result.data;
         this.noticeList = list;
       }
