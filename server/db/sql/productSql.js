@@ -1,15 +1,20 @@
 // productSql.js 
 
 const productList =
-`SELECT product_code
-      , category
-      , product_name
-      , product_price
-      , stock_cnt
-      , register_date
-      , product_display
-   FROM product
-  ORDER BY 1`;
+`SELECT p.product_code
+, p.category
+, p.product_name
+, p.product_price
+, p.stock_cnt
+, p.register_date
+, p.product_display
+, f.save_name
+, f.extension
+, f.thumbnail
+, f.path
+FROM product p 
+LEFT OUTER JOIN file f
+ON p.product_code = f.board_code `;
 
 const productInfo =
 `SELECT product_code
@@ -31,27 +36,9 @@ const productUpdate =
     SET ?
   WHERE product_code = ?`;
 
-const categoryProductList =
-`SELECT p.product_code
-      , p.category
-      , p.product_name
-      , p.product_price
-      , p.stock_cnt
-      , p.register_date
-      , p.product_display
-      , f.save_name
-      , f.extension
-      , f.thumbnail
-      , f.path
-   FROM product p LEFT OUTER 
-   JOIN file f
-     ON p.product_code = f.board_code
-  WHERE category = ?`;
-
 module.exports = {
     productList,
     productInfo,
     productInsert,
     productUpdate,
-    categoryProductList
 }

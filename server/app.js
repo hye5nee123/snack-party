@@ -10,6 +10,7 @@ const noticeRouter = require('./app/noticeApp.js');
 const orderRouter = require('./app/orderApp.js');
 const productRouter = require('./app/productApp.js');
 const reviewRouter = require('./app/reviewApp.js');
+const commonRouter = require('./app/commonApp.js');
 
 app.use(
   express.json({
@@ -41,3 +42,4 @@ app.use('/product', productRouter);
 app.use('/notice', noticeRouter);
 app.use('/order', orderRouter);
 app.use('/review', reviewRouter);
+app.use('/common', commonRouter);

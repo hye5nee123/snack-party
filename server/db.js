@@ -14,15 +14,15 @@ const dbPool = mysql.createPool(dbInfo);
 // const file = process.env.FILE_PATH;
 
 module.exports = {
-  connection(table, alias, param = []) {
-    return new Promise((resolve, reject) => dbPool.query(sql[table][alias], param, (error, results) => {
+  connection(table, alias, param = [], where="") {
+    return new Promise((resolve, reject) => dbPool.query(sql[table][alias] + where, param, (error, results) => {
       if (error) {         
         reject({
           error
         });
       } else { 
       resolve(results);
-      console.log(results)
+     console.log(results)
     }
     }));
   }

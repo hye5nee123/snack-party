@@ -2,12 +2,12 @@
     <div class="col-lg-9">
         <div class="row g-4 justify-content-center">
             <div class="col-md-6 col-lg-6 col-xl-4" :key="i" v-for="(product, i) in productList">
-                <ProductCard :productInfo="product" />
+                <ProductCard />
             </div>
         </div>
         <div class="col-12">
             <div class="pagination d-flex justify-content-center mt-5">
-                <a href="#" class="rounded">&laquo;</a>
+                <a class="rounded">&laquo;</a>
                 <a href="#" class="active rounded">1</a>
                 <a href="#" class="rounded">2</a>
                 <a href="#" class="rounded">3</a>
@@ -21,44 +21,42 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import CategoryProduct from '@/CategoryProduct.vue';
 import ProductCard from '@/components/ProductCard.vue'
+import axios from 'axios';
 
 export default {
-    props: ['cateProps', 'keyProps'],
+    props: ['cateProps'],
     components: {
         ProductCard
     },
     data() {
         return {
-            productList: []
+            productList: [],
         };
     },
     created() {
-        this.getProductList(this.cateProps, this.keyProps);
+        // let category = this.$route.query.category;
+        this.getProductList(this.cateProps);
     },
     watch: {
         cateProps() {
-            this.getProductList(this.cateProps, this.keyProps);
-        },
-        keyProps(){
-            this.getProductList(this.cateProps, this.keyProps);
+            this.getProductList(this.cateProps);
         }
     },
     methods: {
-        async getProductList(scate, skeyword) {
-            let param = '';
-            if (scate != '') {
-                param = `?category=${scate}`;
+        async getProductList(scate) {
+            if (scate == '') {
+                let result = await axios.get(`/api/product/`)
+                    .catch(err => console.log(err));
+                this.productList = result.data;
             }
-            if(skeyword != ''){
-                param += `&keyword=${skeyword}`;
+            else {
+                let result = await axios.get(`/api/product/category/${scate}`)
+                    .catch(err => console.log(err));
+                this.productList = result.data;
             }
-            let result = await axios.get(`/api/product${param}`)
-                .catch(err => console.log(err));
-            this.productList = result.data;
-        }
+        },
     }
 }
-
 </script>

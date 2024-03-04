@@ -2,11 +2,6 @@
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
         <h1 class="text-center text-white display-6">Shop</h1>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="/main">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Shop</li>
-        </ol>
     </div>
     <!-- Single Page Header End -->
 
@@ -21,8 +16,8 @@
                         <div class="col-xl-3">
                             <div class="input-group w-100 mx-auto d-flex">
                                 <input type="search" class="form-control p-3" placeholder="keywords"
-                                    aria-describedby="search-icon-1">
-                                <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                                    aria-describedby="search-icon-1" v-model="sproduct">
+                                <span id="search-icon-1" class="input-group-text p-3" @click="findProduct"><i class="fa fa-search"></i></span>
                             </div>
                         </div>
                         <div class="col-6"></div>
@@ -45,7 +40,7 @@
                                         <h4>카테고리</h4>
                                         <ul class="list-unstyled fruite-categorie" :key="i"
                                             v-for="(category, i) in categoryList">
-                                            <li @click="getCategoryProductList(category.sub_code)">
+                                            <li @click="selectCategory(category.sub_code)">
                                                 <div class="d-flex justify-content-between fruite-name">
                                                     <a><i class="fa-solid fa-cookie"></i> {{ category.sub_codename }}</a>
                                                 </div>
@@ -55,7 +50,7 @@
                                 </div>
                             </div>
                         </div>
-                        <CategoryProductList />
+                        <CategoryProductList :cateProps="scategory" :keyProps="sproduct" />
                     </div>
                 </div>
             </div>
@@ -71,15 +66,23 @@ import axios from 'axios';
 
 export default {
     name: 'ProductList',
-    components: { CategoryProductList },
+    components: {
+        CategoryProductList
+    },
     data() {
         return {
             categoryList: [],
-            
+            scategory: '',
+            sproduct: ''
         };
     },
     created() {
         this.getCategoryList();
+        if(this.$route.query.category)
+            this.scategory = this.$route.query.category;
+    },
+    watch : {
+
     },
     methods: {
         async getCategoryList() {
@@ -87,8 +90,14 @@ export default {
                 .catch(err => console.log(err));
             this.categoryList = result.data;
         },
-        getCategoryProductList(category) {
-            this.$router.push({ path: '/productlist', query: { 'category': category } });
+        selectCategory(category){
+            this.scategory = category;
+            this.$router.push({path: 'productlist', query: {category: category}})
+        },
+        findProduct(e){
+            e.preventDefault();
+            console.log(this.sproduct);
+            this.$router.push({path: 'productlist', query:{category: this.scategory, keyword: this.sproduct}})
         }
     }
 }
