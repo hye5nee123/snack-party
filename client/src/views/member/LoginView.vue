@@ -31,7 +31,7 @@
                     name="email-username"
                     placeholder="Enter your email or username"
                     autofocus
-                    v-model="memberInfo.id"
+                    v-model="id"
                   />
                 </div>
                 <div class="mb-3 form-password-toggle">
@@ -49,7 +49,7 @@
                       name="password"
                       placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                       aria-describedby="password"
-                      v-model="memberInfo.pw"
+                      v-model="pw"
                     />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
@@ -94,48 +94,52 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      memberInfo : {
         id : '',
-        pw : '',
-        pw_confirm : '',
-        name : '',
-        phone : '',
-        email : '',
-        birth : null,
-        gender : '',
-        postcode : '',
-        type : 'b01',
-        address : '',
-        address_detail : '',
-        status : 'c01',
-        quit_date : null,
-        token : ''
-      }
+        pw : ''
     }
   },
   methods : {
     async memberLogin() {
       if(!this.validation()) return;
 
-      let result = await axios.get('/api/member/' + this.memberInfo.id)
+      let result = await axios.get('/api/member/' + this.id)
                     .catch(err => console.log(err));
-      
-      let uid = result.data.member_id;
-      let upw = result.data.pw;
+                       
+      let data = {
+        member_code : result.data.member_code,
+        member_id : result.data.member_id,
+        pw : result.data.pw,
+        member_name : result.data.member_name,
+        member_phone : result.data.member_phone,
+        member_email : result.data.member_email,
+        birthday : result.data.birthday,
+        gender : result.data.gender,
+        postcode : result.data.postcode,
+        member_type : result.data.member_type,
+        join_date : result.data.join_date,
+        address : result.data.address,
+        address_detail : result.data.address_detail,
+        member_status : result.data.member_status,
+        quit_date : result.data.quit_date,
+        token : result.data.token
+      }                    
 
-      if(uid == this.memberInfo.id && upw == this.memberInfo.pw) {
+      if(data.member_id == this.id && data.pw == this.pw) {
         alert('로그인 되었습니다.');
+
+        this.$store.commit('setLoginStatus', true);
+        console.log(this.$store.state.memberStore.loginStatus);
         this.$router.push({path : '/'})
       } else {
         alert('아이디 또는 비밀번호가 일치하지 않습니다.')
       }
     },
     validation() {
-      if(this.memberInfo.id == '') {
+      if(this.id == '') {
         alert('아이디를 입력해주세요.');
         return false;
       }
-      if(this.memberInfo.pw == '') {
+      if(this.pw == '') {
         alert('비밀번호를 입력해주세요.');
         return false;
       }
