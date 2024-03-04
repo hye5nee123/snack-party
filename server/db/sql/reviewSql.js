@@ -21,7 +21,8 @@ WHERE member_code = ?`;
 
 //리뷰 insert.
 const reviewInsert = `INSERT INTO review
-  SET ?`;
+SET review_code = snack.nextval('REV')
+, ?`;
 
 //리뷰 delete.
 const reviewDelete = `DELETE FROM review WHERE review_code = ?`;

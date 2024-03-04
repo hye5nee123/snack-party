@@ -2,15 +2,13 @@
 <div class="container">
     <div id="show">
         <div class="page-title">
-        <h3 class="text-center">review</h3>
+        <h3 class="text-center">상품문의하기</h3>
         </div>
 
         <table id="writetable">
         <tr>
-            <td class="title"><p>작성자</p></td>
-            <td>
-            <!-- <span>{{ member_code}}</span> -->
-            </td>
+            <td/>img
+            <td class="title"><p>{{product_name}}</p></td>
         </tr>
         <tr>
             <td class="title"><p>제목</p></td>

@@ -20,3 +20,8 @@ export default{
     methods:{}
 }
 </script>
+<style scoped>
+    .content-wrapper {
+        height: 200px
+    }
+</style>
