@@ -7,16 +7,16 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>공지코드</th>
-              <th>제목</th>
-              <th>작성일</th>
+              <th>주문코드</th>
+              <th>회원코드</th>
+              <th>주문일자</th>
             </tr>
           </thead>
           <tbody class="table-border-bottom-0">          
-            <tr :key="i" v-for="(notice, i) in noticeList">
-              <td>{{ notice.notice_code }}</td>
-              <td>{{ notice.notice_title }}</td>
-              <td>{{ notice.notice_date }}</td>
+            <tr :key="i" v-for="(order, i) in orderList">
+              <td>{{ order.order_code }}</td>
+              <td>{{ order.member_code }}</td>
+              <td>{{ order.order_date }}</td>
             </tr>
             
           </tbody>
@@ -34,19 +34,19 @@ export default{
   components:{},
   data(){
     return{
-      noticeList : []
+      orderList : []
     };
   },
   created(){
-    this.getNoticeList();
+    this.getOrderList();
   },
   methods:{
-    async getNoticeList() {
-        let result = await axios.get('/api/notice')
+    async getOrderList() {
+        let result = await axios.get('/api/order')
                                 .catch(err => console.log(err));
         console.log('result : ', result);
         let list = result.data;
-        this.noticeList = list;
+        this.orderList = list;
       }
   }
 }

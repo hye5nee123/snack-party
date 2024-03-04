@@ -65,6 +65,12 @@ app.post('/delivery', async(request, response) => {
 });
 
 //---------------------
+//주문전체조회
+app.get('/', async(request, response) => {
+  let result = await db.connection('ordersql', 'orderListAll');
+  response.send(result);
+});
+
 //주문조회
 app.get('/:ocode', async(request, response) => {
   let data = request.params.ocode;
