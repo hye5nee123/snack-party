@@ -1,5 +1,6 @@
 <template>
   <h1>NoticeManage.vue</h1>
+  <h1>$store : {{ $store.state.exampleStore.name }}</h1>
   <AdminNoticeList />
 </template>
 <script>
@@ -12,13 +13,15 @@ export default{
   },
   data(){
     return{
-      sampleData:''
     };
   },
   setup(){},
-  created(){},
+  created(){
+
+  },
   mounted(){},
   unmounted(){},
-  methods:{}
+  methods:{
+  }
 }
 </script>
