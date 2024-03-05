@@ -37,4 +37,11 @@ app.delete("/:member_code", async(request, response) => {
     response.send(result);
 })
 
+// 로그인
+app.post("/:member_id", async(request, response) => {
+    let data = request.params.member_id;
+    let result = (await db.connection('membersql', 'memberLogin', data))[0];
+    response.send(result);
+})
+
 module.exports = app;

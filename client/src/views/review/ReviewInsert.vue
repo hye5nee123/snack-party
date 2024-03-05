@@ -9,6 +9,7 @@
         <tr>
             <td class="title"><p>작성자</p></td>
             <td>
+                
             <!-- <span>{{ member_code}}</span> -->
             </td>
         </tr>

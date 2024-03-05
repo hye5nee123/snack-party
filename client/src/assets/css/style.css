@@ -494,3 +494,28 @@
     line-height: 35px;
 }
 /*** Footer End ***/
+
+/* 효진 make */
+.fruite-img{
+    height: 250px;
+    text-align: center;
+    padding: 10px;
+}
+
+.imghw{
+    height: 230px !important;
+    width: auto;
+}
+
+.h80{
+    height: 80px;
+}
+
+.isSelected{
+    color: var(--bs-secondary) !important;
+}
+
+.imgmw{
+    max-width: 454px !important;
+    margin: 0 auto;
+}

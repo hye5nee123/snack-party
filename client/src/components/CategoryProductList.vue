@@ -1,6 +1,6 @@
 <template>
     <div class="col-lg-9">
-        <div class="row g-4 justify-content-center">
+        <div class="row g-4">
             <div class="col-md-6 col-lg-6 col-xl-4" :key="i" v-for="(product, i) in productList">
                 <ProductCard :productInfo="product" />
             </div>
@@ -25,35 +25,33 @@ import axios from 'axios';
 import ProductCard from '@/components/ProductCard.vue'
 
 export default {
-    props: ['cateProps', 'keyProps'],
+    props: ['cateProps', 'keyProps', 'sortProps'],
     components: {
         ProductCard
     },
     data() {
         return {
-            productList: []
+            productList: [],
         };
     },
     created() {
-        this.getProductList(this.cateProps, this.keyProps);
+        this.getProductList();
     },
     watch: {
         cateProps() {
-            this.getProductList(this.cateProps, this.keyProps);
+            this.getProductList();
         },
-        keyProps(){
-            this.getProductList(this.cateProps, this.keyProps);
+        keyProps() {
+            this.getProductList();
+        },
+        sortProps(){
+            this.getProductList();
         }
     },
     methods: {
-        async getProductList(scate, skeyword) {
+        async getProductList() {
             let param = '';
-            if (scate != '') {
-                param = `?category=${scate}`;
-            }
-            if(skeyword != ''){
-                param += `&keyword=${skeyword}`;
-            }
+            param = `?category=${this.cateProps}&keyword=${this.keyProps}&sort=${this.sortProps}`;
             let result = await axios.get(`/api/product${param}`)
                 .catch(err => console.log(err));
             this.productList = result.data;
