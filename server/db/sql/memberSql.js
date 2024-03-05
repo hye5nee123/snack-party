@@ -54,10 +54,31 @@ const memberDelete =
 `DELETE FROM member
 WHERE member_code = ?`
 
+const memberLogin = 
+`SELECT member_code
+        , member_id
+        , pw
+        , member_name
+        , member_phone
+        , member_email
+        , birthday
+        , gender
+        , postcode
+        , member_type
+        , join_date
+        , address
+        , address_detail
+        , member_status
+        , quit_date
+        , token
+FROM member
+WHERE member_id = ?`;
+
 module.exports = {
     memberList,
     memberInfo,
     memberInsert,
     memberUpdate,
-    memberDelete
+    memberDelete,
+    memberLogin
 }

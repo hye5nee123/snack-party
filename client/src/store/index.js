@@ -1,13 +1,18 @@
 import { createStore } from 'vuex'
 import exampleStore from './modules/exampleStore'
-import loginStore from './modules/exampleStore'
+import memberStore from './modules/memberStore'
+import persistedstate from 'vuex-persistedstate'
 
-
-const store = createStore({
+const store = createStore ({
   modules : {
     exampleStore,
-    loginStore
+    memberStore
   },
+  plugins : [
+    persistedstate ({
+        paths : ['memberStore']
+    })
+  ]
 })
 
 export default store;
