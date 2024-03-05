@@ -1,15 +1,5 @@
 import UserMain from "../views/UserMain.vue";
 import Main from "../views/ShopMain.vue";
-import ProductList from "../views/ProductList.vue";
-import SignUp from "../views/member/SignUp.vue";
-import LoginView from "../views/member/LoginView.vue";
-import Cart from "../views/order/CartView.vue";
-import CheckOut from "../views/order/CheckOutView.vue";
-import CheckOutTest from "../views/order/CheckOutTestView.vue";
-import ReviewList from "../views/review/ReviewList.vue";
-import ReviewInsert from "../views/review/ReviewInsert.vue";
-import PInquiryInsert from "../views/inquiry/PInquiryInsert.vue";
-import PInquiryList from "../views/inquiry/PInquiryList.vue";
 
 export default {
   path: "/",
@@ -25,52 +15,57 @@ export default {
     {
       path: "productlist",
       name: "ProductList",
-      component: ProductList,
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ "../views/product/ProductList.vue"),
+    },
+    {
+      path: "productinfo",
+      name: "ProductInfo",
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ "../views/product/ProductInfo.vue"),
     },
     {
       path: "signup",
       name: "SignUp",
-      component: SignUp,
+      component: import(/* webpackChunkName: "signup", webpackPrefetch: false */ "../views/member/SignUp.vue"),
     },
     {
       path: "login",
       name: "LoginView",
-      component: LoginView,
+      component: import(/* webpackChunkName: "loginview", webpackPrefetch: false */ "../views/member/LoginView.vue"),
     },
     {
       path: "cart",
       name: "Cart",
-      component: Cart,
+      component: import(/* webpackChunkName: "cart", webpackPrefetch: false */ "../views/order/CartView.vue"),
     },
     {
       path: "checkout",
       name: "CheckOut",
-      component: CheckOut,
+      component: import(/* webpackChunkName: "checkout", webpackPrefetch: false */ "../views/order/CheckOutView.vue"),
     },
     {
       path: "reviewlist",
       name: "ReviewList",
-      component: ReviewList,
+      component: import(/* webpackChunkName: "reviewlist", webpackPrefetch: false */ "../views/review/ReviewList.vue"),
     },
     {
       path: "reviewinsert",
       name: "ReviewInsert",
-      component: ReviewInsert,
+      component: import(/* webpackChunkName: "reviewinsert", webpackPrefetch: false */ "../views/review/ReviewInsert.vue"),
     },
     {
       path: "pinquiryinsert",
       name: "PInquiryInsert",
-      component: PInquiryInsert,
+      component: import(/* webpackChunkName: "pinquiryinsert", webpackPrefetch: false */ "../views/inquiry/PInquiryInsert.vue")
     },
     {
       path: "pinquirylist",
       name: "PInquiryList",
-      component: PInquiryList,
+      component: import(/* webpackChunkName: "pinquirylist", webpackPrefetch: false */ "../views/inquiry/PInquiryList.vue"),
     },
     {
       path : 'checkouttest',
       name : 'CheckOutTest',
-      component : CheckOutTest
+      component : import(/* webpackChunkName: "checkouttest", webpackPrefetch: false */ "../views/order/CheckOutTestView.vue")
     }
   ],
 };
