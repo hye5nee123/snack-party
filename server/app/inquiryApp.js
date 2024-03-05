@@ -1,8 +1,15 @@
 const express = require("express");
 const app = express();
 const db = require("../db.js");
+/*1:1*/
 
-//상품
+//자기 문의 조회(회원)
+app.get("/:member_code", async (request, response) => {
+  let data = request.params.member_code;
+  let result = await db.connection("inquirysql", "sinquiryList", data);
+  response.send(result);
+})
+/*상품*/
 
 //상품 건별 조회.
 app.get("/:product_code", async (request, response) => {

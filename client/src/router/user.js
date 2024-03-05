@@ -10,6 +10,7 @@ import ReviewList from "../views/review/ReviewList.vue";
 import ReviewInsert from "../views/review/ReviewInsert.vue";
 import PInquiryInsert from "../views/inquiry/PInquiryInsert.vue";
 import PInquiryList from "../views/inquiry/PInquiryList.vue";
+import InquiryList from "../views/inquiry/InquiryList.vue";
 
 export default {
   path: "/",
@@ -71,6 +72,11 @@ export default {
       path : 'checkouttest',
       name : 'CheckOutTest',
       component : CheckOutTest
+    },
+    {
+      path : 'inquirylist',
+      name : 'InquiryList',
+      component : InquiryList
     }
   ],
 };
