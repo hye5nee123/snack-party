@@ -4,9 +4,7 @@ import AdminNoticeList from '../components/AdminNoticeList.vue';
 import OrderManage from '../views/admin/OrderManage.vue';
 import AdminOrderList from '../components/AdminOrderList.vue';
 
-
 export default {
-
   path: '/admin',
   name: 'admin',
   component: AdminMain,
@@ -39,5 +37,4 @@ export default {
       ]
     }
   ]
-
 }
