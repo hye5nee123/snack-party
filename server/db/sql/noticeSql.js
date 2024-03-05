@@ -1,3 +1,7 @@
+const noticeListCount = 
+`SELECT COUNT(*) count
+FROM notice`
+
 const noticeList = 
 `SELECT notice_code
         , notice_title
@@ -5,6 +9,15 @@ const noticeList =
         , notice_date
 FROM    notice
 ORDER BY 1`;
+
+const noticeListPage = 
+`SELECT notice_code
+        , notice_title
+        , notice_content
+        , notice_date
+FROM    notice
+ORDER BY 1
+LIMIT 5 OFFSET ?`;
 
 const noticeInfo = 
 `SELECT notice_code
@@ -25,7 +38,9 @@ WHERE notice_code = ?`
 
 module.exports = {
   noticeList,
+  noticeListPage,
   noticeInfo,
   noticeInsert,
-  noticeDelete
+  noticeDelete,
+  noticeListCount
 }
