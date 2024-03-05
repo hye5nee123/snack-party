@@ -1,11 +1,14 @@
 <template>
   <div class="rounded position-relative fruite-item border border-secondary">
     <div class="fruite-img">
-      <img :src="getImgUrl(productInfo.path)" class="img-fluid w-100 rounded-top" alt="" />
+      <img :src="getImgUrl(productInfo.path)" class="img-fluid rounded-top imghw" alt=""
+        @click="gotodetail(productInfo.product_code)" />
     </div>
     <div class="p-4 border-top-0 rounded-bottom">
-      <h4>{{ productInfo.product_name }}</h4>
-      <p class="text-dark fs-5 fw-bold mb-0">{{ productInfo.product_price }}원</p>
+      <div class="h80" @click="gotodetail(productInfo.product_code)">
+        <h4>{{ productInfo.product_name }}</h4>
+      </div>
+      <p class="text-dark fs-5 fw-bold mb-0">{{ getCurrencyFormat(productInfo.product_price) }}원</p>
       <br>
       <!--  -->
       <div class="d-flex justify-content-between flex-lg-wrap">
@@ -50,6 +53,12 @@ export default {
     },
     getImgUrl(path) {
       return new URL(this.url + '/common/download?path=' + path);
+    },
+    getCurrencyFormat(value) {
+      return this.$currencyFormat(value);
+    },
+    gotodetail(pcode) {
+      this.$router.push({ name: 'ProductInfo', query: { 'product_code': pcode } });
     }
   }
 };
