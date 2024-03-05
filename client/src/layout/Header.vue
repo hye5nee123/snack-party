@@ -10,8 +10,10 @@
                             class="text-white">Email@Example.com</a></small>
                 </div>
                 <div class="top-link pe-2">
-                    <a href="/login" class="text-white"><small class="text-white mx-2">로그인</small>/</a>
-                    <a href="/signup" class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
+                    <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white"><small class="text-white mx-2">{{ this.$store.state.memberStore.memberInfo.member_name }}님</small>/</a>
+                    <a href="/login" v-else class="text-white"><small class="text-white mx-2">로그인</small>/</a>
+                    <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white" @click="memberLoginout()"><small class="text-white mx-2">로그아웃</small>/</a>
+                    <a href="/signup" v-else class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
                     <a href="#" class="text-white"><small class="text-white ms-2">보유적립금</small></a>
                 </div>
             </div>
@@ -27,20 +29,20 @@
                 </button>
                 <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                     <div class="navbar-nav mx-auto">
-                        <a href="/main" class="nav-item nav-link active">메인화면</a>
-                        <a href="/productlist" class="nav-item nav-link">전체상품</a>
+                        <router-link to="/main" class="nav-item nav-link active">메인화면</router-link>
+                        <router-link to="/productlist" class="nav-item nav-link">전체상품</router-link>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">카테고리별 상품</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <a href="/productlist?category=e01" class="nav-item nav-link">과자</a>
-                                <a href="/productlist?category=e02" class="nav-item nav-link">비스킷/크래커</a>
-                                <a href="/productlist?category=e03" class="nav-item nav-link">쿠키/파이</a>
-                                <a href="/productlist?category=e04" class="nav-item nav-link">유기농/전통과자</a>
-                                <a href="/productlist?category=e05" class="nav-item nav-link">초콜릿</a>
-                                <a href="/productlist?category=e06" class="nav-item nav-link">젤리/캐러멜</a>
+                                <router-link to="/productlist?category=e01" class="nav-item nav-link">과자</router-link>
+                                <router-link to="/productlist?category=e02" class="nav-item nav-link">비스킷/크래커</router-link>
+                                <router-link to="/productlist?category=e03" class="nav-item nav-link">쿠키/파이</router-link>
+                                <router-link to="/productlist?category=e04" class="nav-item nav-link">유기농/전통과자</router-link>
+                                <router-link to="/productlist?category=e05" class="nav-item nav-link">초콜릿</router-link>
+                                <router-link to="/productlist?category=e06" class="nav-item nav-link">젤리/캐러멜</router-link>
                             </div>
                         </div>
-                        <a href="shop-detail.html" class="nav-item nav-link">상품상세</a>
+                        <router-link to="/productinfo" class="nav-item nav-link">상품상세</router-link>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -76,6 +78,17 @@
 <script>
 export default {
     name: "header_part",
+    methods : {
+        async memberLoginout() {
+            this.$store.commit('clearStore');
+            alert('로그아웃 되었습니다.');
+        }
+    },
+    computed: {
+    user() {
+      return this.$store.state.loginStore.user;
+    }
+  },
 
 }
 </script>
