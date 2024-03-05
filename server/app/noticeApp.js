@@ -10,9 +10,11 @@ app.get('/list', async (request, response) => {
 });
 
 //전체조회(pagination)
-app.get('/list/:no', async (request, response) => {
-  let data = request.params.no;
-  data =  Number(data);
+app.get('/list/:limit/:offset', async (request, response) => {
+  let limit = Number(request.params.limit);
+  let offset = Number(request.params.offset);
+
+  let data = [limit, offset]
   let result = await db.connection('noticesql', 'noticeListPage', data)
                        .catch(err => console.log(err));
   response.send(result);
