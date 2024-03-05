@@ -38,6 +38,11 @@ export default {
       component: LoginView,
     },
     {
+      path: "login",
+      name: "LoginView",
+      component: LoginView,
+    },
+    {
       path: "cart",
       name: "Cart",
       component: Cart,

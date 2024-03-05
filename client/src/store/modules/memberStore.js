@@ -1,5 +1,3 @@
-import persistedstate from 'vuex-persistedstate'
-
 const memberStore = {
     state() {
         return {
@@ -30,13 +28,12 @@ const memberStore = {
         },
         setLoginStatus(state, data) {
             state.loginStatus = data;
+        },
+        clearStore(state) {
+            state.memberInfo = {};
+            state.loginStatus = false;
         }
-    },
-    Plugin : [
-        persistedstate ({
-            paths : ['memberStore']
-        })
-    ]
+    }
 };
 
 export default memberStore;

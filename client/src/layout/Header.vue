@@ -10,8 +10,10 @@
                             class="text-white">Email@Example.com</a></small>
                 </div>
                 <div class="top-link pe-2">
-                    <a href="/login" class="text-white"><small class="text-white mx-2">로그인</small>/</a>
-                    <a href="/signup" class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
+                    <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white"><small class="text-white mx-2">{{ this.$store.state.memberStore.memberInfo.member_name }}님</small>/</a>
+                    <a href="/login" v-else class="text-white"><small class="text-white mx-2">로그인</small>/</a>
+                    <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white" @click="memberLoginout()"><small class="text-white mx-2">로그아웃</small>/</a>
+                    <a href="/signup" v-else class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
                     <a href="#" class="text-white"><small class="text-white ms-2">보유적립금</small></a>
                 </div>
             </div>
@@ -76,7 +78,12 @@
 <script>
 export default {
     name: "header_part",
-
+    methods : {
+        async memberLoginout() {
+            this.$store.commit('clearStore');
+            alert('로그아웃 되었습니다.');
+        }
+    }
 }
 </script>
 

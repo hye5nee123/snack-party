@@ -63,6 +63,7 @@
                 <div class="mb-3">
                   <button class="btn btn-primary2 d-grid w-100" type="submit" @click="memberLogin()">로그인</button>
                 </div>
+                <KakaoLogin />
               <!-- </form> -->
 
               <p class="text-center form-label">
@@ -90,6 +91,7 @@
 
 <script>
 import axios from 'axios';
+import KakaoLogin from '../../components/KakaoLogin.vue';
 
 export default {
   data() {
@@ -98,11 +100,18 @@ export default {
         pw : ''
     }
   },
+  created() {
+        console.log(this.$store.state.memberStore.loginStatus);
+        console.log(this.$store.state.memberStore.memberInfo);
+    },
+  components : {
+    KakaoLogin
+  },
   methods : {
     async memberLogin() {
       if(!this.validation()) return;
 
-      let result = await axios.get('/api/member/' + this.id)
+      let result = await axios.post('/api/member/' + this.id)
                     .catch(err => console.log(err));
                        
       let data = {
@@ -128,7 +137,9 @@ export default {
         alert('로그인 되었습니다.');
 
         this.$store.commit('setLoginStatus', true);
+        this.$store.commit('setMemberInfo', data);
         console.log(this.$store.state.memberStore.loginStatus);
+        console.log(this.$store.state.memberStore.memberInfo);
         this.$router.push({path : '/'})
       } else {
         alert('아이디 또는 비밀번호가 일치하지 않습니다.')
