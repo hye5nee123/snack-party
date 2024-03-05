@@ -5,6 +5,7 @@ import SignUp from "../views/member/SignUp.vue";
 import LoginView from "../views/member/LoginView.vue";
 import Cart from "../views/order/CartView.vue";
 import CheckOut from "../views/order/CheckOutView.vue";
+import OrderCompleted from "../views/order/OrdCompletedView.vue";
 import CheckOutTest from "../views/order/CheckOutTestView.vue";
 import ReviewList from "../views/review/ReviewList.vue";
 import ReviewInsert from "../views/review/ReviewInsert.vue";
@@ -46,6 +47,11 @@ export default {
       path: "checkout",
       name: "CheckOut",
       component: CheckOut,
+    },
+    {
+      path: "ordcompleted",
+      name: "OrdCompleted",
+      component: OrderCompleted,
     },
     {
       path: "reviewlist",

@@ -80,5 +80,11 @@ export default {
 
       return prefix + currency + String(v) + String(d);
     },
+
+    // 금액 포맷
+    getCurrencyFormat(value) {
+      return this.$currencyFormat(value);
+    },
+
   },
 };

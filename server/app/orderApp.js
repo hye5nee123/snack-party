@@ -45,24 +45,31 @@ app.delete('/carts/:ccode', async(request, response) => {
 
 //주문등록
 app.post('/', async(request, response) => {
-  let data = request.body.param;
-  let result = await db.connection('ordersql', 'orderInsert', data);
+  let order = request.body.param.order;
+  let details = request.body.param.orderDetail;
+  let delivery = request.body.param.deliveryInfo;
+  let result = await db.connection('ordersql', 'orderInsert', order).catch(error => {console.log(error)});
+  
+  for(let i; i < details.length; i++) {
+    details[i].order_code = result.order_code;
+    await db.connection('ordersql', 'detailInsert', details[i]).catch(error => {console.log(error)});
+  }
+  delivery.order_code = result.order_code;
+  await db.connection('ordersql', 'deliveryInsert', delivery).catch(error => {console.log(error)});
   response.send(result);
 });
 
-//주문상세등록
-app.post('/details', async(request, response) => {
-  let data = request.body.param;
-  let result = await db.connection('ordersql', 'detailInsert', data);
-  response.send(result);
-});
+// //주문상세등록
+// app.post('/details', async(request, response) => {
+//   let data = request.body.param;
+//   response.send(result);
+// });
 
-//배송지등록
-app.post('/delivery', async(request, response) => {
-  let data = request.body.param;
-  let result = await db.connection('ordersql', 'deliveryInsert', data);
-  response.send(result);
-});
+// //배송지등록
+// app.post('/delivery', async(request, response) => {
+//   let data = request.body.param;
+//   response.send(result);
+// });
 
 //---------------------
 //주문전체조회
