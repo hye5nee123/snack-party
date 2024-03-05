@@ -149,6 +149,7 @@ export default {
         this.getMemberList();
         console.log(this.$store.state.memberStore.loginStatus);
         console.log(this.$store.state.memberStore.memberInfo);
+        console.log(this.$store.state.memberStore.kakaoInfo);
     },
     components : {
         OpenPostcode
