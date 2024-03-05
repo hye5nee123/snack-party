@@ -17,39 +17,34 @@
       </tbody>
     </div>
 
-    <PaginationTest :ITEM_PER_PAGE="ITEM_PER_PAGE" :PAGE_PER_SECTION="PAGE_PER_SECTION" :TOTAL_ARITCLES="this.listCount"
+    <!-- Pagination 컴포넌트 -->
+    <PaginationTest :ITEM_PER_PAGE="ITEM_PER_PAGE" :PAGE_PER_SECTION="PAGE_PER_SECTION" :TOTAL_ARITCLES="TOTAL_ARITCLES"
       @change-page="onChangePage" />
-    
-    curPage : {{ curPage }}
-    pageData : {{ this.pageData }}
   </div>
 </template>
 
 <script>
+// Pagination 컴포넌트 import
 import PaginationTest from './PaginationTest.vue';
 import axios from 'axios';
 
 export default {
+  // Pagination 컴포넌트 import
   components: { PaginationTest },
   data() {
-    const articles = new Array(111);
-    for (let i = 0; i < articles.length; i++) {
-      articles[i] = `Article ${i + 1}`;
-    }
-
     return {
-      noticeList : [],
-      listCount : 0,
+      noticeList : [],  // limit, offset 적용된 리스트
+      curPage: 1,       // 현재 페이지
+      pageData: 0,      // offset에 전달할 페이징 데이터
 
-      ITEM_PER_PAGE: 5,
-      PAGE_PER_SECTION: 5,
-      curPage: 1,
-      pageData: 0
+      ITEM_PER_PAGE: 5,     // 한 페이지에 출력할 데이터 수
+      PAGE_PER_SECTION: 5,  // 한번에 보여줄 페이지 버튼 수
+      TOTAL_ARITCLES: 0     // 전체 데이터 갯수
     };
   },
   created() {
-    this.getNoticeList();
     this.getListCount();
+    this.getNoticeList(); 
   },
   computed: {
     pageStartIdx() {
@@ -57,22 +52,25 @@ export default {
     }
   },
   methods: {
+    // 페이지네이션 컴포넌트에서 전달되는 emit event
     onChangePage(data) {
       this.curPage = data;
-      this.pageData = (this.curPage - 1) * 5;
+      this.pageData = (this.curPage - 1) * this.ITEM_PER_PAGE;
       this.getNoticeList();
     },
+    // limit, offset, 적용된 데이터 리스트
     async getNoticeList() {
-      let result = await axios.get(`/api/notice/list/${this.pageData}`)
+      let result = await axios.get(`/api/notice/list/${this.ITEM_PER_PAGE}/${this.pageData}`)
         .catch(err => console.log(err));
       console.log('result : ', result)
       this.noticeList = result.data;
     },
+    // 전체 데이터 갯수
     async getListCount() {
       let result = await axios.get('/api/notice/count')
         .catch(err => console.log(err));
       console.log('count : ', result.data[0].count)
-      this.listCount = result.data[0].count;
+      this.TOTAL_ARITCLES = result.data[0].count;
     },
   }
 }

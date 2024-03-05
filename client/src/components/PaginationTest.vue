@@ -15,11 +15,11 @@
     </div>
   </div>
 
-	<p>totalArticles : {{ TOTAL_ARITCLES }}</p>
+	<!-- <p>totalArticles : {{ TOTAL_ARITCLES }}</p>
 	<p>totalPage : {{ totalPage }}</p>
 	<p>leftmostPage : {{ leftmostPage }}</p>
 	<p>ITEM_PER_PAGE : {{ ITEM_PER_PAGE }}</p>
-	<p>PAGE_PER_SECTION : {{ PAGE_PER_SECTION }}</p>
+	<p>PAGE_PER_SECTION : {{ PAGE_PER_SECTION }}</p> -->
 </template>
 
 <script>
