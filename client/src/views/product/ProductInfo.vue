@@ -14,14 +14,13 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="border rounded imgmw">
                                 <a href="#">
-                                    <img src="img/single-item.jpg" class="img-fluid rounded" alt="Image">
+                                    <img :src="getImgUrl(productInfo[0].path)" class="img-fluid rounded" alt="Image">
                                 </a>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <h4 class="fw-bold mb-3">감자깡</h4>
-                            <p class="mb-3">Category: 과자</p>
-                            <h5 class="fw-bold mb-3">1,540원</h5>
+                            <h4 class="fw-bold mb-3">{{ productInfo[0].product_name }}</h4>
+                            <h5 class="fw-bold mb-3">{{ productInfo[0].product_price }}원</h5>
                             <div class="d-flex mb-4">
                                 <i class="fa fa-star text-secondary"></i>
                                 <i class="fa fa-star text-secondary"></i>
@@ -53,22 +52,95 @@
                                 <div class="nav nav-tabs mb-3">
                                     <button class="nav-link active border-white border-bottom-0" type="button"
                                         role="tab" id="nav-about-tab" data-bs-toggle="tab" data-bs-target="#nav-about"
-                                        aria-controls="nav-about" aria-selected="true">Description</button>
+                                        aria-controls="nav-about" aria-selected="true">상품상세정보</button>
                                     <button class="nav-link border-white border-bottom-0" type="button" role="tab"
-                                        id="nav-mission-tab" data-bs-toggle="tab" data-bs-target="#nav-mission"
-                                        aria-controls="nav-mission" aria-selected="false">Reviews</button>
+                                        id="nav-dilret-tab" data-bs-toggle="tab" data-bs-target="#nav-delret"
+                                        aria-controls="nav-about" aria-selected="false">배송/반품 안내</button>
+                                    <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                        id="nav-review-tab" data-bs-toggle="tab" data-bs-target="#nav-review"
+                                        aria-controls="nav-review" aria-selected="false">상품리뷰</button>
+                                    <button class="nav-link border-white border-bottom-0" type="button" role="tab"
+                                        id="nav-inquire-tab" data-bs-toggle="tab" data-bs-target="#nav-inquire"
+                                        aria-controls="nav-inquire" aria-selected="false">상품문의</button>
                                 </div>
                             </nav>
                             <div class="tab-content mb-5">
-                                <div class="tab-pane active" id="nav-about" role="tabpanel"
+                                <div class="tab-pane active tacenter" id="nav-about" role="tabpanel"
                                     aria-labelledby="nav-about-tab">
-                                    <img src="img/single-item.jpg" class="img-fluid rounded" alt="Image">
-                                    <div class="px-2">
-                                    </div>
+                                    <img :src="getImgUrl(productInfo[1].path)" class="img-fluid rounded" alt="Image">
                                 </div>
-                                <div class="tab-pane" id="nav-mission" role="tabpanel"
-                                    aria-labelledby="nav-mission-tab">
-                                    <div class="d-flex">
+                                <div class="tab-pane tacenter" id="nav-delret" role="tabpanel"
+                                    aria-labelledby="nav-delret-tab">
+                                    <table class="table taleft">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="lfont">배송정보</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>배송 방법 : 택배<br>
+                                                    배송 지역 : 전국지역<br>
+                                                    배송 비용 : 3,000원<br>
+                                                    배송 기간 : 3일 ~ 7일<br>
+                                                    배송 안내 : - 산간벽지나 도서지방은 별도의 추가금액을 지불하셔야 하는 경우가 있습니다.<br>
+                                                    고객님께서 주문하신 상품은 입금 확인후 배송해 드립니다. 다만, 상품종류에 따라서 상품의 배송이 다소 지연될 수 있습니다.
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table taleft">
+                                        <thead>
+                                            <tr>
+                                                <th scope="row" class="lfont">유통기한 안내</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>제품별 생산 일자가 상이하여, 주문 시점에 따라 유통기한이 다를 수 있습니다.<br>
+                                                    유통기한이 긴 상품일 경우 잔여 유통기한이 3분의 1이상인 제품으로 출고되고 있으며, 유통기한이 비교적 짧은 제품은 최소
+                                                    1달 이상 남은 제품으로 출고됩니다.<br>
+                                                    자세한 유통기한 문의는 상품문의로 직접 문의주시면 확인 가능합니다.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table taleft">
+                                        <thead>
+                                            <tr>
+                                                <th scope="row" class="lfont">교환 및 반품정보</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1) 교환 및 반품이 가능한 경우</td>
+                                            </tr>
+                                            <tr>
+                                                <td>- 상품을 공급 받으신 날로부터 7일이내.<br>
+                                                    - 공급받으신 상품 및 용역의 내용이 표시.광고 내용과 다르거나 다르게 이행된 경우에는 공급받은 날로부터 3개월 이내, 그
+                                                    사실을 알게 된 날로부터 30일 이내</td>
+                                            </tr>
+                                            <tr>
+                                                <td>2) 교환 및 반품이 불가능한 경우</td>
+                                            </tr>
+                                            <tr>
+                                                <td>- 고객님의 책임 있는 사유로 상품등이 멸실 또는 훼손된 경우. 단, 상품의 내용을 확인하기 위하여 포장 등을 훼손한
+                                                    경우는 제외<br>
+                                                    - 포장을 개봉하였거나 포장이 훼손되어 상품가치가 상실된 경우<br>
+                                                    - 고객님의 사용 또는 일부 소비에 의하여 상품의 가치가 현저히 감소한 경우.<br>
+                                                    - 시간의 경과에 의하여 재판매가 곤란할 정도로 상품등의 가치가 현저히 감소한 경우<br>
+                                                    - 복제가 가능한 상품등의 포장을 훼손한 경우<br>
+                                                    (자세한 내용은 상품문의를 이용해 주시기 바랍니다.)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>※ 고객님의 마음이 바뀌어 교환, 반품을 하실 경우 상품의 왕복 배송 비용은 고객님께서 부담하셔야 합니다.</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
+                                    <p>리뷰 테이블 출력</p>
+                                    <!-- <div class="d-flex">
                                         <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
                                             style="width: 100px; height: 100px;" alt="">
                                         <div class="">
@@ -148,7 +220,11 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
+                                    </form> -->
+                                </div>
+                                <div class="tab-pane tacenter" id="nav-inquire" role="tabpanel"
+                                    aria-labelledby="nav-inquire-tab">
+                                    <p>문의 테이블 출력</p>
                                 </div>
                             </div>
                         </div>
@@ -161,19 +237,42 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
     name: 'ProductInfo',
-    components: {},
     data() {
         return {
-            sampleData: ''
+            productInfo: [],
+            pcode: '',
         };
     },
-    setup() { },
-    created() { },
-    mounted() { },
-    unmounted() { },
-    methods: {}
+    created() {
+        this.pcode = this.$route.query.product_code;
+        this.getProductInfo();
+    },
+    methods: {
+        async getProductInfo() {
+            let result = await axios.get(`/api/product/info/${this.pcode}`)
+                .catch(err => console.log(err));
+            this.productInfo = result.data;
+
+            console.log(this.productInfo);
+        },
+        getImgUrl(path) {
+            return new URL(this.url + '/common/download?path=' + path);
+        },
+    }
 }
 </script>
+
+<style scoped>
+.lfont {
+    font-size: large;
+}
+
+.taleft {
+    text-align: left;
+    line-height: 30px;
+}
+</style>
