@@ -3,6 +3,7 @@
 //장바구니 목록 -- 상품이미지 추가해야 됨
 const cartList = 
 `SELECT c.cart_code
+      , p.product_code
       ,p.product_name
 	    , c.cart_cnt
       , p.product_price

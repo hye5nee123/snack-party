@@ -72,7 +72,7 @@
               </td>
               <td>
                 <p class="mb-0 mt-4">
-                  {{ cart.cart_cnt * cart.product_price }}원
+                  {{ getCurrencyFormat(cart.cart_cnt * cart.product_price) }}원
                 </p>
               </td>
               <td>
@@ -97,9 +97,9 @@
             <th>결제예정금액</th>
           </tr>
           <tr>
-            <td>{{ allProPrice() }}원</td>
-            <td>+ {{ deliveryFee }}원</td>
-            <td>= {{ allProPrice() + deliveryFee }}원</td>
+            <td>{{ getCurrencyFormat(allProPrice()) }}원</td>
+            <td>+ {{ getCurrencyFormat(deliveryFee) }}원</td>
+            <td>= {{ getCurrencyFormat(allProPrice() + deliveryFee) }}원</td>
           </tr>
         </table>
       </div>

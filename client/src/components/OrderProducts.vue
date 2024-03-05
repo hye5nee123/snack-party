@@ -24,9 +24,9 @@
             </div>
           </th>
           <td class="py-5">{{ checkout.product_name}}</td>
-          <td class="py-5">{{ checkout.product_price}}원</td>
+          <td class="py-5">{{ getCurrencyFormat(checkout.product_price)}}원</td>
           <td class="py-5">{{ checkout.cart_cnt}}개</td>
-          <td class="py-5">{{ checkout.product_price * checkout.cart_cnt}}원</td>
+          <td class="py-5">{{ getCurrencyFormat(checkout.product_price * checkout.cart_cnt)}}원</td>
         </tr>
 
 

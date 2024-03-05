@@ -9,21 +9,23 @@
       <tbody>
         <tr>
           <td>주문상품 금액</td>
-          <td>{{ allProPrice() }}원</td>
+          <td>{{ getCurrencyFormat(allPrice) }}원</td>
         </tr>
         <tr>
           <td>적립금</td>
 
-          <td><input type="text" v-model="use_point">원 <button type="button" @click="use_point = point_value">모두사용</button>
-            <br>보유적립금: {{ point_value }}원</td>
+          <td><input type="text" v-model="usePoint" @input="usePoint = $event.target.value">원 
+            <button type="button" @click="usePoint = point_value">모두사용</button>
+            <br>보유적립금: {{ getCurrencyFormat(point_value - usePoint) }}원
+          </td>
         </tr>
         <tr>
           <td>배송비</td>
-          <td>{{ deliveryFee }}원</td>
+          <td>{{ getCurrencyFormat(deliveryFee) }}원</td>
         </tr>
         <tr>
-          <td>총 결제 금액</td>
-          <td>{{ total() }}원</td>
+          <td>최종결제 금액</td>
+          <td>{{ getCurrencyFormat(totalPrice) }}원</td>
         </tr>
       </tbody>
     </table>
@@ -33,44 +35,55 @@
 
 <script>
 export default {
+  emits: ['allPrice', 'usePoint', 'deliveryFee'],
+
   props: {
     checkOutList: Array,
     point_value: Number,
   },
+
   data() {
     return {
       allPrice: 0,
       totalPrice: 0,
-      use_point: 0,
+      usePoint: 0,
+      deliveryFee: 0,
     }
   },
 
+  mounted() {
+    this.allProPrice()
+    this.delivery()
+    this.$emit('allPrice', this.allPrice);
+    this.$emit('deliveryFee', this.deliveryFee);
+  },
+
+  updated() {
+    this.total()
+    this.$emit('usePoint', this.usePoint);
+    this.$emit('totalPrice', this.totalPrice);
+  },
+  
 
   methods: {
     allProPrice() { //총 상품금액
       let allProPrice = 0;
       for (let pro of this.checkOutList) {
-          allProPrice += pro.product_price * pro.cart_cnt;
+        allProPrice += pro.product_price * pro.cart_cnt;
       }
-      return (this.allPrice = allProPrice);
+     this.allPrice = allProPrice;
     },
     total() { //최종결제금액
-      return this.totalPrice = this.allPrice - this.use_point + this.deliveryFee; 
+      this.totalPrice = this.allPrice - this.usePoint + this.deliveryFee;
+    },
+    delivery() {
+      this.deliveryFee = this.allPrice >= 30000 ? 0 : 3000;
     }
-    
-    
+
   },
 
-  computed: {
-    deliveryFee() {
-      return this.allPrice >= 30000 ? 0 : 3000;
-    },
-  }
 
 }
 </script>
 
-<style scoped>
-
-</style>
-
+<style scoped></style>

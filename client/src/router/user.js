@@ -1,5 +1,6 @@
 import UserMain from "../views/UserMain.vue";
 import Main from "../views/ShopMain.vue";
+import OrderCompleted from "../views/order/OrdCompletedView.vue";
 
 export default {
   path: "/",
@@ -46,6 +47,11 @@ export default {
       path: "checkout",
       name: "CheckOut",
       component: import(/* webpackChunkName: "checkout", webpackPrefetch: false */ "../views/order/CheckOutView.vue"),
+    },
+    {
+      path: "ordcompleted",
+      name: "OrdCompleted",
+      component: OrderCompleted,
     },
     {
       path: "reviewlist",
