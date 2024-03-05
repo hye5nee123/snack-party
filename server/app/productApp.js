@@ -1,13 +1,12 @@
 const express = require('express');
 const app = express();
 const db = require('../db.js');
-const sql = require('../db/sql.js');
 const url = require('url');
 
 // 전체조회
 app.get('/', async (req, res) => {
     let data = [];
-    let where = "WHERE 1=1";
+    let where = "";
     var queryData = url.parse(req.url, true).query;
     let category = queryData.category;
     let keyword = queryData.keyword;
@@ -24,11 +23,15 @@ app.get('/', async (req, res) => {
         data.push(category);
     }
 
-    //페이징이 있을 경우
-    if (sort == 'new') {
-        where += " ORDER BY register_date"
-    } else {
+    //정렬이 있을 경우
+    if (sort == 'name') {
         where += " ORDER BY product_name"
+    } else if (sort == 'new') {
+        where += " ORDER BY register_date"
+    } else if (sort == 'lprice') {
+        where += " ORDER BY product_price"
+    } else if (sort == 'hprice') {
+        where += " ORDER BY product_price DESC"
     }
 
     let result = await db.connection('productsql', 'productList', data, where);

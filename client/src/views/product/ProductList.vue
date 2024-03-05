@@ -16,17 +16,20 @@
                         <div class="col-xl-3">
                             <div class="input-group w-100 mx-auto d-flex">
                                 <input type="search" class="form-control p-3" placeholder="keywords"
-                                    aria-describedby="search-icon-1" v-model="skeyword" @keyup.enter="findProduct">
-                                <span id="search-icon-1" class="input-group-text p-3" @click="findProduct"><i class="fa fa-search"></i></span>
+                                    aria-describedby="search-icon-1" v-model="skeyword">
+                                <span id="search-icon-1" class="input-group-text p-3"><i
+                                        class="fa fa-search"></i></span>
                             </div>
                         </div>
                         <div class="col-6"></div>
                         <div class="col-xl-3">
                             <div class="ps-3 py-3 rounded d-flex sort-text-align mb-4">
                                 <label for="fruits">정렬:</label>
-                                <select id="fruits" name="fruitlist" class="border-0 form-select-sm me-3" form="fruitform">
+                                <select id="fruits" name="fruitlist" class="border-0 form-select-sm me-3"
+                                    form="fruitform" v-model="ssort">
                                     <option value="name">상품명순</option>
-                                    <option value="popular">인기순</option>
+                                    <option value="lprice">낮은 가격 순</option>
+                                    <option value="hprice">높은 가격 순</option>
                                     <option value="new">신상품순</option>
                                 </select>
                             </div>
@@ -42,7 +45,8 @@
                                             v-for="(category, i) in categoryList">
                                             <li @click="selectCategory(category.sub_code)">
                                                 <div class="d-flex justify-content-between fruite-name">
-                                                    <a><i class="fa-solid fa-cookie"></i> {{ category.sub_codename }}</a>
+                                                    <a><i class="fa-solid fa-cookie"></i>
+                                                        {{ category.sub_codename }}</a>
                                                 </div>
                                             </li>
                                         </ul>
@@ -50,7 +54,7 @@
                                 </div>
                             </div>
                         </div>
-                        <CategoryProductList :cateProps="scategory" />
+                        <CategoryProductList :cateProps="scategory" :keyProps="skeyword" :sortProps="ssort" />
                     </div>
                 </div>
             </div>
@@ -73,15 +77,17 @@ export default {
         return {
             categoryList: [],
             scategory: '',
-            skeyword: ''
+            skeyword: '',
+            ssort: 'name',
         };
     },
     created() {
         this.getCategoryList();
-        if(this.$route.query.category)
+        if (this.$route.query.category) {
             this.scategory = this.$route.query.category;
+        }
     },
-    watch : {
+    watch: {
 
     },
     methods: {
@@ -90,14 +96,10 @@ export default {
                 .catch(err => console.log(err));
             this.categoryList = result.data;
         },
-        selectCategory(category){
+        selectCategory(category) {
             this.scategory = category;
-            this.$router.push({path: 'productlist', query: {category: category}})
-        },
-        findProduct(){
-            console.log(this.sproduct);
-                this.$router.push({path: 'productlist', query:{keyword: this.skeyword}})
-                this.skeyword='';
+            this.skeyword = '';
+            this.ssort = 'name';
         }
     }
 }

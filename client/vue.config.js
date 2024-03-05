@@ -13,5 +13,8 @@ module.exports = defineConfig({
         pathRewrite: {'^/api' : '/'}
       }  
     }
+  },
+  chainWebpack: config => {
+    config.plugins.delete('prefetch');
   }
 })
