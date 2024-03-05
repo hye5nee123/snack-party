@@ -76,6 +76,11 @@
 <script>
 export default {
     name: "header_part",
+    computed: {
+    user() {
+      return this.$store.state.loginStore.user;
+    }
+  },
 
 }
 </script>
