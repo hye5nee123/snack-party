@@ -16,5 +16,5 @@ module.exports = defineConfig({
   },
   chainWebpack: config => {
     config.plugins.delete('prefetch');
-  }
+  },
 })
