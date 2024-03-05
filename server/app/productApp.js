@@ -7,7 +7,7 @@ const url = require('url');
 // 전체조회
 app.get('/', async (req, res) => {
     let data = [];
-    let where = "WHERE 1=1";
+    let where = "";
     var queryData = url.parse(req.url, true).query;
     let category = queryData.category;
     let keyword = queryData.keyword;

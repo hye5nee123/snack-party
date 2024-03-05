@@ -14,7 +14,8 @@ const productList =
 , f.path
 FROM product p 
 LEFT OUTER JOIN file f
-ON p.product_code = f.board_code `;
+ON p.product_code = f.board_code 
+WHERE thumbnail = 'n01'`;
 
 const productInfo =
 `SELECT product_code
