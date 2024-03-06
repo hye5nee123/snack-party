@@ -213,7 +213,7 @@ export default {
             const vue = this; //안에서 바깥 함수 호출하려고
             /* 4. 결제 창 호출하기 */
             IMP.request_pay(data, function (rsp) {
-                console.log('결제완료 전: ' + rsp);
+                // console.log('결제완료 전: ' + rsp);
                 if (rsp.success) {
                     var msg = '결제가 완료되었습니다.';
                     alert(msg);
@@ -224,7 +224,7 @@ export default {
                     //재고량변경
 
 
-                    vue.$router.push({ path: '/ordcompleted' }) //결제완료 후 이동할 페이지
+                    // vue.$router.push({ path: '/ordcompleted' }) //결제완료 후 이동할 페이지
                     // this.$router.push({path:'/ordcompleted', query:{order_code: this.order_code}}); //주문번호
 
                 } else {
@@ -239,36 +239,38 @@ export default {
         //1.주문테이블등록
         async orderInsert(rsp) {
             let data = {
-                "param": { order : {
-                    member_code: this.userInfo.member_code,
-                    delivery_fee: this.delivery_fee,
-                    order_price: this.all_pro_price,
-                    use_point: this.use_point,
-                    total_price: this.total_price,
-                    get_point: this.get_point,
-                    order_status: '결제완료',
-                    cancel_date: null,
-                    imp_uid: rsp.imp_uid,
-                    merchant_uid: rsp.merchant_uid,
-                }, 
-                orderDetail : this.checkOutList,
+                "param": { 
+                    order : {
+                        member_code: this.userInfo.member_code,
+                        delivery_fee: this.delivery_fee,
+                        order_price: this.all_pro_price,
+                        use_point: this.use_point,
+                        total_price: this.total_price,
+                        get_point: this.get_point,
+                        order_status: 'h03', //결제완료
+                        cancel_date: null,
+                        imp_uid: rsp.imp_uid,
+                        merchant_uid: rsp.merchant_uid,
+                    }, 
 
-                deliveryInfo: {
-                    recipient: this.userInfo.member_name,
-                    rec_phone: this.userInfo.member_phone,
-                    rec_postcode: this.userInfo.postcode,
-                    rec_address: this.userInfo.address,
-                    rec_address_detail: this.userInfo.address_detail,
-                    memo: this.deliveryInfo.memo,
-                    delivery_num: this.deliveryInfo.delivery_num,
-                    order_code: this.deliveryInfo.order_code //수정하기
-                }
+                    orderDetail : this.checkOutList,
+
+                    deliveryInfo: {
+                        recipient: this.userInfo.member_name,
+                        rec_phone: this.userInfo.member_phone,
+                        rec_postcode: this.userInfo.postcode,
+                        rec_address: this.userInfo.address,
+                        rec_address_detail: this.userInfo.address_detail,
+                        memo: this.deliveryInfo.memo,
+                        delivery_num: this.deliveryInfo.delivery_num
+                    }
             }
 
             };
             let result = await axios.post("/apiorder", data)
                 .catch(err => console.log(err));
-            console.log(result);
+                
+                console.log('결제성공' + result);
         },
 
         // //2.주문상세등록 
