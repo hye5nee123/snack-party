@@ -7128,7 +7128,7 @@ button:focus {
 
 .nav-tabs:not(.nav-fill):not(.nav-justified) .nav-link,
 .nav-pills:not(.nav-fill):not(.nav-justified) .nav-link {
-  width: 100%;
+  width: 25%;
 }
 
 .nav-pills .nav-link:not(.active, .disabled) {
