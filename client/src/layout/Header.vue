@@ -12,7 +12,7 @@
                 <div class="top-link pe-2">
                     <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white"><small class="text-white mx-2">{{ this.$store.state.memberStore.memberInfo.member_name }}님</small>/</a>
                     <a href="/login" v-else class="text-white"><small class="text-white mx-2">로그인</small>/</a>
-                    <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white" @click="memberLoginout()"><small class="text-white mx-2">로그아웃</small>/</a>
+                    <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white" @click.prevent="memberLogout()"><small class="text-white mx-2">로그아웃</small>/</a>
                     <a href="/signup" v-else class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
                     <a href="#" class="text-white"><small class="text-white ms-2">보유적립금</small></a>
                 </div>
@@ -34,15 +34,14 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">카테고리별 상품</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <router-link to="/productlist?category=e01" class="nav-item nav-link">과자</router-link>
-                                <router-link to="/productlist?category=e02" class="nav-item nav-link">비스킷/크래커</router-link>
-                                <router-link to="/productlist?category=e03" class="nav-item nav-link">쿠키/파이</router-link>
-                                <router-link to="/productlist?category=e04" class="nav-item nav-link">유기농/전통과자</router-link>
-                                <router-link to="/productlist?category=e05" class="nav-item nav-link">초콜릿</router-link>
-                                <router-link to="/productlist?category=e06" class="nav-item nav-link">젤리/캐러멜</router-link>
+                                <router-link to="/productlist/e01" class="nav-item nav-link">과자</router-link>
+                                <router-link to="/productlist/e02" class="nav-item nav-link">비스킷/크래커</router-link>
+                                <router-link to="/productlist/e03" class="nav-item nav-link">쿠키/파이</router-link>
+                                <router-link to="/productlist/e04" class="nav-item nav-link">유기농/전통과자</router-link>
+                                <router-link to="/productlist/e05" class="nav-item nav-link">초콜릿</router-link>
+                                <router-link to="/productlist/e06" class="nav-item nav-link">젤리/캐러멜</router-link>
                             </div>
                         </div>
-                        <router-link to="/productinfo" class="nav-item nav-link">상품상세</router-link>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
@@ -54,16 +53,22 @@
                         </div>
                     </div>
                     <div class="d-flex m-3 me-0">
-                        <button
-                            class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
-                            data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                                class="fas fa-search text-primary"></i></button>
-                        <a href="/cart" class="position-relative me-4 my-auto icon">
+                        <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
+                            <i class="fas fa-search text-primary"></i>
+                        </button>
+                        
+                        <!-- 장바구니 -->
+                       
+                        <router-link to="/cart" v-if="$store.state.memberStore.memberInfo.member_id" class="position-relative me-4 my-auto icon">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3<!--로그인정보필요(장바구니개수)--></span>
-                        </a>
+                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3<!--로그인정보필요(장바구니개수)-->
+                            </span>
+                        </router-link>
+                    
+                        
+
                         <a href="#" class="my-auto icon">
                             <i class="fas fa-user fa-2x"></i>
                         </a>
@@ -78,17 +83,30 @@
 <script>
 export default {
     name: "header_part",
+    data() {
+        return {
+            memId: this.$store.state.memberStore.memberInfo.member_id,
+        }
+    },
+    created(){
+        console.log(this.memId);
+    },
     methods : {
-        async memberLoginout() {
+        async memberLogout() {
             this.$store.commit('clearStore');
             alert('로그아웃 되었습니다.');
+
+            window.Kakao.Auth.logout( () => {
+                console.log('카카오 로그아웃!')
+                }
+            )
         }
     },
     computed: {
     user() {
       return this.$store.state.loginStore.user;
     }
-  },
+  }
 
 }
 </script>

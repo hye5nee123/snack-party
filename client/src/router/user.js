@@ -14,7 +14,12 @@ export default {
     },
     {
       path: "productlist",
-      name: "ProductList",
+      name: "ProductListAll",
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ "../views/product/ProductList.vue"),
+    },
+    {
+      path: "productlist/:category",
+      name: "ProductListCategory",
       component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ "../views/product/ProductList.vue"),
     },
     {
@@ -33,7 +38,6 @@ export default {
       component: import(/* webpackChunkName: "loginview", webpackPrefetch: false */ "../views/member/LoginView.vue"),
     },
     {
-
       path: "sociallogin",
       name: "SocialLogin",
       component: import(/* webpackChunkName: "loginview", webpackPrefetch: false */ "../views/member/SocialLogin.vue"),
@@ -72,11 +76,6 @@ export default {
       path: "pinquirylist",
       name: "PInquiryList",
       component: import(/* webpackChunkName: "pinquirylist", webpackPrefetch: false */ "../views/inquiry/PInquiryList.vue"),
-    },
-    {
-      path: 'checkouttest',
-      name: 'CheckOutTest',
-      component: import(/* webpackChunkName: "checkouttest", webpackPrefetch: false */ "../views/order/CheckOutTestView.vue")
     },
     {
       path: 'reviewdetail',

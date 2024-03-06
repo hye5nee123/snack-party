@@ -19,33 +19,81 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <h4 class="fw-bold mb-3">{{ productInfo[0].product_name }}</h4>
-                            <h5 class="fw-bold mb-3">{{ productInfo[0].product_price }}원</h5>
-                            <div class="d-flex mb-4">
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <table class="mb-4">
-
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="1">
+                                            <h3 class="fw-bold mb-3">{{ productInfo[0].product_name }}</h3>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>원산지</td>
+                                        <td>상세/구매 정보 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <td>판매가</td>
+                                        <td style="font-weight: bold;">{{
+                                        getCurrencyFormat(productInfo[0].product_price) }}원</td>
+                                    </tr>
+                                    <tr>
+                                        <td>리뷰</td>
+                                        <td>0건 | <i class="fa fa-star text-secondary" /> 0.0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>배송방법</td>
+                                        <td>택배</td>
+                                    </tr>
+                                    <tr>
+                                        <td>배송비</td>
+                                        <td>3,000원 (30,000원 이상 구매 시 무료)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>수량</td>
+                                        <td>
+                                            <div class="input-group quantity" style="width: 100px;">
+                                                <div class="input-group-btn">
+                                                    <button @click="quantityDown"
+                                                        class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                                <input type="text" v-model="quantity"
+                                                    class="form-control form-control-sm text-center border-0">
+                                                <div class="input-group-btn">
+                                                    <button @click="quantityUp"
+                                                        class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
-                            <div class="input-group quantity mb-5" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        <h5 class="fw-bold mb-3">총 상품금액</h5>
+                                    </th>
+                                    <td>
+                                        <h5 class="fw-bold mb-3">{{ getCurrencyFormat(productInfo[0].product_price *
+                                        quantity) }} 원</h5>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="col-lg-12">
+                                <a href="#"
+                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
+                                        class="fa-regular fa-heart" /> 관심상품</a>
+                                <a href="#"
+                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
+                                        class="fa-solid fa-cart-plus" /> 장바구니</a>
+                                <a href="#"
+                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
+                                        class="fa-brands fa-shopify" /> 바로 구매하기</a>
                             </div>
-                            <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                         </div>
                         <div class="col-lg-12">
                             <nav>
@@ -67,7 +115,8 @@
                             <div class="tab-content mb-5">
                                 <div class="tab-pane active tacenter" id="nav-about" role="tabpanel"
                                     aria-labelledby="nav-about-tab">
-                                    <img :src="getImgUrl(productInfo[1].path)" class="img-fluid rounded" alt="Image">
+                                    <img :src="getImgUrl(productInfo != null && productInfo.length > 1 ? productInfo[1].path : '') "
+                                        class="img-fluid rounded" alt="Image">
                                 </div>
                                 <div class="tab-pane tacenter" id="nav-delret" role="tabpanel"
                                     aria-labelledby="nav-delret-tab">
@@ -226,7 +275,7 @@
                                 </div>
                                 <div class="tab-pane" id="nav-inquire" role="tabpanel"
                                     aria-labelledby="nav-inquire-tab">
-                                    <p>문의 테이블 출력</p>
+                                    <h5>문의 테이블 출력</h5>
                                 </div>
                             </div>
                         </div>
@@ -262,7 +311,8 @@ export default {
                 file_seq: 0,
                 thumbnail: '',
                 path: ''
-            }, {
+            },
+            {
                 product_code: '',
                 category: '',
                 product_name: '',
@@ -277,6 +327,7 @@ export default {
                 path: ''
             }],
             pcode: '',
+            quantity: '1',
         };
     },
     created() {
@@ -293,13 +344,26 @@ export default {
 
             this.productInfo = result.data;
 
-            console.log('this.productInfo : ',this.productInfo);
+            console.log('this.productInfo : ', this.productInfo);
         },
         getImgUrl(path) {
-            if(path)
+            if (path)
                 return new URL(this.url + '/common/download?path=' + path);
             else
                 return '';
+        },
+        quantityUp() {
+            this.quantity++;
+        },
+        quantityDown() {
+            if (this.quantity > 1) {
+                this.quantity--;
+            } else {
+                alert('최소 주문수량은 1개 입니다.');
+            }
+        },
+        getCurrencyFormat(value) {
+            return this.$currencyFormat(value);
         },
     }
 }

@@ -4408,7 +4408,7 @@ fieldset:disabled .btn {
 }
 
 .nav-tabs {
-    border-bottom: 1px solid #dee2e6
+    border-bottom: 1px solid #ffab00
 }
 
 .nav-tabs .nav-link {
@@ -4421,7 +4421,7 @@ fieldset:disabled .btn {
 
 .nav-tabs .nav-link:hover,
 .nav-tabs .nav-link:focus {
-    border-color: #e9ecef #e9ecef #dee2e6;
+    border-color: #e9ecef #e9ecef #ffab00;
     isolation: isolate
 }
 
