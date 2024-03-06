@@ -9,7 +9,7 @@ const reviewList = `SELECT
   member_code
   FROM review `;
 
-//단건 조회
+//멤버별 조회.
 const reviewInfo = `SELECT 
 review_code,
 review_title,
@@ -19,6 +19,8 @@ member_code
 FROM review
 WHERE member_code = ?`;
 
+//list에서 클릭시 상세조회 기능.
+// const reviewDetail =
 //리뷰 insert.
 const reviewInsert = `INSERT INTO review
 SET review_code = snack.nextval('REV')

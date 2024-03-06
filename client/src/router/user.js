@@ -77,6 +77,11 @@ export default {
       path : 'checkouttest',
       name : 'CheckOutTest',
       component : import(/* webpackChunkName: "checkouttest", webpackPrefetch: false */ "../views/order/CheckOutTestView.vue")
+    },
+        {
+      path : 'reviewdetail',
+      name : 'ReviewDetail',
+      component : import(/* webpackChunkName: "reviewdetail", webpackPrefetch: false */ "../views/review/ReviewDetail.vue")
     }
   ],
 };
