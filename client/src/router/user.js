@@ -77,5 +77,20 @@ export default {
       name: "PInquiryList",
       component: import(/* webpackChunkName: "pinquirylist", webpackPrefetch: false */ "../views/inquiry/PInquiryList.vue"),
     },
+    {
+      path: 'reviewdetail',
+      name: 'ReviewDetail',
+      component: import(/* webpackChunkName: "reviewdetail", webpackPrefetch: false */ "../views/review/ReviewDetail.vue")
+    },
+    {
+      path: 'inquirylist',
+      name: 'InquiryList',
+      component: import(/* webpackChunkName: "inquirylist", webpackPrefetch: false */ "../views/inquiry/InquiryList.vue")
+    },
+    {
+      path: 'inquiryinsert',
+      name: 'InquiryInsert',
+      component: import(/* webpackChunkName: "inquirylist", webpackPrefetch: false */ "../views/inquiry/InquiryInsert.vue")
+    },
   ],
 };
