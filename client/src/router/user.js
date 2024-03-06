@@ -14,7 +14,12 @@ export default {
     },
     {
       path: "productlist",
-      name: "ProductList",
+      name: "ProductListAll",
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ "../views/product/ProductList.vue"),
+    },
+    {
+      path: "productlist/:category",
+      name: "ProductListCategory",
       component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ "../views/product/ProductList.vue"),
     },
     {

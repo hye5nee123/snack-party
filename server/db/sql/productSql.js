@@ -1,4 +1,7 @@
 // productSql.js 
+const productListCount = 
+`SELECT COUNT(*) count
+FROM product`
 
 const productList =
 `SELECT product_code
@@ -63,5 +66,6 @@ module.exports = {
     productInfo,
     productInsert,
     productUpdate,
-    productReview
+    productReview,
+    productListCount
 }
