@@ -236,7 +236,7 @@ export default {
         },
 
         //< 결제 후 >
-        //1.주문테이블등록
+        //1. orders / detail / delivery 테이블등록
         async orderInsert(rsp) {
             let data = {
                 "param": { 
@@ -273,49 +273,11 @@ export default {
                 console.log('결제성공' + result);
         },
 
-        // //2.주문상세등록 
-        // async detailInsert(rsp) {
-        //     console.log('넘어오는 데이터: ' + rsp)
-        //     for (let i = 0; i < this.checkOutList.length; i++) {
-        //         let data = {
-        //             "param": {
-        //                 product_code: this.checkOutList[i].product_code,
-        //                 order_code: rsp.merchant_uid,
-        //                 order_cnt: this.checkOutList[i].cart_cnt,
-        //                 product_price: this.checkOutList[i].product_price,
-        //                 detail_price: this.checkOutList[i].product_price * this.checkOutList[i].cart_cnt
-        //             }
-        //         };
-        //         let result = await axios.post("/apiorder/details", data)
-        //             .catch(err => console.log(err));
-        //         console.log(result);
-        //     }
-        // },
-        // //3.배송 등록
-        // async insertInfo() { //배송지등록
-        //     let data = {
-        //         "param": {
-        //             recipient: this.userInfo.member_name,
-        //             rec_phone: this.userInfo.member_phone,
-        //             rec_postcode: this.userInfo.postcode,
-        //             rec_address: this.userInfo.address,
-        //             rec_address_detail: this.userInfo.address_detail,
-        //             memo: this.deliveryInfo.memo,
-        //             delivery_num: this.deliveryInfo.delivery_num,
-        //             order_code: this.deliveryInfo.order_code //수정하기
-        //         }
-        //     }
-        //     let result = await axios.post("/apiorder/delivery", data)
-        //         .catch(err => console.log(err));
+        //2.장바구니삭제 
+        
 
-        //     let info = result.data.affectedRows;
-        //     if (info == 0) {
-        //         alert(`등록되지 않았습니다.\n내용을 확인해주세요`);
-        //     }
-        // },
-        //4.장바구니삭제 
 
-        //5.재고량 수정
+        //3.재고량 수정
 
 
     }

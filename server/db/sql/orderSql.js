@@ -58,6 +58,15 @@ const detailInsert =
 `INSERT INTO detail
 SET detail_code = snack.nextval('DET')
     , ?`
+// `INSERT INTO detail
+// SET detail_code = snack.nextval('DET')
+//     , product_code = ?
+//     , order_code = ?
+//     , order_cnt = ?
+//     , product_price = ?
+//     , detail_price = ?`
+
+
 
 //배송정보 등록
 const deliveryInsert =
