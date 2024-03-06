@@ -16,7 +16,6 @@
       <div class="table-responsive">
         <table class="table cart-list-table">
           <thead>
-            {{selectList}}
             <tr>
               <th><input type="checkbox" v-model="selectAll" /></th>
               <th scope="col">이미지</th>
@@ -31,55 +30,43 @@
               <td>
                 <input type="checkbox" v-model="selectList" :value="cart" />
               </td>
-              <td><img src="../../assets/apple.jpg" width="100px" /></td>
-              <td><p class="mb-0 mt-4">{{ cart.product_name }}</p></td>
+              <td>
+                <img :src="getImgUrl(cartList[i].path)" width="120px" class="img-fluid rounded-top" alt="" /> <!--class의 imghw 지우고 크기 조절-->
+              </td>
+              <td>
+                <p class="mb-0 mt-4">{{ cart.product_name }}</p>
+              </td>
               <td>
                 <div class="input-group quantity mt-4" style="width: 150px">
                   <div class="input-group-btn">
-                    <button
-                      class="btn btn-sm btn-minus rounded-circle bg-light border"
-                      @click="
-                        cart.cart_cnt <= 1 ? cart.cart_cnt : cart.cart_cnt--
-                      "
-                    >
+                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" @click="
+                cart.cart_cnt <= 1 ? cart.cart_cnt : cart.cart_cnt--
+                ">
                       <i class="fa fa-minus"></i>
                     </button>
                   </div>
-                  <input
-                    type="text"
-                    style="background: #fff"
-                    class="form-control form-control-sm text-center border-0"
-                    min="1"
-                    v-model="cart.cart_cnt"
-                    readonly
-                  />
+                  <input type="text" style="background: #fff" class="form-control form-control-sm text-center border-0"
+                    min="1" v-model="cart.cart_cnt" readonly />
                   <div class="input-group-btn">
-                    <button
-                      class="btn btn-sm btn-plus rounded-circle bg-light border"
-                      @click="cart.cart_cnt++"
-                      v-bind:disabled="
-                        cart.stock_cnt <= cart.cart_cnt || cart.stock_cnt == 0
-                      "
-                    >
+                    <button class="btn btn-sm btn-plus rounded-circle bg-light border" @click="cart.cart_cnt++"
+                      v-bind:disabled="cart.stock_cnt <= cart.cart_cnt || cart.stock_cnt == 0
+                ">
                       <i class="fa fa-plus"></i>
                     </button>
-                    </div>
-                    <div style="padding-left: 10px;">
+                  </div>
+                  <div style="padding-left: 10px;">
                     <button type="button" class="cnt-update-btn btn-sm" @click="updateCnt(cart)">수정</button>
-                                          <!--  class=btn-secondary 없앰 색깔 주황색버튼  -->
+                    <!--  class=btn-secondary 없앰 색깔 주황색버튼  -->
                   </div>
                 </div>
               </td>
               <td>
                 <p class="mb-0 mt-4">
-                  {{ getCurrencyFormat(cart.cart_cnt * cart.product_price) }}원
+                  {{ $currencyFormat(cart.cart_cnt * cart.product_price) }}원
                 </p>
               </td>
               <td>
-                <button
-                  @click="delCartOne(cart)"
-                  class="btn btn-md rounded-circle bg-light border mt-4"
-                >
+                <button @click="delCartOne(cart)" class="btn btn-md rounded-circle bg-light border mt-4">
                   <i class="fa fa-times text-danger"></i>
                 </button>
                 <!-- <button @click="delCartOne(cart)" >삭제</button> -->
@@ -97,21 +84,19 @@
             <th>결제예정금액</th>
           </tr>
           <tr>
-            <td>{{ getCurrencyFormat(allProPrice()) }}원</td>
-            <td>+ {{ getCurrencyFormat(deliveryFee) }}원</td>
-            <td>= {{ getCurrencyFormat(allProPrice() + deliveryFee) }}원</td>
+            <td>{{ $currencyFormat(allProPrice()) }}원</td>
+            <td>+ {{ $currencyFormat(deliveryFee) }}원</td>
+            <td>= {{ $currencyFormat(allProPrice() + deliveryFee) }}원</td>
           </tr>
         </table>
       </div>
       <div class="button-center">
-        <button @click="goToCheckOut()" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 ordBtn">
-          주문하기
+        <button @click="goToCheckOut()"
+          class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 ordBtn">
+          선택상품 주문하기
         </button>
-        <button
-          @click="deleteSelected()"
-          class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
-          type="button"
-        >
+        <button @click="deleteSelected()"
+          class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">
           장바구니 비우기
         </button>
       </div>
@@ -119,6 +104,7 @@
   </div>
   <!-- Cart Page End -->
 </template>
+
 <script>
 import axios from 'axios';
 
@@ -128,12 +114,13 @@ export default {
       cartList: [],
       totalPrice: 0,
       selectList: [],
+      memId: this.$store.state.memberStore.memberInfo.member_id,
     };
   },
 
   created() {
-    // let searchNo = this.$route.query.userId;
-    this.getCartList('user002');
+    // this.getCartList(this.memId);
+    this.getCartList(this.$store.state.memberStore.memberInfo.member_id);
   },
 
   computed: {
@@ -161,6 +148,12 @@ export default {
       let list = result.data;
       this.cartList = list;
     },
+    getImgUrl(path) {
+      if (path)
+        return new URL(this.url + '/common/download?path=' + path);
+      else
+        return '';
+    },
 
     async updateCnt(cart) {
       //수량
@@ -176,7 +169,7 @@ export default {
       } else if (cart.stock_cnt == 0) {
         alert('품절된 상품으로 주문이 불가합니다.');
         cart.cart_cnt = cart.stock_cnt;
-      } // else {
+      } //else {
       //   alert(cart.product_name + '의 재고량이 부족합니다. 주문가능한 수량은 ' + cart.stock_cnt + '개 입니다.');
       //   cart.cart_cnt = cart.stock_cnt;
       // }
@@ -206,14 +199,19 @@ export default {
       alert('삭제되었습니다.');
       this.$router.go(0); //페이지새로고침
     },
-    
+
+    // goToCheckOut() {
+    //   sessionStorage.setItem("carts", JSON.stringify(this.selectList))
+    //   this.$router.push({path:'/checkout'})
+    // },
     goToCheckOut() {
-      sessionStorage.setItem("carts", JSON.stringify(this.selectList))
-      this.$router.push({path:'/checkout'})
+      if (this.selectList.length == 0) {
+        alert('주문하실 상품을 선택해주세요.');
+      } else {
+        sessionStorage.setItem("carts", JSON.stringify(this.selectList))
+        this.$router.push({ path: '/checkout' })
+      }
     },
-    getCurrencyFormat(value) {
-      return this.$currencyFormat(value)
-    }
   },
 
 
@@ -221,17 +219,21 @@ export default {
 </script>
 
 <style scoped>
-.cart-list-table th,td {
+.cart-list-table th,
+td {
   font-size: 17px;
 }
+
 #total {
   border: 1px solid #ccc;
 }
+
 #total th {
   text-align: center;
   padding: 20px;
   font-size: 17px;
 }
+
 #total td {
   text-align: center;
   padding: 35px;
@@ -241,11 +243,11 @@ export default {
 .button-center {
   text-align: center;
 }
+
 .cnt-update-btn {
   background-color: #fff;
   border: 1px solid #8299ff;
   color: #5a5a5a;
   font-weight: bold;
 }
-
 </style>

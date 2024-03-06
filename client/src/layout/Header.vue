@@ -54,16 +54,22 @@
                         </div>
                     </div>
                     <div class="d-flex m-3 me-0">
-                        <button
-                            class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
-                            data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                                class="fas fa-search text-primary"></i></button>
-                        <a href="/cart" class="position-relative me-4 my-auto icon">
+                        <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
+                            <i class="fas fa-search text-primary"></i>
+                        </button>
+                        
+                        <!-- 장바구니 -->
+                       
+                        <router-link to="/cart" v-if="$store.state.memberStore.memberInfo.member_id" class="position-relative me-4 my-auto icon">
                             <i class="fa fa-shopping-bag fa-2x"></i>
                             <span
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3<!--로그인정보필요(장바구니개수)--></span>
-                        </a>
+                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3<!--로그인정보필요(장바구니개수)-->
+                            </span>
+                        </router-link>
+                    
+                        
+
                         <a href="#" class="my-auto icon">
                             <i class="fas fa-user fa-2x"></i>
                         </a>
@@ -78,6 +84,14 @@
 <script>
 export default {
     name: "header_part",
+    data() {
+        return {
+            memId: this.$store.state.memberStore.memberInfo.member_id,
+        }
+    },
+    created(){
+        console.log(this.memId);
+    },
     methods : {
         async memberLogout() {
             this.$store.commit('clearStore');
