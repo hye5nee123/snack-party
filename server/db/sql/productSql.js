@@ -16,8 +16,7 @@ const productList =
    FROM product p LEFT OUTER 
    JOIN file f
      ON product_code = board_code
-  WHERE thumbnail='n01'
-  LIMIT ? OFFSET ?`;
+  WHERE thumbnail='n01'`;
 
 const productInfo =
 `SELECT product_code

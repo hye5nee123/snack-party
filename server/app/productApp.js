@@ -38,7 +38,7 @@ app.get('/', async (req, res) => {
         where += " ORDER BY product_price DESC"
     }
 
-    let result = await db.connection('productsql', 'productList', data, where);
+    let result = await db.connection('productsql', 'productList', data, where).catch(err=>{console.log(err)});
     res.send(result);
 });
 
