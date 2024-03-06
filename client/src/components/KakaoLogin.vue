@@ -1,5 +1,5 @@
 <template>
-    <a id="kakao-login-btn" @click="loginWithKakao()">
+    <a id="kakao-login-btn" @click="kakaoLogin()">
     <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" alt="카카오 로그인 버튼" />
     </a><br>
     <p id="token-result"></p>
@@ -11,22 +11,34 @@ export default {
     methods : {
         kakaoLogin() {
             window.Kakao.Auth.login({
+                // redirectUri : 'http://localhost:8081/sociallogin',
+                scope : 'account_email, name',
                 success : this.getKakaoAccount
             })
         },
-        getKakaoAccount() {
+        getKakaoAccount(authObj) {
+            console.log(authObj);
             window.Kakao.API.request({
                 url: '/v2/user/me',
                 success : res => {
-                    const profile_nickname = res.profile_nickname;
-                    console.log(profile_nickname);
-                    alert('로그인 성공!');
+                    const kakao_account = res.kakao_account;
+                    console.log(kakao_account);
+                    this.$store.commit('setKakaoInfo', kakao_account);
+                    console.log(this.$store.state.memberStore.kakaoInfo);
+                    // alert('로그인 성공!');
+                    this.$router.push({path : '/sociallogin'})
                 },
                 fail : error => {
                     console.log(error);
                 }
             })
         },
+
+
+
+
+
+
 
         requestUserInfo() {
     window.Kakao.API.request({
@@ -68,13 +80,13 @@ export default {
 
 
         loginWithKakao() {
-            // const params = {
-            //     redirectUri : 'http://localhost:8081/kakaologin'
-            // }
-            // window.Kakao.Auth.authorize(params);
-            window.Kakao.Auth.login({
-                success : this.getKakaoAccount2
-            })
+            const params = {
+                redirectUri : 'http://localhost:8081/login'
+            }
+            window.Kakao.Auth.authorize(params);
+            // window.Kakao.Auth.login({
+            //     success : this.getKakaoAccount2
+            // })
         }
     }
 }

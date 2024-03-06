@@ -48,14 +48,18 @@ app.post('/', async(request, response) => {
   let order = request.body.param.order;
   let details = request.body.param.orderDetail;
   let delivery = request.body.param.deliveryInfo;
+
   let result = await db.connection('ordersql', 'orderInsert', order).catch(error => {console.log(error)});
+  console.log('order결과: ' + JSON.stringify(result));  //insertId: 0
   
   for(let i; i < details.length; i++) {
-    details[i].order_code = result.order_code;
+    details[i].order_code =  result.order_code//order.order_code;
     await db.connection('ordersql', 'detailInsert', details[i]).catch(error => {console.log(error)});
   }
-  delivery.order_code = result.order_code;
+  delivery.order_code = result.order_code; 
+  
   await db.connection('ordersql', 'deliveryInsert', delivery).catch(error => {console.log(error)});
+
   response.send(result);
 });
 

@@ -217,7 +217,7 @@ export default {
   },
 
 
-};
+}; //end
 </script>
 
 <style scoped>

@@ -1,6 +1,5 @@
 import UserMain from "../views/UserMain.vue";
 import Main from "../views/ShopMain.vue";
-import OrderCompleted from "../views/order/OrdCompletedView.vue";
 
 export default {
   path: "/",
@@ -34,6 +33,12 @@ export default {
       component: import(/* webpackChunkName: "loginview", webpackPrefetch: false */ "../views/member/LoginView.vue"),
     },
     {
+
+      path: "sociallogin",
+      name: "SocialLogin",
+      component: import(/* webpackChunkName: "loginview", webpackPrefetch: false */ "../views/member/SocialLogin.vue"),
+    },
+    {
       path: "cart",
       name: "Cart",
       component: import(/* webpackChunkName: "cart", webpackPrefetch: false */ "../views/order/CartView.vue"),
@@ -46,7 +51,7 @@ export default {
     {
       path: "ordcompleted",
       name: "OrdCompleted",
-      component: OrderCompleted,
+      component: import(/* webpackChunkName: "ordcompleted", webpackPrefetch: false */ "../views/order/OrdCompletedView.vue"),
     },
     {
       path: "reviewlist",

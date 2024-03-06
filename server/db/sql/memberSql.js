@@ -21,7 +21,7 @@ FROM member
 ORDER BY member_code`;
 
 const memberInfo =
-`SELECT member_code
+`SELECT m.member_code
         , member_id
         , pw
         , member_name
@@ -37,8 +37,10 @@ const memberInfo =
         , member_status
         , quit_date
         , token
-   FROM member
-  WHERE member_id = ?`;
+        , p.point_value
+FROM member m JOIN point p
+WHERE m.member_code = p.member_code
+AND m.member_id = ?`;
 
 const memberInsert =
 `INSERT INTO member
