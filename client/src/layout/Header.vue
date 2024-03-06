@@ -34,15 +34,14 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">카테고리별 상품</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <router-link to="/productlist?category=e01" class="nav-item nav-link">과자</router-link>
-                                <router-link to="/productlist?category=e02" class="nav-item nav-link">비스킷/크래커</router-link>
-                                <router-link to="/productlist?category=e03" class="nav-item nav-link">쿠키/파이</router-link>
-                                <router-link to="/productlist?category=e04" class="nav-item nav-link">유기농/전통과자</router-link>
-                                <router-link to="/productlist?category=e05" class="nav-item nav-link">초콜릿</router-link>
-                                <router-link to="/productlist?category=e06" class="nav-item nav-link">젤리/캐러멜</router-link>
+                                <router-link to="/productlist/e01" class="nav-item nav-link">과자</router-link>
+                                <router-link to="/productlist/e02" class="nav-item nav-link">비스킷/크래커</router-link>
+                                <router-link to="/productlist/e03" class="nav-item nav-link">쿠키/파이</router-link>
+                                <router-link to="/productlist/e04" class="nav-item nav-link">유기농/전통과자</router-link>
+                                <router-link to="/productlist/e05" class="nav-item nav-link">초콜릿</router-link>
+                                <router-link to="/productlist/e06" class="nav-item nav-link">젤리/캐러멜</router-link>
                             </div>
                         </div>
-                        <router-link to="/productinfo" class="nav-item nav-link">상품상세</router-link>
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">

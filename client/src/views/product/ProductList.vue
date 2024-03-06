@@ -15,7 +15,7 @@
                     <div class="row g-4">
                         <div class="col-xl-3">
                             <div class="input-group w-100 mx-auto d-flex">
-                                <input type="search" class="form-control p-3" placeholder="keywords"
+                                <input type="search" class="form-control p-3" placeholder="검색어를 입력하세요."
                                     aria-describedby="search-icon-1" v-model="skeyword">
                                 <span id="search-icon-1" class="input-group-text p-3"><i
                                         class="fa fa-search"></i></span>
@@ -83,12 +83,21 @@ export default {
     },
     created() {
         this.getCategoryList();
-        if (this.$route.query.category) {
-            this.scategory = this.$route.query.category;
+        if (this.$route.params.category) {
+            this.scategory = this.$route.params.category;
         }
-    },
-    watch: {
-
+        this.$watch(
+            () => this.$route.params,
+            () => {
+                if (this.$route.params.category) {
+                    this.scategory = this.$route.params.category;
+                } else {
+                    this.scategory = '';
+                }
+                this.skeyword = '';
+                this.ssort = 'name';
+            }
+        )
     },
     methods: {
         async getCategoryList() {
@@ -100,6 +109,7 @@ export default {
             this.scategory = category;
             this.skeyword = '';
             this.ssort = 'name';
+            this.$router.push({ path: `/productlist/${category}` });
         }
     }
 }
