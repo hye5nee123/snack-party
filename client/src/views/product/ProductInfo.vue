@@ -222,7 +222,7 @@
                                         </div>
                                     </form> -->
                                 </div>
-                                <div class="tab-pane tacenter" id="nav-inquire" role="tabpanel"
+                                <div class="tab-pane" id="nav-inquire" role="tabpanel"
                                     aria-labelledby="nav-inquire-tab">
                                     <p>문의 테이블 출력</p>
                                 </div>
@@ -243,7 +243,33 @@ export default {
     name: 'ProductInfo',
     data() {
         return {
-            productInfo: [],
+            productInfo: [{
+                product_code: '',
+                category: '',
+                product_name: '',
+                product_price: 0,
+                stock_cnt: 0,
+                register_date: '',
+                product_display: '',
+                save_name: '',
+                extension: '',
+                file_seq: 0,
+                thumbnail: '',
+                path: ''
+            }, {
+                product_code: '',
+                category: '',
+                product_name: '',
+                product_price: 0,
+                stock_cnt: 0,
+                register_date: '',
+                product_display: '',
+                save_name: '',
+                extension: '',
+                file_seq: 0,
+                thumbnail: '',
+                path: ''
+            }],
             pcode: '',
         };
     },
@@ -264,7 +290,10 @@ export default {
             console.log('this.productInfo : ',this.productInfo);
         },
         getImgUrl(path) {
-            return new URL(this.url + '/common/download?path=' + path);
+            if(path)
+                return new URL(this.url + '/common/download?path=' + path);
+            else
+                return '';
         },
     }
 }
