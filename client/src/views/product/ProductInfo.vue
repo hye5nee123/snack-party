@@ -253,11 +253,15 @@ export default {
     },
     methods: {
         async getProductInfo() {
+            console.log('getProductInfo() 실행');
+            console.log(`this.pcode : ${this.pcode}`);
+
             let result = await axios.get(`/api/product/info/${this.pcode}`)
                 .catch(err => console.log(err));
+
             this.productInfo = result.data;
 
-            console.log(this.productInfo);
+            console.log('this.productInfo : ',this.productInfo);
         },
         getImgUrl(path) {
             return new URL(this.url + '/common/download?path=' + path);
