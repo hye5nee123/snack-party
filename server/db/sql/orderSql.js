@@ -30,7 +30,8 @@ FROM cart c JOIN product p
               ON c.product_code = f.board_code
 WHERE member_code = ( SELECT member_code
                       FROM member
-                      WHERE member_id = ? )`
+                      WHERE member_id = ? )
+AND f.thumbnail = 'n01'`
 
 
 //장바구니 담기
