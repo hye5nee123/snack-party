@@ -11,6 +11,10 @@ app.get('/', async (req, res) => {
     let category = queryData.category;
     let keyword = queryData.keyword;
     let sort = queryData.sort;
+
+    // LIMIT OFFSET
+    
+
     //키워드가 있을 경우
     if (keyword) {
         where += " AND product_name LIKE ?"
@@ -41,7 +45,7 @@ app.get('/', async (req, res) => {
 // 단건조회
 app.get('/info/:product_code', async (req, res) => {
     let data = req.params.product_code;
-    let result = await db.connection('productsql', 'productInfo', data)
+    let result = await db.connection('productsql', 'productInfo', data).catch(err=>{console.log(err)});
     res.send(result);
 });
 

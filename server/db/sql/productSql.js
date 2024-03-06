@@ -16,7 +16,8 @@ const productList =
    FROM product p LEFT OUTER 
    JOIN file f
      ON product_code = board_code
-  WHERE thumbnail='n01' `;
+  WHERE thumbnail='n01'
+  LIMIT ? OFFSET ?`;
 
 const productInfo =
 `SELECT product_code
@@ -59,7 +60,7 @@ const productReview =
   WHERE d.product_code = ?`;
 
 module.exports = {
-    productList,
+    productList,    
     productInfo,
     productInsert,
     productUpdate,
