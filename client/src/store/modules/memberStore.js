@@ -19,10 +19,7 @@ const memberStore = {
                 quit_date : null,
                 token : ''                
             },
-            kakaoInfo : {
-                email : '',
-                name : ''
-            },
+            kakaoInfo : {},
             loginStatus : false,
         }
     },
@@ -38,6 +35,7 @@ const memberStore = {
         },
         clearStore(state) {
             state.memberInfo = {};
+            state.kakaoInfo = {};
             state.loginStatus = false;
         }
     }

@@ -181,7 +181,7 @@ export default {
             let info = result.data.affectedRows;
             if(info > 0) {
                 alert('회원가입이 완료되었습니다.');
-                this.$router.push({path : '/'})
+                this.$router.push({path : '/login'})
             }
         },
         validation() {
