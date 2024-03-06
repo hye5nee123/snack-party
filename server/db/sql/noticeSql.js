@@ -17,7 +17,7 @@ const noticeListPage =
         , notice_date
 FROM    notice
 ORDER BY 1
-LIMIT 5 OFFSET ?`;
+LIMIT ? OFFSET ?`;
 
 const noticeInfo = 
 `SELECT notice_code

@@ -33,11 +33,11 @@ export default {
       name: "LoginView",
       component: import(/* webpackChunkName: "loginview", webpackPrefetch: false */ "../views/member/LoginView.vue"),
     },
-    // {
-    //   path: "login",
-    //   name: "LoginView",
-    //   component: LoginView,
-    // },
+    {
+      path: "sociallogin",
+      name: "SocialLogin",
+      component: import(/* webpackChunkName: "loginview", webpackPrefetch: false */ "../views/member/SocialLogin.vue"),
+    },
     {
       path: "cart",
       name: "Cart",

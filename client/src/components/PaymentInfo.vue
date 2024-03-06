@@ -78,8 +78,10 @@ export default {
     },
     delivery() {
       this.deliveryFee = this.allPrice >= 30000 ? 0 : 3000;
+    },
+    getCurrencyFormat(value) {
+      return this.$currencyFormat(value)
     }
-
   },
 
 

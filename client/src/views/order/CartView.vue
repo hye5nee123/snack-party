@@ -211,11 +211,10 @@ export default {
       sessionStorage.setItem("carts", JSON.stringify(this.selectList))
       this.$router.push({path:'/checkout'})
     },
-
-    // getCurrencyFormat(value) {
-    //   return this.$currencyFormat(value);
-    // },
-  }, //method
+    getCurrencyFormat(value) {
+      return this.$currencyFormat(value)
+    }
+  },
 
 
 }; //end
