@@ -1,7 +1,7 @@
 <template>
   <div>
     <h3>ReviewList.vue</h3>
-    <ReviewListComp type="admin"/>
+    <ReviewListComp type="user"/>
   </div>
 </template>
 <script>
