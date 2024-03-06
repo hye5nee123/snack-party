@@ -2,19 +2,35 @@
 
 //장바구니 목록 -- 상품이미지 추가해야 됨
 const cartList = 
+// `SELECT c.cart_code
+//       , p.product_code
+//       ,p.product_name
+// 	    , c.cart_cnt
+//       , p.product_price
+//     	, c.member_code
+// 	    , c.product_code
+//       , p.stock_cnt
+// FROM cart c JOIN product p
+// 			ON c.product_code = p.product_code
+// WHERE member_code = (SELECT member_code
+//                      FROM member
+//                      WHERE member_id = ?)`
 `SELECT c.cart_code
-      , p.product_code
-      ,p.product_name
-	    , c.cart_cnt
-      , p.product_price
-    	, c.member_code
-	    , c.product_code
-      , p.stock_cnt
+, p.product_code
+, p.product_name
+, c.cart_cnt
+, p.product_price
+, c.member_code
+, c.product_code
+, p.stock_cnt
+, f.path
 FROM cart c JOIN product p
-			ON c.product_code = p.product_code
-WHERE member_code = (SELECT member_code
-                     FROM member
-                     WHERE member_id = ?)`
+              ON c.product_code = p.product_code
+            LEFT OUTER JOIN file f
+              ON c.product_code = f.board_code
+WHERE member_code = ( SELECT member_code
+                      FROM member
+                      WHERE member_id = ? )`
 
 
 //장바구니 담기

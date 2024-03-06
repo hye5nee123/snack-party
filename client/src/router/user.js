@@ -73,10 +73,5 @@ export default {
       name: "PInquiryList",
       component: import(/* webpackChunkName: "pinquirylist", webpackPrefetch: false */ "../views/inquiry/PInquiryList.vue"),
     },
-    {
-      path : 'checkouttest',
-      name : 'CheckOutTest',
-      component : import(/* webpackChunkName: "checkouttest", webpackPrefetch: false */ "../views/order/CheckOutTestView.vue")
-    }
   ],
 };
