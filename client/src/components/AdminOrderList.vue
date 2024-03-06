@@ -1,14 +1,14 @@
 <template>
 	<div>
 		<h3>AdminOrderList.vue</h3>
-		<PaginationTest />
+		<PaginationComp />
 	</div>
 </template>
 
 <script>
-import PaginationTest from './PaginationTest.vue';
+import PaginationComp from './PaginationComp.vue';
 
 export default {
-	components: { PaginationTest }
+	components: { PaginationComp }
 };
 </script>
