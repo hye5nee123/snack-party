@@ -111,7 +111,7 @@ export default {
     async memberLogin() {
       if(!this.validation()) return;
 
-      let result = await axios.post('/api/member/' + this.id)
+      let result = await axios.post('api/member/' + this.id)
                     .catch(err => console.log(err));
                        
       let data = {

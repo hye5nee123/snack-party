@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express.Router();
 const db = require('../db.js');
-// const fs = 
+const url = require('url');
 
 
 //장바구니 조회
@@ -43,7 +43,7 @@ app.delete('/carts/:ccode', async(request, response) => {
 //=============================================================
 //< orders >
 
-//주문등록
+//주문, 상세, 배송 등록
 app.post('/', async(request, response) => {
   let order = request.body.param.order;
   let details = selectedInfo(request.body.param.orderDetail);
@@ -51,8 +51,7 @@ app.post('/', async(request, response) => {
 
   let result = await db.connection('ordersql', 'orderInsert', order).catch(error => {console.log(error)});
   console.log('order결과: ' ,result);  //insertId: 0
-  
-  //
+
   let order_code = await db.connection('commonsql', 'currval', ['ORD', 'ORD']).catch(error => {console.log(error)});
   console.log('details결과', details);
 
@@ -85,31 +84,31 @@ function selectedInfo(list) {
 //=======================================
 //< 나의 주문내역 >
 
-//주문전체조회
-app.get('/', async(request, response) => {
-  let result = await db.connection('ordersql', 'orderListAll');
-  response.send(result);
-});
+// //주문전체조회
+// app.get('/', async(request, response) => {
+//   let result = await db.connection('ordersql', 'orderListAll');
+//   response.send(result);
+// });
 
-//주문조회
-app.get('/:ocode', async(request, response) => {
-  let data = request.params.ocode;
-  let result = db.connection(sql.ordersql.orderList, data).then(result => {
-    response.send(result);
-  }).catch(err => {
-    console.log(err);
-  }) 
-});
+// //주문조회
+// app.get('/:ocode', async(request, response) => {
+//   let data = request.params.ocode;
+//   let result = db.connection(sql.ordersql.orderList, data).then(result => {
+//     response.send(result);
+//   }).catch(err => {
+//     console.log(err);
+//   }) 
+// });
 
-//주문상세조회
-app.get('/details/:ocode', async(request, response) => {
-  let data = request.params.userId;
-  let result = db.connection(sql.ordersql.detailList, data).then(result => {
-    response.send(result);
-  }).catch(err => {
-    console.log(err);
-  }) 
-});
+// //주문상세조회
+// app.get('/details/:ocode', async(request, response) => {
+//   let data = request.params.userId;
+//   let result = db.connection(sql.ordersql.detailList, data).then(result => {
+//     response.send(result);
+//   }).catch(err => {
+//     console.log(err);
+//   }) 
+// });
 
 
 module.exports = app;
