@@ -18,19 +18,19 @@
     </div>
 
     <!-- Pagination 컴포넌트 -->
-    <PaginationTest :ITEM_PER_PAGE="ITEM_PER_PAGE" :PAGE_PER_SECTION="PAGE_PER_SECTION" :TOTAL_ARITCLES="TOTAL_ARITCLES"
+    <PaginationComp :ITEM_PER_PAGE="ITEM_PER_PAGE" :PAGE_PER_SECTION="PAGE_PER_SECTION" :TOTAL_ARITCLES="TOTAL_ARITCLES"
       @change-page="onChangePage" />
   </div>
 </template>
 
 <script>
 // Pagination 컴포넌트 import
-import PaginationTest from './PaginationTest.vue';
+import PaginationComp from './PaginationComp.vue';
 import axios from 'axios';
 
 export default {
   // Pagination 컴포넌트 import
-  components: { PaginationTest },
+  components: { PaginationComp },
   data() {
     return {
       noticeList : [],  // limit, offset 적용된 리스트
@@ -74,4 +74,4 @@ export default {
     },
   }
 }
-</script>
+</script>./PaginationComp.vue
