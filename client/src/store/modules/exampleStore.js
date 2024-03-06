@@ -1,12 +1,15 @@
 const exampleStore = {
   state () {
     return {
-      name : '현준'
+      currPage : 1
     }
   },
   getters : {
   },
   mutations : {
+    setCurrPage(state, data) {
+      state.currPage = data;
+  },
   },
   actions : {
   }

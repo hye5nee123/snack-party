@@ -74,4 +74,4 @@ export default {
     },
   }
 }
-</script>./PaginationComp.vue
+</script>
