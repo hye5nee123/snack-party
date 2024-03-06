@@ -41,6 +41,11 @@ export default {
   // props: ['checkOutList'],
   props: {
     checkOutList: Array,
+  },
+  methods : {
+    getCurrencyFormat(value) {
+      return this.$currencyFormat(value)
+    }
   }
 }
 </script>

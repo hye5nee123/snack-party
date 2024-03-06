@@ -16,7 +16,7 @@
 
           <td><input type="text" v-model="usePoint" @input="usePoint = $event.target.value">원 
             <button type="button" @click="usePoint = point_value">모두사용</button>
-            <br>보유적립금: {{ getCurrencyFormat(point_value - usePoint) }}원
+            <br>보유적립금: {{ $currencyFormat(point_value - usePoint) }}원
           </td>
         </tr>
         <tr>
@@ -78,8 +78,10 @@ export default {
     },
     delivery() {
       this.deliveryFee = this.allPrice >= 30000 ? 0 : 3000;
+    },
+    getCurrencyFormat(value) {
+      return this.$currencyFormat(value)
     }
-
   },
 
 
