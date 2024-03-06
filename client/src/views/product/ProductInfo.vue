@@ -139,7 +139,9 @@
                                     </table>
                                 </div>
                                 <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
-                                    <p>리뷰 테이블 출력</p>
+                                    
+                                    <!-- 리뷰 컴포넌트 -->
+                                    <ReviewListComp :pcode="pcode" type="product"/>
                                     <!-- <div class="d-flex">
                                         <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
                                             style="width: 100px; height: 100px;" alt="">
@@ -238,9 +240,13 @@
 
 <script>
 import axios from 'axios';
+import ReviewListComp from '../../components/ReviewListComp.vue';
 
 export default {
     name: 'ProductInfo',
+    components: {
+        ReviewListComp
+    },
     data() {
         return {
             productInfo: [{

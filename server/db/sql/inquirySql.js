@@ -3,6 +3,7 @@
 //문의사항 자기 거 전체 조회(회원).
 
 const sinquiryList = `SELECT 
+            inquiry_code,
             p_inquiry_type,
             title,
             answer_status,
@@ -54,9 +55,9 @@ const pInquiryInfo = `
                 WHERE member_code= ?`;
 
 module.exports = {
-  inquiryInsert,
-  inquirylist,
-  pInquiryInfo,
-  sinquiryList
-  
+    inquiryInsert,
+    inquirylist,
+    pInquiryInfo,
+    sinquiryList
+
 };

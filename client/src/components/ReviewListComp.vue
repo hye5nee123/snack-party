@@ -7,20 +7,18 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>리뷰코드</th>
               <th>제목</th>
               <th>내용</th>
-              <th>별점</th>
               <th>작성자</th>
+              <th>별점</th>
             </tr>
           </thead>
           <tbody class="table-border-bottom-0">          
-            <tr :key="i" v-for="(review, i) in reviewList" @click="getReviewList(review)">
-              <td>{{ review.review_code }}</td>
+            <tr :key="i" v-for="(review, i) in reviewList">
               <td>{{ review.review_title }}</td>
               <td>{{ review.review_content }}</td>
+              <td>{{ review.member_id }}</td>
               <td>{{ review.stars }}</td>
-              <td>{{ review.member_code }}</td>
             </tr>
             </tbody>
         </table>
@@ -29,33 +27,38 @@
     </div>
   </div>
 </div>
-<h1>{{ type }}</h1>
 </template>
 <script>
 import axios from 'axios';
 
 export default {
-  props: ["type"],
+  props: ["pcode","type"],
     
-  
   data() {
-      return {
-        reviewList: [],
-          
-      };
+    return {
+      reviewList: []
+    };
   },
   created() {
-      this.getReviewList();
+    this.getReviewList();
   },
   methods: {
     async getReviewList() {
-        console.log('getReviewList() 실행')
-        let result = await axios.get('/api/review/')
-            .catch(err => console.log(err));
-            
-        console.log('result : ', result);
-        this.reviewList = result.data;
+      let url = "";
+      if (this.type == "product") {
+        url = `/api/review/detailreview/${this.pcode}`
+      } else if (this.type == "admin") {
+        url = "/api/review/";
+      } else {
+        url =`/api/review/:member_code`
+      }
+      let result = await axios.get(url)
+          .catch(err => console.log(err));
+          
+      console.log('result.data : ', result.data);
+      this.reviewList = result.data
     },
+    
     // async getReviewInfo(review) {
     //     console.log('getReviewInfo() 실행')
     //     let result = await axios.get(`/api/review/${review.review_code}`)
@@ -66,4 +69,5 @@ export default {
     // }
   }
 }
+
 </script>
