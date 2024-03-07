@@ -62,7 +62,7 @@
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <div data-i18n="Account Settings">공지 관리</div>
         </router-link>
-        <router-link to="#" class="menu-link menu-toggle">
+        <router-link to="/admin/review" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <div data-i18n="Account Settings">리뷰 관리</div>
         </router-link>

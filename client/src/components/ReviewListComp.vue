@@ -57,6 +57,7 @@ export default {
   created() {
     this.getReviewList();
     this.getReviewCnt();
+    console.log('this.type: ', this.type );
   },
   computed: {
     pageStartIdx() {
@@ -75,10 +76,11 @@ export default {
       if (this.type == "product") {
         url = `/api/review/detaillist/${this.pcode}/${this.ITEM_PER_PAGE}/${this.pageData}`
       } else if (this.type == "admin") {
-        url = "/api/review/";
+        url = `/api/review/`;
       } else {
         url =`/api/review/member_code`
       }
+      console.log('url : ',url)
       let result = await axios.get(url)
           .catch(err => console.log(err));
           
