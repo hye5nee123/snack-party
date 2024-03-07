@@ -1,38 +1,48 @@
 import AdminMain from '../views/AdminMain.vue';
-import NoticeManage from '../views/admin/NoticeManage.vue';
-import AdminNoticeList from '../components/AdminNoticeList.vue';
-import OrderManage from '../views/admin/OrderManage.vue';
-import AdminOrderList from '../components/AdminOrderList.vue';
 
 export default {
   path: '/admin',
   name: 'admin',
   component: AdminMain,
-  children : [
+  children: [
+    // 상품 페이지
+    {
+      path: '/admin/product',
+      name: 'ProductManage',
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/ProductManage.vue'),
+      children: [
+        {
+          path: 'admin/productlist',
+          name: 'AdminProductList',
+          component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../components/AdminProductList.vue'),
+        }
+      ]
+    },
+
     // 공지게시판 페이지
     {
-      path : '/admin/notice',
-      name : 'NoticeManage',
-      component : NoticeManage,
-      children : [
+      path: '/admin/notice',
+      name: 'NoticeManage',
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/NoticeManage.vue'),
+      children: [
         {
-          path : '/admin/noticelist',
-          name : 'AdminNoticeList',
-          component : AdminNoticeList
+          path: 'admin/noticelist',
+          name: 'AdminNoticeList',
+          component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../components/AdminNoticeList.vue'),
         }
       ]
     },
 
     // 주문관리 페이지
     {
-      path : '/admin/order',
-      name : 'OrderManage',
-      component : OrderManage,
-      children : [
+      path: '/admin/order',
+      name: 'OrderManage',
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/OrderManage.vue'),
+      children: [
         {
-          path : '/admin/orderlist',
-          name : 'AdminOrderList',
-          component : AdminOrderList
+          path: 'admin/orderlist',
+          name: 'AdminOrderList',
+          component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../components/AdminOrderList.vue')
         }
       ]
     }

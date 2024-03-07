@@ -9,7 +9,6 @@
     <!-- Fruits Shop Start-->
     <div class="container-fluid fruite py-5">
         <div class="container py-5">
-            <h1 class="mb-4">Delicious snack shop</h1>
             <div class="row g-4">
                 <div class="col-lg-12">
                     <div class="row g-4">
@@ -43,7 +42,8 @@
                                         <h4>카테고리</h4>
                                         <ul class="list-unstyled fruite-categorie" :key="i"
                                             v-for="(category, i) in categoryList">
-                                            <li @click="selectCategory(category.sub_code)">
+                                            <li @click="selectCategory(category.sub_code)"
+                                                :class="{ coloryellow: category.sub_code == this.scategory }">
                                                 <div class="d-flex justify-content-between fruite-name">
                                                     <a><i class="fa-solid fa-cookie"></i>
                                                         {{ category.sub_codename }}</a>
@@ -114,3 +114,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.coloryellow{
+    color: #ffc107;
+}
+</style>
