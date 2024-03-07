@@ -14,7 +14,7 @@ app.get('/carts/:userId', async(request, response) => {
 //장바구니 담기
 app.post('/carts', async(request, response) => {
   let data = request.body.param;
-  let result = await db.connection('ordersql', 'cartInsert', data);
+  let result = await db.connection('ordersql', 'cartInsert', data).catch(error => {console.log(error)});
     response.send(result);
 });
 
@@ -23,9 +23,16 @@ app.get('/carts/:ucode/:pcode', async(request, response) => {
   let data = [request.params.ucode, request.params.pcode];
   let result = await db.connection('ordersql', 'cartCheck', data);
     response.send(result);
+  console.log('장바구니 담긴 상품?', result)
 });
+//이미 담겨있는 상품에 수량 추가
+app.put('/addCnt/:cnt/:ccode', async(request, response) => {
+  let data = [request.params.cnt, request.params.ccode];
+  let result = await db.connection('ordersql', 'cartCntPlus', data);
+  response.send(result);
+})
 
-//수량
+//장바구니 수량 변경
 app.put('/carts/:cnt/:ccode', async(request, response) => {
   let data = [request.params.cnt, request.params.ccode];
   let result = await db.connection('ordersql', 'cartCntUpdate', data);
@@ -39,7 +46,6 @@ app.delete('/carts/:ccode', async(request, response) => {
     response.send(result);
 });
 
-
 //=============================================================
 //< orders >
 
@@ -48,20 +54,26 @@ app.post('/', async(request, response) => {
   let order = request.body.param.order;
   let details = selectedInfo(request.body.param.orderDetail);
   let delivery = request.body.param.deliveryInfo;
+  let point = request.body.param.point;
 
   let result = await db.connection('ordersql', 'orderInsert', order).catch(error => {console.log(error)});
   console.log('order결과: ' ,result);  //insertId: 0
-
+  //주문테이블 등록 후 생성된 주문코드
   let order_code = await db.connection('commonsql', 'currval', ['ORD', 'ORD']).catch(error => {console.log(error)});
   console.log('details결과', details);
-
+  //상세테이블
   for(let i=0; i < details.length; i++) {
     details[i].order_code =  order_code[0].seq
     await db.connection('ordersql', 'detailInsert', details[i]).catch(error => {console.log(error)});
   }
+
+  //배송테이블
   delivery.order_code = order_code[0].seq; 
-  
   await db.connection('ordersql', 'deliveryInsert', delivery).catch(error => {console.log(error)});
+
+  //포인트차감내역 추가
+  point.order_code = order_code[0].seq;
+  await db.connection('ordersql', 'memUsedPointInsert', point).catch(error => {console.log(error)});
 
   response.send(result);
 });
@@ -80,6 +92,19 @@ function selectedInfo(list) {
   return newArr;
 };
 
+//재고량 수정
+app.put('/:orderedCnt/:pco', async(request, response) => {
+  let data = [request.params.stockCnt, request.params.pcode];
+  let result = await db.connection('ordersql', 'stockCntUpdate', data);
+  response.send(result);
+});
+
+//회원포인트 수정
+app.put('/:usepoint/:mco', async(request, response) => {
+  let data = [request.params.usepoint, request.params.mco];
+  let result = await db.connection('ordersql', 'memPointUpdate', data);
+  response.send(result);
+});
 
 //=======================================
 //< 나의 주문내역 >

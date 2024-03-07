@@ -115,12 +115,12 @@ export default {
       totalPrice: 0,
       selectList: [],
       memId: this.$store.state.memberStore.memberInfo.member_id,
+      loginStatus: this.$store.state.memberStore.loginStatus,
     };
   },
 
   created() {
-    // this.getCartList(this.memId);
-    this.getCartList(this.$store.state.memberStore.memberInfo.member_id);
+    this.getCartList(this.memId);
   },
 
   computed: {
@@ -200,11 +200,7 @@ export default {
       this.$router.go(0); //페이지새로고침
     },
 
-    // goToCheckOut() {
-    //   sessionStorage.setItem("carts", JSON.stringify(this.selectList))
-    //   this.$router.push({path:'/checkout'})
-    // },
-    goToCheckOut() {
+    goToCheckOut() { //주문하기로 이동
       if (this.selectList.length == 0) {
         alert('주문하실 상품을 선택해주세요.');
       } else {

@@ -1,5 +1,6 @@
 import UserMain from "../views/UserMain.vue";
 import Main from "../views/ShopMain.vue";
+import Store from "../store/index";
 
 export default {
   path: "/",
@@ -46,11 +47,36 @@ export default {
       path: "cart",
       name: "Cart",
       component: import(/* webpackChunkName: "cart", webpackPrefetch: false */ "../views/order/CartView.vue"),
+      
+      beforeEnter: (to, from, next) => {
+        let loginStatus =  Store.state.memberStore.loginStatus;
+        console.log(loginStatus);
+        if(!loginStatus ){
+          alert('로그인 후 접근 가능한 페이지입니다.'),
+          next('/main');
+        }
+        else {
+          next();
+        }
+      },
     },
     {
       path: "checkout",
       name: "CheckOut",
       component: import(/* webpackChunkName: "checkout", webpackPrefetch: false */ "../views/order/CheckOutView.vue"),
+    
+      beforeEnter: (to, from, next) => {
+        let loginStatus =  Store.state.memberStore.loginStatus;
+        console.log(loginStatus);
+        if(!loginStatus ){
+          alert('로그인 후 접근 가능한 페이지입니다.'),
+          next('/main');
+        }
+        else {
+          next();
+        }
+      },
+    
     },
     {
       path: "ordcompleted",
