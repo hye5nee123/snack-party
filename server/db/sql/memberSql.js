@@ -50,7 +50,7 @@ SET member_code = snack.nextval('MEM')
 const memberUpdate =
 `UPDATE member
 SET ?
-WHERE member_code = ?`
+WHERE member_id = ?`
 
 const memberDelete = 
 `DELETE FROM member

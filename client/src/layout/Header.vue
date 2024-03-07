@@ -12,7 +12,7 @@
                 <div class="top-link pe-2">
                     <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white"><small class="text-white mx-2">{{ this.$store.state.memberStore.memberInfo.member_name }}님</small>/</a>
                     <a href="/login" v-else class="text-white"><small class="text-white mx-2">로그인</small>/</a>
-                    <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white" @click.prevent="memberLogout()"><small class="text-white mx-2">로그아웃</small>/</a>
+                    <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white" @click="memberLogout()"><small class="text-white mx-2">로그아웃</small>/</a>
                     <a href="/signup" v-else class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
                     <a href="#" class="text-white"><small class="text-white ms-2">보유적립금</small></a>
                 </div>
@@ -69,7 +69,7 @@
                     
                         
 
-                        <a href="#" class="my-auto icon">
+                        <a href="#" class="my-auto icon" @click="memberInfo()">
                             <i class="fas fa-user fa-2x"></i>
                         </a>
                     </div>
@@ -93,18 +93,28 @@ export default {
     },
     methods : {
         async memberLogout() {
+            if(this.$store.state.memberStore.kakaoInfo.id > 0) {
+                window.Kakao.Auth.logout(() => {
+                    console.log('카카오 로그아웃');
+                    }
+                )
+            }
             this.$store.commit('clearStore');
             alert('로그아웃 되었습니다.');
-
-            window.Kakao.Auth.logout( () => {
-                console.log('카카오 로그아웃!')
-                }
-            )
+            this.$router.push({path : '/'});
+        },
+        async memberInfo() {
+            if(this.$store.state.memberStore.loginStatus) {
+                this.$router.push({path : '/signup'});
+            } else {
+                alert('로그인을 해주세요.');
+                this.$router.push({path : '/login'});
+            }
         }
     },
     computed: {
-    user() {
-      return this.$store.state.loginStore.user;
+        user() {
+        return this.$store.state.loginStore.user;
     }
   }
 

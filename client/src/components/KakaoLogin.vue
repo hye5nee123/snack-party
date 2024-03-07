@@ -1,6 +1,6 @@
 <template>
     <a id="kakao-login-btn" @click="kakaoLogin()">
-    <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" alt="카카오 로그인 버튼" />
+    <img src="../assets/img/kakao_login_medium_wide.png" alt="카카오 로그인 버튼"/>
     </a>
 </template>
 
@@ -31,35 +31,33 @@ export default {
                     let result = await axios.post('/api/member/' + res.id)
                             .catch(err => console.log(err));
                     let info = result.data.member_id;
-                    console.log('===============', result.data);
-                    console.log('===============', result.data.member_id);
-                    console.log(info)
 
                     if(info > 0) {
                         alert('로그인 되었습니다.');
                                 
-                    let data = {
-                        member_code : result.data.member_code,
-                        member_id : result.data.member_id,
-                        pw : result.data.pw,
-                        member_name : result.data.member_name,
-                        member_phone : result.data.member_phone,
-                        member_email : result.data.member_email,
-                        birthday : result.data.birthday,
-                        gender : result.data.gender,
-                        postcode : result.data.postcode,
-                        member_type : result.data.member_type,
-                        join_date : result.data.join_date,
-                        address : result.data.address,
-                        address_detail : result.data.address_detail,
-                        member_status : result.data.member_status,
-                        quit_date : result.data.quit_date,
-                        token : result.data.token
-                    }  
+                        let data = {
+                            member_code : result.data.member_code,
+                            member_id : result.data.member_id,
+                            pw : result.data.pw,
+                            member_name : result.data.member_name,
+                            member_phone : result.data.member_phone,
+                            member_email : result.data.member_email,
+                            birthday : result.data.birthday,
+                            gender : result.data.gender,
+                            postcode : result.data.postcode,
+                            member_type : result.data.member_type,
+                            join_date : result.data.join_date,
+                            address : result.data.address,
+                            address_detail : result.data.address_detail,
+                            member_status : result.data.member_status,
+                            quit_date : result.data.quit_date,
+                            token : result.data.token
+                        }  
                         
-                    this.$store.commit('setLoginStatus', true);
-                    this.$store.commit('setMemberInfo', data);
-                    this.$router.push({path : '/'});
+                        this.$store.commit('setLoginStatus', true);
+                        this.$store.commit('setKakaoStatus', true);
+                        this.$store.commit('setMemberInfo', data);
+                        this.$router.push({path : '/'});
                     } else {
                         this.$router.push({path : '/sociallogin'});
                     }
