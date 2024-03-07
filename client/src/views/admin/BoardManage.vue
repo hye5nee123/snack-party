@@ -5,7 +5,7 @@
   </div>
 </template>
 <script>
-import ReviewListComp from "../../components/ReviewListComp";
+import ReviewListComp from "../../components/ReviewListComp.vue";
 export default {
   components: {
     ReviewListComp

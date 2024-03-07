@@ -7,7 +7,7 @@ const reviewList = `SELECT
   r.review_content,
   r.stars,
   r.review_date,
-  r.member_code
+  r.member_code,
   m.member_id
   FROM review r
   JOIN member m ON r.member_code = m.member_code;`

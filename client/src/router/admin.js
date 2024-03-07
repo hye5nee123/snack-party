@@ -50,8 +50,8 @@ export default {
     //리뷰관리 페이지
     {
       path: '/admin/review',
-      name: 'AReviewList',
-      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/AReviewList.vue'),
+      name: 'BoardManage',
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/BoardManage.vue'),
       children: [
         {
           path: '/admin/reviewlist',
