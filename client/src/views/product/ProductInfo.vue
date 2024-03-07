@@ -39,7 +39,7 @@
                                     </tr>
                                     <tr>
                                         <td>리뷰</td>
-                                        <td>0건 | <i class="fa fa-star text-secondary" /> 0.0</td>
+                                        <td>{{this.reviewCnt}}건 | <i class="fa fa-star text-secondary" /> {{this.avgStars}}</td>
                                     </tr>
                                     <tr>
                                         <td>배송방법</td>
@@ -190,6 +190,7 @@
                                 <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
                                     
                                     <!-- 리뷰 컴포넌트 -->
+                                    <button type="button" onclick="location.href='http://localhost:8081/reviewinsert'">리뷰 작성</button>
                                     <ReviewListComp :pcode="pcode" type="product"/>
                                     <!-- <div class="d-flex">
                                         <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
@@ -275,11 +276,13 @@
                                 </div>
                                 <div class="tab-pane" id="nav-inquire" role="tabpanel"
                                     aria-labelledby="nav-inquire-tab">
-                                    <h5>문의 테이블 출력</h5>
+                                     <!-- 문의 컴포넌트 -->
+                                      <button type="button" onclick="location.href='http://localhost:8081/reviewinsert'">문의 작성</button>
+                                    <ProInquiryListComp :pcode="pcode" type="product"/>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>                           
                 </div>
             </div>
         </div>
@@ -290,11 +293,13 @@
 <script>
 import axios from 'axios';
 import ReviewListComp from '../../components/ReviewListComp.vue';
+import ProInquiryListComp from "../../components/ProInquiryListComp.vue";
 
 export default {
     name: 'ProductInfo',
     components: {
-        ReviewListComp
+        ReviewListComp,
+        ProInquiryListComp
     },
     data() {
         return {
@@ -328,11 +333,15 @@ export default {
             }],
             pcode: '',
             quantity: '1',
+            reviewCnt: 0,
+            avgStars: 0
         };
     },
     created() {
         this.pcode = this.$route.query.product_code;
         this.getProductInfo();
+        this.getReviewCnt();
+        this.getAvgStars();
     },
     methods: {
         async getProductInfo() {
@@ -364,6 +373,22 @@ export default {
         },
         getCurrencyFormat(value) {
             return this.$currencyFormat(value);
+        },
+        //상품평 개수 가져오기
+        async getReviewCnt() {
+            let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
+                .catch(err => console.log(err));
+            this.reviewCnt = result.data[0].count;
+
+            console.log('this.reviewCnt : ', this.productInfo);
+        },
+         async getAvgStars() {
+            let result = await axios.get(`/api/review/avgStars/${this.pcode}`)
+                .catch(err => console.log(err));
+
+            this.avgStars = result.data[0].avg;
+
+            console.log('this.avgStars : ', this.avgStars);
         },
     }
 }
