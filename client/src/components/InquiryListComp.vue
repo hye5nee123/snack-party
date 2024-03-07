@@ -34,7 +34,7 @@
 import axios from 'axios';
 
 export default { 
-    props:["type"],
+    props:["type","pcode"],
 
   data(){
     return {
@@ -48,7 +48,7 @@ export default {
       async getInquiryList() { 
           let url = "";
           if (this.type == "product") {
-            url=`/api/inquiry/{{product_code}}`
+            url=`/api/inquiry/${this.pcode}`
           }else if(this.type == "admin"){
             url=`/api/inquiry/{{member_code}}`
           }else{

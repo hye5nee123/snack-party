@@ -78,9 +78,9 @@ export default {
       component: import(/* webpackChunkName: "pinquirylist", webpackPrefetch: false */ "../views/inquiry/PInquiryList.vue"),
     },
     {
-      path: 'reviewdetail',
-      name: 'ReviewDetail',
-      component: import(/* webpackChunkName: "reviewdetail", webpackPrefetch: false */ "../views/review/ReviewDetail.vue")
+      path: 'reviewinfo',
+      name: 'ReviewInfo',
+      component: import(/* webpackChunkName: "reviewinfo", webpackPrefetch: false */ "../views/review/ReviewInfo.vue")
     },
     {
       path: 'inquirylist',

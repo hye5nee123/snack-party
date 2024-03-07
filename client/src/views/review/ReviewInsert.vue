@@ -10,7 +10,7 @@
             <td class="title"><p>작성자</p></td>
             <td>
                 
-            <!-- <span>{{ member_code}}</span> -->
+            <span>{{ this.$store.state.memberStore.memberInfo.member_name }}</span>
             </td>
         </tr>
         <tr>
@@ -18,16 +18,6 @@
             <td>
             <input
                 v-model="reviewInfo.review_title"
-                type="text"
-                required
-            />
-            </td>
-        </tr>
-           <tr>
-            <td class="title"><p>디테일코드</p></td>
-            <td>
-            <input
-                v-model="reviewInfo.detail_code"
                 type="text"
                 required
             />

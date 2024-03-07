@@ -7,6 +7,7 @@ import AReviewList from '../views/admin/AReviewList.vue';
 import ReviewListComp from '../components/ReviewListComp.vue';
 import Store from '../store/index';
 
+
 export default {
   path: '/admin',
   name: 'admin',
@@ -27,28 +28,28 @@ export default {
   children : [
     // 공지게시판 페이지
     {
-      path : '/admin/notice',
-      name : 'NoticeManage',
-      component : NoticeManage,
-      children : [
+      path: '/admin/notice',
+      name: 'NoticeManage',
+      component: NoticeManage,
+      children: [
         {
-          path : '/admin/noticelist',
-          name : 'AdminNoticeList',
-          component : AdminNoticeList
+          path: '/admin/noticelist',
+          name: 'AdminNoticeList',
+          component: AdminNoticeList
         }
       ]
     },
 
     // 주문관리 페이지
     {
-      path : '/admin/order',
-      name : 'OrderManage',
-      component : OrderManage,
-      children : [
+      path: '/admin/order',
+      name: 'OrderManage',
+      component: OrderManage,
+      children: [
         {
-          path : '/admin/orderlist',
-          name : 'AdminOrderList',
-          component : AdminOrderList
+          path: '/admin/orderlist',
+          name: 'AdminOrderList',
+          component: AdminOrderList
         }
       ]
     },
@@ -60,12 +61,12 @@ export default {
       component: AReviewList,
       children: [
         {
-          path : '/admin/reviewlist',
-          name : 'ReviewListComp',
-          component : ReviewListComp
+          path: '/admin/reviewlist',
+          name: 'ReviewListComp',
+          component: ReviewListComp
         }
       ]
-      
+
     }
   ]
 }
