@@ -362,8 +362,8 @@ export default {
     created() {
         this.pcode = this.$route.query.product_code;
         this.getProductInfo();
-        this.getReviewCnt();
-        this.getAvgStars();
+        // this.getReviewCnt();
+        // this.getAvgStars();
     },
     watch: {
 
@@ -408,6 +408,7 @@ export default {
 
         //장바구니 추가
         async addToCart() {
+            console.log('addToCart() 실행');
             let data = {
                 "param": {
                     cart_cnt: this.quantity,
@@ -415,6 +416,8 @@ export default {
                     product_code: this.productInfo.product_code
                 }
             }
+            console.log('this.productInfo.product_code : ', );
+            console.log('data : ', data);
             //이미 담긴 상품 확인
             let ucode = this.memberCode;
             let pcode = this.productInfo[0].product_code;
@@ -433,22 +436,22 @@ export default {
                 await axios.post("/apiorder/carts", data).catch(err => console.log(err));
             }
         },
-    },
-    //상품평 개수 가져오기
-    async getReviewCnt() {
-        let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
-            .catch(err => console.log(err));
-        this.reviewCnt = result.data[0].count;
-
-        console.log('this.reviewCnt : ', this.productInfo);
-    },
-    async getAvgStars() {
-        let result = await axios.get(`/api/review/avgStars/${this.pcode}`)
-            .catch(err => console.log(err));
-
-        this.avgStars = result.data[0].avg;
-
-        console.log('this.avgStars : ', this.avgStars);
+        //상품평 개수 가져오기
+        async getReviewCnt() {
+            let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
+                .catch(err => console.log(err));
+            this.reviewCnt = result.data[0].count;
+    
+            console.log('this.reviewCnt : ', this.productInfo);
+        },
+        async getAvgStars() {
+            let result = await axios.get(`/api/review/avgStars/${this.pcode}`)
+                .catch(err => console.log(err));
+    
+            this.avgStars = result.data[0].avg;
+    
+            console.log('this.avgStars : ', this.avgStars);
+        },
     },
 }
 
