@@ -20,13 +20,13 @@
                 style="width: 90px; height: 90px"
                 alt=""
               /> -->
-              <img src="../assets/apple.jpg" width="80px" />
+              <img :src="getImgUrl(checkOutList[i].path)" width="100px" class="img-fluid rounded-top" alt="" />
             </div>
           </th>
           <td class="py-5">{{ checkout.product_name}}</td>
-          <td class="py-5">{{ getCurrencyFormat(checkout.product_price)}}원</td>
+          <td class="py-5">{{ $currencyFormat(checkout.product_price)}}원</td>
           <td class="py-5">{{ checkout.cart_cnt}}개</td>
-          <td class="py-5">{{ getCurrencyFormat(checkout.product_price * checkout.cart_cnt)}}원</td>
+          <td class="py-5">{{ $currencyFormat(checkout.product_price * checkout.cart_cnt)}}원</td>
         </tr>
 
 
@@ -43,9 +43,9 @@ export default {
     checkOutList: Array,
   },
   methods : {
-    getCurrencyFormat(value) {
-      return this.$currencyFormat(value)
-    }
+    getImgUrl(path) {
+      return new URL(this.url + '/common/download?path=' + path);
+    },
   }
 }
 </script>

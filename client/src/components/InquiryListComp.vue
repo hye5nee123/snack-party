@@ -33,19 +33,28 @@
 <script>
 import axios from 'axios';
 
-export default{ 
+export default { 
+    props:["type","pcode"],
+
   data(){
     return {
-      inquiryList: [],
-      member_code:'MEM00001'
+      inquiryList: []
     };
   },
   created() {
-    this.getInquiryList(this.member_code);
+    this.getInquiryList();
   },
   methods: {
-    async getInquiryList(mcode) { // 이 코드는 실제로 사용할 상품 코드로 대체되어야 합니다.
-  let result = await axios.get('/api/inquiry/'+mcode)
+      async getInquiryList() { 
+          let url = "";
+          if (this.type == "product") {
+            url=`/api/inquiry/${this.pcode}`
+          }else if(this.type == "admin"){
+            url=`/api/inquiry/{{member_code}}`
+          }else{
+            url=
+          }
+  let result = await axios.get(url)
       .catch(err => console.log(err));
   console.log('result : ', result);
   this.inquiryList = result.data;

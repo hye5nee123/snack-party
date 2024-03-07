@@ -16,15 +16,7 @@
         <div class="container py-5">
             <h3 class="mb-4">주문/결제</h3>
 
-            <!-- 데이터확인 -->
-
-            <!-- {{checkOutList}} -->
-            <!-- userInfo : {{ userInfo }} <br>
-            deliveryInfo : {{ deliveryInfo }}<br>
-            {{ all_pro_price }}원 {{ use_point }}원 {{ delivery_fee }}원 {{ total_price }}원 -->
-
-            <form action="#">
-
+            <!-- <form action="#"> -->
                 <div class="row g-5">
                     <!--주문정보-->
                     <div class="col-md-12 col-lg-6 col-xl-7">
@@ -41,8 +33,6 @@
                             <label class="form-label my-3">받는사람 <sup>*</sup></label>
                             <input type="text" class="form-control" v-model="userInfo.member_name">
                         </div>
-
-
 
                         <div class="form-item address-box">
                             <label class="form-label my-3">주소 <sup>*</sup></label>
@@ -94,7 +84,7 @@
                         </div>
                     </div>
                 </div>
-            </form>
+            <!-- </form> -->
         </div>
     </div>
     <!-- Checkout Page End -->
@@ -123,7 +113,6 @@ export default {
             //주문테이블
             get_point: 0,
 
-
             //배송
             deliveryInfo: {
                 memo: null,
@@ -132,6 +121,8 @@ export default {
             },
 
             order_code: '',
+
+            member_code: this.$store.state.memberStore.memberInfo.member_code
 
 
         }
@@ -143,9 +134,7 @@ export default {
     },
     created() {
         this.checkOutList = JSON.parse(sessionStorage.getItem("carts"));
-
-        // let searchNo = this.$route.query.userId;
-        this.getUserInfo('user002')
+        this.getUserInfo(this.$store.state.memberStore.memberInfo.member_id);
     },
 
     methods: {
@@ -198,16 +187,16 @@ export default {
 
             /* 2. 결제 데이터 정의하기 */
             const data = {
-                pg: 'html5_inicis',                           // PG사
-                pay_method: 'card',                           // 결제수단
-                merchant_uid: `ORD_${new Date().getTime()}`,  // 주문번호
-                amount: this.total_price,                                 // 결제금액
-                name: '상품명',                  // 주문명
-                buyer_name: this.userInfo.member_name,                           // 구매자 이름
-                buyer_tel: this.userInfo.member_phone,                     // 구매자 전화번호
-                buyer_email: this.userInfo.member_email,               // 구매자 이메일
-                buyer_postcode: this.userInfo.postcode,                      // 구매자 우편번호
-                buyer_addr: this.userInfo.address + this.userInfo.address_detail,                    // 구매자 주소
+                pg: 'html5_inicis',                                                      // PG사
+                pay_method: 'card',                                                      // 결제수단
+                merchant_uid: `ORD_${new Date().getTime()}`,                            // 주문번호
+                amount: this.total_price,                                               // 결제금액
+                name: '상품명',                                                         // 주문명
+                buyer_name: this.userInfo.member_name,                                  // 구매자 이름
+                buyer_tel: this.userInfo.member_phone,                                  // 구매자 전화번호
+                buyer_email: this.userInfo.member_email,                                // 구매자 이메일
+                buyer_postcode: this.userInfo.postcode,                                 // 구매자 우편번호
+                buyer_addr: this.userInfo.address + this.userInfo.address_detail,      // 구매자 주소
             };
 
             const vue = this; //안에서 바깥 함수 호출하려고
@@ -220,9 +209,8 @@ export default {
 
                     vue.orderInsert(rsp); //주문,상세,배송 테이블 등록
 
-                    //장바구니삭제
-                    //재고량변경
-
+                    //장바구니삭제, 재고량&회원포인트수정
+                    vue.changeInfo(rsp);
 
                     // vue.$router.push({ path: '/ordcompleted' }) //결제완료 후 이동할 페이지
                     // this.$router.push({path:'/ordcompleted', query:{order_code: this.order_code}}); //주문번호
@@ -236,11 +224,11 @@ export default {
         },
 
         //< 결제 후 >
-        //1.주문테이블등록
+        //1. orders / detail / delivery 테이블등록
         async orderInsert(rsp) {
             let data = {
-                "param": { 
-                    order : {
+                "param": {
+                    order: { //주문
                         member_code: this.userInfo.member_code,
                         delivery_fee: this.delivery_fee,
                         order_price: this.all_pro_price,
@@ -251,11 +239,11 @@ export default {
                         cancel_date: null,
                         imp_uid: rsp.imp_uid,
                         merchant_uid: rsp.merchant_uid,
-                    }, 
+                    },
 
-                    orderDetail : this.checkOutList,
+                    orderDetail: this.checkOutList, //주문상세
 
-                    deliveryInfo: {
+                    deliveryInfo: { //배송
                         recipient: this.userInfo.member_name,
                         rec_phone: this.userInfo.member_phone,
                         rec_postcode: this.userInfo.postcode,
@@ -263,61 +251,34 @@ export default {
                         rec_address_detail: this.userInfo.address_detail,
                         memo: this.deliveryInfo.memo,
                         delivery_num: this.deliveryInfo.delivery_num
-                    }
-            }
+                    },
 
+                    point: {
+                        review_code: null,
+                        point_status: 'd02',
+                        point_value: this.use_point,
+                        member_code: this.member_code
+                    }
+                }
             };
             let result = await axios.post("/apiorder", data)
                 .catch(err => console.log(err));
-                
-                console.log('결제성공' + result);
+
+            console.log('결제성공' + result);
         },
 
-        // //2.주문상세등록 
-        // async detailInsert(rsp) {
-        //     console.log('넘어오는 데이터: ' + rsp)
-        //     for (let i = 0; i < this.checkOutList.length; i++) {
-        //         let data = {
-        //             "param": {
-        //                 product_code: this.checkOutList[i].product_code,
-        //                 order_code: rsp.merchant_uid,
-        //                 order_cnt: this.checkOutList[i].cart_cnt,
-        //                 product_price: this.checkOutList[i].product_price,
-        //                 detail_price: this.checkOutList[i].product_price * this.checkOutList[i].cart_cnt
-        //             }
-        //         };
-        //         let result = await axios.post("/apiorder/details", data)
-        //             .catch(err => console.log(err));
-        //         console.log(result);
-        //     }
-        // },
-        // //3.배송 등록
-        // async insertInfo() { //배송지등록
-        //     let data = {
-        //         "param": {
-        //             recipient: this.userInfo.member_name,
-        //             rec_phone: this.userInfo.member_phone,
-        //             rec_postcode: this.userInfo.postcode,
-        //             rec_address: this.userInfo.address,
-        //             rec_address_detail: this.userInfo.address_detail,
-        //             memo: this.deliveryInfo.memo,
-        //             delivery_num: this.deliveryInfo.delivery_num,
-        //             order_code: this.deliveryInfo.order_code //수정하기
-        //         }
-        //     }
-        //     let result = await axios.post("/apiorder/delivery", data)
-        //         .catch(err => console.log(err));
+        //장바구니삭제 & 재고량 & 회원포인트 차감
+        async changeInfo() {
+            for (let ordered of this.checkOutList) {
+                await axios
+                .delete(`/apiorder/carts/${ordered.cart_code}`)
+                .catch((err) => console.log(err));
 
-        //     let info = result.data.affectedRows;
-        //     if (info == 0) {
-        //         alert(`등록되지 않았습니다.\n내용을 확인해주세요`);
-        //     }
-        // },
-        //4.장바구니삭제 
-
-        //5.재고량 수정
-
-
+                //재고량수정
+                await axios.put(`/apiorder/${ordered.cart_cnt}/${ordered.product_code}`).catch((err) => console.log(err));
+            }
+            console.log('삭제,수정되었습니다.');
+        },
     }
 } //end
 

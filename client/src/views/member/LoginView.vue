@@ -11,8 +11,8 @@
   
     <!-- Content -->
 
-    <div class="container-xxl">
-      <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="container-xxl boxsize">
+      <div class="container-p-y">
         <div class="authentication-inner">
           <!-- Register -->
           <div class="card">
@@ -29,7 +29,7 @@
                     class="form-control"
                     id="id"
                     name="email-username"
-                    placeholder="Enter your email or username"
+                    placeholder="아이디 입력"
                     autofocus
                     v-model="id"
                   />
@@ -47,11 +47,12 @@
                       id="pw"
                       class="form-control"
                       name="password"
-                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                      placeholder="비밀번호 입력"
                       aria-describedby="password"
                       v-model="pw"
+                      @keyup.enter="memberLogin()"
                     />
-                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                    <!-- <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span> -->
                   </div>
                 </div>
                 <!-- <div class="mb-3">
@@ -61,7 +62,7 @@
                   </div>
                 </div> -->
                 <div class="mb-3">
-                  <button class="btn btn-primary2 d-grid w-100" type="submit" @click="memberLogin()">로그인</button>
+                  <button class="btn btn-primary2 d-grid login center" type="button" @click="memberLogin()">로그인</button>
                 </div>
                 <KakaoLogin />
               <!-- </form> -->
@@ -73,7 +74,7 @@
                   <span>비밀번호 찾기</span>
                 </a>
                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <span>회원가입</span>
+                <router-link to="/signup">회원가입</router-link>
               </p>
             </div>
           </div>
@@ -111,7 +112,7 @@ export default {
     async memberLogin() {
       if(!this.validation()) return;
 
-      let result = await axios.post('/api/member/' + this.id)
+      let result = await axios.post('api/member/' + this.id)
                     .catch(err => console.log(err));
                        
       let data = {
@@ -185,5 +186,17 @@ export default {
 .form-label {
     margin-bottom: .5rem;
     font-size: 0.8rem;
+}
+
+.boxsize {
+  max-width: 430px
+}
+
+.login {
+  width: 300px
+  }
+
+input::placeholder {
+    color: #cccccc;
 }
 </style>

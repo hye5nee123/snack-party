@@ -24,8 +24,8 @@ app.post("/", async(request, response) => {
 })
 
 // 수정
-app.put("/:member_code", async(request, response) => {
-    let data = [request.body.param, request.params.member_code];
+app.put("/:member_id", async(request, response) => {
+    let data = [request.body.param, request.params.member_id];
     let result = await db.connection('membersql', 'memberUpdate', data);
     response.send(result);
 })

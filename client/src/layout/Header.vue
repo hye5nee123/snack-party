@@ -10,11 +10,13 @@
                             class="text-white">Email@Example.com</a></small>
                 </div>
                 <div class="top-link pe-2">
-                    <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white"><small class="text-white mx-2">{{ this.$store.state.memberStore.memberInfo.member_name }}님</small>/</a>
-                    <a href="/login" v-else class="text-white"><small class="text-white mx-2">로그인</small>/</a>
-                    <a href="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white" @click="memberLoginout()"><small class="text-white mx-2">로그아웃</small>/</a>
-                    <a href="/signup" v-else class="text-white"><small class="text-white mx-2">회원가입</small>/</a>
-                    <a href="#" class="text-white"><small class="text-white ms-2">보유적립금</small></a>
+
+                    <router-link to="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white"><small class="text-white mx-2">{{ this.$store.state.memberStore.memberInfo.member_name }}님</small>/</router-link>
+                    <router-link to="/login" v-else class="text-white"><small class="text-white mx-2">로그인</small>/</router-link>
+                    <router-link to="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white" @click.prevent="memberLogout()"><small class="text-white mx-2">로그아웃</small>/</router-link>
+                    <router-link to="/signup" v-else class="text-white"><small class="text-white mx-2">회원가입</small>/</router-link>
+                    <router-link to="#" class="text-white"><small class="text-white ms-2">보유적립금</small></router-link>
+                    <router-link to="/admin" v-if="this.$store.state.memberStore.memberInfo.member_type == 'b03'" class="text-white">/<small class="text-white mx-2">관리자 페이지</small></router-link>
                 </div>
             </div>
         </div>
@@ -53,17 +55,21 @@
                         </div>
                     </div>
                     <div class="d-flex m-3 me-0">
-                        <button
-                            class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
-                            data-bs-toggle="modal" data-bs-target="#searchModal"><i
-                                class="fas fa-search text-primary"></i></button>
-                        <a href="/cart" class="position-relative me-4 my-auto icon">
+                        <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
+                            <i class="fas fa-search text-primary"></i>
+                        </button>
+                        
+                        <!-- 장바구니 -->
+                        <router-link to="/cart" v-if="$store.state.memberStore.memberInfo.member_id" class="position-relative me-4 my-auto icon">
                             <i class="fa fa-shopping-bag fa-2x"></i>
-                            <span
+                            <!-- 장바구니개수 -->
+                            <!-- <span
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3<!--로그인정보필요(장바구니개수)--></span>
-                        </a>
-                        <a href="#" class="my-auto icon">
+                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3
+                            </span> -->
+                        </router-link>
+
+                        <a href="#" class="my-auto icon" @click="memberInfo()">
                             <i class="fas fa-user fa-2x"></i>
                         </a>
                     </div>
@@ -77,17 +83,40 @@
 <script>
 export default {
     name: "header_part",
+    data() {
+        return {
+            memId: this.$store.state.memberStore.memberInfo.member_id,
+        }
+    },
+    created(){
+        console.log(this.memId);
+    },
     methods : {
-        async memberLoginout() {
+        async memberLogout() {
+            if(this.$store.state.memberStore.kakaoInfo.id > 0) {
+                window.Kakao.Auth.logout(() => {
+                    console.log('카카오 로그아웃');
+                    }
+                )
+            }
             this.$store.commit('clearStore');
             alert('로그아웃 되었습니다.');
+            this.$router.push({path : '/'});
+        },
+        async memberInfo() {
+            if(this.$store.state.memberStore.loginStatus) {
+                this.$router.push({path : '/signup'});
+            } else {
+                alert('로그인을 해주세요.');
+                this.$router.push({path : '/login'});
+            }
         }
     },
     computed: {
-    user() {
-      return this.$store.state.loginStore.user;
+        user() {
+        return this.$store.state.loginStore.user;
     }
-  },
+  }
 
 }
 </script>

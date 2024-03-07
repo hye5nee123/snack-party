@@ -45,7 +45,8 @@
                                     </tr>
                                     <tr>
                                         <td>리뷰</td>
-                                        <td>0건 | <i class="fa fa-star text-secondary" /> 0.0</td>
+                                        <td>{{ this.reviewCnt }}건 | <i class="fa fa-star text-secondary" />
+                                            {{ this.avgStars }}</td>
                                     </tr>
                                     <tr>
                                         <td>배송방법</td>
@@ -58,7 +59,8 @@
                                     <tr>
                                         <td>수량</td>
                                         <td>
-                                            <div class="input-group quantity" style="width: 100px;">
+                                            <div class="input-group quantity" style="width: 100px;"
+                                                v-show="productInfo[0].stock_cnt != 0">
                                                 <div class="input-group-btn">
                                                     <button @click="quantityDown"
                                                         class="btn btn-sm btn-minus rounded-circle bg-light border">
@@ -93,12 +95,20 @@
                                 <a href="#"
                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
                                         class="fa-regular fa-heart" /> 관심상품</a>
-                                <a href="#"
+
+                                <button type="button" v-if="productInfo[0].stock_cnt == 0"
+                                    class="btn border rounded-pill px-4 py-2 mb-4 text-primary col-lg-4">품절</button>
+                                <button type="button" v-else @click="addToCart()"
                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
-                                        class="fa-solid fa-cart-plus" /> 장바구니</a>
-                                <a href="#"
+                                        class="fa-solid fa-cart-plus" /> 장바구니</button>
+
+                                <button
+                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4">
+                                    <i class="fa-brands fa-shopify" /> 바로 구매하기
+                                </button>
+                                <!-- <a href="#"
                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
-                                        class="fa-brands fa-shopify" /> 바로 구매하기</a>
+                                        class="fa-brands fa-shopify" /> 바로 구매하기</a> -->
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -121,7 +131,7 @@
                             <div class="tab-content mb-5">
                                 <div class="tab-pane active tacenter" id="nav-about" role="tabpanel"
                                     aria-labelledby="nav-about-tab">
-                                    <img :src="getImgUrl(productInfo != null && productInfo.length > 1 ? productInfo[1].path : '') "
+                                    <img :src="getImgUrl(productInfo != null && productInfo.length > 1 ? productInfo[1].path : '')"
                                         class="img-fluid rounded" alt="Image">
                                 </div>
                                 <div class="tab-pane tacenter" id="nav-delret" role="tabpanel"
@@ -194,7 +204,11 @@
                                     </table>
                                 </div>
                                 <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
-                                    <h5>리뷰 테이블 출력</h5>
+
+                                    <!-- 리뷰 컴포넌트 -->
+                                    <button type="button"
+                                        onclick="location.href='http://localhost:8081/reviewinsert'">리뷰 작성</button>
+                                    <ReviewListComp :pcode="pcode" type="product" />
                                     <!-- <div class="d-flex">
                                         <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
                                             style="width: 100px; height: 100px;" alt="">
@@ -279,7 +293,10 @@
                                 </div>
                                 <div class="tab-pane" id="nav-inquire" role="tabpanel"
                                     aria-labelledby="nav-inquire-tab">
-                                    <h5>문의 테이블 출력</h5>
+                                    <!-- 문의 컴포넌트 -->
+                                    <button type="button"
+                                        onclick="location.href='http://localhost:8081/reviewinsert'">문의 작성</button>
+                                    <ProInquiryListComp :pcode="pcode" type="product" />
                                 </div>
                             </div>
                         </div>
@@ -293,9 +310,15 @@
 
 <script>
 import axios from 'axios';
+import ReviewListComp from '../../components/ReviewListComp.vue';
+import ProInquiryListComp from "../../components/ProInquiryListComp.vue";
 
 export default {
     name: 'ProductInfo',
+    components: {
+        ReviewListComp,
+        ProInquiryListComp
+    },
     data() {
         return {
             productInfo: [{
@@ -328,11 +351,22 @@ export default {
             }],
             pcode: '',
             quantity: '1',
+
+            loginStatus: this.$store.state.memberStore.loginStatus,
+            memberCode: this.$store.state.memberStore.memberInfo.member_code
+
+            reviewCnt: 0,
+            avgStars: 0
         };
     },
     created() {
         this.pcode = this.$route.query.product_code;
         this.getProductInfo();
+        this.getReviewCnt();
+        this.getAvgStars();
+    },
+    watch: {
+
     },
     methods: {
         async getProductInfo() {
@@ -353,7 +387,13 @@ export default {
                 return '';
         },
         quantityUp() {
-            this.quantity++;
+            //재고량과 수량 비교
+            if (this.productInfo[0].stock_cnt <= this.quantity) {
+                alert('재고 부족으로 주문가능한 수량은 ' + this.productInfo[0].stock_cnt + '개 입니다.');
+                this.quantity = this.productInfo[0].stock_cnt;
+            } else {
+                this.quantity++;
+            }
         },
         quantityDown() {
             if (this.quantity > 1) {
@@ -365,8 +405,53 @@ export default {
         getCurrencyFormat(value) {
             return this.$currencyFormat(value);
         },
-    }
+
+        //장바구니 추가
+        async addToCart() {
+            let data = {
+                "param": {
+                    cart_cnt: this.quantity,
+                    member_code: this.memberCode,
+                    product_code: this.productInfo.product_code
+                }
+            }
+            //이미 담긴 상품 확인
+            let ucode = this.memberCode;
+            let pcode = this.productInfo[0].product_code;
+            let cartCheck = await axios.get(`/apiorder/carts/${ucode}/${pcode}`).catch((err) => console.log(err));
+            // console.log('cartCheck결과', cartCheck.data[0].cart_code)
+
+            if (!this.loginStatus) {
+                alert('로그인 후 이용가능합니다.');
+            } else if (cartCheck.data.length != 0) {
+                //이미 담긴 수량에 원하는 수량 추가
+                let ccode = cartCheck.data[0].cart_code
+                await axios.put(`/apiorder/addCnt/${this.quantity}/${ccode}`).catch((err) => console.log(err));
+                alert('이미 담긴 상품으로 ' + this.quantity + '개가 추가되었습니다.');
+
+                //최종 장바구니 추가
+                await axios.post("/apiorder/carts", data).catch(err => console.log(err));
+            }
+        },
+    },
+    //상품평 개수 가져오기
+    async getReviewCnt() {
+        let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
+            .catch(err => console.log(err));
+        this.reviewCnt = result.data[0].count;
+
+        console.log('this.reviewCnt : ', this.productInfo);
+    },
+    async getAvgStars() {
+        let result = await axios.get(`/api/review/avgStars/${this.pcode}`)
+            .catch(err => console.log(err));
+
+        this.avgStars = result.data[0].avg;
+
+        console.log('this.avgStars : ', this.avgStars);
+    },
 }
+
 </script>
 
 <style scoped>

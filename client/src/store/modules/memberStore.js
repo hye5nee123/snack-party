@@ -19,11 +19,9 @@ const memberStore = {
                 quit_date : null,
                 token : ''                
             },
-            kakaoInfo : {
-                email : '',
-                name : ''
-            },
+            kakaoInfo : {},
             loginStatus : false,
+            kakaoStatus : false
         }
     },
     mutations : {
@@ -36,9 +34,14 @@ const memberStore = {
         setLoginStatus(state, data) {
             state.loginStatus = data;
         },
+        setKakaoStatus(state, data) {
+            state.kakaoStatus = data;
+        },
         clearStore(state) {
             state.memberInfo = {};
+            state.kakaoInfo = {};
             state.loginStatus = false;
+            state.kakaoStatus = false;
         }
     }
 };
