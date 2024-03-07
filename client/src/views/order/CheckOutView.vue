@@ -34,8 +34,6 @@
                             <input type="text" class="form-control" v-model="userInfo.member_name">
                         </div>
 
-
-
                         <div class="form-item address-box">
                             <label class="form-label my-3">주소 <sup>*</sup></label>
                             <br>
@@ -115,7 +113,6 @@ export default {
             //주문테이블
             get_point: 0,
 
-
             //배송
             deliveryInfo: {
                 memo: null,
@@ -124,6 +121,8 @@ export default {
             },
 
             order_code: '',
+
+            member_code: this.$store.state.memberStore.memberInfo.member_code
 
 
         }
@@ -135,9 +134,7 @@ export default {
     },
     created() {
         this.checkOutList = JSON.parse(sessionStorage.getItem("carts"));
-
-        // let searchNo = this.$route.query.userId;
-        this.getUserInfo('user002')
+        this.getUserInfo(this.$store.state.memberStore.memberInfo.member_id);
     },
 
     methods: {
@@ -212,8 +209,8 @@ export default {
 
                     vue.orderInsert(rsp); //주문,상세,배송 테이블 등록
 
-                    //장바구니삭제
-                    //재고량변경
+                    //장바구니삭제, 재고량&회원포인트수정
+                    vue.changeInfo(rsp);
 
                     // vue.$router.push({ path: '/ordcompleted' }) //결제완료 후 이동할 페이지
                     // this.$router.push({path:'/ordcompleted', query:{order_code: this.order_code}}); //주문번호
@@ -254,6 +251,13 @@ export default {
                         rec_address_detail: this.userInfo.address_detail,
                         memo: this.deliveryInfo.memo,
                         delivery_num: this.deliveryInfo.delivery_num
+                    },
+
+                    point: {
+                        review_code: null,
+                        point_status: 'd02',
+                        point_value: this.use_point,
+                        member_code: this.member_code
                     }
                 }
             };
@@ -263,13 +267,18 @@ export default {
             console.log('결제성공' + result);
         },
 
-        //2.장바구니삭제 
+        //장바구니삭제 & 재고량 & 회원포인트 차감
+        async changeInfo() {
+            for (let ordered of this.checkOutList) {
+                await axios
+                .delete(`/apiorder/carts/${ordered.cart_code}`)
+                .catch((err) => console.log(err));
 
-
-
-        //3.재고량 수정
-
-
+                //재고량수정
+                await axios.put(`/apiorder/${ordered.cart_cnt}/${ordered.product_code}`).catch((err) => console.log(err));
+            }
+            console.log('삭제,수정되었습니다.');
+        },
     }
 } //end
 

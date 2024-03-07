@@ -2,19 +2,6 @@
 
 //장바구니 목록 -- 상품이미지 추가해야 됨
 const cartList = 
-// `SELECT c.cart_code
-//       , p.product_code
-//       ,p.product_name
-// 	    , c.cart_cnt
-//       , p.product_price
-//     	, c.member_code
-// 	    , c.product_code
-//       , p.stock_cnt
-// FROM cart c JOIN product p
-// 			ON c.product_code = p.product_code
-// WHERE member_code = (SELECT member_code
-//                      FROM member
-//                      WHERE member_id = ?)`
 `SELECT c.cart_code
 , p.product_code
 , p.product_name
@@ -46,6 +33,11 @@ const cartCheck =
 FROM cart
 WHERE member_code = ?
 AND product_code = ?`
+//상품 장바구니 수량 추가
+const cartCntPlus = 
+`UPDATE cart
+SET cart_cnt = cart_cnt + ?
+WHERE cart_code = ?`
 
 //장바구니 수량 변경
 const cartCntUpdate =
@@ -57,8 +49,6 @@ WHERE cart_code = ?`
 const cartDelete =
 `DELETE FROM cart
 WHERE cart_code = ?`
-
-
 
 //====================================================
 
@@ -81,6 +71,23 @@ const deliveryInsert =
 `INSERT INTO delivery
 SET delivery_code = snack.nextval('DEL')
     , ?`
+
+//주문 후 재고량 수정
+const stockCntUpdate =
+`UPDATE product
+SET stock_cnt = stock_cnt - ?
+WHERE product_code = ?`;
+
+//주문 후 회원포인트 차감 등록
+const memUsedPointInsert = //point_status d02
+`INSERT INTO point
+SET point_code = snack.nextval('POI')
+    , ?`
+
+
+//======================================================
+
+/* < 나의 주문내역 > */
 
 //전체 주문 목록
 const orderListAll =
@@ -130,18 +137,21 @@ module.exports = {
   cartList, //목록
   cartInsert, //담기
   cartCheck, //중복확인
+  cartCntPlus,
   cartCntUpdate, //수량수정
   cartDelete,
 
 //2)주문하기  
-  orderInsert,
-  detailInsert,
-  deliveryInsert,
+  orderInsert, //주문등록
+  detailInsert, //상세등록
+  deliveryInsert, //배송등록
+  stockCntUpdate, //재고량수정
+  memUsedPointInsert, //회원포인트수정
 
 
+  
+  //3)주문관리
   orderList,
   detailList,
-
-//3)주문관리
   orderListAll,
 }

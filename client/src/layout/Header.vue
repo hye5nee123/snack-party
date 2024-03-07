@@ -60,16 +60,14 @@
                         </button>
                         
                         <!-- 장바구니 -->
-                       
                         <router-link to="/cart" v-if="$store.state.memberStore.memberInfo.member_id" class="position-relative me-4 my-auto icon">
                             <i class="fa fa-shopping-bag fa-2x"></i>
-                            <span
+                            <!-- 장바구니개수 -->
+                            <!-- <span
                                 class="position-absolute bg-secondary rounded-circle d-flex align-items-center justify-content-center text-dark px-1"
-                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3<!--로그인정보필요(장바구니개수)-->
-                            </span>
+                                style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3
+                            </span> -->
                         </router-link>
-                    
-                        
 
                         <a href="#" class="my-auto icon" @click="memberInfo()">
                             <i class="fas fa-user fa-2x"></i>
