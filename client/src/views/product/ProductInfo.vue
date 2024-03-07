@@ -353,7 +353,7 @@ export default {
             quantity: '1',
 
             loginStatus: this.$store.state.memberStore.loginStatus,
-            memberCode: this.$store.state.memberStore.memberInfo.member_code
+            memberCode: this.$store.state.memberStore.memberInfo.member_code,
 
             reviewCnt: 0,
             avgStars: 0

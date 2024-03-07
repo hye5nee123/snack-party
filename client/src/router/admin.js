@@ -1,4 +1,5 @@
 import AdminMain from '../views/AdminMain.vue';
+import Store from '../store/index.js'
 
 export default {
   path: '/admin',
@@ -50,12 +51,12 @@ export default {
     {
       path: '/admin/review',
       name: 'AReviewList',
-      component: AReviewList,
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/AReviewList.vue'),
       children: [
         {
           path: '/admin/reviewlist',
           name: 'ReviewListComp',
-          component: ReviewListComp
+          component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../components/ReviewListComp.vue')
         }
       ]
 
