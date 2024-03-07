@@ -71,7 +71,7 @@
                     
                         
 
-                        <a href="#" class="my-auto icon">
+                        <a href="#" class="my-auto icon" @click="memberInfo()">
                             <i class="fas fa-user fa-2x"></i>
                         </a>
                     </div>
@@ -95,18 +95,28 @@ export default {
     },
     methods : {
         async memberLogout() {
+            if(this.$store.state.memberStore.kakaoInfo.id > 0) {
+                window.Kakao.Auth.logout(() => {
+                    console.log('카카오 로그아웃');
+                    }
+                )
+            }
             this.$store.commit('clearStore');
             alert('로그아웃 되었습니다.');
-
-            window.Kakao.Auth.logout( () => {
-                console.log('카카오 로그아웃!')
-                }
-            )
+            this.$router.push({path : '/'});
+        },
+        async memberInfo() {
+            if(this.$store.state.memberStore.loginStatus) {
+                this.$router.push({path : '/signup'});
+            } else {
+                alert('로그인을 해주세요.');
+                this.$router.push({path : '/login'});
+            }
         }
     },
     computed: {
-    user() {
-      return this.$store.state.loginStore.user;
+        user() {
+        return this.$store.state.loginStore.user;
     }
   }
 
