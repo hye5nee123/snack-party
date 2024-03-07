@@ -39,7 +39,8 @@
                                     </tr>
                                     <tr>
                                         <td>리뷰</td>
-                                        <td>0건 | <i class="fa fa-star text-secondary" /> 0.0</td>
+                                        <td>{{ this.reviewCnt }}건 | <i class="fa fa-star text-secondary" />
+                                            {{ this.avgStars }}</td>
                                     </tr>
                                     <tr>
                                         <td>배송방법</td>
@@ -52,7 +53,8 @@
                                     <tr>
                                         <td>수량</td>
                                         <td>
-                                            <div class="input-group quantity" style="width: 100px;" v-show="productInfo[0].stock_cnt != 0">
+                                            <div class="input-group quantity" style="width: 100px;"
+                                                v-show="productInfo[0].stock_cnt != 0">
                                                 <div class="input-group-btn">
                                                     <button @click="quantityDown"
                                                         class="btn btn-sm btn-minus rounded-circle bg-light border">
@@ -94,7 +96,8 @@
                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
                                         class="fa-solid fa-cart-plus" /> 장바구니</button>
 
-                                <button class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4">
+                                <button
+                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4">
                                     <i class="fa-brands fa-shopify" /> 바로 구매하기
                                 </button>
                                 <!-- <a href="#"
@@ -197,11 +200,97 @@
                                 <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
 
                                     <!-- 리뷰 컴포넌트 -->
+                                    <button type="button"
+                                        onclick="location.href='http://localhost:8081/reviewinsert'">리뷰 작성</button>
                                     <ReviewListComp :pcode="pcode" type="product" />
+                                    <!-- <div class="d-flex">
+                                        <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
+                                            style="width: 100px; height: 100px;" alt="">
+                                        <div class="">
+                                            <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                            <div class="d-flex justify-content-between">
+                                                <h5>Jason Smith</h5>
+                                                <div class="d-flex mb-3">
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p>The generated Lorem Ipsum is therefore always free from repetition
+                                                injected humour, or non-characteristic
+                                                words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
+                                            style="width: 100px; height: 100px;" alt="">
+                                        <div class="">
+                                            <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                            <div class="d-flex justify-content-between">
+                                                <h5>Sam Peters</h5>
+                                                <div class="d-flex mb-3">
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p class="text-dark">The generated Lorem Ipsum is therefore always free
+                                                from repetition injected humour, or non-characteristic
+                                                words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                        </div>
+                                    </div>
+                                    <form action="#">
+                                        <h4 class="mb-5 fw-bold">Leave a Reply</h4>
+                                        <div class="row g-4">
+                                            <div class="col-lg-6">
+                                                <div class="border-bottom rounded">
+                                                    <input type="text" class="form-control border-0 me-4"
+                                                        placeholder="Yur Name *">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="border-bottom rounded">
+                                                    <input type="email" class="form-control border-0"
+                                                        placeholder="Your Email *">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="border-bottom rounded my-4">
+                                                    <textarea name="" id="" class="form-control border-0" cols="30"
+                                                        rows="8" placeholder="Your Review *"
+                                                        spellcheck="false"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="d-flex justify-content-between py-3 mb-5">
+                                                    <div class="d-flex align-items-center">
+                                                        <p class="mb-0 me-3">Please rate:</p>
+                                                        <div class="d-flex align-items-center" style="font-size: 12px;">
+                                                            <i class="fa fa-star text-muted"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+                                                    </div>
+                                                    <a href="#"
+                                                        class="btn border border-secondary text-primary rounded-pill px-4 py-3">
+                                                        Post Comment</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form> -->
                                 </div>
                                 <div class="tab-pane" id="nav-inquire" role="tabpanel"
                                     aria-labelledby="nav-inquire-tab">
-                                    <h5>문의 테이블 출력</h5>
+                                    <!-- 문의 컴포넌트 -->
+                                    <button type="button"
+                                        onclick="location.href='http://localhost:8081/reviewinsert'">문의 작성</button>
+                                    <ProInquiryListComp :pcode="pcode" type="product" />
                                 </div>
                             </div>
                         </div>
@@ -216,11 +305,13 @@
 <script>
 import axios from 'axios';
 import ReviewListComp from '../../components/ReviewListComp.vue';
+import ProInquiryListComp from "../../components/ProInquiryListComp.vue";
 
 export default {
     name: 'ProductInfo',
     components: {
-        ReviewListComp
+        ReviewListComp,
+        ProInquiryListComp
     },
     data() {
         return {
@@ -258,14 +349,18 @@ export default {
             loginStatus: this.$store.state.memberStore.loginStatus,
             memberCode: this.$store.state.memberStore.memberInfo.member_code
 
+            reviewCnt: 0,
+            avgStars: 0
         };
     },
     created() {
         this.pcode = this.$route.query.product_code;
         this.getProductInfo();
+        this.getReviewCnt();
+        this.getAvgStars();
     },
     watch: {
-        
+
     },
     methods: {
         async getProductInfo() {
@@ -287,7 +382,7 @@ export default {
         },
         quantityUp() {
             //재고량과 수량 비교
-            if(this.productInfo[0].stock_cnt <= this.quantity) {
+            if (this.productInfo[0].stock_cnt <= this.quantity) {
                 alert('재고 부족으로 주문가능한 수량은 ' + this.productInfo[0].stock_cnt + '개 입니다.');
                 this.quantity = this.productInfo[0].stock_cnt;
             } else {
@@ -322,22 +417,35 @@ export default {
 
             if (!this.loginStatus) {
                 alert('로그인 후 이용가능합니다.');
-             } else if (cartCheck.data.length != 0) {
+            } else if (cartCheck.data.length != 0) {
                 //이미 담긴 수량에 원하는 수량 추가
                 let ccode = cartCheck.data[0].cart_code
                 await axios.put(`/apiorder/addCnt/${this.quantity}/${ccode}`).catch((err) => console.log(err));
                 alert('이미 담긴 상품으로 ' + this.quantity + '개가 추가되었습니다.');
-               
+
                 //최종 장바구니 추가
                 await axios.post("/apiorder/carts", data).catch(err => console.log(err));
-            } 
+            }
         },
+    },
+    //상품평 개수 가져오기
+    async getReviewCnt() {
+        let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
+            .catch(err => console.log(err));
+        this.reviewCnt = result.data[0].count;
 
-        
+        console.log('this.reviewCnt : ', this.productInfo);
+    },
+    async getAvgStars() {
+        let result = await axios.get(`/api/review/avgStars/${this.pcode}`)
+            .catch(err => console.log(err));
 
+        this.avgStars = result.data[0].avg;
 
+        console.log('this.avgStars : ', this.avgStars);
     },
 }
+
 </script>
 
 <style scoped>

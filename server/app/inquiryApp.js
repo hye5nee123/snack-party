@@ -4,11 +4,17 @@ const db = require("../db.js");
 /*1:1*/
 
 //자기 문의 조회(회원)
-app.get("/:member_code", async (request, response) => {
+app.get("/member/:member_code", async (request, response) => {
   let data = request.params.member_code;
   let result = await db.connection("inquirysql", "sinquiryList", data);
   response.send(result);
-})
+});
+//전체 조회(관리자)
+// app.get("/", async (request, response) => {
+//   let data = request.params.member_code;
+//   let result = await db.connection("inquirysql", "sinquiryList", data);
+//   response.send(result);
+// })
 /*상품*/
 
 //상품 건별 조회.

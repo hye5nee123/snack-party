@@ -1,7 +1,7 @@
 <template>
 <!-- Menu -->
 
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+<aside id="layout-menu" class="menu-vertical menu bg-menu-theme">
   <div>
     <router-link to="/admin" class="app-brand-link">
       <img src="../assets/img/과자파티_투명배경.png" width="250px"/>
@@ -67,6 +67,7 @@
       </router-link>
     </li>
     <!-- 주문관리 end -->
+    
   </ul>
 </aside>
 

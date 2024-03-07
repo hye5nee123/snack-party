@@ -34,7 +34,8 @@
 import axios from 'axios';
 
 export default { 
-    props:["type"]
+    props:["type","pcode"],
+
   data(){
     return {
       inquiryList: []
@@ -47,9 +48,13 @@ export default {
       async getInquiryList() { 
           let url = "";
           if (this.type == "product") {
+            url=`/api/inquiry/${this.pcode}`
+          }else if(this.type == "admin"){
+            url=`/api/inquiry/{{member_code}}`
+          }else{
             url=
           }
-  let result = await axios.get(`/api/inquiry/{{member_code}}`)
+  let result = await axios.get(url)
       .catch(err => console.log(err));
   console.log('result : ', result);
   this.inquiryList = result.data;

@@ -17,13 +17,14 @@
           <form action="#">
               <div class="row g-5 center">
                 <div class="col-md-12 col-lg-6 col-xl-7">
+                    <div class="info"><sup>*</sup> 필수 입력사항</div><br>
                     <div class="form-item col-lg-6 my-3">
                         <label class="bold">아이디<sup>*</sup></label>
                         <input type="text" class="form-control" id="id" v-model="memberInfo.id" readonly>
                     </div>
                     <div class="form-item col-lg-6 ">
                         <label class="bold">이름<sup>*</sup></label>
-                        <input type="text" class="form-control" id="name" v-model="memberInfo.name" autofocus>
+                        <input type="text" class="form-control" placeholder="이름 입력" id="name" v-model="memberInfo.name" autofocus>
                     </div>
                     <div class="form-item col-lg-6 my-3">
                         <label class="bold">휴대전화<sup>*</sup></label>
@@ -98,21 +99,16 @@
                   birth : null,
                   gender : '',
                   postcode : '',
-                  type : 'b01',
+                  type : 'b02',
                   address : '',
                   address_detail : '',
                   status : 'c01',
                   quit_date : null,
                   token : ''
-              },
-              memberList : [],
-              check : false
+              }
           };
       },
       created() {
-          console.log(this.$store.state.memberStore.loginStatus);
-          console.log(this.$store.state.memberStore.memberInfo);
-          console.log(this.$store.state.memberStore.kakaoInfo);
           this.memberInfo.id = this.$store.state.memberStore.kakaoInfo.id;
           this.memberInfo.email = this.$store.state.memberStore.kakaoInfo.kakao_account.email;
       },
@@ -185,45 +181,51 @@
   }
   </script>
   
-  <style scoped>
-  .center {
-      justify-content: center
-  }
-  
-  sup {
-      color: red
-  }
-  
-  .bold {
-      font-weight: 700;
-      margin-bottom: .5rem;
-  }
-  
-  .margin-right {
-      margin-right: 0.5rem;
-  }
-  
-  input::placeholder {
-      color: #cccccc;
-  }
-  
-  input:read-only {
-      background-color: #eeeeee;
-  }
-  
-  .page-header {
-      position: relative;
-      background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../../assets/img/snack.jpg);
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: cover;
-  }
-  
-  .breadcrumb-item+.breadcrumb-item::before {
-      float: left;
-      padding-right: .5rem;
-      color: #fd7e14;
-      content: var(--bs-breadcrumb-divider, "/")
-          /* rtl: var(--bs-breadcrumb-divider, "/") */
-  }
-  </style>
+<style scoped>
+.center {
+    justify-content: center
+}
+
+sup {
+    color: red
+}
+
+.bold {
+    font-weight: 700;
+    margin-bottom: .5rem;
+    font-size: .9rem;
+}
+
+.margin-right {
+    margin-right: 0.5rem;
+}
+
+input::placeholder {
+    color: #cccccc;
+}
+
+input:read-only {
+    background-color: #eeeeee;
+}
+
+.page-header {
+    position: relative;
+    background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(../../assets/img/snack.jpg);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    float: left;
+    padding-right: .5rem;
+    color: #fd7e14;
+    content: var(--bs-breadcrumb-divider, "/")
+        /* rtl: var(--bs-breadcrumb-divider, "/") */
+}
+
+.info {
+float: right;
+font-size: .9rem;
+}
+</style>
