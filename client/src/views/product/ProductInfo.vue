@@ -12,10 +12,13 @@
                 <div class="col-lg-12 col-xl-12">
                     <div class="row g-4">
                         <div class="col-lg-6 col-md-6">
-                            <div class="border rounded imgmw">
-                                <a href="#">
+                            <div class="border rounded imgmw tacenter">
+                                <div style="filter: brightness(0.5);" v-if="productInfo[0].stock_cnt == 0">
                                     <img :src="getImgUrl(productInfo[0].path)" class="img-fluid rounded" alt="Image">
-                                </a>
+                                </div>
+                                <div v-else>
+                                    <img :src="getImgUrl(productInfo[0].path)" class="img-fluid rounded" alt="Image">
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
@@ -23,7 +26,10 @@
                                 <thead>
                                     <tr>
                                         <th colspan="1">
-                                            <h3 class="fw-bold mb-3">{{ productInfo[0].product_name }}</h3>
+                                            <h3 class="fw-bold mb-3">{{ productInfo[0].product_name }} 
+                                                <!-- 품절 배지 -->
+                                                <span class="badge bg-danger" v-if="productInfo[0].stock_cnt == 0">품절</span>
+                                            </h3>
                                         </th>
                                     </tr>
                                 </thead>
@@ -35,7 +41,7 @@
                                     <tr>
                                         <td>판매가</td>
                                         <td style="font-weight: bold;">{{
-                                        getCurrencyFormat(productInfo[0].product_price) }}원</td>
+                                    getCurrencyFormat(productInfo[0].product_price) }}원</td>
                                     </tr>
                                     <tr>
                                         <td>리뷰</td>
@@ -81,7 +87,7 @@
                                     </th>
                                     <td>
                                         <h5 class="fw-bold mb-3">{{ getCurrencyFormat(productInfo[0].product_price *
-                                        quantity) }} 원</h5>
+                                    quantity) }} 원</h5>
                                     </td>
                                 </tr>
                             </table>
@@ -456,5 +462,9 @@ export default {
 .taleft {
     text-align: left;
     line-height: 30px;
+}
+
+.tacenter {
+    text-align: center;
 }
 </style>

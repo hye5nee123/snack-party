@@ -1,12 +1,4 @@
 import AdminMain from '../views/AdminMain.vue';
-import NoticeManage from '../views/admin/NoticeManage.vue';
-import AdminNoticeList from '../components/AdminNoticeList.vue';
-import OrderManage from '../views/admin/OrderManage.vue';
-import AdminOrderList from '../components/AdminOrderList.vue';
-import AReviewList from '../views/admin/AReviewList.vue';
-import ReviewListComp from '../components/ReviewListComp.vue';
-import Store from '../store/index';
-
 
 export default {
   path: '/admin',
@@ -30,12 +22,12 @@ export default {
     {
       path: '/admin/notice',
       name: 'NoticeManage',
-      component: NoticeManage,
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/NoticeManage.vue'),
       children: [
         {
-          path: '/admin/noticelist',
+          path: 'admin/noticelist',
           name: 'AdminNoticeList',
-          component: AdminNoticeList
+          component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../components/AdminNoticeList.vue'),
         }
       ]
     },
@@ -44,12 +36,12 @@ export default {
     {
       path: '/admin/order',
       name: 'OrderManage',
-      component: OrderManage,
+      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/OrderManage.vue'),
       children: [
         {
-          path: '/admin/orderlist',
+          path: 'admin/orderlist',
           name: 'AdminOrderList',
-          component: AdminOrderList
+          component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../components/AdminOrderList.vue')
         }
       ]
     },

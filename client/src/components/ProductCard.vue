@@ -1,12 +1,21 @@
 <template>
   <div class="rounded position-relative fruite-item border border-secondary">
     <div class="fruite-img">
-      <img :src="getImgUrl(productInfo.path)" class="img-fluid rounded-top imghw" alt=""
-        @click="gotodetail(productInfo.product_code)" />
+      <div style="filter: brightness(0.5);" v-if="productInfo.stock_cnt == 0">
+        <img :src="getImgUrl(productInfo.path)" class="img-fluid rounded imghw" alt=""
+          @click="gotodetail(productInfo.product_code)" />
+      </div>
+      <div v-else>
+        <img :src="getImgUrl(productInfo.path)" class="img-fluid rounded imghw" alt=""
+          @click="gotodetail(productInfo.product_code)" />
+      </div>
     </div>
     <div class="p-4 border-top-0 rounded-bottom">
       <div @click="gotodetail(productInfo.product_code)">
-        <h4>{{ productInfo.product_name }}</h4>
+        <h4 class="sheight">{{ productInfo.product_name }}
+          <!-- 품절 배지 -->
+          <span class="badge bg-danger" v-if="productInfo.stock_cnt == 0">품절</span>
+        </h4>
       </div>
       <p class="text-dark fs-5 fw-bold mb-0">{{ getCurrencyFormat(productInfo.product_price) }}원</p>
       <br>
