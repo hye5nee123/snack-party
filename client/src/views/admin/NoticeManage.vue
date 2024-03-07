@@ -1,17 +1,23 @@
 <template>
-  <h1>NoticeManage.vue</h1>
-  <AdminNoticeList />
+  <div class="container">
+    <h1>NoticeManage.vue</h1>
+    <AdminNoticeList />
+  </div>
+  
 </template>
 <script>
 import AdminNoticeList from '../../components/AdminNoticeList.vue';
+// import ModalComp from '../../components/ModalComp.vue';
 
 export default{ 
   name:'NoticeManage',
   components:{
-    AdminNoticeList
+    AdminNoticeList,
+    // ModalComp
   },
   data(){
     return{
+     
     };
   },
   setup(){},

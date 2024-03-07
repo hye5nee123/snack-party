@@ -5,11 +5,25 @@ import OrderManage from '../views/admin/OrderManage.vue';
 import AdminOrderList from '../components/AdminOrderList.vue';
 import AReviewList from '../views/admin/AReviewList.vue';
 import ReviewListComp from '../components/ReviewListComp.vue';
+import Store from '../store/index';
 
 export default {
   path: '/admin',
   name: 'admin',
   component: AdminMain,
+  // 네비게이션 가드 : admin만 관리자페이지(/admin) 접근 가능
+  beforeEnter: (to, from, next) => {
+    let member_type = Store.state.memberStore.memberInfo.member_type;
+    let loginStatus =  Store.state.memberStore.loginStatus;
+    console.log(member_type, ', ', loginStatus);
+    if(member_type != 'b03' || !loginStatus ){
+      alert('관리자만 접근 가능한 페이지입니다.'),
+      next('/main');
+    }
+    else {
+      next();
+    }
+  },
   children : [
     // 공지게시판 페이지
     {

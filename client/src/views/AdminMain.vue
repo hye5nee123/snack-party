@@ -20,11 +20,11 @@ export default {
 </script>
 
 <style>
-  @import "../assets/css/demo.css";
-  @import "../assets/css/core.css";
-  @import "../assets/css/page-account-settings.css";
-  @import "../assets/css/page-auth.css";
-  @import "../assets/css/page-icons.css";
-  @import "../assets/css/page-misc.css";
-  @import "../assets/css/theme-default.css";
+  @import "../assets/css/admin/demo.css";
+  @import "../assets/css/admin/core.css";
+  @import "../assets/css/admin/page-account-settings.css";
+  @import "../assets/css/admin/page-auth.css";
+  @import "../assets/css/admin/page-icons.css";
+  @import "../assets/css/admin/page-misc.css";
+  @import "../assets/css/admin/theme-default.css";
 </style> 

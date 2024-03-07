@@ -10,6 +10,7 @@ const routes = [
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
+  // 라우터 이동시 스크롤 자동 상위
   scrollBehavior() {
     return { top: 0 }
   },
