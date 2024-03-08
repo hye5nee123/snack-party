@@ -22,30 +22,30 @@ ORDER BY member_code`;
 
 const memberInfo = //회원적립금
 `SELECT m.member_code
-        , member_id
-        , member_name
-        , member_phone
-        , member_email
-        , birthday
-        , postcode
-        , member_type
-        , join_date
-        , address
-        , address_detail
-        , member_status
-        , ( SELECT sum(point_value)
-	    FROM point
-	    WHERE point_status = 'd01'
-	    AND member_code = ? ) 
-            - 
-        NVL(( SELECT sum(point_value) 
-             FROM point
-             WHERE point_status = 'd02'
-             AND member_code = ? ), 0) AS point_value
-FROM member m JOIN point p
-WHERE m.member_code = p.member_code
-AND m.member_code =  ? 
-limit 1`;
+, member_id
+, member_name
+, member_phone
+, member_email
+, birthday
+, postcode
+, member_type
+, join_date
+, address
+, address_detail
+, member_status
+, NVL(( SELECT sum(point_value)
+    FROM point
+    WHERE point_status = 'd01'
+    AND member_code = ? ), 0)
+    - 
+                NVL(( SELECT sum(point_value) 
+     FROM point
+     WHERE point_status = 'd02'
+     AND member_code = ? ), 0) AS point_value
+FROM member m LEFT OUTER JOIN point p
+ON m.member_code = p.member_code
+WHERE m.member_code =  ? 
+LIMIT 1`;
 
 const memberInsert =
 `INSERT INTO member
@@ -79,7 +79,8 @@ const memberLogin =
         , quit_date
         , token
 FROM member
-WHERE member_id = ?`;
+WHERE member_id = ?
+OR member_name = ?`;
 
 module.exports = {
     memberList,
@@ -87,5 +88,5 @@ module.exports = {
     memberInsert,
     memberUpdate,
     memberDelete,
-    memberLogin
+    memberLogin,
 }

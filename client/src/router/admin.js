@@ -43,48 +43,25 @@ export default {
         }
       ]
     },
-
     // 공지게시판 페이지
     {
       path: '/admin/notice',
       name: 'NoticeManage',
-      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/NoticeManage.vue'),
-      children: [
-        {
-          path: 'admin/noticelist',
-          name: 'AdminNoticeList',
-          component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../components/admin/AdminNoticeList.vue'),
-        }
-      ]
+      component: import(/* webpackChunkName: "NoticeManage", webpackPrefetch: false */ '../views/admin/NoticeManage.vue'),
     },
 
     // 주문관리 페이지
     {
       path: '/admin/order',
       name: 'OrderManage',
-      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/OrderManage.vue'),
-      children: [
-        {
-          path: 'admin/orderlist',
-          name: 'AdminOrderList',
-          component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../components/admin/AdminOrderList.vue')
-        }
-      ]
+      component: import(/* webpackChunkName: "OrderManage", webpackPrefetch: false */ '../views/admin/OrderManage.vue'),
     },
 
     //리뷰관리 페이지
     {
       path: '/admin/review',
       name: 'BoardManage',
-      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/BoardManage.vue'),
-      children: [
-        {
-          path: '/admin/reviewlist',
-          name: 'ReviewListComp',
-          component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../components/ReviewListComp.vue')
-        }
-      ]
-
+      component: import(/* webpackChunkName: "BoardManage", webpackPrefetch: false */ '../views/admin/BoardManage.vue'),
     }
   ]
 }

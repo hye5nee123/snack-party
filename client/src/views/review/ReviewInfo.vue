@@ -8,23 +8,23 @@
               <thead>
                 <tr>
                   <th>글번호</th>
-                  <td>{{reviewInfo.review_code.slice(-3)}}</td>
+                  <td>{{ reviewInfo.review_code }}</td>
                   <th>제목</th>
-                  <td>{{reviewInfo.review_title }}</td>
+                  <td>{{ reviewInfo.review_title }}</td>
                   <th>작성자</th>
-                  <td>{{ this.$store.state.memberStore.memberInfo.member_name  }}</td>
+                  <td>{{ this.$store.state.memberStore.memberInfo.member_name }}</td>
                 </tr>
                 <tr>
                   <th>내용</th>
-                  <td style="width: 150px; height:100;">{{  reviewInfo.review_content }}</td>
+                  <td style="width: 150px; height:100;">{{ reviewInfo.review_content }}</td>
                 </tr>
               </thead>
             </table>
-          
+
           </div>
         </div>
-          <button>수정</button>
-          <button>삭제</button>
+        <button>수정</button>
+        <button>삭제</button>
       </div>
     </div>
   </div>
@@ -37,14 +37,15 @@ export default {
   data() {
     return {
       reviewInfo: {
-        review_code:"",
+        review_code: "",
         review_title: "",
-        review_content:""
+        review_content: ""
       },
       review_code: "REV00007"
     };
   },
   created() {
+    // review_code: this.$router.query.review_code,
     this.getReviewInfo();
   },
   methods: {
