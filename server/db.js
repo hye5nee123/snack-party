@@ -26,4 +26,16 @@ module.exports = {
     }
     }));
   }
+  // excuteConnection(cmd){
+  //   return new Promise((resolve, reject) => dbPool.query(cmd, (error, results) => {
+  //     if (error) {         
+  //       reject({
+  //         error
+  //       });
+  //     } else { 
+  //     resolve(results);
+  //    console.log(results)
+  //   }
+  //   }));
+  // }
 };
