@@ -69,7 +69,6 @@
                 <button @click="delCartOne(cart)" class="btn btn-md rounded-circle bg-light border mt-4">
                   <i class="fa fa-times text-danger"></i>
                 </button>
-                <!-- <button @click="delCartOne(cart)" >삭제</button> -->
               </td>
             </tr>
           </tbody>

@@ -83,7 +83,7 @@ export default {
     },
 
     point() {
-      if(this.usePoint >= this.point_value || this.usePoint < 0) {
+      if(this.usePoint > this.point_value || this.usePoint < 0) {
         alert('보유적립금을 확인해 주세요');
         this.usePoint = 0;
        }

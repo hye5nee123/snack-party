@@ -1,6 +1,6 @@
 /* < cart > */
 
-//장바구니 목록 -- 상품이미지 추가해야 됨
+//장바구니 목록
 const cartList = 
 `SELECT c.cart_code
 , p.product_code
@@ -90,6 +90,24 @@ SET point_code = snack.nextval('POI')
 
 //나의 전체 주문 목록 (-외 몇 개) + 페이징
 const orderListPage =
+// `SELECT o.order_code
+//       , member_code
+//       , DATE_FORMAT(order_date, '%Y-%m-%d') as order_date
+//       , merchant_uid
+//       , total_price
+//       , order_status
+//       , DATE_FORMAT(cancel_date, '%Y-%m-%d') as cancel_date
+//       , imp_uid
+//       , p.product_name
+//       , COUNT(d.order_code)-1 as buy_cnt
+// FROM orders o JOIN detail d
+// 				ON o.order_code = d.order_code
+//               JOIN product p
+// 				ON d.product_code = p.product_code
+// where member_code = ?
+// group by d.order_code
+// order by order_date desc, order_code desc
+// LIMIT ? OFFSET ?`
 `SELECT o.order_code
       , member_code
       , DATE_FORMAT(order_date, '%Y-%m-%d') as order_date
@@ -106,8 +124,7 @@ FROM orders o JOIN detail d
 				ON d.product_code = p.product_code
 where member_code = ?
 group by d.order_code
-order by order_date desc, order_code desc
-LIMIT ? OFFSET ?`
+order by order_date desc, order_code desc`
 
 //페이징용 개수
 const orderListCount = 
@@ -119,13 +136,22 @@ WHERE member_code = ?`
 //주문상세 목록
 const detailList =
 `SELECT detail_code
+      , d.order_code
+      , d.product_price
+	    , d.order_cnt
 	    , detail_price
-      , product_code
-      , order_code
-      , order_cnt
-      , product_price
-FROM detail
-WHERE order_code = ?`
+	    , product_name
+      , f.path
+      , o.order_status
+FROM detail d JOIN product p
+				        ON d.product_code = p.product_code
+              LEFT OUTER JOIN file f
+				        ON p.product_code = f.board_code
+              JOIN orders o
+				        ON d.order_code = o.order_code
+WHERE d.order_code = ?
+AND f.thumbnail = 'n01'
+AND member_code = ?`
 
 
 module.exports = {
@@ -146,8 +172,8 @@ module.exports = {
 
 
   
-//3)주문관리
-  orderListPage,
-  orderListCount,
-  detailList,
+//3)나의 주문내역
+  orderListPage,  //주문전체목록
+  orderListCount, //페이징용 개수
+  detailList,    //주문상세목록
 }

@@ -28,9 +28,6 @@
           <td class="py-5">{{ checkout.cart_cnt}}개</td>
           <td class="py-5">{{ $currencyFormat(checkout.product_price * checkout.cart_cnt)}}원</td>
         </tr>
-
-
-        
       </tbody>
     </table>
   </div>
