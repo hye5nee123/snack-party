@@ -413,7 +413,7 @@ export default {
                 "param": {
                     cart_cnt: this.quantity,
                     member_code: this.memberCode,
-                    product_code: this.productInfo.product_code
+                    product_code: this.productInfo[0].product_code
                 }
             }
             console.log('this.productInfo.product_code : ', );
@@ -421,8 +421,9 @@ export default {
             //이미 담긴 상품 확인
             let ucode = this.memberCode;
             let pcode = this.productInfo[0].product_code;
+            console.log(ucode,pcode);
             let cartCheck = await axios.get(`/apiorder/carts/${ucode}/${pcode}`).catch((err) => console.log(err));
-            // console.log('cartCheck결과', cartCheck.data[0].cart_code)
+            console.log('cartCheck결과', cartCheck.data)
 
             if (!this.loginStatus) {
                 alert('로그인 후 이용가능합니다.');
@@ -431,9 +432,10 @@ export default {
                 let ccode = cartCheck.data[0].cart_code
                 await axios.put(`/apiorder/addCnt/${this.quantity}/${ccode}`).catch((err) => console.log(err));
                 alert('이미 담긴 상품으로 ' + this.quantity + '개가 추가되었습니다.');
-
+            } else {
                 //최종 장바구니 추가
                 await axios.post("/apiorder/carts", data).catch(err => console.log(err));
+                alert('장바구니에 추가되었습니다.')
             }
         },
         //상품평 개수 가져오기

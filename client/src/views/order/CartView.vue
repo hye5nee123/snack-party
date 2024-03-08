@@ -177,7 +177,7 @@ export default {
 
     allProPrice() { //총 상품금액
       let allProPrice = 0;
-      for (let pro of this.cartList) {
+      for (let pro of this.selectList) {
         allProPrice += pro.product_price * pro.cart_cnt;
       }
       return (this.totalPrice = allProPrice);

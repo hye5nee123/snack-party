@@ -23,7 +23,7 @@
 
                         <div class="form-item">
                             <input type="radio" name="chk_info" checked class="radio-btn"
-                                @click="getUserInfo(this.userId)">
+                                @click="getUserInfo(this.member_code)">
                             <label class="form-label my-3" style="margin-right:10px">회원 정보와 동일</label>
                             <input type="radio" name="chk_info" class="radio-btn" @click="newInfo()">
                             <label class="form-label my-3">새로운 배송지</label>
@@ -117,10 +117,9 @@ export default {
             deliveryInfo: {
                 memo: null,
                 delivery_num: null,
-                order_code: 'ord00001',
             },
 
-            order_code: '',
+            merchant_uid: '',
 
             member_code: this.$store.state.memberStore.memberInfo.member_code
 
@@ -134,16 +133,17 @@ export default {
     },
     created() {
         this.checkOutList = JSON.parse(sessionStorage.getItem("carts"));
-        this.getUserInfo(this.$store.state.memberStore.memberInfo.member_id);
+        this.getUserInfo(this.member_code);
     },
 
     methods: {
-        async getUserInfo(uid) { //회원기본정보
-            let result = await axios.get('/apimember/' + uid)
+        async getUserInfo(mcode) { //회원기본정보
+            let result = await axios.get('/apimember/' + mcode)
                 .catch(err => console.log(err));
+                
             let info = result.data;
             this.userInfo = info;
-            this.userId = info.member_id;
+            this.mcode = info.member_code;
         },
 
         getPoint() { // h05 '배송완료'시 결제금액의 1%적립 ----수정
@@ -208,12 +208,11 @@ export default {
                     alert(msg);
 
                     vue.orderInsert(rsp); //주문,상세,배송 테이블 등록
-
-                    //장바구니삭제, 재고량&회원포인트수정
-                    vue.changeInfo(rsp);
-
+                    vue.changeInfo(rsp); //장바구니삭제, 재고량&회원포인트수정
+                   
+                    vue.merchant_uid = rsp.merchant_uid
                     // vue.$router.push({ path: '/ordcompleted' }) //결제완료 후 이동할 페이지
-                    // this.$router.push({path:'/ordcompleted', query:{order_code: this.order_code}}); //주문번호
+                    vue.$router.push({path:'/ordcompleted', query:{merchant_uid: vue.merchant_uid}}); //주문번호
 
                 } else {
                     var msg2 = '결제에 실패하였습니다.';
@@ -258,7 +257,8 @@ export default {
                         point_status: 'd02',
                         point_value: this.use_point,
                         member_code: this.member_code
-                    }
+                    },
+
                 }
             };
             let result = await axios.post("/apiorder", data)
@@ -267,7 +267,7 @@ export default {
             console.log('결제성공' + result);
         },
 
-        //장바구니삭제 & 재고량 & 회원포인트 차감
+        //장바구니삭제
         async changeInfo() {
             for (let ordered of this.checkOutList) {
                 await axios
@@ -275,7 +275,7 @@ export default {
                 .catch((err) => console.log(err));
 
                 //재고량수정
-                await axios.put(`/apiorder/${ordered.cart_cnt}/${ordered.product_code}`).catch((err) => console.log(err));
+                // await axios.put(`/apiorder/${ordered.cart_cnt}/${ordered.product_code}`).catch((err) => console.log(err));
             }
             console.log('삭제,수정되었습니다.');
         },

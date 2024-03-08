@@ -10,8 +10,8 @@ app.get("/", async(request, response) => {
 });
 
 // 단건조회
-app.get("/:member_id", async(request, response) => {
-    let data = request.params.member_id;
+app.get("/:mcode", async(request, response) => {
+    let data = [request.params.mcode, request.params.mcode, request.params.mcode];
     let result = (await db.connection('membersql', 'memberInfo', data))[0];
     response.send(result);
 })

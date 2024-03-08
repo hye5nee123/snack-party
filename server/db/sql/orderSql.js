@@ -78,12 +78,11 @@ const stockCntUpdate =
 SET stock_cnt = stock_cnt - ?
 WHERE product_code = ?`;
 
-//주문 후 회원포인트 차감 등록
+//주문 후 회원포인트 내역 등록(d02차감내역)
 const memUsedPointInsert = //point_status d02
 `INSERT INTO point
 SET point_code = snack.nextval('POI')
     , ?`
-
 
 //======================================================
 
@@ -146,7 +145,7 @@ module.exports = {
   detailInsert, //상세등록
   deliveryInsert, //배송등록
   stockCntUpdate, //재고량수정
-  memUsedPointInsert, //회원포인트수정
+  memUsedPointInsert, //회원포인트 차감내역 추가
 
 
   
