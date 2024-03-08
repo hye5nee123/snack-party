@@ -79,7 +79,8 @@ const memberLogin =
         , quit_date
         , token
 FROM member
-WHERE member_id = ?`;
+WHERE member_id = ?
+OR member_name = ?`;
 
 module.exports = {
     memberList,
@@ -87,5 +88,5 @@ module.exports = {
     memberInsert,
     memberUpdate,
     memberDelete,
-    memberLogin
+    memberLogin,
 }
