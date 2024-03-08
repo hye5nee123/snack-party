@@ -1,57 +1,67 @@
 import AdminMain from '../views/AdminMain.vue';
-import NoticeManage from '../views/admin/NoticeManage.vue';
-import AdminNoticeList from '../components/AdminNoticeList.vue';
-import OrderManage from '../views/admin/OrderManage.vue';
-import AdminOrderList from '../components/AdminOrderList.vue';
-import AReviewList from '../views/admin/AReviewList.vue';
-import ReviewListComp from '../components/ReviewListComp.vue';
+import Store from '../store/index.js'
 
 export default {
   path: '/admin',
   name: 'admin',
   component: AdminMain,
-  children : [
-    // 공지게시판 페이지
+  // 네비게이션 가드 : admin만 관리자페이지(/admin) 접근 가능
+  beforeEnter: (to, from, next) => {
+    let member_type = Store.state.memberStore.memberInfo.member_type;
+    let loginStatus = Store.state.memberStore.loginStatus;
+    console.log(member_type, ', ', loginStatus);
+    if (member_type != 'b03' || !loginStatus) {
+      alert('관리자만 접근 가능한 페이지입니다.'),
+        next('/main');
+    }
+    else {
+      next();
+    }
+  },
+  children: [
+    // 상품관리 페이지
     {
-      path : '/admin/notice',
-      name : 'NoticeManage',
-      component : NoticeManage,
-      children : [
+      path: '/admin/product',
+      name: 'ProductManage',
+      component: import(/* webpackChunkName: "ProductManage", webpackPrefetch: false */ '../views/admin/ProductManage.vue'),
+      redirect: '/admin/product/productlist',
+      children: [
         {
-          path : '/admin/noticelist',
-          name : 'AdminNoticeList',
-          component : AdminNoticeList
+          path: 'productlist',
+          name: 'AdminProductList',
+          component: import(/* webpackChunkName: "AdminProductList", webpackPrefetch: false */ '../components/admin/AdminProductList.vue'),
+        },
+        {
+          path: 'productinsert',
+          name: 'AdminProductInsert',
+          component: import(/* webpackChunkName: "AdminProductInsert", webpackPrefetch: false */ '../components/admin/AdminProductInsert.vue'),
+        },
+        {
+          path: 'productwarehousing',
+          name: 'AdminProductWarehousing',
+          component: import(/* webpackChunkName: "AdminProductWarehousing", webpackPrefetch: false */ '../components/admin/AdminProductWarehousing.vue'),
         }
       ]
+    },
+    // 공지게시판 페이지
+    {
+      path: '/admin/notice',
+      name: 'NoticeManage',
+      component: import(/* webpackChunkName: "NoticeManage", webpackPrefetch: false */ '../views/admin/NoticeManage.vue'),
     },
 
     // 주문관리 페이지
     {
-      path : '/admin/order',
-      name : 'OrderManage',
-      component : OrderManage,
-      children : [
-        {
-          path : '/admin/orderlist',
-          name : 'AdminOrderList',
-          component : AdminOrderList
-        }
-      ]
+      path: '/admin/order',
+      name: 'OrderManage',
+      component: import(/* webpackChunkName: "OrderManage", webpackPrefetch: false */ '../views/admin/OrderManage.vue'),
     },
 
     //리뷰관리 페이지
     {
       path: '/admin/review',
-      name: 'AReviewList',
-      component: AReviewList,
-      children: [
-        {
-          path : '/admin/reviewlist',
-          name : 'ReviewListComp',
-          component : ReviewListComp
-        }
-      ]
-      
+      name: 'BoardManage',
+      component: import(/* webpackChunkName: "BoardManage", webpackPrefetch: false */ '../views/admin/BoardManage.vue'),
     }
   ]
 }

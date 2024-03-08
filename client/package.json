@@ -12,9 +12,11 @@
     "bootstrap": "^5.2.3",
     "core-js": "^3.8.3",
     "i": "^0.3.7",
+    "multer": "^1.4.5-lts.1",
     "pinia": "^2.1.7",
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
+    "vue-sweetalert2": "^5.0.5",
     "vuex": "^4.1.0",
     "vuex-persistedstate": "^4.1.0"
   },

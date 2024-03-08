@@ -3,7 +3,7 @@
   <AdminOrderList />
 </template>
 <script>
-import AdminOrderList from '../../components/AdminOrderList.vue';
+import AdminOrderList from '../../components/admin/AdminOrderList.vue';
 
 export default{ 
   name:'NoticeManage',
@@ -24,3 +24,4 @@ export default{
   }
 }
 </script>
+../../components/admin/AdminOrderList.vue

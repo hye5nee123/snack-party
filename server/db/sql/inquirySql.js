@@ -1,7 +1,20 @@
 //1:1 //
 
+//문의 insert를 위한 쿼리...
+const InquiryInfo = `
+                SELECT 
+                    inquiry_code,
+                    p_inquiry_type,
+                    title,
+                    content,
+                    inquiry_date,
+                    inquiry_display
+                    product_code,
+                    member_code,
+                FROM inquiry 
+               
+                WHERE member_code= ?`;
 //문의사항 자기 거 전체 조회(회원).
-
 const sinquiryList = `SELECT 
             inquiry_code,
             p_inquiry_type,
@@ -18,7 +31,25 @@ WHERE       member_code = ?`;
 // WHERE `;
 //문의사항 입력.
 
-//상품문의 //
+//문의 insert(공통).
+const inquiryInsert = `INSERT INTO inquiry
+SET inquiry_code = snack.nextval('INQ')
+, ?`;
+
+
+/*상품*/
+
+//상품 상세에서 insert를 위한 쿼리...
+const pInquiryInfo = `
+                SELECT 
+                    inquiry_code,
+                    title,
+                    content,
+                    product_code,
+                    member_code
+                FROM inquiry 
+               
+                WHERE member_code= ?`;
 
 //상세 페이지에서 상품 조회
 const inquirylist = `SELECT 
@@ -38,26 +69,12 @@ LEFT JOIN
 WHERE 
     p.product_code  = ?`;
 
-//문의 insert(공통).
-const inquiryInsert = `INSERT INTO inquiry
-SET inquiry_code = snack.nextval('INQ')
-, ?`;
-//상품 상세에서 insert를 위한 쿼리...
-const pInquiryInfo = `
-                SELECT 
-                    inquiry_code,
-                    title,
-                    content,
-                    product_code,
-                    member_code
-                FROM inquiry 
-               
-                WHERE member_code= ?`;
-
+//관리자 회원 상품문의 전체 조회.
+const proinquirylist = ``
 module.exports = {
     inquiryInsert,
     inquirylist,
     pInquiryInfo,
-    sinquiryList
-
+    sinquiryList,
+    InquiryInfo
 };

@@ -14,7 +14,9 @@
         <tr>
           <td>적립금</td>
 
-          <td><input type="text" v-model="usePoint" @input="usePoint = $event.target.value">원 
+          <td>
+            <!-- <input type="text" v-model="usePoint" @input="usePoint = $event.target.value">원  -->
+            <input type="text" v-model="usePoint" @input="point()">원 
             <button type="button" @click="usePoint = point_value">모두사용</button>
             <br>보유적립금: {{ $currencyFormat(point_value - usePoint) }}원
           </td>
@@ -78,6 +80,13 @@ export default {
     },
     delivery() {
       this.deliveryFee = this.allPrice >= 30000 ? 0 : 3000;
+    },
+
+    point() {
+      if(this.usePoint >= this.point_value || this.usePoint < 0) {
+        alert('보유적립금을 확인해 주세요');
+        this.usePoint = 0;
+       }
     }
   },
 

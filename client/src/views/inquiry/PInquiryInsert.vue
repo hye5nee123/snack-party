@@ -14,11 +14,11 @@
             </tr>
             <tr>
                 <td> 작성자 </td>
-                <td>{{ pInquiryInfo.member_name }}</td>
+                <td>{{ this.$store.state.memberStore.memberInfo.member_name }}</td>
             </tr>
             <tr>
                 <td>제품명</td>
-                <td>{{ productInfo.product_name }} </td>
+                <td v-text="productInfo.product_name"> </td>
             </tr>
             <tr>
                 <td>내용</td>
@@ -46,27 +46,27 @@
 </template>
 <script>
 import axios from "axios";
-export default{ 
-    data(){
+export default {
+    data() {
         return {
             pInquiryInfo: {
-                title: "", 
+                title: "",
                 content: "",
-                member_code: "MEM00001"
+                member_code: this.$store.state.memberStore.memberInfo.member_code,
+                product_code: this.$route.query.product_code,
+
             },
             productInfo: {
-               
-            },
-            product_code:"PRO00001",
-            member_code:"MEM00001"
+                product_name: ""
+            }
         };
     },
     created() {
-        this.getProductInfo('PRO00001')
+        this.getProductInfo()
     },
     methods: {
         async getProductInfo() {
-            let result = await axios.get('/api/product/info/' + this.product_code)
+            let result = await axios.get('/api/product/info/' + this.pInquiryInfo.product_code)
                 .catch(err => console.log(err));
             console.log('result : ', result);
             let info = result.data;
