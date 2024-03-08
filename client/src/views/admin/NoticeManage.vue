@@ -6,7 +6,7 @@
   
 </template>
 <script>
-import AdminNoticeList from '../../components/AdminNoticeList.vue';
+import AdminNoticeList from '../../components/admin/AdminNoticeList.vue';
 // import ModalComp from '../../components/ModalComp.vue';
 
 export default{ 
@@ -30,3 +30,4 @@ export default{
   }
 }
 </script>
+../../components/admin/AdminNoticeList.vue

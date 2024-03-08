@@ -135,7 +135,7 @@
 </template>
 
 <script>
-import PaginationComp from './PaginationComp.vue';
+import PaginationComp from '../PaginationComp.vue';
 
 export default {
 	components: { PaginationComp }

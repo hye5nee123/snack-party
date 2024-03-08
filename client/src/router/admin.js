@@ -19,6 +19,30 @@ export default {
     }
   },
   children: [
+    // 상품관리 페이지
+    {
+      path: '/admin/product',
+      name: 'ProductManage',
+      component: import(/* webpackChunkName: "ProductManage", webpackPrefetch: false */ '../views/admin/ProductManage.vue'),
+      redirect: '/admin/product/productlist',
+      children: [
+        {
+          path: 'productlist',
+          name: 'AdminProductList',
+          component: import(/* webpackChunkName: "AdminProductList", webpackPrefetch: false */ '../components/admin/AdminProductList.vue'),
+        },
+        {
+          path: 'productinsert',
+          name: 'AdminProductInsert',
+          component: import(/* webpackChunkName: "AdminProductInsert", webpackPrefetch: false */ '../components/admin/AdminProductInsert.vue'),
+        },
+        {
+          path: 'productwarehousing',
+          name: 'AdminProductWarehousing',
+          component: import(/* webpackChunkName: "AdminProductWarehousing", webpackPrefetch: false */ '../components/admin/AdminProductWarehousing.vue'),
+        }
+      ]
+    },
     // 공지게시판 페이지
     {
       path: '/admin/notice',

@@ -10,6 +10,8 @@ app.get('/count', async (req, res) => {
     var queryData = url.parse(req.url, true).query;
     let category = queryData.category;
     let keyword = queryData.keyword;
+    let display = queryData.display;
+    let status = queryData.status;
 
     //키워드가 있을 경우
     if (keyword) {
@@ -21,6 +23,17 @@ app.get('/count', async (req, res) => {
     if (category) {
         where += " AND category = ?"
         data.push(category);
+    }
+
+    // 상품상태 조건이 있을 경우
+    if (status == 'so') {
+        where += " AND stock_cnt = 0"
+    }
+
+    // 공개유무 조건이 있을 경우
+    if (display) {
+        where += " AND product_display = ?"
+        data.push(display);
     }
 
     let result = await db.connection('productsql', 'productListCount', data, where).catch(err => { console.log(err) });
@@ -35,21 +48,34 @@ app.get('/', async (req, res) => {
     let category = queryData.category;
     let keyword = queryData.keyword;
     let sort = queryData.sort;
+    let display = queryData.display;
+    let status = queryData.status;
     let offset = queryData.offset;
 
-    //키워드가 있을 경우
+    // 키워드가 있을 경우
     if (keyword) {
         where += " AND product_name LIKE ?"
         data.push("%" + keyword + "%");
     }
 
-    //카테고리가 있을 경우
+    // 카테고리가 있을 경우
     if (category) {
         where += " AND category = ?"
         data.push(category);
     }
 
-    //정렬이 있을 경우
+    // 상품상태 조건이 있을 경우
+    if (status == 'so') {
+        where += " AND stock_cnt = 0"
+    }
+
+    // 공개유무 조건이 있을 경우
+    if (display) {
+        where += " AND product_display = ?"
+        data.push(display);
+    }
+
+    // 정렬이 있을 경우
     if (sort == 'name') {
         where += " ORDER BY product_name"
     } else if (sort == 'new') {
