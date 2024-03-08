@@ -140,8 +140,8 @@
 <script>
 // Pagination 컴포넌트 import
 import axios from 'axios';
-import PaginationComp from './PaginationComp.vue';
-import ModalComp from './ModalComp.vue';
+import PaginationComp from '../PaginationComp.vue';
+import ModalComp from '../ModalComp.vue';
 
 export default {
   // Pagination 컴포넌트 import

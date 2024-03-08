@@ -1,16 +1,12 @@
 <template>
   <h1>ProductManage.vue</h1>
-  <AdminProductList />
+  <router-view />
 </template>
 
 <script>
-import AdminProductList from '../../components/AdminProductList.vue';
 
 export default {
   name: 'ProductManage',
-  components: {
-    AdminProductList
-  },
   data() {
     return {
     };
@@ -25,3 +21,4 @@ export default {
   }
 }
 </script>
+../../components/admin/AdminProductList.vue

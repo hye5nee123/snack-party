@@ -42,11 +42,11 @@
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <div data-i18n="Account Settings">상품 조회/수정</div>
         </router-link>
-        <router-link to="#" class="menu-link menu-toggle">
+        <router-link to="/admin/product/productinsert" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <div data-i18n="Account Settings">상품 등록</div>
         </router-link>
-        <router-link to="#" class="menu-link menu-toggle">
+        <router-link to="/admin/product/productwarehousing" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <div data-i18n="Account Settings">상품 입고</div>
         </router-link>
