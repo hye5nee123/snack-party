@@ -8,15 +8,15 @@
                 <thead>
                   <tr>
                     <th>글번호</th>
-                    <td>{{ reviewInfo.review_code }}</td>
+                    <td>{{ InquiryInfo.inquiry_code }}</td>
                     <th>제목</th>
-                    <td>{{ reviewInfo.review_title }}</td>
+                    <td>{{ InquiryInfo.title }}</td>
                     <th>작성자</th>
                     <td>{{ this.$store.state.memberStore.memberInfo.member_name }}</td>
                   </tr>
                   <tr>
                     <th>내용</th>
-                    <td style="width: 150px; height:100;">{{ reviewInfo.review_content }}</td>
+                    <td style="width: 150px; height:100;">{{ InquiryInfo.content }}</td>
                   </tr>
                 </thead>
               </table>
@@ -36,23 +36,22 @@
   export default {
     data() {
       return {
-        reviewInfo: {
-          review_code: "",
-          review_title: "",
-          review_content: ""
-        },
-        review_code: "REV00007"
+        InquiryInfo: {
+          inquiry_code: "",
+          title: "",
+          content: ""
+        }
       };
     },
     created() {
-      // review_code: this.$router.query.review_code,
-      this.getReviewInfo();
+      // inquiry_code: this.$router.query.inquiry_code,
+      this.getInquiryInfo(this.$router.query.inquiry_code);
     },
     methods: {
-      async getReviewInfo() {
+      async getInquiryInfo(inquiry_code) {
         try {
-          const response = await axios.get('/api/review/detail/' + this.review_code);
-          this.reviewInfo = response.data;
+          const response = await axios.get('/api/inquiry/inquirydetail/' + inquiry_code);
+          this.inquiry_code = response.data;
         } catch (error) {
           console.log(error);
         }
