@@ -91,13 +91,47 @@ export default {
           next();
         }
       },
-    
     },
     {
       path: "ordcompleted",
       name: "OrdCompleted",
       component: import(/* webpackChunkName: "ordcompleted", webpackPrefetch: false */ "../views/order/OrdCompletedView.vue"),
     },
+    {
+      path: "myorderlist",
+      name: "MyOrderList",
+      component: import(/* webpackChunkName: "myorderlist", webpackPrefetch: false */ "../views/order/MyOrdListView.vue"),
+    
+      beforeEnter: (to, from, next) => {
+        let loginStatus =  Store.state.memberStore.loginStatus;
+        console.log(loginStatus);
+        if(!loginStatus ){
+          alert('로그인 후 접근 가능한 페이지입니다.'),
+          next('/main');
+        }
+        else {
+          next();
+        }
+      },
+    },
+    {
+      path: "myorderdetail",
+      name: "MyOrderDetail",
+      component: import(/* webpackChunkName: "myorderdetail", webpackPrefetch: false */ "../views/order/MyOrdDetailView.vue"),
+    
+      beforeEnter: (to, from, next) => {
+        let loginStatus =  Store.state.memberStore.loginStatus;
+        console.log(loginStatus);
+        if(!loginStatus ){
+          alert('로그인 후 접근 가능한 페이지입니다.'),
+          next('/main');
+        }
+        else {
+          next();
+        }
+      },
+    },
+    
     {
       path: "reviewlist",
       name: "ReviewList",

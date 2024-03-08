@@ -88,36 +88,33 @@ SET point_code = snack.nextval('POI')
 
 /* < 나의 주문내역 > */
 
-//전체 주문 목록
-const orderListAll =
-`SELECT order_code
+//나의 전체 주문 목록 (-외 몇 개) + 페이징
+const orderListPage =
+`SELECT o.order_code
       , member_code
-      , order_date
-      , delivery_fee
-      , order_price
-      , use_point
+      , DATE_FORMAT(order_date, '%Y-%m-%d') as order_date
+      , merchant_uid
       , total_price
-      , get_point
       , order_status
-      , cancel_date
+      , DATE_FORMAT(cancel_date, '%Y-%m-%d') as cancel_date
       , imp_uid
-FROM orders`
+      , p.product_name
+      , COUNT(d.order_code)-1 as buy_cnt
+FROM orders o JOIN detail d
+				ON o.order_code = d.order_code
+              JOIN product p
+				ON d.product_code = p.product_code
+where member_code = ?
+group by d.order_code
+order by order_date desc, order_code desc
+LIMIT ? OFFSET ?`
 
-//주문 목록
-const orderList =
-`SELECT order_code
-      , member_code
-      , order_date
-      , delivery_fee
-      , order_price
-      , use_point
-      , total_price
-      , get_point
-      , order_status
-      , cancel_date
-      , imp_uid
+//페이징용 개수
+const orderListCount = 
+`SELECT COUNT(*) count
 FROM orders
-WHERE order_code = ?`
+WHERE member_code = ?`
+
 
 //주문상세 목록
 const detailList =
@@ -149,8 +146,8 @@ module.exports = {
 
 
   
-  //3)주문관리
-  orderList,
+//3)주문관리
+  orderListPage,
+  orderListCount,
   detailList,
-  orderListAll,
 }
