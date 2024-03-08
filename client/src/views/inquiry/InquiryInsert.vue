@@ -9,22 +9,28 @@
                     <p>제목</p>
                 </td>
                 <td>
-                    <input v-model="pInquiryInfo.title" type="text" required />
+                    <input v-model="InquiryInfo.title" type="text" required />
                 </td>
             </tr>
             <tr>
                 <td> 작성자 </td>
-                <td>{{ pInquiryInfo.member_name }}</td>
+                <td>{{ this.$store.state.memberStore.memberInfo.member_name }}</td>
             </tr>
             <tr>
-                <td>제품명</td>
-                <td>{{ productInfo.product_name }} </td>
+                <td>문의유형</td>
+                <select v-model="InquiryInfo.p_inquiry_type">
+                    <option value="취소/교환/반품">취소/교환/반품</option>
+                    <option value="회원정보">회원정보</option>
+                    <option value="배송">배송</option>
+                    <option value="주문/결제">주문/결제</option>
+                    <option value="서비스/오류/기타">서비스/오류/기타</option>
+                </select>
             </tr>
             <tr>
                 <td>내용</td>
                 <td colspan="2" id="textarea">
                     <textarea id="textarea2" cols="130" rows="15" name="content"
-                        v-model="pInquiryInfo.content"></textarea>
+                        v-model="InquiryInfo.content"></textarea>
                 </td>
             </tr>
             <tr>
@@ -46,33 +52,18 @@
 </template>
 <script>
 import axios from "axios";
-export default{ 
-    data(){
+export default {
+    data() {
         return {
-            pInquiryInfo: {
-                title: "", 
+            InquiryInfo: {
+                p_inquiry_type: "",
+                title: "",
                 content: "",
-                member_code: "MEM00001"
-            },
-            productInfo: {
-               
-            },
-            product_code:"PRO00001",
-            member_code:"MEM00001"
+                member_code: this.$store.state.memberStore.memberInfo.member_code
+            }
         };
     },
-    created() {
-        this.getProductInfo('PRO00001')
-    },
     methods: {
-        async getProductInfo() {
-            let result = await axios.get('/api/product/info/' + this.product_code)
-                .catch(err => console.log(err));
-            console.log('result : ', result);
-            let info = result.data;
-            console.log(info);
-            this.productInfo = info[0];
-        },
         saveInfo() {
             // 1) 유효성 체크
             if (!this.validation()) return;
@@ -81,7 +72,7 @@ export default{
             let data = this.getSendData();
             // 2-2) axios를 이용해 ajax
             axios
-                .post('/api/inquiry', data)
+                .post(`/api/inquiry/member/${this.$store.state.memberStore.memberInfo.member_code}`, data)
                 .then(result => {
                     // 3) 결과처리
                     let inquiry_code = result.data.inquiry_code;
@@ -89,18 +80,18 @@ export default{
                         alert(`등록되지 않았습니다.\n메세지를 확인해주세요\n${result.data.message}`)
                     } else {
                         alert(`정상적으로 등록되었습니다.`);
-                        this.pInquiryInfo.inquiry_code = inquiry_code;
+                        this.InquiryInfo.inquiry_code = inquiry_code;
                     }
                 })
                 .catch(err => console.log(err));
         },
         validation() {
-            if (this.pInquiryInfo.title == "") {
+            if (this.InquiryInfo.title == "") {
                 alert('제목이 입력되지 않았습니다.');
                 return false;
             }
 
-            if (this.pInquiryInfo.content == "") {
+            if (this.InquiryInfo.content == "") {
                 alert('내용이 입력되지 않았습니다.');
                 return false;
             }
@@ -108,7 +99,7 @@ export default{
             return true;
         },
         getSendData() {
-            let obj = this.pInquiryInfo;
+            let obj = this.InquiryInfo;
             let delData = ["inquiry_code"];
             let newObj = {};
             let isTargeted = null;

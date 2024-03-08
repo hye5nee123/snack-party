@@ -107,11 +107,10 @@ WHERE  d.product_code = ?`;
 
 //평균 별점 쿼리
 const avgStars =
-  `SELECT d.product_code, truncate(AVG(stars),1) avg
-FROM   review r JOIN detail d
-ON     r.detail_code = d.detail_code
-GROUP BY d.product_code
-HAVING  d.product_code = ?`;
+  `SELECT NVL(truncate(AVG(stars),1), 0) avg
+  FROM   review r JOIN detail d
+  ON     r.detail_code = d.detail_code
+  WHERE  d.product_code = ?`;
 
 //이미지.
 // reviewImgInsert: `insert into file set board_code = ?`,

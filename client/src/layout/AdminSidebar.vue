@@ -66,7 +66,7 @@
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <div data-i18n="Account Settings">리뷰 관리</div>
         </router-link>
-        <router-link to="#" class="menu-link menu-toggle">
+        <router-link to="/admin/proinquiry" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <div data-i18n="Account Settings">상품문의 관리</div>
         </router-link>
