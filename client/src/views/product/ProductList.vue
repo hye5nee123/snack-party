@@ -15,8 +15,8 @@
                         <div class="col-xl-3">
                             <div class="input-group w-100 mx-auto d-flex">
                                 <input type="search" class="form-control p-3" placeholder="검색어를 입력하세요."
-                                    aria-describedby="search-icon-1" v-model="skeyword">
-                                <span id="search-icon-1" class="input-group-text p-3"><i
+                                    aria-describedby="search-icon-1" v-model="skeyword" @keyup.enter="searchkeyword">
+                                <span id="search-icon-1" class="input-group-text p-3" @click="searchkeyword"><i
                                         class="fa fa-search"></i></span>
                             </div>
                         </div>
@@ -54,7 +54,7 @@
                                 </div>
                             </div>
                         </div>
-                        <CategoryProductList :cateProps="scategory" :keyProps="skeyword" :sortProps="ssort" />
+                        <CategoryProductList :cateProps="scategory" :keyProps="keyword" :sortProps="ssort" />
                     </div>
                 </div>
             </div>
@@ -79,6 +79,7 @@ export default {
             scategory: '',
             skeyword: '',
             ssort: 'name',
+            keyword: '',
         };
     },
     created() {
@@ -94,6 +95,7 @@ export default {
                 } else {
                     this.scategory = '';
                 }
+                this.keyword = '';
                 this.skeyword = '';
                 this.ssort = 'name';
             }
@@ -107,16 +109,21 @@ export default {
         },
         selectCategory(category) {
             this.scategory = category;
+            this.keyword = '';
             this.skeyword = '';
             this.ssort = 'name';
             this.$router.push({ path: `/productlist/${category}` });
+        },
+        searchkeyword() {
+            this.keyword = this.skeyword;
+            console.log('keyword : ', this.keyword, 'skeyword : ', this.skeyword);
         }
     }
 }
 </script>
 
 <style>
-.coloryellow{
+.coloryellow {
     color: #ffc107;
 }
 </style>
