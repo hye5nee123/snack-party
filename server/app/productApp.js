@@ -3,6 +3,30 @@ const app = express();
 const db = require('../db.js');
 const url = require('url');
 
+// 게시물 수 조회
+app.get('/count', async (req, res) => {
+    let data = [];
+    let where = " WHERE 1=1";
+    var queryData = url.parse(req.url, true).query;
+    let category = queryData.category;
+    let keyword = queryData.keyword;
+
+    //키워드가 있을 경우
+    if (keyword) {
+        where += " AND product_name LIKE ?"
+        data.push("%" + keyword + "%");
+    }
+
+    //카테고리가 있을 경우
+    if (category) {
+        where += " AND category = ?"
+        data.push(category);
+    }
+
+    let result = await db.connection('productsql', 'productListCount', data, where).catch(err => { console.log(err) });
+    res.send(result);
+});
+
 // 전체조회
 app.get('/', async (req, res) => {
     let data = [];
@@ -11,6 +35,8 @@ app.get('/', async (req, res) => {
     let category = queryData.category;
     let keyword = queryData.keyword;
     let sort = queryData.sort;
+    let offset = queryData.offset;
+
     //키워드가 있을 경우
     if (keyword) {
         where += " AND product_name LIKE ?"
@@ -34,14 +60,20 @@ app.get('/', async (req, res) => {
         where += " ORDER BY product_price DESC"
     }
 
-    let result = await db.connection('productsql', 'productList', data, where);
+    // LIMIT OFFSET
+    if (offset) {
+        where += " LIMIT 12 OFFSET ?"
+        data.push(Number(offset));
+    }
+
+    let result = await db.connection('productsql', 'productList', data, where).catch(err => { console.log(err) });
     res.send(result);
 });
 
 // 단건조회
 app.get('/info/:product_code', async (req, res) => {
     let data = req.params.product_code;
-    let result = await db.connection('productsql', 'productInfo', data)
+    let result = await db.connection('productsql', 'productInfo', data).catch(err => { console.log(err) });
     res.send(result);
 });
 

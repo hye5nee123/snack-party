@@ -9,23 +9,23 @@
       <tbody>
         <tr>
           <td>주문상품 금액</td>
-          <td>{{ getCurrencyFormat(allPrice) }}원</td>
+          <td>{{ $currencyFormat(allPrice) }}원</td>
         </tr>
         <tr>
           <td>적립금</td>
 
           <td><input type="text" v-model="usePoint" @input="usePoint = $event.target.value">원 
             <button type="button" @click="usePoint = point_value">모두사용</button>
-            <br>보유적립금: {{ getCurrencyFormat(point_value - usePoint) }}원
+            <br>보유적립금: {{ $currencyFormat(point_value - usePoint) }}원
           </td>
         </tr>
         <tr>
           <td>배송비</td>
-          <td>{{ getCurrencyFormat(deliveryFee) }}원</td>
+          <td>{{ $currencyFormat(deliveryFee) }}원</td>
         </tr>
         <tr>
           <td>최종결제 금액</td>
-          <td>{{ getCurrencyFormat(totalPrice) }}원</td>
+          <td>{{ $currencyFormat(totalPrice) }}원</td>
         </tr>
       </tbody>
     </table>
@@ -79,7 +79,6 @@ export default {
     delivery() {
       this.deliveryFee = this.allPrice >= 30000 ? 0 : 3000;
     }
-
   },
 
 

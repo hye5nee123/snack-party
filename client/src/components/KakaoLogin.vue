@@ -1,79 +1,72 @@
 <template>
-    <a id="kakao-login-btn" @click="loginWithKakao()">
+    <a id="kakao-login-btn" @click="kakaoLogin()">
     <img src="https://k.kakaocdn.net/14/dn/btroDszwNrM/I6efHub1SN5KCJqLm1Ovx1/o.jpg" alt="카카오 로그인 버튼" />
-    </a><br>
-    <p id="token-result"></p>
-    <button class="api-btn" @onclick="requestUserInfo()" >사용자 정보 가져오기</button>
+    </a>
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+    data() {
+        return {
+            memberList : []
+        }
+    },
     methods : {
         kakaoLogin() {
             window.Kakao.Auth.login({
+                scope : 'account_email',
                 success : this.getKakaoAccount
             })
         },
-        getKakaoAccount() {
+        getKakaoAccount(authObj) {
+            console.log(authObj);
             window.Kakao.API.request({
                 url: '/v2/user/me',
-                success : res => {
-                    const profile_nickname = res.profile_nickname;
-                    console.log(profile_nickname);
-                    alert('로그인 성공!');
+                success : async res => {
+                    this.$store.commit('setKakaoInfo', res);
+                    console.log(res.id);
+
+                    let result = await axios.post('/api/member/' + res.id)
+                            .catch(err => console.log(err));
+                    let info = result.data.member_id;
+                    console.log('===============', result.data);
+                    console.log('===============', result.data.member_id);
+                    console.log(info)
+
+                    if(info > 0) {
+                        alert('로그인 되었습니다.');
+                                
+                    let data = {
+                        member_code : result.data.member_code,
+                        member_id : result.data.member_id,
+                        pw : result.data.pw,
+                        member_name : result.data.member_name,
+                        member_phone : result.data.member_phone,
+                        member_email : result.data.member_email,
+                        birthday : result.data.birthday,
+                        gender : result.data.gender,
+                        postcode : result.data.postcode,
+                        member_type : result.data.member_type,
+                        join_date : result.data.join_date,
+                        address : result.data.address,
+                        address_detail : result.data.address_detail,
+                        member_status : result.data.member_status,
+                        quit_date : result.data.quit_date,
+                        token : result.data.token
+                    }  
+                        
+                    this.$store.commit('setLoginStatus', true);
+                    this.$store.commit('setMemberInfo', data);
+                    this.$router.push({path : '/'});
+                    } else {
+                        this.$router.push({path : '/sociallogin'});
+                    }
                 },
                 fail : error => {
                     console.log(error);
                 }
-            })
-        },
-
-        requestUserInfo() {
-    window.Kakao.API.request({
-      url: '/v2/user/me',
-    })
-      .then(function(res) {
-        alert(JSON.stringify(res));
-      })
-      .catch(function(err) {
-        alert(
-          'failed to request user information: ' + JSON.stringify(err)
-        );
-      });
-  },
-
-
-
-
-
-
-
-
-
-
-
-        kakaoLogout() {
-            window.Kakao.Auth.logout({
-                url : '/v1/user/unlink',
-                success : res => {
-                    console.loㅎ(res);
-                    alert('로그아웃 성공!');
-                    // Kakao.Auth.setAccessToken(undefined);	//토큰 제거
-                    sessionStorage.clear();					//세션 제거
-                    localStorage.clear();
-                }
-            })
-        },
-
-
-
-        loginWithKakao() {
-            // const params = {
-            //     redirectUri : 'http://localhost:8081/kakaologin'
-            // }
-            // window.Kakao.Auth.authorize(params);
-            window.Kakao.Auth.login({
-                success : this.getKakaoAccount2
             })
         }
     }

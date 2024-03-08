@@ -19,33 +19,81 @@
                             </div>
                         </div>
                         <div class="col-lg-6 col-md-6">
-                            <h4 class="fw-bold mb-3">{{ productInfo[0].product_name }}</h4>
-                            <h5 class="fw-bold mb-3">{{ productInfo[0].product_price }}원</h5>
-                            <div class="d-flex mb-4">
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star text-secondary"></i>
-                                <i class="fa fa-star"></i>
-                            </div>
-                            <table class="mb-4">
-
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="1">
+                                            <h3 class="fw-bold mb-3">{{ productInfo[0].product_name }}</h3>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>원산지</td>
+                                        <td>상세/구매 정보 참조</td>
+                                    </tr>
+                                    <tr>
+                                        <td>판매가</td>
+                                        <td style="font-weight: bold;">{{
+                                        getCurrencyFormat(productInfo[0].product_price) }}원</td>
+                                    </tr>
+                                    <tr>
+                                        <td>리뷰</td>
+                                        <td>0건 | <i class="fa fa-star text-secondary" /> 0.0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>배송방법</td>
+                                        <td>택배</td>
+                                    </tr>
+                                    <tr>
+                                        <td>배송비</td>
+                                        <td>3,000원 (30,000원 이상 구매 시 무료)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>수량</td>
+                                        <td>
+                                            <div class="input-group quantity" style="width: 100px;">
+                                                <div class="input-group-btn">
+                                                    <button @click="quantityDown"
+                                                        class="btn btn-sm btn-minus rounded-circle bg-light border">
+                                                        <i class="fa fa-minus"></i>
+                                                    </button>
+                                                </div>
+                                                <input type="text" v-model="quantity"
+                                                    class="form-control form-control-sm text-center border-0">
+                                                <div class="input-group-btn">
+                                                    <button @click="quantityUp"
+                                                        class="btn btn-sm btn-plus rounded-circle bg-light border">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </table>
-                            <div class="input-group quantity mb-5" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
-                                </div>
-                                <input type="text" class="form-control form-control-sm text-center border-0" value="1">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
+                            <table class="table">
+                                <tr>
+                                    <th>
+                                        <h5 class="fw-bold mb-3">총 상품금액</h5>
+                                    </th>
+                                    <td>
+                                        <h5 class="fw-bold mb-3">{{ getCurrencyFormat(productInfo[0].product_price *
+                                        quantity) }} 원</h5>
+                                    </td>
+                                </tr>
+                            </table>
+                            <div class="col-lg-12">
+                                <a href="#"
+                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
+                                        class="fa-regular fa-heart" /> 관심상품</a>
+                                <a href="#"
+                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
+                                        class="fa-solid fa-cart-plus" /> 장바구니</a>
+                                <a href="#"
+                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
+                                        class="fa-brands fa-shopify" /> 바로 구매하기</a>
                             </div>
-                            <a href="#" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i
-                                    class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
                         </div>
                         <div class="col-lg-12">
                             <nav>
@@ -67,7 +115,8 @@
                             <div class="tab-content mb-5">
                                 <div class="tab-pane active tacenter" id="nav-about" role="tabpanel"
                                     aria-labelledby="nav-about-tab">
-                                    <img :src="getImgUrl(productInfo[1].path)" class="img-fluid rounded" alt="Image">
+                                    <img :src="getImgUrl(productInfo != null && productInfo.length > 1 ? productInfo[1].path : '') "
+                                        class="img-fluid rounded" alt="Image">
                                 </div>
                                 <div class="tab-pane tacenter" id="nav-delret" role="tabpanel"
                                     aria-labelledby="nav-delret-tab">
@@ -139,11 +188,94 @@
                                     </table>
                                 </div>
                                 <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
-                                    <p>리뷰 테이블 출력</p>
+                                    
+                                    <!-- 리뷰 컴포넌트 -->
+                                    <ReviewListComp :pcode="pcode" type="product"/>
+                                    <!-- <div class="d-flex">
+                                        <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
+                                            style="width: 100px; height: 100px;" alt="">
+                                        <div class="">
+                                            <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                            <div class="d-flex justify-content-between">
+                                                <h5>Jason Smith</h5>
+                                                <div class="d-flex mb-3">
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p>The generated Lorem Ipsum is therefore always free from repetition
+                                                injected humour, or non-characteristic
+                                                words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex">
+                                        <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
+                                            style="width: 100px; height: 100px;" alt="">
+                                        <div class="">
+                                            <p class="mb-2" style="font-size: 14px;">April 12, 2024</p>
+                                            <div class="d-flex justify-content-between">
+                                                <h5>Sam Peters</h5>
+                                                <div class="d-flex mb-3">
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star text-secondary"></i>
+                                                    <i class="fa fa-star"></i>
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                            </div>
+                                            <p class="text-dark">The generated Lorem Ipsum is therefore always free
+                                                from repetition injected humour, or non-characteristic
+                                                words etc. Susp endisse ultricies nisi vel quam suscipit </p>
+                                        </div>
+                                    </div>
+                                    <form action="#">
+                                        <h4 class="mb-5 fw-bold">Leave a Reply</h4>
+                                        <div class="row g-4">
+                                            <div class="col-lg-6">
+                                                <div class="border-bottom rounded">
+                                                    <input type="text" class="form-control border-0 me-4"
+                                                        placeholder="Yur Name *">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="border-bottom rounded">
+                                                    <input type="email" class="form-control border-0"
+                                                        placeholder="Your Email *">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="border-bottom rounded my-4">
+                                                    <textarea name="" id="" class="form-control border-0" cols="30"
+                                                        rows="8" placeholder="Your Review *"
+                                                        spellcheck="false"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12">
+                                                <div class="d-flex justify-content-between py-3 mb-5">
+                                                    <div class="d-flex align-items-center">
+                                                        <p class="mb-0 me-3">Please rate:</p>
+                                                        <div class="d-flex align-items-center" style="font-size: 12px;">
+                                                            <i class="fa fa-star text-muted"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                            <i class="fa fa-star"></i>
+                                                        </div>
+                                                    </div>
+                                                    <a href="#"
+                                                        class="btn border border-secondary text-primary rounded-pill px-4 py-3">
+                                                        Post Comment</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form> -->
                                 </div>
-                                <div class="tab-pane tacenter" id="nav-inquire" role="tabpanel"
+                                <div class="tab-pane" id="nav-inquire" role="tabpanel"
                                     aria-labelledby="nav-inquire-tab">
-                                    <p>문의 테이블 출력</p>
+                                    <h5>문의 테이블 출력</h5>
                                 </div>
                             </div>
                         </div>
@@ -157,13 +289,45 @@
 
 <script>
 import axios from 'axios';
+import ReviewListComp from '../../components/ReviewListComp.vue';
 
 export default {
     name: 'ProductInfo',
+    components: {
+        ReviewListComp
+    },
     data() {
         return {
-            productInfo: [],
+            productInfo: [{
+                product_code: '',
+                category: '',
+                product_name: '',
+                product_price: 0,
+                stock_cnt: 0,
+                register_date: '',
+                product_display: '',
+                save_name: '',
+                extension: '',
+                file_seq: 0,
+                thumbnail: '',
+                path: ''
+            },
+            {
+                product_code: '',
+                category: '',
+                product_name: '',
+                product_price: 0,
+                stock_cnt: 0,
+                register_date: '',
+                product_display: '',
+                save_name: '',
+                extension: '',
+                file_seq: 0,
+                thumbnail: '',
+                path: ''
+            }],
             pcode: '',
+            quantity: '1',
         };
     },
     created() {
@@ -172,14 +336,34 @@ export default {
     },
     methods: {
         async getProductInfo() {
+            console.log('getProductInfo() 실행');
+            console.log(`this.pcode : ${this.pcode}`);
+
             let result = await axios.get(`/api/product/info/${this.pcode}`)
                 .catch(err => console.log(err));
+
             this.productInfo = result.data;
 
-            console.log(this.productInfo);
+            console.log('this.productInfo : ', this.productInfo);
         },
         getImgUrl(path) {
-            return new URL(this.url + '/common/download?path=' + path);
+            if (path)
+                return new URL(this.url + '/common/download?path=' + path);
+            else
+                return '';
+        },
+        quantityUp() {
+            this.quantity++;
+        },
+        quantityDown() {
+            if (this.quantity > 1) {
+                this.quantity--;
+            } else {
+                alert('최소 주문수량은 1개 입니다.');
+            }
+        },
+        getCurrencyFormat(value) {
+            return this.$currencyFormat(value);
         },
     }
 }
