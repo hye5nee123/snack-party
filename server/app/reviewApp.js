@@ -49,7 +49,6 @@ app.get("/detailreview/:product_code", async (request, response) => {
 // 단건조회
 app.get("/detail/:review_code", async (request, response) => {
   let data = request.params.review_code;
-  console.log(data, ">>>>>>>>>>>>>>>>>>>>>>");
   let result = await db.connection("reviewsql", "reviewInfo", data)
     .catch(err => console.log(err))
   response.send(result[0]);

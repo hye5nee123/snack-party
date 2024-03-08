@@ -167,5 +167,10 @@ export default {
       name: 'InquiryInsert',
       component: import(/* webpackChunkName: "InquiryInsert", webpackPrefetch: false */ "../views/inquiry/InquiryInsert.vue")
     },
+    {
+      path: 'pinquiryinfo',
+      name: 'PInquiryInfo',
+      component: import(/* webpackChunkName: "PInquiryInfo", webpackPrefetch: false */ "../views/inquiry/PInquiryInfo.vue")
+    },
   ],
 };

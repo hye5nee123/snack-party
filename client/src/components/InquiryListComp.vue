@@ -44,7 +44,7 @@ export default {
     this.getInquiryList();
   },
   methods: {
-    async getInquiryList() { // 이 코드는 실제로 사용할 상품 코드로 대체되어야 합니다.
+    async getInquiryList() {
       let result = await axios.get('/api/inquiry/member/' + this.member_code)
         .catch(err => console.log(err));
       console.log('result : ', result);

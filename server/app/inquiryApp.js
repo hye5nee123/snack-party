@@ -39,6 +39,14 @@ app.get("/:product_code", async (request, response) => {
   response.send(result);
 });
 
+//게시글 단건조회
+app.get("/detail/:inquiry_code", async (request, response) => {
+  let data = request.params.inquiry_code;
+  let result = await db.connection("inquirysql", "pInquiryInfo", data)
+    .catch(err => console.log(err))
+  response.send(result[0]);
+});
+
 //등록
 
 app.post("/", async (request, response) => {
