@@ -189,7 +189,7 @@ export default {
             const data = {
                 pg: 'html5_inicis',                                                      // PG사
                 pay_method: 'card',                                                      // 결제수단
-                merchant_uid: `ORD_${new Date().getTime()}`,                            // 주문번호
+                merchant_uid: `snack_${new Date().getTime()}`,                            // 주문번호
                 amount: this.total_price,                                               // 결제금액
                 name: '상품명',                                                         // 주문명
                 buyer_name: this.userInfo.member_name,                                  // 구매자 이름
@@ -234,7 +234,7 @@ export default {
                         use_point: this.use_point,
                         total_price: this.total_price,
                         get_point: this.get_point,
-                        order_status: 'h03', //결제완료
+                        order_status: 'h01', //결제완료
                         cancel_date: null,
                         imp_uid: rsp.imp_uid,
                         merchant_uid: rsp.merchant_uid,
@@ -252,7 +252,7 @@ export default {
                         delivery_num: this.deliveryInfo.delivery_num
                     },
 
-                    point: {
+                    point: { //포인트
                         review_code: null,
                         point_status: 'd02',
                         point_value: this.use_point,
@@ -273,11 +273,8 @@ export default {
                 await axios
                 .delete(`/apiorder/carts/${ordered.cart_code}`)
                 .catch((err) => console.log(err));
-
-                //재고량수정
-                // await axios.put(`/apiorder/${ordered.cart_cnt}/${ordered.product_code}`).catch((err) => console.log(err));
             }
-            console.log('삭제,수정되었습니다.');
+            console.log('장바구니 삭제');
         },
     }
 } //end

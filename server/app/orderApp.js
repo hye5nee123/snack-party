@@ -58,21 +58,24 @@ app.post('/', async (request, response) => {
     let details = selectedInfo(request.body.param.orderDetail);
     let delivery = request.body.param.deliveryInfo;
     let point = request.body.param.point;
-
+    
+    //1.주문등록
     let result = await db
       .connection('ordersql', 'orderInsert', order)
       .catch((error) => {
         console.log(error);
       });
-    console.log('order결과: ', result); //insertId: 0
-    //주문테이블 등록 후 생성된 주문코드
+    console.log('order결과: ', result);
+
+    //*주문테이블 등록 후 생성된 주문코드 불러오기
     let order_code = await db
       .connection('commonsql', 'currval', ['ORD', 'ORD'])
       .catch((error) => {
         console.log(error);
       });
     console.log('details결과', details);
-    //상세테이블
+
+    //2.상세테이블
     for (let i = 0; i < details.length; i++) {
       details[i].order_code = order_code[0].seq;
       await db
@@ -82,7 +85,7 @@ app.post('/', async (request, response) => {
         });
     }
 
-    //배송테이블
+    //3. 배송테이블
     delivery.order_code = order_code[0].seq;
     await db
       .connection('ordersql', 'deliveryInsert', delivery)
@@ -90,20 +93,24 @@ app.post('/', async (request, response) => {
         console.log(error);
       });
 
-    //포인트차감내역 추가
-    point.order_code = order_code[0].seq;
-    let pointresult = await db
+    //4. 포인트차감내역 등록
+    if(point.point_value > 0){
+      point.order_code = order_code[0].seq;
+      let pointresult = await db
       .connection('ordersql', 'memUsedPointInsert', point)
-      console.log('포인트?', pointresult)
       .catch((error) => {
         console.log(error);
       });
+      console.log('포인트?', pointresult)
+    }
     
-    //재고량 수정
+    //5. 재고량 수정
     for(let i=0; i < details.length; i++) {
-      console.log('order_cnt는? ', details[i].order_cnt);
       let stock_info = [details[i].order_cnt, details[i].product_code];
-      await db.connection('ordersql', 'stockCntUpdate', stock_info);
+      await db.connection('ordersql', 'stockCntUpdate', stock_info)
+      .catch((error) => {
+        console.log(error);
+      });
     }
 
     response.send(result);
@@ -122,28 +129,31 @@ function selectedInfo(list) {
   }
   return newArr;
 }
-//재고량 수정
-// app.put('/:orderedCnt/:pco', async (request, response) => {
-//   let data = [request.params.stockCnt, request.params.pcode];
-//   let result = await db.connection('ordersql', 'stockCntUpdate', data);
-//   response.send(result);
-// });
 
-// //회원포인트 수정
-// app.put('/:usepoint/:mco', async (request, response) => {
-//   let data = [request.params.usepoint, request.params.mco];
-//   let result = await db.connection('ordersql', 'memPointUpdate', data);
-//   response.send(result);
-// });
 
 //=======================================
 //< 나의 주문내역 >
 
-// //주문전체조회
-// app.get('/', async(request, response) => {
-//   let result = await db.connection('ordersql', 'orderListAll');
-//   response.send(result);
-// });
+//주문전체조회
+//* 페이징
+app.get('/myord/:mcode/:limit/:offset', async (request, response) => {
+  let mcode = request.params.mcode;
+  let limit = Number(request.params.limit);
+  let offset = Number(request.params.offset);
+
+  let data = [mcode, limit, offset]
+  let result = await db.connection('ordersql', 'orderListPage', data)
+                       .catch(err => console.log(err));
+  response.send(result);
+});
+
+// 게시물 수 조회
+app.get('/myord/count/:mcode', async (request, response) => {
+  let mcode = request.params.mcode;
+  let result = await db.connection('ordersql', 'orderListCount', mcode)
+                       .catch(err => console.log(err));
+  response.send(result);
+});
 
 // //주문조회
 // app.get('/:ocode', async(request, response) => {

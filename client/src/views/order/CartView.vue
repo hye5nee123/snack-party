@@ -55,7 +55,7 @@
                     </button>
                   </div>
                   <div style="padding-left: 10px;">
-                    <button type="button" class="cnt-update-btn btn-sm" @click="updateCnt(cart)">수정</button>
+                    <button type="button" class="cnt-update-btn btn-sm" @click="updateCnt(cart)">변경</button>
                     <!--  class=btn-secondary 없앰 색깔 주황색버튼  -->
                   </div>
                 </div>
@@ -100,6 +100,7 @@
           장바구니 비우기
         </button>
       </div>
+      <p>{{ selectList }}</p>
     </div>
   </div>
   <!-- Cart Page End -->
@@ -191,21 +192,31 @@ export default {
     },
 
     async deleteSelected() { //선택삭제
-      for (let selected of this.selectList) {
-        await axios
-          .delete(`/apiorder/carts/${selected.cart_code}`)
-          .catch((err) => console.log(err));
+      if(this.selectList.length == 0) {
+        alert('삭제할 상품을 선택해주세요.');
+      } else {
+        for (let selected of this.selectList) {
+          await axios
+            .delete(`/apiorder/carts/${selected.cart_code}`)
+            .catch((err) => console.log(err));
+        }
+        alert('삭제되었습니다.');
+        this.$router.go(0); //페이지새로고침
       }
-      alert('삭제되었습니다.');
-      this.$router.go(0); //페이지새로고침
     },
 
     goToCheckOut() { //주문하기로 이동
       if (this.selectList.length == 0) {
         alert('주문하실 상품을 선택해주세요.');
-      } else {
-        sessionStorage.setItem("carts", JSON.stringify(this.selectList))
-        this.$router.push({ path: '/checkout' })
+      } 
+      for(let selOrd of this.selectList) {
+        if(selOrd.stock_cnt < selOrd.cart_cnt){
+          alert(selOrd.product_name + '의 재고량이 부족합니다.\n주문가능한 수량은 ' + selOrd.stock_cnt + '개로 수량이 변경됩니다.');
+          selOrd.cart_cnt = selOrd.stock_cnt;
+        } else {
+          sessionStorage.setItem("carts", JSON.stringify(this.selectList))
+          this.$router.push({ path: '/checkout' })
+        }
       }
     },
   },
