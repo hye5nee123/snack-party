@@ -107,7 +107,7 @@
                   <div class="row g-4 text-center align-items-center justify-content-center pt-4">
                       <button type="button" class="btn btn-primary2 border-secondary py-3 px-4 text-uppercase w-100" @click="this.loginStatus? memberUpdate() : memberInsert()">{{ this.button }}</button>
                   </div><br>
-                  <div class="info" v-show="loginStatus">회원탈퇴 ></div>
+                  <div class="info" v-show="loginStatus"><router-link to="/withdraw">회원탈퇴 ></router-link></div>
               </div>
           </div>
       </form>
@@ -230,6 +230,7 @@ export default {
             let info = result.data.affectedRows;
             if(info > 0) {
                 alert('회원정보가 수정되었습니다.');
+                this.$store.commit('setMemberInfo', data.param);
                 this.$router.push({path : '/'})
             }
         },
@@ -306,7 +307,7 @@ export default {
                 alert('아이디를 입력해주세요.');
                 return false;
             } else { 
-                let result = await axios.post('/api/member/' + this.memberInfo.id)
+                let result = await axios.get('/api/member/info/' + this.memberInfo.id)
                             .catch(err => console.log(err));
                 let info = result.data.member_id;
                 

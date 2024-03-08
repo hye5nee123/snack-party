@@ -41,7 +41,22 @@ export default {
     {
       path: "sociallogin",
       name: "SocialLogin",
-      component: import(/* webpackChunkName: "loginview", webpackPrefetch: false */ "../views/member/SocialLogin.vue"),
+      component: import(/* webpackChunkName: "sociallogin", webpackPrefetch: false */ "../views/member/SocialLogin.vue"),
+    },
+    {
+      path: "searchid",
+      name: "SearchID",
+      component: import(/* webpackChunkName: "searchid", webpackPrefetch: false */ "../views/member/SearchID.vue"),
+    },
+    {
+      path: "searchpw",
+      name: "SearchPW",
+      component: import(/* webpackChunkName: "searchpw", webpackPrefetch: false */ "../views/member/SearchPW.vue"),
+    },
+    {
+      path: "withdraw",
+      name: "WithdrawView",
+      component: import(/* webpackChunkName: "withdraw", webpackPrefetch: false */ "../views/member/WithdrawView.vue"),
     },
     {
       path: "cart",

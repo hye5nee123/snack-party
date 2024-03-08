@@ -1,16 +1,16 @@
 <template>
   <!-- Single Page Header start -->
   <div class="container-fluid page-header py-5">
-  <h1 class="text-center text-white display-6">로그인</h1>
+  <h1 class="text-center text-white display-6">아이디 찾기</h1>
   <ol class="breadcrumb justify-content-center mb-0">
       <li class="breadcrumb-item"><a href="/">Home</a></li>
-      <li class="breadcrumb-item text-white">Login</li>
+      <li class="breadcrumb-item text-white">Search ID</li>
   </ol>
 </div>
 <!-- Single Page Header End -->
   
-    <!-- Content -->
-
+  <!-- Content -->
+    <div>고객님의 정보와 일치하는 아이디는 {{  }}입니다.</div>
     <div class="container-xxl boxsize">
       <div class="container-p-y">
         <div class="authentication-inner">
@@ -23,20 +23,20 @@
 
               <!-- <form id="formAuthentication" class="mb-3" action="index.html" method="POST"> -->
                 <div class="mb-3">
-                  <label for="id" class="form-label">아이디</label>
+                  <label for="name" class="form-label">이름</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="id"
-                    name="email-username"
-                    placeholder="아이디 입력"
+                    id="name"
+                    name="name"
+                    placeholder="이름 입력"
                     autofocus
-                    v-model="id"
+                    v-model="name"
                   />
                 </div>
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
-                    <label class="form-label" for="pw">비밀번호</label>
+                    <label class="form-label" for="phone">휴대전화</label>
                     <!-- <a href="auth-forgot-password-basic.html">
                       <small>Forgot Password?</small>
                     </a> -->
@@ -44,12 +44,12 @@
                   <div class="input-group input-group-merge">
                     <input
                       type="password"
-                      id="pw"
+                      id="phone"
                       class="form-control"
                       name="password"
-                      placeholder="비밀번호 입력"
+                      placeholder="'-'없이 숫자만 입력"
                       aria-describedby="password"
-                      v-model="pw"
+                      v-model="phone"
                       @keyup.enter="memberLogin()"
                     />
                     <!-- <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span> -->
@@ -62,83 +62,78 @@
                   </div>
                 </div> -->
                 <div class="mb-3">
-                  <button class="btn btn-primary2 d-grid login center" type="button" @click="memberLogin()">로그인</button>
+                  <button class="btn btn-primary2 d-grid login center" type="button" @click="memberLogin()">다음</button>
                 </div>
-                <KakaoLogin />
               <!-- </form> -->
-
-              <p class="text-center form-label">
-                <router-link to="/searchid">아이디 찾기</router-link>
-                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                  <router-link to="/searchpw">비밀번호 찾기</router-link>
-                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <router-link to="/signup">회원가입</router-link>
-              </p>
             </div>
           </div>
           <!-- /Register -->
         </div>
       </div>
     </div>
-    <!-- / Content -->
-  </template>
+  <!-- / Content -->
+</template>
+
 
 <script>
 import axios from 'axios';
-import KakaoLogin from '../../components/KakaoLogin.vue';
 
 export default {
   data() {
     return {
-        id : '',
-        pw : ''
+        name : '',
+        phone : ''
     }
   },
   created() {
         console.log(this.$store.state.memberStore.loginStatus);
         console.log(this.$store.state.memberStore.memberInfo);
     },
-  components : {
-    KakaoLogin
-  },
   methods : {
     async memberLogin() {
       if(!this.validation()) return;
 
-      let data = {
-          member_id : this.id,
-          pw : this.pw
-      };
-
-      let result = await axios.post('api/member/login', data)
+      let result = await axios.post('api/member/' + this.name)
                     .catch(err => console.log(err));
-      if(result.data.loginStatus == '1') {
+                       
+      let data = {
+        member_code : result.data.member_code,
+        member_id : result.data.member_id,
+        pw : result.data.pw,
+        member_name : result.data.member_name,
+        member_phone : result.data.member_phone,
+        member_email : result.data.member_email,
+        birthday : result.data.birthday,
+        gender : result.data.gender,
+        postcode : result.data.postcode,
+        member_type : result.data.member_type,
+        join_date : result.data.join_date,
+        address : result.data.address,
+        address_detail : result.data.address_detail,
+        member_status : result.data.member_status,
+        quit_date : result.data.quit_date,
+        token : result.data.token
+      }                    
+
+      if(data.member_name == this.name && data.member_phone == this.phone) {
         alert('로그인 되었습니다.');
 
-        this.$store.commit('setLoginStatus', true);
-        this.$store.commit('setMemberInfo', result.data.member);
-        console.log(this.$store.state.memberStore.loginStatus);
-        console.log(this.$store.state.memberStore.memberInfo);
-        this.$router.push({path : '/'})
-
-      } else if(result.data.loginStatus == '2' || result.data.loginStatus == '3') {
-        alert('아이디 또는 비밀번호가 일치하지 않습니다.')
-        this.id = '';
-        this.pw = '';
-
-      } else if(result.data.loginStatus == '4') {
-        alert('탈퇴한 회원입니다.');
-        this.id = '';
-        this.pw = '';
+        // this.$store.commit('setLoginStatus', true);
+        // this.$store.commit('setMemberInfo', data);
+        // console.log(this.$store.state.memberStore.loginStatus);
+        // console.log(this.$store.state.memberStore.memberInfo);
+        // this.$router.push({path : '/'})
+      } else {
+        alert('이름 또는 휴대전화가 일치하지 않습니다.')
       }
     },
     validation() {
-      if(this.id == '') {
-        alert('아이디를 입력해주세요.');
+      if(this.name == '') {
+        alert('이름을 입력해주세요.');
         return false;
       }
-      if(this.pw == '') {
-        alert('비밀번호를 입력해주세요.');
+      if(this.phone == '') {
+        alert('휴대전화를 입력해주세요.');
         return false;
       }
 

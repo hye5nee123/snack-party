@@ -26,13 +26,12 @@ export default {
                 url: '/v2/user/me',
                 success : async res => {
                     this.$store.commit('setKakaoInfo', res);
-                    console.log(res.id);
 
-                    let result = await axios.post('/api/member/' + res.id)
+                    let result = await axios.get('/api/member/info/' + res.id)
                             .catch(err => console.log(err));
                     let info = result.data.member_id;
 
-                    if(info > 0) {
+                    if(info == res.id) {
                         alert('로그인 되었습니다.');
                                 
                         let data = {

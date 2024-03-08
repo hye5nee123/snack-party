@@ -1,10 +1,10 @@
 <template>
   <!-- Single Page Header start -->
   <div class="container-fluid page-header py-5">
-  <h1 class="text-center text-white display-6">로그인</h1>
+  <h1 class="text-center text-white display-6">회원탈퇴</h1>
   <ol class="breadcrumb justify-content-center mb-0">
       <li class="breadcrumb-item"><a href="/">Home</a></li>
-      <li class="breadcrumb-item text-white">Login</li>
+      <li class="breadcrumb-item text-white">Search Password</li>
   </ol>
 </div>
 <!-- Single Page Header End -->
@@ -68,9 +68,11 @@
               <!-- </form> -->
 
               <p class="text-center form-label">
-                <router-link to="/searchid">아이디 찾기</router-link>
+                <span>아이디 찾기</span>
                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                  <router-link to="/searchpw">비밀번호 찾기</router-link>
+                <a href="auth-register-basic.html">
+                  <span>비밀번호 찾기</span>
+                </a>
                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                 <router-link to="/signup">회원가입</router-link>
               </p>
@@ -80,8 +82,13 @@
         </div>
       </div>
     </div>
+
     <!-- / Content -->
+
+
+
   </template>
+
 
 <script>
 import axios from 'axios';
@@ -105,31 +112,38 @@ export default {
     async memberLogin() {
       if(!this.validation()) return;
 
-      let data = {
-          member_id : this.id,
-          pw : this.pw
-      };
-
-      let result = await axios.post('api/member/login', data)
+      let result = await axios.post('api/member/' + this.id)
                     .catch(err => console.log(err));
-      if(result.data.loginStatus == '1') {
+                       
+      let data = {
+        member_code : result.data.member_code,
+        member_id : result.data.member_id,
+        pw : result.data.pw,
+        member_name : result.data.member_name,
+        member_phone : result.data.member_phone,
+        member_email : result.data.member_email,
+        birthday : result.data.birthday,
+        gender : result.data.gender,
+        postcode : result.data.postcode,
+        member_type : result.data.member_type,
+        join_date : result.data.join_date,
+        address : result.data.address,
+        address_detail : result.data.address_detail,
+        member_status : result.data.member_status,
+        quit_date : result.data.quit_date,
+        token : result.data.token
+      }                    
+
+      if(data.member_id == this.id && data.pw == this.pw) {
         alert('로그인 되었습니다.');
 
         this.$store.commit('setLoginStatus', true);
-        this.$store.commit('setMemberInfo', result.data.member);
+        this.$store.commit('setMemberInfo', data);
         console.log(this.$store.state.memberStore.loginStatus);
         console.log(this.$store.state.memberStore.memberInfo);
         this.$router.push({path : '/'})
-
-      } else if(result.data.loginStatus == '2' || result.data.loginStatus == '3') {
+      } else {
         alert('아이디 또는 비밀번호가 일치하지 않습니다.')
-        this.id = '';
-        this.pw = '';
-
-      } else if(result.data.loginStatus == '4') {
-        alert('탈퇴한 회원입니다.');
-        this.id = '';
-        this.pw = '';
       }
     },
     validation() {
