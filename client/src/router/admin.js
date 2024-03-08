@@ -23,28 +23,21 @@ export default {
     {
       path: '/admin/notice',
       name: 'NoticeManage',
-      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/NoticeManage.vue'),
+      component: import(/* webpackChunkName: "NoticeManage", webpackPrefetch: false */ '../views/admin/NoticeManage.vue'),
     },
 
     // 주문관리 페이지
     {
       path: '/admin/order',
       name: 'OrderManage',
-      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/OrderManage.vue'),
+      component: import(/* webpackChunkName: "OrderManage", webpackPrefetch: false */ '../views/admin/OrderManage.vue'),
     },
 
     //리뷰관리 페이지
     {
       path: '/admin/review',
       name: 'BoardManage',
-      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/BoardManage.vue'),
-    },
-
-    //상품문의 관리 페이지
-    {
-      path: '/admin/proinquiry',
-      name: 'ProInquiryManage',
-      component: import(/* webpackChunkName: "productlist", webpackPrefetch: false */ '../views/admin/ProInquiryManage.vue'),
+      component: import(/* webpackChunkName: "BoardManage", webpackPrefetch: false */ '../views/admin/BoardManage.vue'),
     }
   ]
 }

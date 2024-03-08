@@ -41,7 +41,22 @@ export default {
     {
       path: "sociallogin",
       name: "SocialLogin",
-      component: import(/* webpackChunkName: "loginview", webpackPrefetch: false */ "../views/member/SocialLogin.vue"),
+      component: import(/* webpackChunkName: "sociallogin", webpackPrefetch: false */ "../views/member/SocialLogin.vue"),
+    },
+    {
+      path: "searchid",
+      name: "SearchID",
+      component: import(/* webpackChunkName: "searchid", webpackPrefetch: false */ "../views/member/SearchID.vue"),
+    },
+    {
+      path: "searchpw",
+      name: "SearchPW",
+      component: import(/* webpackChunkName: "searchpw", webpackPrefetch: false */ "../views/member/SearchPW.vue"),
+    },
+    {
+      path: "withdraw",
+      name: "WithdrawView",
+      component: import(/* webpackChunkName: "withdraw", webpackPrefetch: false */ "../views/member/WithdrawView.vue"),
     },
     {
       path: "cart",
@@ -76,13 +91,47 @@ export default {
           next();
         }
       },
-    
     },
     {
       path: "ordcompleted",
       name: "OrdCompleted",
       component: import(/* webpackChunkName: "ordcompleted", webpackPrefetch: false */ "../views/order/OrdCompletedView.vue"),
     },
+    {
+      path: "myorderlist",
+      name: "MyOrderList",
+      component: import(/* webpackChunkName: "myorderlist", webpackPrefetch: false */ "../views/order/MyOrdListView.vue"),
+    
+      beforeEnter: (to, from, next) => {
+        let loginStatus =  Store.state.memberStore.loginStatus;
+        console.log(loginStatus);
+        if(!loginStatus ){
+          alert('로그인 후 접근 가능한 페이지입니다.'),
+          next('/main');
+        }
+        else {
+          next();
+        }
+      },
+    },
+    {
+      path: "myorderdetail",
+      name: "MyOrderDetail",
+      component: import(/* webpackChunkName: "myorderdetail", webpackPrefetch: false */ "../views/order/MyOrdDetailView.vue"),
+    
+      beforeEnter: (to, from, next) => {
+        let loginStatus =  Store.state.memberStore.loginStatus;
+        console.log(loginStatus);
+        if(!loginStatus ){
+          alert('로그인 후 접근 가능한 페이지입니다.'),
+          next('/main');
+        }
+        else {
+          next();
+        }
+      },
+    },
+    
     {
       path: "reviewlist",
       name: "ReviewList",

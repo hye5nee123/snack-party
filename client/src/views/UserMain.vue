@@ -16,12 +16,20 @@ export default {
   components: {
     Header,
     Footer
-  }
+  },
   // ,
   // mounted () {
   //   console.log('mounted');
   //   this.$router.push('/user/main')
   // }
+  mounted() {
+    window.addEventListener('beforeunload', this.unLoadEvent);
+  },
+  methods : {
+    unLoadEvent : function() {
+      this.$store.commit('clearStore');
+    }
+  }
 };
 </script>
 
