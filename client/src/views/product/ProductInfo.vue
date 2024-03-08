@@ -26,9 +26,10 @@
                                 <thead>
                                     <tr>
                                         <th colspan="1">
-                                            <h3 class="fw-bold mb-3">{{ productInfo[0].product_name }} 
+                                            <h3 class="fw-bold mb-3">{{ productInfo[0].product_name }}
                                                 <!-- 품절 배지 -->
-                                                <span class="badge bg-danger" v-if="productInfo[0].stock_cnt == 0">품절</span>
+                                                <span class="badge bg-danger"
+                                                    v-if="productInfo[0].stock_cnt == 0">품절</span>
                                             </h3>
                                         </th>
                                     </tr>
@@ -206,8 +207,8 @@
                                 <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
 
                                     <!-- 리뷰 컴포넌트 -->
-                                    <button type="button"
-                                        onclick="location.href='http://localhost:8081/reviewinsert'">리뷰 작성</button>
+                                    <button type="button" class="btn btn-secondary"
+                                        @click="$router.push('/reviewinsert')">리뷰 작성</button>
                                     <ReviewListComp :pcode="pcode" type="product" />
                                     <!-- <div class="d-flex">
                                         <img src="img/avatar.jpg" class="img-fluid rounded-circle p-3"
@@ -294,8 +295,11 @@
                                 <div class="tab-pane" id="nav-inquire" role="tabpanel"
                                     aria-labelledby="nav-inquire-tab">
                                     <!-- 문의 컴포넌트 -->
-                                    <button type="button"
-                                        onclick="location.href='http://localhost:8081/reviewinsert'">문의 작성</button>
+                                    <!-- <button type="button" class="btn btn-secondary"
+                                        @click="$router.push('/pinquiryinsert')">문의 작성</button> -->
+                                    <router-link :to="{ path: '/pinquiryinsert', query: { product_code: pcode } }">
+                                        <button type="button" class="btn btn-secondary">문의 작성</button>
+                                    </router-link>
                                     <ProInquiryListComp :pcode="pcode" type="product" />
                                 </div>
                             </div>
@@ -362,8 +366,8 @@ export default {
     created() {
         this.pcode = this.$route.query.product_code;
         this.getProductInfo();
-        // this.getReviewCnt();
-        // this.getAvgStars();
+        this.getReviewCnt();
+        this.getAvgStars();
     },
     watch: {
 
@@ -416,12 +420,12 @@ export default {
                     product_code: this.productInfo[0].product_code
                 }
             }
-            console.log('this.productInfo.product_code : ', );
+            console.log('this.productInfo.product_code : ',);
             console.log('data : ', data);
             //이미 담긴 상품 확인
             let ucode = this.memberCode;
             let pcode = this.productInfo[0].product_code;
-            console.log(ucode,pcode);
+            console.log(ucode, pcode);
             let cartCheck = await axios.get(`/apiorder/carts/${ucode}/${pcode}`).catch((err) => console.log(err));
             console.log('cartCheck결과', cartCheck.data)
 
@@ -443,15 +447,15 @@ export default {
             let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
                 .catch(err => console.log(err));
             this.reviewCnt = result.data[0].count;
-    
+
             console.log('this.reviewCnt : ', this.productInfo);
         },
         async getAvgStars() {
             let result = await axios.get(`/api/review/avgStars/${this.pcode}`)
                 .catch(err => console.log(err));
-    
+
             this.avgStars = result.data[0].avg;
-    
+
             console.log('this.avgStars : ', this.avgStars);
         },
     },

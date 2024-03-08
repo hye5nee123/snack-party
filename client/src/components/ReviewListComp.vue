@@ -1,32 +1,32 @@
 <template>
-<div class="container-fluid fruite py-5">
- <div class="content-wrapper">
-    <div class="container-xxl flex-grow-1 container-p-y">
-      <div class="card">
-      <div class="table-responsive text-nowrap">
-        <table class="table table-hover">
-          <thead>
-            <tr>
-              <th>제목</th>
-              <th>내용</th>
-              <th>작성자</th>
-              <th>별점</th>
-            </tr>
-          </thead>
-          <tbody class="table-border-bottom-0">          
-            <tr :key="i" v-for="(review, i) in reviewList">
-              <td>{{ review.review_title }}</td>
-              <td>{{ review.review_content }}</td>
-              <td>{{ review.member_id }}</td>
-              <td>{{ review.stars }}</td>
-            </tr>
-            </tbody>
-        </table>
+  <div class="container-fluid fruite py-5">
+    <div class="content-wrapper">
+      <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="card">
+          <div class="table-responsive text-nowrap">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>제목</th>
+                  <th>내용</th>
+                  <th>작성자</th>
+                  <th>별점</th>
+                </tr>
+              </thead>
+              <tbody class="table-border-bottom-0">
+                <tr :key="i" v-for="(review, i) in reviewList" v-on:click="goToReviewInfo(review.review_code)">
+                  <td>{{ review.review_title }}</td>
+                  <td>{{ review.review_content }}</td>
+                  <td>{{ review.member_id }}</td>
+                  <td>{{ review.stars }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <PaginationComp :ITEM_PER_PAGE="ITEM_PER_PAGE" :PAGE_PER_SECTION="PAGE_PER_SECTION" :TOTAL_ARITCLES="TOTAL_ARITCLES"
+    <PaginationComp :ITEM_PER_PAGE="ITEM_PER_PAGE" :PAGE_PER_SECTION="PAGE_PER_SECTION" :TOTAL_ARITCLES="TOTAL_ARITCLES"
       @change-page="onChangePage" />
   </div>
 </template>
@@ -39,7 +39,7 @@ export default {
   components: {
     PaginationComp
   },
-    
+
   data() {
     return {
       reviewList: [],
@@ -57,7 +57,7 @@ export default {
   created() {
     this.getReviewList();
     this.getReviewCnt();
-    console.log('this.type: ', this.type );
+    console.log('this.type: ', this.type);
   },
   computed: {
     pageStartIdx() {
@@ -78,28 +78,35 @@ export default {
       } else if (this.type == "admin") {
         url = `/api/review/`;
       } else {
-        url =`/api/review/member_code`
+        url = `/api/review/member_code`
       }
-      console.log('url : ',url)
+      console.log('url : ', url)
       let result = await axios.get(url)
-          .catch(err => console.log(err));
-          
+        .catch(err => console.log(err));
+
       console.log('reviewList : ', result.data);
       this.reviewList = result.data
     },
     // 전체 데이터 갯수
     async getReviewCnt() {
-        let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
-            .catch(err => console.log(err));
-        this.TOTAL_ARITCLES = result.data[0].count;
+      let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
+        .catch(err => console.log(err));
+      this.TOTAL_ARITCLES = result.data[0].count;
 
-        console.log('this.TOTAL_ARITCLES : ', this.TOTAL_ARITCLES);
+      console.log('this.TOTAL_ARITCLES : ', this.TOTAL_ARITCLES);
     },
+
+    //저장버튼.
+    //뒤가 넘겨주는 파라미터임.
+    goToReviewInfo(review_code) {
+      this.$router.push({ path: '/reviewInfo', query: { "review_code": review_code } });
+      //this.$router.push({ name: 'userInfo', query : { "userId" : userId }});
+    }
     // async getReviewInfo(review) {
     //     console.log('getReviewInfo() 실행')
     //     let result = await axios.get(`/api/review/${review.review_code}`)
     //         .catch(err => console.log(err));
-            
+
     //     console.log(result);
     //     this.reviewInfo = result.data;
     // }

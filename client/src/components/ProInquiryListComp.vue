@@ -7,6 +7,7 @@
             <table class="table table-hover">
               <thead>
                 <tr>
+                  <td>리뷰코드</td>
                   <th>제목</th>
                   <th>작성자</th>
                   <th>작성일</th>
@@ -15,6 +16,7 @@
               </thead>
               <tbody class="table-border-bottom-0">
                 <tr :key="i" v-for="(pInquiry, i) in pInquiryList">
+                  <td>{{ pInquiry.review_code }}</td>
                   <td>{{ pInquiry.inquiry_title }}</td>
                   <td>{{ pInquiry.member_name }}</td>
                   <td>{{ dateformat(pInquiry.inquiry_date) }}</td>
@@ -31,30 +33,30 @@
 <script>
 import axios from 'axios';
 
-export default { 
-    props: ["pcode","type"],
-    data(){
-        return{
-          pInquiryList: []
-          //상품 코드를 넣어주면 보임
-        };
-    },
-    created(){
-        this.getPInquiryList();
-    },
-    methods:{
-      async getPInquiryList() {
-        let url = "";
-        if (this.type == "product") {
-          url = `/api/inquiry/${this.pcode}`
-        } else if (this.type == "admin") {
-          url = "/api/inquiry/";
-        } else {
-          url =`/api/inquiry/:member_code`
-        }
+export default {
+  props: ["pcode", "type"],
+  data() {
+    return {
+      pInquiryList: []
+      //상품 코드를 넣어주면 보임
+    };
+  },
+  created() {
+    this.getPInquiryList();
+  },
+  methods: {
+    async getPInquiryList() {
+      let url = "";
+      if (this.type == "product") {
+        url = `/api/inquiry/${this.pcode}`
+      } else if (this.type == "admin") {
+        url = `/api/inquiry/`
+      } else {
+        url = `/api/inquiry/:member_code`
+      }
       let result = await axios.get(url)
-            .catch(err => console.log(err));
-            this.pInquiryList = result.data;
+        .catch(err => console.log(err));
+      this.pInquiryList = result.data;
     },
     // formatDate(dateString) {
     //   const date = new Date(dateString);
@@ -63,15 +65,15 @@ export default {
     //   let day = date.getDate().toString().padStart(2, '0');
 
     //   return `${year}-${month}-${day}`;
-      // }
-      dateformat(dateString) {
-        return this.$formatDate(dateString);
-      }
+    // }
+    dateformat(dateString) {
+      return this.$formatDate(dateString);
     }
+  }
 }
 </script>
 <style scoped>
-    .content-wrapper {
-        height: 200px
-    }
+.content-wrapper {
+  height: 200px
+}
 </style>
