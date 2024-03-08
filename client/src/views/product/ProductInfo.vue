@@ -132,7 +132,7 @@
                                 <div class="tab-pane active tacenter" id="nav-about" role="tabpanel"
                                     aria-labelledby="nav-about-tab">
                                     <img :src="getImgUrl(productInfo != null && productInfo.length > 1 ? productInfo[1].path : '')"
-                                        class="img-fluid rounded" alt="Image">
+                                        class="img-fluid rounded" onerror="this.src='/img/no_img.jpg'" alt="Image">
                                 </div>
                                 <div class="tab-pane tacenter" id="nav-delret" role="tabpanel"
                                     aria-labelledby="nav-delret-tab">
@@ -449,7 +449,6 @@ export default {
         async getAvgStars() {
             let result = await axios.get(`/api/review/avgStars/${this.pcode}`)
                 .catch(err => console.log(err));
-    
             this.avgStars = result.data[0].avg;
     
             console.log('this.avgStars : ', this.avgStars);

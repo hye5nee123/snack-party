@@ -9,7 +9,15 @@ const url = require('url');
 app.get('/download', (req, res) => {
     var queryData = url.parse(req.url, true).query;
     let path = queryData.path;
-    fs.createReadStream(file+'/'+path).pipe(res);
+
+    let check = fs.existsSync(file+'/'+path)
+    if(check){
+        fs.createReadStream(file+'/'+path).pipe(res);
+    }
+    else {
+        res.sendStatus(404);
+    }
+
 })
 
 module.exports = app;
