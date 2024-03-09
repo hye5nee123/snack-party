@@ -1,6 +1,6 @@
 /* < cart > */
 
-//장바구니 목록 -- 상품이미지 추가해야 됨
+//장바구니 목록
 const cartList = 
 `SELECT c.cart_code
 , p.product_code
@@ -22,7 +22,7 @@ AND f.thumbnail = 'n01'`
 
 
 //장바구니 담기
-const cartInsert = //db에선 명령어 되는데 test가 실행 X
+const cartInsert =
 `INSERT INTO cart 
 SET cart_code = snack.nextval('CART')
     , ?`
@@ -33,7 +33,7 @@ const cartCheck =
 FROM cart
 WHERE member_code = ?
 AND product_code = ?`
-//상품 장바구니 수량 추가
+//담긴 상품 장바구니 수량 추가
 const cartCntPlus = 
 `UPDATE cart
 SET cart_cnt = cart_cnt + ?
@@ -101,12 +101,12 @@ const orderListPage =
       , p.product_name
       , COUNT(d.order_code)-1 as buy_cnt
 FROM orders o JOIN detail d
-				ON o.order_code = d.order_code
+				        ON o.order_code = d.order_code
               JOIN product p
-				ON d.product_code = p.product_code
-where member_code = ?
-group by d.order_code
-order by order_date desc, order_code desc
+				        ON d.product_code = p.product_code
+WHERE member_code = ?
+GROUP BY d.order_code
+ORDER BY order_date desc, order_code desc
 LIMIT ? OFFSET ?`
 
 //페이징용 개수
@@ -119,13 +119,22 @@ WHERE member_code = ?`
 //주문상세 목록
 const detailList =
 `SELECT detail_code
+      , d.order_code
+      , d.product_price
+	    , d.order_cnt
 	    , detail_price
-      , product_code
-      , order_code
-      , order_cnt
-      , product_price
-FROM detail
-WHERE order_code = ?`
+	    , product_name
+      , f.path
+      , o.order_status
+FROM detail d JOIN product p
+				        ON d.product_code = p.product_code
+              LEFT OUTER JOIN file f
+				        ON p.product_code = f.board_code
+              JOIN orders o
+				        ON d.order_code = o.order_code
+WHERE d.order_code = ?
+AND f.thumbnail = 'n01'
+AND member_code = ?`
 
 
 module.exports = {
@@ -143,11 +152,9 @@ module.exports = {
   deliveryInsert, //배송등록
   stockCntUpdate, //재고량수정
   memUsedPointInsert, //회원포인트 차감내역 추가
-
-
   
-//3)주문관리
-  orderListPage,
-  orderListCount,
-  detailList,
+//3)나의 주문내역
+  orderListPage,  //주문전체목록
+  orderListCount, //페이징용 개수
+  detailList,    //주문상세목록
 }
