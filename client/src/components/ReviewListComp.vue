@@ -57,7 +57,6 @@ export default {
   created() {
     this.getReviewList();
     this.getReviewCnt();
-    console.log('this.type: ', this.type);
   },
   computed: {
     pageStartIdx() {
@@ -80,11 +79,9 @@ export default {
       } else {
         url = `/api/review/member_code`
       }
-      console.log('url : ', url)
       let result = await axios.get(url)
         .catch(err => console.log(err));
 
-      console.log('reviewList : ', result.data);
       this.reviewList = result.data
     },
     // 전체 데이터 갯수
@@ -92,14 +89,12 @@ export default {
       let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
         .catch(err => console.log(err));
       this.TOTAL_ARITCLES = result.data[0].count;
-
-      console.log('this.TOTAL_ARITCLES : ', this.TOTAL_ARITCLES);
     },
 
     //저장버튼.
     //뒤가 넘겨주는 파라미터임.
     goToReviewInfo(review_code) {
-      this.$router.push({ path: '/reviewInfo', query: { "review_code": review_code } });
+      this.$router.push({ path: '/reviewInfo', query: { 'review_code': review_code } });
       //this.$router.push({ name: 'userInfo', query : { "userId" : userId }});
     }
     // async getReviewInfo(review) {

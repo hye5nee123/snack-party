@@ -14,13 +14,14 @@
                   <th>작성자</th>
                   <td>{{ this.$store.state.memberStore.memberInfo.member_name }}</td>
                 </tr>
+              </thead>
+              <tbody>
                 <tr>
                   <th>내용</th>
                   <td style="width: 150px; height:100;">{{ reviewInfo.review_content }}</td>
                 </tr>
-              </thead>
+              </tbody>
             </table>
-
           </div>
         </div>
         <button>수정</button>
@@ -41,17 +42,15 @@ export default {
         review_title: "",
         review_content: ""
       },
-      review_code: "REV00007"
     };
   },
   created() {
-    // review_code: this.$router.query.review_code,
-    this.getReviewInfo();
+    this.getReviewInfo(this.$route.query.review_code);
   },
   methods: {
-    async getReviewInfo() {
+    async getReviewInfo(review_code) {
       try {
-        const response = await axios.get('/api/review/detail/' + this.review_code);
+        const response = await axios.get('/api/review/detail/' + review_code);
         this.reviewInfo = response.data;
       } catch (error) {
         console.log(error);

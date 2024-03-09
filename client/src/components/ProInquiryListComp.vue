@@ -7,7 +7,7 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <td>리뷰코드</td>
+                  <td>문의코드</td>
                   <th>제목</th>
                   <th>작성자</th>
                   <th>작성일</th>
@@ -15,8 +15,8 @@
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0">
-                <tr :key="i" v-for="(pInquiry, i) in pInquiryList">
-                  <td>{{ pInquiry.review_code }}</td>
+                <tr :key="i" v-for="(pInquiry, i) in pInquiryList" v-on:click="goToProInquiryInfo(pInquiry.inquiry_code)">
+                  <td>{{ pInquiry.inquiry_code }}</td>
                   <td>{{ pInquiry.inquiry_title }}</td>
                   <td>{{ pInquiry.member_name }}</td>
                   <td>{{ dateformat(pInquiry.inquiry_date) }}</td>
@@ -68,7 +68,12 @@ export default {
     // }
     dateformat(dateString) {
       return this.$formatDate(dateString);
+    },
+    goToProInquiryInfo(inquiry_code) {
+      this.$router.push({ path: '/pinquiryInfo', query: { 'inquiry_code': inquiry_code } });
+      //this.$router.push({ name: 'userInfo', query : { "userId" : userId }});
     }
+
   }
 }
 </script>

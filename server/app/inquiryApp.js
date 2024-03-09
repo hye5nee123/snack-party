@@ -3,6 +3,14 @@ const app = express();
 const db = require("../db.js");
 /*1:1*/
 
+
+//게시글 단건조회
+app.get("/inquirydetail/:inquiry_code", async (request, response) => {
+  let data = request.params.inquiry_code;
+  let result = await db.connection("inquirysql", "InquiryInfo", data)
+    .catch(err => console.log(err))
+  response.send(result[0]);
+});
 //등록
 
 app.post("/member/:member_code", async (request, response) => {
@@ -37,6 +45,14 @@ app.get("/:product_code", async (request, response) => {
   let data = request.params.product_code;
   let result = await db.connection("inquirysql", "inquirylist", data);
   response.send(result);
+});
+
+//게시글 단건조회
+app.get("/detail/:inquiry_code", async (request, response) => {
+  let data = request.params.inquiry_code;
+  let result = await db.connection("inquirysql", "pInquiryInfo", data)
+    .catch(err => console.log(err))
+  response.send(result[0]);
 });
 
 //등록

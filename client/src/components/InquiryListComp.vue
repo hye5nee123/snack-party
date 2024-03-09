@@ -15,7 +15,7 @@
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0">
-                <tr v-for="(inquiry, i) in inquiryList" :key="i">
+                <tr v-for="(inquiry, i) in inquiryList" :key="i" v-on:click="goToInquiryInfo(inquiry.inquiry_code)">
                   <td>{{ inquiry.inquiry_code.slice(-3) }}</td>
                   <td>{{ inquiry.p_inquiry_type }}</td>
                   <td>{{ inquiry.title }}</td>
@@ -44,7 +44,7 @@ export default {
     this.getInquiryList();
   },
   methods: {
-    async getInquiryList() { // 이 코드는 실제로 사용할 상품 코드로 대체되어야 합니다.
+    async getInquiryList() {
       let result = await axios.get('/api/inquiry/member/' + this.member_code)
         .catch(err => console.log(err));
       console.log('result : ', result);
@@ -52,6 +52,10 @@ export default {
     },
     dateformat(dateString) {
       return this.$formatDate(dateString);
+    },
+    goToReviewInfo(inquiry_code) {
+      this.$router.push({ path: '/inquiryInfo', query: { 'inquiry_code': inquiry_code } });
+      //this.$router.push({ name: 'userInfo', query : { "userId" : userId }});
     }
   }
 }
