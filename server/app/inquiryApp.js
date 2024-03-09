@@ -11,6 +11,12 @@ app.get("/inquirydetail/:inquiry_code", async (request, response) => {
     .catch(err => console.log(err))
   response.send(result[0]);
 });
+
+//전체조회(테스트or관리자용)
+app.get("/test", async (request, response) => {
+  let result = await db.connection("inquirysql", "inquiryAll").catch(err => console.log(err));
+  response.send(result);
+});
 //등록
 
 app.post("/member/:member_code", async (request, response) => {
