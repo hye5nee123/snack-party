@@ -57,6 +57,7 @@
                                         <td>배송비</td>
                                         <td>3,000원 (30,000원 이상 구매 시 무료)</td>
                                     </tr>
+                                    <!-- 수량 -->
                                     <tr>
                                         <td>수량</td>
                                         <td>
@@ -79,6 +80,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <!--수량end  -->
                                 </tbody>
                             </table>
                             <table class="table">
@@ -351,11 +353,23 @@ export default {
                 alert('로그인 후 이용가능합니다.');
             } else if (cartCheck.data.length == this.productInfo[0].stock_cnt){
                 alert('재고 부족으로 수량을 추가하실 수 없습니다.')
-            } else if (cartCheck.data.length != 0) {
+
+            } else if(cartCheck.data.length != 0 && cartCheck.data[0].cart_cnt + this.quantity >= this.productInfo[0].stock_cnt) {
+                let ccode = cartCheck.data[0].cart_code
+                let calquan = this.productInfo[0].stock_cnt - cartCheck.data[0].cart_cnt
+                await axios.put(`/apiorder/addCnt/${calquan}/${ccode}`).catch((err) => console.log(err));
+                
+                if(calquan == 0) {
+                    alert('이미 담긴 상품이며\n재고가 부족하여 수량을 추가하실 수 없습니다.')
+                } else {
+                    alert('2이미 담긴 상품으로 ' + calquan + '개가 추가되었습니다.');
+                }
+            } 
+            else if (cartCheck.data.length != 0) {
                 //이미 담긴 수량에 원하는 수량 추가
                 let ccode = cartCheck.data[0].cart_code
                 await axios.put(`/apiorder/addCnt/${this.quantity}/${ccode}`).catch((err) => console.log(err));
-                alert('이미 담긴 상품으로 ' + this.quantity + '개가 추가되었습니다.');
+                alert('이미 담긴 상품으로 기존 수량에 ' + this.quantity + '개가 추가되었습니다.');
             } else {
                 //최종 장바구니 추가
                 await axios.post("/apiorder/carts", data).catch(err => console.log(err));

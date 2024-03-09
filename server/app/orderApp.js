@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express.Router();
 const db = require('../db.js');
-const url = require('url');
+// const url = require('url');
 
 //장바구니 조회
 app.get('/carts/:userId', async (request, response) => {
@@ -53,20 +53,20 @@ app.delete('/carts/:ccode', async (request, response) => {
 //< orders >
 
 //주문, 상세, 배송 등록
-app.post('/', async (request, response) => {   
-    let conn = null;
-  try{
-    //커넥션 가져오기
+app.post('/', async (request, response) => {
+  let conn = null;
+  try {
+    //connection 가져오기
     conn = await db.getConnecttion();
 
-  // 트랜지션 시작
-  await db.excuteConnection(conn,"START TRANSACTION")
+    // transaction 시작
+    await db.excuteConnection(conn, 'START TRANSACTION');
 
     let order = request.body.param.order;
     let details = selectedInfo(request.body.param.orderDetail);
     let delivery = request.body.param.deliveryInfo;
     let point = request.body.param.point;
-    
+
     //1.주문등록
     let result = await db
       .trConnection(conn, 'ordersql', 'orderInsert', order)
@@ -102,38 +102,41 @@ app.post('/', async (request, response) => {
       });
 
     //4. 포인트차감내역 등록
-    if(point.point_value > 0){
+    if (point.point_value > 0) {
       point.order_code = order_code[0].seq;
       let pointresult = await db
-      .trConnection(conn, 'ordersql', 'memUsedPointInsert', point)
-      .catch((error) => {
-        console.log(error);
-      });
-      console.log('포인트?', pointresult)
+        .trConnection(conn, 'ordersql', 'memUsedPointInsert', point)
+        .catch((error) => {
+          console.log(error);
+        });
+      console.log('포인트?', pointresult);
     }
-    
+
     //5. 재고량 수정
-    for(let i=0; i < details.length; i++) {
+    for (let i = 0; i < details.length; i++) {
       let stock_info = [details[i].order_cnt, details[i].product_code];
-      await db.trConnection(conn, 'ordersql', 'stockCntUpdate', stock_info)
-      .catch((error) => {
-        console.log(error);
-      });
+      await db
+        .trConnection(conn, 'ordersql', 'stockCntUpdate', stock_info)
+        .catch((error) => {
+          console.log(error);
+        });
     }
-    //트랜지션 커밋
-    await db.excuteConnection(conn,"COMMIT")
-   
-    //결과 판단후 마지막 결과 반환
+
+    //transaction commit
+    await db.excuteConnection(conn, 'COMMIT');
+
+    //실행 후 결과 반환
     return response.send(result);
 
   } catch (err) {
-      //트랜지션 롤백
-      console.log(err)
-      await db.excuteConnection(conn,"ROLLBACK") //롤백 실행문 삽입
-      return response.status(500).json(err)
-    } finally{
-      conn.release();
-    }
+    console.log(err);
+    
+    //transaction rollback
+    await db.excuteConnection(conn, 'ROLLBACK');
+    return response.status(500).json(err);
+  } finally {
+    conn.release();
+  }
 });
 
 //장바구니에서 넘어 온 checkList의 필드명을 변경시켜서 새로운 배열로 담기
@@ -150,45 +153,38 @@ function selectedInfo(list) {
   return newArr;
 }
 
-
 //=======================================
 //< 나의 주문내역 >
 
 //주문전체조회
 //* 페이징
-// app.get('/myord/:mcode/:limit/:offset', async (request, response) => {
-//   let mcode = request.params.mcode;
-//   let limit = Number(request.params.limit);
-//   let offset = Number(request.params.offset);
-
-//   let data = [mcode, limit, offset]
-//   let result = await db.connection('ordersql', 'orderListPage', data)
-//                        .catch(err => console.log(err));
-//   response.send(result);
-// });
-
-app.get('/myord/:mcode', async (request, response) => {
+app.get('/myord/list/:mcode/:limit/:offset', async (request, response) => {
   let mcode = request.params.mcode;
-  let result = await db.connection('ordersql', 'orderListPage', mcode)
-                       .catch(err => console.log(err));
-  response.send(result);
-  console.log('나의주문내역전체?', result);
-});
+  let limit = Number(request.params.limit);
+  let offset = Number(request.params.offset);
 
+  let data = [mcode, limit, offset];
+  let result = await db
+    .connection('ordersql', 'orderListPage', data)
+    .catch((err) => console.log(err));
+  response.send(result);
+});
 
 // 게시물 수 조회 (페이징처리)
 app.get('/myord/count/:mcode', async (request, response) => {
   let mcode = request.params.mcode;
-  let result = await db.connection('ordersql', 'orderListCount', mcode)
-                       .catch(err => console.log(err));
+  let result = await db
+    .connection('ordersql', 'orderListCount', mcode)
+    .catch((err) => console.log(err));
   response.send(result);
 });
 
 //주문상세조회
-app.get('/myord/details/:ocode/:mcode', async(request, response) => {
+app.get('/myord/details/:ocode/:mcode', async (request, response) => {
   let data = [request.params.ocode, request.params.mcode];
-  let result = await db.connection('ordersql', 'detailList', data)
-              .catch(err => console.log(err));
+  let result = await db
+    .connection('ordersql', 'detailList', data)
+    .catch((err) => console.log(err));
   response.send(result);
   console.log('나의주문내역상세?', result);
 });
