@@ -11,11 +11,47 @@ const dbInfo = {
 }
 
 const dbPool = mysql.createPool(dbInfo);
-// const file = process.env.FILE_PATH;
-
+// 
 module.exports = {
   connection(table, alias, param = [], where="") {
-    return new Promise((resolve, reject) => dbPool.query(sql[table][alias] + where, param, (error, results) => {
+    return new Promise((resolve, reject) => dbPool.query(sql[table][alias] + where, param, (error, results) => { 
+      if (error) {         
+        reject({
+          error
+        });
+      } else { 
+      resolve(results);
+     console.log(results)
+    }
+    }));
+  },
+  getConnecttion(){ //getconnection
+    return new Promise((resolve, reject) => dbPool.getConnection( (error, conn) => { //conn: 실행문 직접 작성 
+      if (error) { 
+        reject({
+          error
+        });
+      } else { 
+      resolve(conn);
+    }
+    })); 
+  },
+
+  trConnection(conn, table, alias, param = [], where="") { //release단계 (transaction으로 처리한 결과 쌓기)
+    return new Promise((resolve, reject) => conn.query(sql[table][alias] + where, param, (error, results) => {
+      if (error) {         
+        reject({
+          error
+        });
+      } else { 
+      resolve(results);
+     console.log(results)
+    }
+    }));
+  },
+
+  excuteConnection(conn,cmd){ //실행문 작성
+    return new Promise((resolve, reject) => conn.query(cmd, (error, results) => {
       if (error) {         
         reject({
           error
@@ -26,16 +62,4 @@ module.exports = {
     }
     }));
   }
-  // excuteConnection(cmd){
-  //   return new Promise((resolve, reject) => dbPool.query(cmd, (error, results) => {
-  //     if (error) {         
-  //       reject({
-  //         error
-  //       });
-  //     } else { 
-  //     resolve(results);
-  //    console.log(results)
-  //   }
-  //   }));
-  // }
 };

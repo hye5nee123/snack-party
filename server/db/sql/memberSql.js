@@ -20,33 +20,6 @@ const memberList =
 FROM member
 ORDER BY member_code`;
 
-const memberInfo = //회원적립금
-`SELECT m.member_code
-, member_id
-, member_name
-, member_phone
-, member_email
-, birthday
-, postcode
-, member_type
-, join_date
-, address
-, address_detail
-, member_status
-, NVL(( SELECT sum(point_value)
-    FROM point
-    WHERE point_status = 'd01'
-    AND member_code = ? ), 0)
-    - 
-                NVL(( SELECT sum(point_value) 
-     FROM point
-     WHERE point_status = 'd02'
-     AND member_code = ? ), 0) AS point_value
-FROM member m LEFT OUTER JOIN point p
-ON m.member_code = p.member_code
-WHERE m.member_code =  ? 
-LIMIT 1`;
-
 const memberInsert =
 `INSERT INTO member
 SET member_code = snack.nextval('MEM')
@@ -82,11 +55,39 @@ FROM member
 WHERE member_id = ?
 OR member_name = ?`;
 
+const memberInfo = //회원적립금(주문)
+`SELECT m.member_code
+, member_id
+, member_name
+, member_phone
+, member_email
+, birthday
+, postcode
+, member_type
+, join_date
+, address
+, address_detail
+, member_status
+, NVL(( SELECT sum(point_value)
+    FROM point
+    WHERE point_status = 'd01'
+    AND member_code = ? ), 0)
+    - 
+                NVL(( SELECT sum(point_value) 
+     FROM point
+     WHERE point_status = 'd02'
+     AND member_code = ? ), 0) AS point_value
+FROM member m LEFT OUTER JOIN point p
+ON m.member_code = p.member_code
+WHERE m.member_code =  ? 
+LIMIT 1`;
+
+
 module.exports = {
     memberList,
-    memberInfo,
     memberInsert,
     memberUpdate,
     memberDelete,
     memberLogin,
+    memberInfo,
 }
