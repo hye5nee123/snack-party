@@ -45,13 +45,13 @@ app.post("/login", async(request, response) => {
     let result = {};
     // let member = (await db.connection('membersql', 'memberLogin', member_id))[0];
     let member = (await db.connection('membersql', 'memberLogin', data))[0];
-    if(member){
+    if(member) {
         if(member.member_status == 'c02') {
             result.loginStatus = 4;  // 탈퇴회원
         }
-        else if(pw == member.pw) {
+        else if(member.pw == pw) {
             result.loginStatus = 1;  // 정상로그인
-            result.member = member
+            result.member = member;
         } else {
             result.loginStatus = 2; // 비밀번호 불일치
         }
@@ -63,10 +63,25 @@ app.post("/login", async(request, response) => {
 })
 
 // 아이디, 비밀번호 찾기
-// app.post("/search", async(request, response) => {
-//     let data = ['', this.request.body.member_name];
-
-// })
+app.post("/search", async(request, response) => {
+    let data = ['', request.body.member_name];
+    let phone = request.body.member_phone;
+    let id = request.body.member_id;
+    let result = {};
+    let memberList = (await db.connection('membersql', 'memberLogin', data));
+    for(let member of memberList) {
+        if(member.member_id == id && member.member_phone == phone) {
+            result.memberInfo = 2;  // 비밀번호 찾기
+            result.member = member;
+        } else if(member.member_phone == phone) {
+            result.memberInfo = 1;  // 아이디 찾기
+            result.member = member;
+        } else {
+            result.memberInfo = 3;  // 일치하는 회원 없음
+        }
+    }
+    response.send(result);
+})
 
 
 // 회원적립금 포함 조회(주문 시 변동 계산)
