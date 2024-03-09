@@ -177,5 +177,10 @@ export default {
       name: 'InquiryInfo',
       component: import(/* webpackChunkName: "InquiryInfo", webpackPrefetch: false */ "../views/inquiry/InquiryInfo.vue")
     },
+    {
+      path: 'reviewupdate',
+      name: 'ReviewUpdate',
+      component: import(/* webpackChunkName: "ReviewUpdate", webpackPrefetch: false */ "../views/review/ReviewUpdate.vue")
+    },
   ],
 };
