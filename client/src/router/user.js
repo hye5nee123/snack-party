@@ -65,7 +65,7 @@ export default {
       
       beforeEnter: (to, from, next) => {
         let loginStatus =  Store.state.memberStore.loginStatus;
-        console.log(loginStatus);
+        console.log('loginStatus : ', loginStatus);
         if(!loginStatus ){
           alert('로그인 후 접근 가능한 페이지입니다.'),
           next('/main');
@@ -82,7 +82,7 @@ export default {
     
       beforeEnter: (to, from, next) => {
         let loginStatus =  Store.state.memberStore.loginStatus;
-        console.log(loginStatus);
+        console.log('loginStatus : ', loginStatus);
         if(!loginStatus ){
           alert('로그인 후 접근 가능한 페이지입니다.'),
           next('/main');
@@ -104,7 +104,7 @@ export default {
     
       beforeEnter: (to, from, next) => {
         let loginStatus =  Store.state.memberStore.loginStatus;
-        console.log(loginStatus);
+        console.log('loginStatus : ', loginStatus);
         if(!loginStatus ){
           alert('로그인 후 접근 가능한 페이지입니다.'),
           next('/main');
@@ -121,7 +121,7 @@ export default {
     
       beforeEnter: (to, from, next) => {
         let loginStatus =  Store.state.memberStore.loginStatus;
-        console.log(loginStatus);
+        console.log('loginStatus : ', loginStatus);
         if(!loginStatus ){
           alert('로그인 후 접근 가능한 페이지입니다.'),
           next('/main');

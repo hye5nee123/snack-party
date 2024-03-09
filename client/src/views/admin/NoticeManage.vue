@@ -1,6 +1,10 @@
 <template>
   <div class="container">
-    <h1>NoticeManage.vue</h1>
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="card">
+        <h3>공지관리</h3>
+      </div>
+    </div>
     <AdminNoticeList />
   </div>
   
@@ -15,19 +19,10 @@ export default{
     AdminNoticeList,
     // ModalComp
   },
-  data(){
-    return{
-     
-    };
-  },
-  setup(){},
-  created(){
-
-  },
-  mounted(){},
-  unmounted(){},
-  methods:{
-  }
 }
 </script>
-../../components/admin/AdminNoticeList.vue
+<style>
+.card {
+  padding: 20px;
+}
+</style>

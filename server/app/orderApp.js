@@ -156,24 +156,24 @@ function selectedInfo(list) {
 
 //주문전체조회
 //* 페이징
-// app.get('/myord/:mcode/:limit/:offset', async (request, response) => {
-//   let mcode = request.params.mcode;
-//   let limit = Number(request.params.limit);
-//   let offset = Number(request.params.offset);
-
-//   let data = [mcode, limit, offset]
-//   let result = await db.connection('ordersql', 'orderListPage', data)
-//                        .catch(err => console.log(err));
-//   response.send(result);
-// });
-
-app.get('/myord/:mcode', async (request, response) => {
+app.get('/myord/list/:mcode/:limit/:offset', async (request, response) => {
   let mcode = request.params.mcode;
-  let result = await db.connection('ordersql', 'orderListPage', mcode)
+  let limit = Number(request.params.limit);
+  let offset = Number(request.params.offset);
+
+  let data = [mcode, limit, offset]
+  let result = await db.connection('ordersql', 'orderListPage', data)
                        .catch(err => console.log(err));
   response.send(result);
-  console.log('나의주문내역전체?', result);
 });
+
+// app.get('/myord/:mcode', async (request, response) => {
+//   let mcode = request.params.mcode;
+//   let result = await db.connection('ordersql', 'orderListPage', mcode)
+//                        .catch(err => console.log(err));
+//   response.send(result);
+//   console.log('나의주문내역전체?', result);
+// });
 
 
 // 게시물 수 조회 (페이징처리)
