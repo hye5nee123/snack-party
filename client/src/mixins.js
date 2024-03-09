@@ -16,6 +16,8 @@ export default {
         })
       ).data;
     },
+
+    // 금액 3자리수 콤마
     $currencyFormat(value, format = "#,###") {
       if (value == 0 || value == null) return 0;
 
@@ -81,6 +83,7 @@ export default {
       return prefix + currency + String(v) + String(d);
     },
     
+    // 날짜 포맷(YYYY-MM-DD)
     $formatDate(dateString) {
       const date = new Date(dateString);
       const year = date.getFullYear();
@@ -88,6 +91,21 @@ export default {
       let day = date.getDate().toString().padStart(2, '0');
       
       return `${year}-${month}-${day}`;
+    },
+
+    // 오늘 날짜(YYYY-MM-DD)
+    $formatDateToday(type) {
+      const date = new Date();
+      const year = date.getFullYear();
+      let month = (1 + date.getMonth()).toString().padStart(2, '0');
+      let day = date.getDate().toString().padStart(2, '0');
+      
+      if(type == 1){
+        return `${year}-${month}-${day}`;
+      }
+      else {
+        return `${year}년 ${month}월 ${day}일`;
+      }
     }
   },
 };

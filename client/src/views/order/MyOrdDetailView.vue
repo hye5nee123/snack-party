@@ -18,7 +18,7 @@
       <br />
       <div>
         {{ myOrdDetail }}
-        <PaymentInfo />
+        <!-- <PaymentInfo /> -->
       </div>
     </div>
   </div>

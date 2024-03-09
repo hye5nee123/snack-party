@@ -3,6 +3,7 @@
     <div class="layout-container">
       <Sidebar />
       <div class="layout-page">
+        <Header />
         <router-view/>
       </div>
   </div>
@@ -10,11 +11,13 @@
 </template>
 <script>
 import Sidebar from '../layout/AdminSidebar.vue'
+import Header from '../layout/AdminHeader.vue'
 
 export default {
   name: "App",
   components: {
-    Sidebar
+    Sidebar,
+    Header
   }
 };
 </script>
