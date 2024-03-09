@@ -22,17 +22,17 @@ export default {
   //   console.log('mounted');
   //   this.$router.push('/user/main')
   // }
-  mounted() {
-    window.addEventListener('beforeunload', this.unLoadEvent);
-  },
-  methods : {
-    unLoadEvent : function() {
-      this.$store.commit('clearStore');
-    }
-  }
+  // mounted() {
+  //   window.addEventListener('beforeunload', this.unLoadEvent);
+  // },
+  // methods : {
+  //   unLoadEvent : function() {
+  //     this.$store.commit('clearStore');
+  //   }
+  // }
 };
 </script>
 
 <style>
-  @import "../assets/css/style.css";
+@import "../assets/css/style.css";
 </style>
