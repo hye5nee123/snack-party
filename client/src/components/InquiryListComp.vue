@@ -14,7 +14,7 @@
               </tr>
             </thead>
             <tbody class="table-border-bottom-0">
-              <tr v-for="(inquiry, i) in inquiryAll" :key="i" @click="goToInquiryInfo(inquiry.inquiry_code)">
+              <tr v-for="(inquiry, i) in inquiryAll" :key="i" v-on:click="goToInquiryInfo(inquiry.inquiry_code)">
                 <td>{{ inquiry.inquiry_code.slice(-3) }}</td>
                 <td>{{ inquiry.p_inquiry_type }}</td>
                 <td>{{ inquiry.title }}</td>
@@ -41,10 +41,10 @@ export default {
   },
   created() {
     this.member_code = this.$store.state.memberStore.memberInfo.member_code;
-    this.getinquiryAll();
+    this.getInquiryAll();
   },
   methods: {
-    async getinquiryAll() {
+    async getInquiryAll() {
       try {
         const response = await axios.get('/api/inquiry/test');
         this.inquiryAll = response.data;

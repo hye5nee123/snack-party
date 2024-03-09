@@ -24,7 +24,7 @@
             </table>
           </div>
         </div>
-        <button>수정</button>
+        <button >수정</button>
         <button>삭제</button>
       </div>
     </div>
@@ -50,8 +50,8 @@ export default {
   methods: {
     async getReviewInfo(review_code) {
       try {
-        const response = await axios.get('/api/review/detail/' + review_code);
-        this.reviewInfo = response.data;
+        let result = await axios.get('/api/review/detail/' + review_code);
+        this.reviewInfo = result.data;
       } catch (error) {
         console.log(error);
       }

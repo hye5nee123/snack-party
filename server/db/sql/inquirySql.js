@@ -13,8 +13,7 @@ const InquiryAll = `
                     answer, 
                     answer_status, 
                     answer_date
-                FROM inquiry
-                WHERE inquiry_code = ?`;
+                FROM inquiry`;
 
 //문의 insert를 위한 쿼리...
 
@@ -27,10 +26,8 @@ const InquiryInfo = `
                     inquiry_date,
                     inquiry_display
                     product_code,
-                    member_code,
-                FROM inquiry 
-               
-                WHERE member_code= ?`;
+                    member_code
+                FROM inquiry`;
 //문의사항 자기 거 전체 조회(회원).
 
 const sinquiryList = `SELECT 

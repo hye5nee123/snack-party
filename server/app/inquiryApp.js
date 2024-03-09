@@ -14,7 +14,7 @@ app.get("/inquirydetail/:inquiry_code", async (request, response) => {
 
 //전체조회(테스트or관리자용)
 app.get("/test", async (request, response) => {
-  let result = await db.connection("inquirysql", "inquiryAll").catch(err => console.log(err));
+  let result = await db.connection("inquirysql", "InquiryAll").catch(err => console.log(err));
   response.send(result);
 });
 //등록
