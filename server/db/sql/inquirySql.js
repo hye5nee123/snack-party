@@ -39,7 +39,7 @@ SET inquiry_code = snack.nextval('INQ')
 
 /*상품*/
 
-//상품 상세에서 insert를 위한 쿼리...
+//상품 상세에서 insert를 위한 쿼리...&게시글 상세조회
 const pInquiryInfo = `
                 SELECT 
                     inquiry_code,
@@ -49,7 +49,7 @@ const pInquiryInfo = `
                     member_code
                 FROM inquiry 
                
-                WHERE member_code= ?`;
+                WHERE inquiry_code= ?`;
 
 //상세 페이지에서 상품 조회
 const inquirylist = `SELECT 
@@ -59,6 +59,7 @@ const inquirylist = `SELECT
     i.content AS inquiry_content,
     i.inquiry_date,
     i.answer_status,
+    i.inquiry_code,
     m.member_name 
 FROM 
     product p 

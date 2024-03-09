@@ -11,10 +11,10 @@ const dbInfo = {
 }
 
 const dbPool = mysql.createPool(dbInfo);
-
+// 
 module.exports = {
   connection(table, alias, param = [], where="") {
-    return new Promise((resolve, reject) => dbPool.query(sql[table][alias] + where, param, (error, results) => { //getconnection, release, commit 3개 동시발생 (아래서 별도 실행되도록 처리)
+    return new Promise((resolve, reject) => dbPool.query(sql[table][alias] + where, param, (error, results) => { 
       if (error) {         
         reject({
           error
@@ -24,8 +24,7 @@ module.exports = {
      console.log(results)
     }
     }));
-  }
-  ,
+  },
   getConnecttion(){ //getconnection
     return new Promise((resolve, reject) => dbPool.getConnection( (error, conn) => { //conn: 실행문 직접 작성 
       if (error) { 

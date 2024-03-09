@@ -115,7 +115,7 @@ export default {
       this.pageData = (this.curPage - 1) * this.ITEM_PER_PAGE;
       this.getMyOrdList();
     },
-    // limit, offset, 적용된 데이터 리스트
+    //주문목록
     async getMyOrdList() {
       let result = await axios.get(`/apiorder/myord/list/${this.memCode}/${this.ITEM_PER_PAGE}/${this.pageData}`)
         .catch(err => console.log(err));
@@ -129,14 +129,6 @@ export default {
       console.log('count : ', result.data[0].count)
       this.TOTAL_ARITCLES = result.data[0].count;
     },
-
-    //주문목록
-    // async getMyOrdList() {
-    //   let result = await axios.get(`/apiorder/myord/${this.memCode}`)
-    //     .catch(err => console.log(err));
-    //   console.log('result : ', result)
-    //   this.myOrdList = result.data;
-    // },
 
     goToDetail(order_code){
       this.$router.push({path:'/myorderdetail', query:{order_code: order_code}});

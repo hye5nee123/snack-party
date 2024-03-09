@@ -9,13 +9,6 @@ app.get("/", async(request, response) => {
     response.send(result);
 });
 
-// 단건조회(회원적립금)
-app.get("/:mcode", async(request, response) => {
-    let data = [request.params.mcode, request.params.mcode, request.params.mcode];
-    let result = (await db.connection('membersql', 'memberInfo', data))[0];
-    response.send(result);
-})
-
 // 등록
 app.post("/", async(request, response) => {
     let data = request.body.param;
@@ -74,5 +67,15 @@ app.post("/login", async(request, response) => {
 //     let data = ['', this.request.body.member_name];
 
 // })
+
+
+// 회원적립금 포함 조회(주문 시 변동 계산)
+app.get("/:mcode", async(request, response) => {
+    let data = [request.params.mcode, request.params.mcode, request.params.mcode];
+    let result = (await db.connection('membersql', 'memberInfo', data))[0];
+    response.send(result);
+})
+
+
 
 module.exports = app;
