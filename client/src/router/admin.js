@@ -32,9 +32,9 @@ export default {
           component: import(/* webpackChunkName: "AdminProductList", webpackPrefetch: false */ '../components/admin/AdminProductList.vue'),
         },
         {
-          path: 'productinsert',
-          name: 'AdminProductInsert',
-          component: import(/* webpackChunkName: "AdminProductInsert", webpackPrefetch: false */ '../components/admin/AdminProductInsert.vue'),
+          path: 'productform',
+          name: 'AdminProductForm',
+          component: import(/* webpackChunkName: "AdminProductForm", webpackPrefetch: false */ '../components/admin/AdminProductForm.vue'),
         },
         {
           path: 'productwarehousing',
