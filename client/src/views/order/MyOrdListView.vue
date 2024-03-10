@@ -33,9 +33,8 @@
               <td v-if="list.buy_cnt == 0">{{ list.product_name }}</td>
               <td v-else>{{ list.product_name }} 외 {{ list.buy_cnt }}개</td>
               <td>{{ $currencyFormat(list.total_price) }}원</td>
-              <!-- <td>{{ list.order_status }}</td> -->
               <td>{{ ordStatus(list.order_status) }}</td>
-              <td><button type="button" class="cnt-update-btn btn-sm detail-btn" @click="goToDetail(list.merchant_uid)">상세조회</button></td>
+              <td><button type="button" class="cnt-update-btn btn-sm detail-btn" @click="goToDetail(list.order_code)">상세조회</button></td>
             </tr>
           </tbody>
         </table>
@@ -49,6 +48,9 @@
       <div class="container">
         <h4>공지</h4>
         <h1>{{ TOTAL_ARITCLES }}</h1>
+        <h1>{{ ITEM_PER_PAGE }}</h1>
+        <h1>{{ pageData }}</h1>
+
       </div>
     </div>
   </div>
@@ -113,9 +115,9 @@ export default {
       this.pageData = (this.curPage - 1) * this.ITEM_PER_PAGE;
       this.getMyOrdList();
     },
-    // limit, offset, 적용된 데이터 리스트
+    //주문목록
     async getMyOrdList() {
-      let result = await axios.get(`/apiorder/myord/${this.memCode}/${this.ITEM_PER_PAGE}/${this.pageData}`)
+      let result = await axios.get(`/apiorder/myord/list/${this.memCode}/${this.ITEM_PER_PAGE}/${this.pageData}`)
         .catch(err => console.log(err));
       console.log('result : ', result)
       this.myOrdList = result.data;
@@ -128,8 +130,8 @@ export default {
       this.TOTAL_ARITCLES = result.data[0].count;
     },
 
-    goToDetail(merchant_uid){
-      this.$router.push({path:'/myorderdetail', query:{merchant_uid: merchant_uid}});
+    goToDetail(order_code){
+      this.$router.push({path:'/myorderdetail', query:{order_code: order_code}});
     }
   },//end methods
 

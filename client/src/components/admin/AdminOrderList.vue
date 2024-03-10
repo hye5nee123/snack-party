@@ -1,143 +1,246 @@
 <template>
-	<div>
-		<h3>AdminOrderList.vue</h3>
-		<div class="container-xxl flex-grow-1 container-p-y">
-			<div class="card">
-				<div class="card-datatable table-responsive">
-					<div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
-						<div class="card-header d-flex flex-column flex-md-row align-items-start align-items-md-center">
-							<div class="ms-n2">
-								<div id="DataTables_Table_0_filter" class="dataTables_filter"><label><input type="search"
-											class="form-control" placeholder="Search Order" aria-controls="DataTables_Table_0"></label></div>
-							</div>
-							<div class="d-flex align-items-md-center justify-content-md-end mt-2 mt-md-0">
-								<div class="dataTables_length mt-0 mt-md-3 me-3" id="DataTables_Table_0_length"><label><select
-											name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="form-select">
-											<option value="10">10</option>
-											<option value="40">40</option>
-											<option value="60">60</option>
-											<option value="80">80</option>
-											<option value="100">100</option>
-										</select></label></div>
-								<div class="dt-action-buttons pt-0">
-									<div class="dt-buttons btn-group flex-wrap">
-										<div class="btn-group"><button class="btn buttons-collection dropdown-toggle btn-label-secondary"
-												tabindex="0" aria-controls="DataTables_Table_0" type="button" aria-haspopup="dialog"
-												aria-expanded="false"><span><i class="bx bx-export me-1"></i>Export</span></button></div>
-									</div>
-								</div>
-							</div>
-						</div>
-						<table class="datatables-order table border-top dataTable no-footer dtr-column collapsed"
-							id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
-							<thead>
-								<tr>
+  <div>
+    <h3>AdminOrderList.vue</h3>
+    <!-- Cart Page Start -->
+    <div class="container-fluid py-5">
+      <div class="container py-5">
+        <h4>나의 주문내역</h4>
+        <br>
+        <div class="card-header">
+          <h5 class="card-title">검색조건</h5>
 
-									<th class="sorting_disabled dt-checkboxes-cell dt-checkboxes-select-all" rowspan="1" colspan="1"
-										style="width: 10%;" data-col="1" aria-label=""><input type="checkbox" class="form-check-input"></th>
-									<th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 10%;" aria-label="order: activate to sort column ascending">order</th>
-									<th class="sorting sorting_desc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1"
-										colspan="1" style="width: 10%;" aria-label="date: activate to sort column ascending"
-										aria-sort="descending">date
-									</th>
-									<th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 10%;" aria-label="customers: activate to sort column ascending">customers</th>
-									<th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 10%;" aria-label="payment: activate to sort column ascending">payment</th>
-									<th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 10%;" aria-label="status: activate to sort column ascending">status</th>
-									<th class="sorting dtr-hidden" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-										style="width: 10%; display: none;" aria-label="method: activate to sort column ascending">method
-									</th>
-									<th class="sorting_disabled dtr-hidden" rowspan="1" colspan="1" style="width: 79px; display: none;"
-										aria-label="Actions">Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="odd">
-									<td class="  dt-checkboxes-cell"><input type="checkbox" class="dt-checkboxes form-check-input"></td>
-									<td class=""><a href="app-ecommerce-order-details.html"><span class="fw-medium">#6265</span></a></td>
-									<td class="sorting_1"><span class="text-nowrap">Sep 7, 2022, 5:58 </span></td>
-									<td>
-										<div class="d-flex justify-content-start align-items-center order-name text-nowrap">
-											<div class="avatar-wrapper">
-												<div class="avatar me-2"><span class="avatar-initial rounded-circle bg-label-primary">CB</span>
-												</div>
-											</div>
-											<div class="d-flex flex-column">
-												<h6 class="m-0"><a href="pages-profile-user.html" class="text-body">Clarice Biesty</a></h6>
-												<small class="text-muted">cbiesty29@hp.com</small>
-											</div>
-										</div>
-									</td>
-									<td class="">
-										<h6 class="mb-0 w-px-100 text-warning"><i class="bx bxs-circle fs-tiny me-2"></i>Pending</h6>
-									</td>
-									<td><span class="badge px-2 bg-label-info" text-capitalized="">Ready to Pickup</span></td>
-									<td class="dtr-hidden" style="display: none;">
-										<div class="d-flex align-items-center text-nowrap"><span><i
-													class="bx bx-dots-horizontal-rounded"></i>@gmail.com</span></div>
-									</td>
-									<td class="dtr-hidden" style="display: none;">
-										<div class="d-flex justify-content-sm-center align-items-sm-center"><button
-												class="btn btn-sm btn-icon dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i
-													class="bx bx-dots-vertical-rounded"></i></button>
-											<div class="dropdown-menu dropdown-menu-end m-0"><a href="app-ecommerce-order-details.html"
-													class="dropdown-item">View</a><a href="javascript:0;"
-													class="dropdown-item delete-record">Delete</a></div>
-										</div>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-						<div class="row mx-2">
-							<div class="col-sm-12 col-md-6">
-								<div class="dataTables_info" id="DataTables_Table_0_info" role="status" aria-live="polite">Displaying 1
-									to
-									10 of 100 entries</div>
-							</div>
-							<div class="col-sm-12 col-md-6">
-								<div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate">
-									<ul class="pagination">
-										<li class="paginate_button page-item previous disabled" id="DataTables_Table_0_previous"><a
-												aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="previous"
-												tabindex="-1" class="page-link">Previous</a></li>
-										<li class="paginate_button page-item active"><a href="#" aria-controls="DataTables_Table_0"
-												role="link" aria-current="page" data-dt-idx="0" tabindex="0" class="page-link">1</a></li>
-										<li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link"
-												data-dt-idx="1" tabindex="0" class="page-link">2</a></li>
-										<li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link"
-												data-dt-idx="2" tabindex="0" class="page-link">3</a></li>
-										<li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link"
-												data-dt-idx="3" tabindex="0" class="page-link">4</a></li>
-										<li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link"
-												data-dt-idx="4" tabindex="0" class="page-link">5</a></li>
-										<li class="paginate_button page-item disabled" id="DataTables_Table_0_ellipsis"><a
-												aria-controls="DataTables_Table_0" aria-disabled="true" role="link" data-dt-idx="ellipsis"
-												tabindex="-1" class="page-link">…</a></li>
-										<li class="paginate_button page-item "><a href="#" aria-controls="DataTables_Table_0" role="link"
-												data-dt-idx="9" tabindex="0" class="page-link">10</a></li>
-										<li class="paginate_button page-item next" id="DataTables_Table_0_next"><a href="#"
-												aria-controls="DataTables_Table_0" role="link" data-dt-idx="next" tabindex="0"
-												class="page-link">Next</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-						<div style="width: 1%;"></div>
-					</div>
-				</div>
-			</div>
-			<PaginationComp />
-		</div>
-	</div>
+          <table class="table">
+
+            <!-- 기간 -->
+            <tr>
+              <td>기간</td>
+              <td>
+                <div class="input-group w-300">
+                  <input class="form-control w-150 inbl" type="date" aria-label="default input example"
+                    v-model="start_date">
+                  <span style="margin: 0 5px;">~</span>
+                  <input class="form-control w-150 inbl" type="date" aria-label="default input example"
+                    v-model="end_date">
+                </div>
+                <div class="inbl">
+                  <button class="btn btn-outline-dark" @click="getOneMonthAfter">1개월</button>
+                  <button class="btn btn-outline-dark mgrl" @click="getSixMonthAfter">6개월</button>
+                  <button class="btn btn-outline-dark" @click="getOneYearAfter">12개월</button>
+                </div>
+              </td>
+            </tr>
+
+            <!-- 주문 코드 -->
+            <tr>
+              <td>주문코드</td>
+              <td>
+                <div class="input-group w-300">
+                  <input type="text" class="form-control" placeholder="주문코드를 입력하세요." aria-describedby="search-icon-1"
+                    v-model="merchant_uid">
+                </div>
+              </td>
+            </tr>
+
+            <!-- 주문자 -->
+            <tr>
+              <td>주문자코드</td>
+              <td>
+                <div class="input-group w-300">
+                  <input type="text" class="form-control" placeholder="주문자 코드를 입력하세요." aria-describedby="search-icon-1"
+                    v-model="member_code">
+                </div>
+              </td>
+            </tr>
+
+            <!-- 상품명 -->
+            <tr>
+              <td>상품명</td>
+              <td>
+                <div class="input-group w-300">
+                  <input type="text" class="form-control" placeholder="상품명을 입력하세요." aria-describedby="search-icon-1"
+                    v-model="product_name">
+                </div>
+              </td>
+            </tr>
+
+            <!-- 주문 상태 -->
+            <tr>
+              <td>주문상태</td>
+              <td>
+                <div class="input-group w-300">
+                  <select id="ProductCategory" class="form-select text-capitalize w-150" v-model="order_status">
+                    <option value="">전체 카테고리</option>
+                    <option value="h01">결제완료</option>
+                    <option value="h02">주문취소</option>
+                    <option value="h03">배송준비중</option>
+                    <option value="h04">배송완료</option>
+                    <option value="h05">반품취소</option>
+                    <option value="h06">반품취소</option>
+                    <option value="h07">반품완료</option>
+                    <option value="h08">환불완료</option>
+                  </select>
+                </div>
+              </td>
+              <td>
+                <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
+                  @click="seacrhOrder()">
+                  <i class="fas fa-search text-primary" aria-hidden="true"></i>
+                </button>
+                <button class="btn border border-secondary rounded-pill px-3 text-primary" @click="clearSearch()">
+                  초기화</button>
+              </td>
+            </tr>
+
+          </table>
+        </div>
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">주문일</th>
+                <th scope="col">주문번호</th>
+                <th scope="col">주문자</th>
+                <th scope="col">상품명</th>
+                <th scope="col">결제금액</th>
+                <th scope="col">주문상태</th>
+                <th scope="col">상세조회</th>
+              </tr>
+            </thead>
+
+            <!-- {{ orderList }} -->
+            <tbody>
+              <tr v-for="(list, i) in orderList" :key="i">
+                <td>{{ list.order_date }}</td>
+                <td>{{ list.merchant_uid }}</td>
+                <td>{{ list.member_code }}</td>
+                <td v-if="list.buy_cnt == 0">{{ list.product_name }}</td>
+                <td v-else>{{ list.product_name }} 외 {{ list.buy_cnt }}개</td>
+                <td>{{ $currencyFormat(list.total_price) }}원</td>
+                <td>{{ ordStatus(list.order_status) }}</td>
+                <td><button type="button" class="cnt-update-btn btn-sm detail-btn"
+                    @click="goToDetail(list.order_code)">상세조회</button></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- 페이징 -->
+          <PaginationComp :ITEM_PER_PAGE="ITEM_PER_PAGE" :PAGE_PER_SECTION="PAGE_PER_SECTION"
+            :TOTAL_ARITCLES="TOTAL_ARITCLES" @change-page="onChangePage" style="margin-bottom: 50px;" />
+
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import PaginationComp from '../PaginationComp.vue';
+import axios from 'axios';
+import PaginationComp from "../../components/PaginationComp.vue";
 
 export default {
-	components: { PaginationComp }
-};
+  data() {
+    return {
+      orderList: [],
+      start_date: '',
+      end_date: '',
+      merchant_uid: '',
+      member_code: '',
+      product_name: '',
+      order_status: '',
+
+      //페이징컴포넌트
+      ITEM_PER_PAGE: 10,     // 한 페이지에 출력할 데이터 수
+      PAGE_PER_SECTION: 5,  // 한번에 보여줄 페이지 버튼 수
+      TOTAL_ARITCLES: 0,     // 전체 데이터 갯수
+
+      curPage: 1,       // 현재 페이지
+      pageData: 0,      // offset에 전달할 페이징 데이터
+    };
+  },
+  components: {
+    PaginationComp
+  },
+  created() {
+    this.getOrderList();
+    this.getListCount();
+  },
+  computed: {
+    pageStartIdx() {
+      return (this.curPage - 1) * this.ITEM_PER_PAGE;
+    }
+  },
+  methods: {
+    ordStatus(status) {
+      if (status == 'h01') {
+        return '결제완료'
+      } else if (status == 'h02') {
+        return '주문취소'
+      } else if (status == 'h03') {
+        return '배송준비중'
+      } else if (status == 'h04') {
+        return '배송중'
+      } else if (status == 'h05') {
+        return '배송완료'
+      } else if (status == 'h06') {
+        return '반품취소'
+      } else if (status == 'h07') {
+        return '반품완료'
+      } else {
+        return '환불완료'
+      }
+    },
+
+    // 페이지네이션 컴포넌트에서 전달되는 emit event
+    onChangePage(data) {
+      this.curPage = data;
+      this.pageData = (this.curPage - 1) * this.ITEM_PER_PAGE;
+      this.getOrderList();
+    },
+
+    //주문목록
+    async getOrderList() {
+      let param = '';
+      param = `?start_date=${this.start_date}&end_date=${this.end_date}&merchant_uid=${this.merchant_uid}`
+      param += `&member_code=${this.member_code}&product_name=${this.product_name}&order_status=${this.order_status}&offset=${this.pageData}`;
+
+      let result = await axios.get(`/api/admin/orderlist${param}`)
+        .catch(err => console.log(err));
+      this.orderList = result.data;
+    },
+
+    // 전체 데이터 갯수
+    async getListCount() {
+      let param = '';
+      param = `?start_date=${this.start_date}&end_date=${this.end_date}&merchant_uid=${this.merchant_uid}`
+      param += `&member_code=${this.member_code}&product_name=${this.product_name}&order_status=${this.order_status}`;
+
+      console.log('param : ', param)
+      let result = await axios.get(`/api/admin/ordercnt${param}`)
+        .catch(err => console.log(err));
+      console.log('result.data[0].count : ', result.data[0].count)
+      this.TOTAL_ARITCLES = result.data[0].count;
+    },
+
+    goToDetail(order_code) {
+      this.$router.push({ path: '/myorderdetail', query: { order_code: order_code } });
+    },
+
+    seacrhOrder() {
+      this.getOrderList();
+      this.getListCount();
+    },
+
+    clearSearch() {
+      console.log('clearSearch()')
+      this.start_date = '';
+      this.end_date = '';
+      this.merchant_uid = '';
+      this.member_code = '';
+      this.product_name = '';
+      this.order_status = '';
+    }
+  },//end methods
+
+
+}//END
 </script>

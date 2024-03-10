@@ -5,6 +5,7 @@ export default {
   path: '/admin',
   name: 'admin',
   component: AdminMain,
+  redirect: "/admin/main",
   // 네비게이션 가드 : admin만 관리자페이지(/admin) 접근 가능
   beforeEnter: (to, from, next) => {
     let member_type = Store.state.memberStore.memberInfo.member_type;
@@ -19,6 +20,11 @@ export default {
     }
   },
   children: [
+    {
+      path: "/admin/main",
+      name: "AdminHome",
+      component: import(/* webpackChunkName: "AdminHome", webpackPrefetch: false */ '../views/admin/AdminHome.vue'),
+    },
     // 상품관리 페이지
     {
       path: '/admin/product',

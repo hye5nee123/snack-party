@@ -10,8 +10,7 @@
 <!-- Single Page Header End -->
   
   <!-- Content -->
-    <div>고객님의 정보와 일치하는 아이디는 {{  }}입니다.</div>
-    <div class="container-xxl boxsize">
+    <div  v-show="!member" class="container-xxl boxsize">
       <div class="container-p-y">
         <div class="authentication-inner">
           <!-- Register -->
@@ -46,7 +45,7 @@
                       type="password"
                       id="phone"
                       class="form-control"
-                      name="password"
+                      name="phone"
                       placeholder="'-'없이 숫자만 입력"
                       aria-describedby="password"
                       v-model="phone"
@@ -72,6 +71,7 @@
       </div>
     </div>
   <!-- / Content -->
+  <div v-show="member">고객님의 정보와 일치하는 아이디는 {{ this.id }}입니다.</div>
 </template>
 
 
@@ -82,7 +82,9 @@ export default {
   data() {
     return {
         name : '',
-        phone : ''
+        phone : '',
+        id : '',
+        member : false
     }
   },
   created() {
@@ -91,41 +93,38 @@ export default {
     },
   methods : {
     async memberLogin() {
-      if(!this.validation()) return;
+      // if(!this.validation()) return;
 
-      let result = await axios.post('api/member/' + this.name)
-                    .catch(err => console.log(err));
-                       
       let data = {
-        member_code : result.data.member_code,
-        member_id : result.data.member_id,
-        pw : result.data.pw,
-        member_name : result.data.member_name,
-        member_phone : result.data.member_phone,
-        member_email : result.data.member_email,
-        birthday : result.data.birthday,
-        gender : result.data.gender,
-        postcode : result.data.postcode,
-        member_type : result.data.member_type,
-        join_date : result.data.join_date,
-        address : result.data.address,
-        address_detail : result.data.address_detail,
-        member_status : result.data.member_status,
-        quit_date : result.data.quit_date,
-        token : result.data.token
-      }                    
+        member_name : this.name,
+        member_phone : this.phone
+      };
 
-      if(data.member_name == this.name && data.member_phone == this.phone) {
-        alert('로그인 되었습니다.');
+      let result = await axios.post('api/member/search', data)
+                    .catch(err => console.log(err));      
+      if(result.data.memberInfo == '1') {
+        alert('아이디 있음!')
+        // this.$store.commit('setMemberInfo', result.data.member);
+        this.id = result.data.member.member_id;
+        this.member = true;
+
+      } else {
+        alert('아이디 없음!')
+        this.name = '';
+        this.phone = '';
+      }
+
+      // if(data.member_name == this.name && data.member_phone == this.phone) {
+      //   alert('로그인 되었습니다.');
 
         // this.$store.commit('setLoginStatus', true);
         // this.$store.commit('setMemberInfo', data);
         // console.log(this.$store.state.memberStore.loginStatus);
         // console.log(this.$store.state.memberStore.memberInfo);
         // this.$router.push({path : '/'})
-      } else {
-        alert('이름 또는 휴대전화가 일치하지 않습니다.')
-      }
+      // } else {
+      //   alert('이름 또는 휴대전화가 일치하지 않습니다.')
+      // }
     },
     validation() {
       if(this.name == '') {

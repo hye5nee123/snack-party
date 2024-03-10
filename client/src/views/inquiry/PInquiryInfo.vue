@@ -50,8 +50,8 @@
     methods: {
       async getpInquiryInfo(inquiry_code) {
         try {
-          const response = await axios.get('/api/inquiry/detail/' +inquiry_code);
-          this.pInquiryInfo = response.data;
+          let result = await axios.get('/api/inquiry/detail/' +inquiry_code);
+          this.pInquiryInfo = result.data;
         } catch (error) {
           console.log(error);
         }
