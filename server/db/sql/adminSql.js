@@ -20,7 +20,8 @@ WHERE  answer_status is null`;
 
 //나의 전체 주문 목록 (-외 몇 개) + 페이징
 const orderListPage =
-`SELECT o.order_code
+`SELECT row_number() over(order by o.order_date desc, order_code desc) as num
+      , o.order_code
       , member_code
       , DATE_FORMAT(order_date, '%Y-%m-%d') as order_date
       , merchant_uid

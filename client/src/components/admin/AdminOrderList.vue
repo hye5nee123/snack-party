@@ -23,9 +23,9 @@
                     v-model="end_date">
                 </div>
                 <div class="inbl">
-                  <button class="btn btn-outline-dark" @click="getOneMonthAfter">1개월</button>
-                  <button class="btn btn-outline-dark mgrl" @click="getSixMonthAfter">6개월</button>
-                  <button class="btn btn-outline-dark" @click="getOneYearAfter">12개월</button>
+                  <button class="btn btn-outline-dark" @click="getOneMonth">1개월</button>
+                  <button class="btn btn-outline-dark mgrl" @click="getSixMonth">6개월</button>
+                  <button class="btn btn-outline-dark" @click="getOneYear">12개월</button>
                 </div>
               </td>
             </tr>
@@ -97,6 +97,7 @@
           <table class="table">
             <thead>
               <tr>
+                <th scope="col">No.</th>
                 <th scope="col">주문일</th>
                 <th scope="col">주문번호</th>
                 <th scope="col">주문자</th>
@@ -110,6 +111,7 @@
             <!-- {{ orderList }} -->
             <tbody>
               <tr v-for="(list, i) in orderList" :key="i">
+                <td>{{ list.num }}</td>
                 <td>{{ list.order_date }}</td>
                 <td>{{ list.merchant_uid }}</td>
                 <td>{{ list.member_code }}</td>
@@ -238,7 +240,38 @@ export default {
       this.member_code = '';
       this.product_name = '';
       this.order_status = '';
-    }
+    },
+    // 기간 자동 설정
+    getOneMonth() {
+      let today = new Date();
+      this.end_date = this.$formatDate(today);
+
+      let oneMonthAgo = new Date(today.setMonth(today.getMonth() - 1));
+      this.start_date = this.$formatDate(oneMonthAgo);
+    },
+    getSixMonth() {
+      let today = new Date();
+      this.end_date = this.$formatDate(today);
+
+      let sixMonthAgo = new Date(today.setMonth(today.getMonth() - 6));	
+      this.start_date = this.$formatDate(sixMonthAgo);
+    },
+    getOneYear() {
+      let today = new Date();
+      this.end_date = this.$formatDate(today);
+      
+      let oneYearAgo = new Date(today.setMonth(today.getMonth() - 1));
+      this.start_date = this.$formatDate(oneYearAgo);
+    },
+
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      const year = date.getFullYear();
+      let month = (1 + date.getMonth()).toString().padStart(2, '0');
+      let day = date.getDate().toString().padStart(2, '0');
+
+      return `${year}-${month}-${day}`;
+    },
   },//end methods
 
 

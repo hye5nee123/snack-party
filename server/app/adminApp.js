@@ -42,9 +42,11 @@ app.get('/orderlist', async (req, res) => {
 
   // 시작일자, 끝날짜 있을 경우
   if (start_date && end_date) {
-    let input = [start_date, end_date]
-    where += " AND order_date between ? and ?"
-    data.push(input);
+    // let input = [start_date, end_date]
+    where += " AND order_date BETWEEN ?"
+    data.push(start_date);
+    where += "AND ?"
+    data.push(end_date);
     // 끝날짜만 있을 경우
   } else if (!start_date && end_date) {
     where += " AND order_date between '2024-01-01' and ?"
@@ -108,9 +110,11 @@ app.get('/ordercnt', async (req, res) => {
 
   // 시작일자, 끝날짜 있을 경우
   if (start_date && end_date) {
-    let input = [start_date, end_date]
-    where += " AND order_date between ? and ?"
-    data.push(input);
+    // let input = [start_date, end_date]
+    where += " AND order_date BETWEEN ?"
+    data.push(start_date);
+    where += "AND ?"
+    data.push(end_date);
     // 끝날짜만 있을 경우
   } else if (!start_date && end_date) {
     where += " AND order_date between '2024-01-01' and ?"

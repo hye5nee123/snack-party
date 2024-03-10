@@ -11,6 +11,7 @@ const orderRouter = require('./app/orderApp.js');
 const productRouter = require('./app/productApp.js');
 const reviewRouter = require('./app/reviewApp.js');
 const commonRouter = require('./app/commonApp.js');
+const mainRouter = require('./app/mainApp.js');
 
 app.use(
   express.json({
@@ -43,3 +44,4 @@ app.use('/notice', noticeRouter);
 app.use('/order', orderRouter);
 app.use('/review', reviewRouter);
 app.use('/common', commonRouter);
+app.use('/main', mainRouter);
