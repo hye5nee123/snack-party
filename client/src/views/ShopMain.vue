@@ -391,7 +391,7 @@ export default {
 </script>
 <style>
     .img-fluid {
-        height: 80% important;
+        height: 80% !important;
         ;
     }
 </style>
