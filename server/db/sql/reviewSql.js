@@ -94,10 +94,6 @@ const reviewInsert = `INSERT INTO review
 SET review_code = snack.nextval('REV')
 , ?`;
 
-//리뷰 delete.
-const reviewDelete = `DELETE FROM review WHERE review_code = ?`;
-
-
 //상품평 개수 쿼리
 const reviewCnt =
   `SELECT COUNT(*) count
@@ -115,6 +111,17 @@ const avgStars =
 //이미지.
 // reviewImgInsert: `insert into file set board_code = ?`,
 
+//review 여부 확인.
+const checkReview = `
+SELECT COUNT(*) count
+FROM review
+WHERE detail_code = ?`;
+
+//수정
+const reviewUpdate = `update review set ? where review_code = ?`;
+
+//리뷰 delete.
+const reviewDelete = `DELETE FROM review WHERE review_code = ?`;
 
 module.exports = {
   reviewList,
@@ -125,7 +132,9 @@ module.exports = {
   avgStars,
   reviewListPage,
   reviewListCount,
-  detailReviewPage
-  // reviewDelete,
+  detailReviewPage,
+  reviewUpdate,
+  reviewDelete,
+  checkReview
   // reviewImgInsert,
 };

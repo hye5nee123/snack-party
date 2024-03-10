@@ -2,10 +2,8 @@
     <div class="container">
         <div id="show">
             <div class="page-title">
-                <h3 class="text-center">review</h3>
+                <h3 class="text-center">review 수정</h3>
             </div>
-            <!-- <OrderProducts :checkOutList="checkout"/>
-            {{ OrderProducts }} -->
             <table id="writetable">
                 <tr>
                     <td class="title">
@@ -41,23 +39,14 @@
                     <td class="stars">
                         <p>별점</p>
                     </td>
-                    <div class="star-rating space-x-4 mx-auto">
-   <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings"/>
-   <label for="5-stars" class="star pr-4">★</label>
-   <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings"/>
-   <label for="4-stars" class="star">★</label>
-   <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings"/>
-   <label for="3-stars" class="star">★</label>
-   <input type="radio" id="2-stars" name="rating" value="2" v-model="ratings"/>
-   <label for="2-stars" class="star">★</label>
-   <input type="radio" id="1-star" name="rating" value="1" v-model="ratings" />
-   <label for="1-star" class="star">★</label>
-    </div>
+                    <td>
+                        <input v-model="reviewInfo.stars" type="number" min=1 max=5 required />
+                    </td>
                 </tr>
             </table>
             <div style="text-align: center">
                 <button type="button" class="btn btn-outline-danger me-2 mt-2" @click="saveInfo()">
-                    작성
+                    저장
                 </button>
                 <button type="reset" class="btn btn-danger mt-2" @click="resetInfo()">취소</button>
             </div>
@@ -66,8 +55,6 @@
 </template>
 <script>
 import axios from "axios";
-// import OrderProducts from '@/components/OrderProducts.vue';
-
 export default {
     data() {
         return {
@@ -75,16 +62,11 @@ export default {
                 member_code: this.$store.state.memberStore.memberInfo.member_code,
                 review_title: "",
                 review_content: "",
-                detail_code: this.$route.query.detail_code,
+                detail_code: "det00001",
                 stars: 5
             },
-            checkout:this.$route.query.checkout,
-
         };
     },
-      components: {
-    // OrderProducts
-  },
     methods: {
         saveInfo() {
             // 1) 유효성 체크
@@ -153,41 +135,8 @@ export default {
 .content-wrapper {
     height: 200px
 }
+
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Adjust as needed */
     margin-top: 200px;
-}
-.star-rating {
-  display: flex;
-  flex-direction: row-reverse;
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-  justify-content: space-around;
-  padding: 0 0.2em;
-  text-align: center;
-  width: 5em;
-}
- 
-.star-rating input {
-  display: none;
-}
- 
-.star-rating label {
-  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-  -webkit-text-stroke-width: 2.3px;
-  -webkit-text-stroke-color: #2b2a29;
-  cursor: pointer;
-}
- 
-.star-rating :checked ~ label {
-  -webkit-text-fill-color: gold;
-}
- 
-.star-rating label:hover,
-.star-rating label:hover ~ label {
-  -webkit-text-fill-color: #fff58c;
 }
 </style>

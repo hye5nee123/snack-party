@@ -23,16 +23,29 @@ export default {
   //   this.$router.push('/user/main')
   // }
   // mounted() {
-  //   window.addEventListener('beforeunload', this.unLoadEvent);
+    
+
+    // window.addEventListener('beforeunload', this.unLoadEvent);
+    // event.preventDefault();
+    // window.addEventListener("unload", this.unLoadEvent);
+    // return () => {
+    //     window.removeEventListener('beforeunload', this.unLoadEvent);
+    //   };
+
+
+  //   window.addEventListener('unload', function(){
+  //     window.onbeforeunload = null;
+  //   });
   // },
   // methods : {
   //   unLoadEvent : function() {
   //     this.$store.commit('clearStore');
+  //     alert('로그인 풀림')
   //   }
   // }
 };
 </script>
 
 <style>
-  @import "../assets/css/style.css";
+@import "../assets/css/style.css";
 </style>

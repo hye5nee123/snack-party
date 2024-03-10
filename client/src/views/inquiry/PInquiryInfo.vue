@@ -24,7 +24,7 @@
             </div>
           </div>
           <button>수정</button>
-          <button>삭제</button>
+          <button  v-on:click="deleteInquiry( pInquiryInfo.inquiry_code)">삭제</button>
         </div>
       </div>
     </div>
@@ -50,12 +50,28 @@
     methods: {
       async getpInquiryInfo(inquiry_code) {
         try {
-          const response = await axios.get('/api/inquiry/detail/' +inquiry_code);
-          this.pInquiryInfo = response.data;
+          let result = await axios.get('/api/inquiry/detail/' +inquiry_code);
+          this.pInquiryInfo = result.data;
         } catch (error) {
           console.log(error);
         }
+      },
+      async deleteInquiry(inquiry_code){
+      let answer = confirm("문의를 삭제하시겠습니까?")
+      if(answer){
+        let result = await axios.delete('/api/inquiry/' + inquiry_code)
+                    .catch (error => console.log(error))
+                    this.$router.go(-1);
+        console.log(result)
+        // if(result.data.affectedRows != 0 && result.data.changedRows == 0){
+        //   alert('정상적으로 삭제 되었습니다.');
+        //   this.$router.go(-1);
+        // }
+        // else{
+        //   alert('삭제 되지 않았습니다.');
+        // }
       }
+    }
     }
   }
   </script>

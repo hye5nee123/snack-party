@@ -26,7 +26,7 @@
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <span>상품 조회/수정</span>
         </router-link>
-        <router-link to="/admin/product/productinsert" class="menu-link menu-toggle">
+        <router-link to="/admin/product/productform" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <span>상품 등록</span>
         </router-link>
