@@ -136,6 +136,82 @@ WHERE d.order_code = ?
 AND f.thumbnail = 'n01'
 AND member_code = ?`
 
+//주문 후 배송정보
+const deliveryInfo =
+`SELECT delivery_code
+	 , recipient
+     , rec_phone
+     , rec_email
+     , rec_postcode
+     , rec_address
+     , rec_address_detail
+     , memo
+     , delivery_num
+     , order_code
+FROM delivery
+WHERE order_code = ?`
+
+//주문 후 포인트 내역 조회
+const orderedPoint =
+`SELECT point_code
+      , order_code
+      , review_code
+      , point_status
+      , DATE_FORMAT(point_date, '%Y-%m-%d') as point_date
+      , point_value
+      , member_code
+FROM point
+WHERE order_code = ? 
+AND member_code = ?`
+
+
+//주문상태 변경(주문취소)
+const cancelOrd =
+`UPDATE orders
+SET order_status = 'h02'
+WHERE order_status = 'h01'
+AND order_code = ?;`
+
+//===========================================
+// < 찜 상품 >
+
+//찜 목록
+const likesList = 
+`SELECT l.like_code
+, l.product_code
+, l.member_code
+, p.product_name
+, p.product_price
+, f.path
+FROM likes l JOIN product p
+              ON l.product_code = p.product_code
+            LEFT OUTER JOIN file f
+              ON l.product_code = f.board_code
+WHERE member_code = ?
+AND f.thumbnail = 'n01'`
+
+//찜 추가
+const likesInsert =
+`INSERT INTO likes 
+SET like_code = snack.nextval('LIKE')
+    , ?`
+//찜 목록 확인
+const likesCheck =
+`SELECT *
+FROM likes
+WHERE member_code = ?
+AND product_code = ?`
+
+// //삭제
+// const likesDelete =
+// `DELETE FROM likes
+// WHERE like_code = ?
+// AND product_code = ?`
+//삭제
+const likesDelete =
+`DELETE FROM likes
+WHERE product_code = ?`
+
 
 module.exports = {
 //1)장바구니
@@ -157,4 +233,13 @@ module.exports = {
   orderListPage,  //주문전체목록
   orderListCount, //페이징용 개수
   detailList,    //주문상세목록
+  orderedPoint, //주문 후 사용포인트/적립포인트
+  deliveryInfo, //주문 후 배송정보
+  cancelOrd, //주문취소
+
+//4)찜
+  likesList,
+  likesInsert,
+  likesCheck,
+  likesDelete,
 }

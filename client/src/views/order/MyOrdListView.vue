@@ -34,7 +34,7 @@
               <td v-else>{{ list.product_name }} 외 {{ list.buy_cnt }}개</td>
               <td>{{ $currencyFormat(list.total_price) }}원</td>
               <td>{{ ordStatus(list.order_status) }}</td>
-              <td><button type="button" class="cnt-update-btn btn-sm detail-btn" @click="goToDetail(list.order_code)">상세조회</button></td>
+              <td><button type="button" class="cnt-update-btn btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2" @click="goToDetail(list.order_code)">상세조회</button></td>
             </tr>
           </tbody>
         </table>
@@ -141,13 +141,5 @@ export default {
 <style scoped>
 td {
   padding: 10px;
-}
-
-.detail-btn {
-  background-color: #fff;
-  /* border: 1px solid #ffc107; */
-  border: 1px solid #FFB524;
-  color: #5a5a5a;
-  padding: 3px;
 }
 </style>

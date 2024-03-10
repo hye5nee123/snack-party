@@ -104,8 +104,7 @@
                                 <button type="button" v-else @click="addToCart()"
                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
                                         class="fa-solid fa-cart-plus" /> 장바구니</button>
-
-                                <button
+                                <button @click="goToCheckOut()"
                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4">
                                     <i class="fa-brands fa-shopify" /> 바로 구매하기
                                 </button>
@@ -229,7 +228,8 @@
             </div>
         </div>
     </div>
-    <!-- Single Product End -->
+    {{productInfo[0]  }}
+<!-- Single Product End -->
 </template>
 
 <script>
@@ -280,7 +280,10 @@ export default {
             memberCode: this.$store.state.memberStore.memberInfo.member_code,
 
             reviewCnt: 0,
-            avgStars: 0
+            avgStars: 0,
+
+            selectPro: [],
+
         };
     },
     created() {
@@ -311,7 +314,7 @@ export default {
                 return '';
         },
         quantityUp() {
-            //재고량과 수량 비교
+            //장바구니 담기 전 재고량과 수량 비교
             if (this.productInfo[0].stock_cnt <= this.quantity) {
                 alert('재고 부족으로 주문가능한 수량은 ' + this.productInfo[0].stock_cnt + '개 입니다.');
                 this.quantity = this.productInfo[0].stock_cnt;
@@ -377,6 +380,46 @@ export default {
             }
         },
 
+        //바로 구매하기
+        goToCheckOut() { //주문하기로 이동
+            if(this.memberCode == null){
+                alert('로그인 후 이용 가능')
+                this.$router.push({ path: '/login' })
+                // if(this.memberCode) {
+                //     this.$router.go(-1);
+                //     return
+                // }
+                return;
+            }
+
+            this.selectPro = this.changeField();
+            if(this.productInfo[0].stock_cnt < this.selectPro.cart_cnt){
+                alert(this.selectPro.product_name + '의 재고량이 부족합니다.\n주문가능한 수량은 ' + this.productInfo[0].stock_cnt + '개로 수량이 변경됩니다.');
+                this.selectPro.cart_cnt = this.productInfo[0].stock_cnt;
+            } else {
+                sessionStorage.setItem("carts", JSON.stringify(this.selectPro))
+                this.$router.push({ path: '/checkout' })
+            }
+            console.log('상품?', this.selectPro)
+        },
+        
+        changeField() {
+            let selectPro = {
+                product_code: this.productInfo[0].product_code,
+                product_name: this.productInfo[0].product_name,
+                product_price: this.productInfo[0].product_price,
+                path: this.productInfo[0].path
+            }
+            let info = {cart_cnt: this.quantity, member_code: this.memberCode}
+            
+            let newArr = [{...selectPro, ...info}];
+
+            return newArr;
+        },
+
+
+
+        
         //상품평 개수 가져오기
         async getReviewCnt() {
             let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
@@ -395,6 +438,7 @@ export default {
         },
     },
 }
+
 
 </script>
 

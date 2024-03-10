@@ -59,7 +59,14 @@
                         <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                             <i class="fas fa-search text-primary"></i>
                         </button>
-                        
+
+                        <!-- 찜 -->
+                        <router-link to="/likes" v-if="$store.state.memberStore.memberInfo.member_id" class="position-relative me-4 my-auto icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="45" height="25" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314"/>
+                            </svg>
+                        </router-link>
+
                         <!-- 장바구니 -->
                         <router-link to="/cart" v-if="$store.state.memberStore.memberInfo.member_id" class="position-relative me-4 my-auto icon">
                             <i class="fa fa-shopping-bag fa-2x"></i>
@@ -69,6 +76,8 @@
                                 style="top: -5px; left: 15px; height: 20px; min-width: 20px;">3
                             </span> -->
                         </router-link>
+
+                        
 
                         <a href="#" class="my-auto icon" @click="memberInfo()">
                             <i class="fas fa-user fa-2x"></i>

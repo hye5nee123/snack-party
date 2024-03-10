@@ -93,11 +93,6 @@ export default {
       },
     },
     {
-      path: "ordcompleted",
-      name: "OrdCompleted",
-      component: import(/* webpackChunkName: "OrdCompleted", webpackPrefetch: false */ "../views/order/OrdCompletedView.vue"),
-    },
-    {
       path: "myorderlist",
       name: "MyOrderList",
       component: import(/* webpackChunkName: "myorderlist", webpackPrefetch: false */ "../views/order/MyOrdListView.vue"),
@@ -130,6 +125,12 @@ export default {
           next();
         }
       },
+    },
+    {
+      path: "likes",
+      name: "Likes",
+      component: import(/* webpackChunkName: "Cart", webpackPrefetch: false */ "../views/order/LikesView.vue"),
+    
     },
     
     {
