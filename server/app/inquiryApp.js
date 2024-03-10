@@ -73,4 +73,11 @@ app.post("/", async (request, response) => {
   response.send(result);
 });
 
+//삭제
+app.delete("/:inquiry_code", async (request, response) => {
+  let data = request.params.inquiry_code;
+  let result = await db.connection("inquirysql", "inquiryDelete", data);
+  response.send(result);
+});
+
 module.exports = app;

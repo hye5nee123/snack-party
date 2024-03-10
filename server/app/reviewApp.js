@@ -61,6 +61,7 @@ app.get("/:member_code", async (request, response) => {
   let result = await db.connection("reviewsql", "uReview", data);
   response.send(result);
 });
+
 //등록
 app.post("/", async (request, response) => {
   let data = request.body.param;
@@ -86,5 +87,17 @@ app.get("/avgStars/:product_code", async (request, response) => {
   response.send(result);
 });
 
+//리뷰체크
+app.get("/checkReview/:detail_code", async (request, response) => {
+  let data = request.params.detail_code;
+  let result = await db.connection("reviewsql", "checkReview", data);
+  response.send(result);
+});
 
+//삭제
+app.delete("/:review_code", async (request, response) => {
+  let data = request.params.review_code;
+  let result = await db.connection("reviewsql", "reviewDelete", data);
+  response.send(result);
+});
 module.exports = app;

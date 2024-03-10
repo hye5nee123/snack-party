@@ -13,7 +13,7 @@
       <h3>주문상세내역</h3>
       <p>{{ order_code }}</p>
       {{ mem_code }}
-      <OrderProducts :checkOutList="myOrdDetail" />
+      <OrderProducts :checkOutList="myOrdDetail" :review_show="review_show"/>
 
       <br />
       <div>
@@ -34,6 +34,7 @@ export default {
     return {
       myOrdDetail: [],
       order_code: '',
+      review_show: '',
       mem_code: this.$store.state.memberStore.memberInfo.member_code,
     }
   },
@@ -43,6 +44,7 @@ export default {
   },
   created() {
     this.order_code = this.$route.query.order_code;
+    this.review_show = this.$route.query.review_show;
     this.getMyOrdDetail()
   },
   methods: {

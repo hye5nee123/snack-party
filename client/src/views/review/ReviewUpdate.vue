@@ -2,9 +2,8 @@
     <div class="container">
         <div id="show">
             <div class="page-title">
-                <h3 class="text-center">review</h3>
+                <h3 class="text-center">review 수정</h3>
             </div>
-
             <table id="writetable">
                 <tr>
                     <td class="title">
@@ -47,7 +46,7 @@
             </table>
             <div style="text-align: center">
                 <button type="button" class="btn btn-outline-danger me-2 mt-2" @click="saveInfo()">
-                    작성
+                    저장
                 </button>
                 <button type="reset" class="btn btn-danger mt-2" @click="resetInfo()">취소</button>
             </div>
