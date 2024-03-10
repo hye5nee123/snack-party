@@ -4,6 +4,7 @@
     <router-view />
     <Footer />
   </div>
+  <div @keydown="keyboardEvent"></div>
 </template>
 
 <script>
@@ -22,27 +23,20 @@ export default {
   //   console.log('mounted');
   //   this.$router.push('/user/main')
   // }
-  // mounted() {
-    
-
-    // window.addEventListener('beforeunload', this.unLoadEvent);
-    // event.preventDefault();
-    // window.addEventListener("unload", this.unLoadEvent);
-    // return () => {
-    //     window.removeEventListener('beforeunload', this.unLoadEvent);
-    //   };
-
-
-  //   window.addEventListener('unload', function(){
-  //     window.onbeforeunload = null;
-  //   });
-  // },
-  // methods : {
-  //   unLoadEvent : function() {
-  //     this.$store.commit('clearStore');
-  //     alert('로그인 풀림')
-  //   }
-  // }
+  mounted() {
+    window.addEventListener('beforeunload', this.unLoadEvent);
+    window.addEventListener('keydown', (e) => {
+      if(e.key == 'F5') {
+        // alert('새로고침')
+        event.preventDefault();
+      }
+    })
+  },
+  methods : {
+    unLoadEvent : function() {
+        this.$store.commit('clearStore');
+    }
+  }
 };
 </script>
 
