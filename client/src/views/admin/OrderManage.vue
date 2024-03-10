@@ -24,4 +24,3 @@ export default{
   }
 }
 </script>
-../../components/admin/AdminOrderList.vue

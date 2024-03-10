@@ -40,10 +40,27 @@ const orderListCount =
 `SELECT COUNT(*) count
 FROM orders`
 
+const orderInfo = 
+`SELECT  order_code,
+        member_code,
+        order_date,
+        delivery_fee,
+        order_price,
+        use_point,
+        total_price,
+        get_point,
+        order_status,
+        cancel_date,
+        imp_uid,
+        merchant_uid
+FROM    orders
+WHERE   order_code = ?`
+
 module.exports = {
     salesDaily,
     salesMonthly,
     inquiryNotAnswered,
     orderListPage,
     orderListCount,
+    orderInfo
 }

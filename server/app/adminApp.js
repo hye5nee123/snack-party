@@ -89,7 +89,7 @@ app.get('/orderlist', async (req, res) => {
     where += " LIMIT 10 OFFSET ?"
     data.push(Number(offset));
   }
-  
+
   let result = await db.connection('adminsql', 'orderListPage', data, where).catch(err => { console.log(err) });
   res.send(result);
 });
@@ -151,6 +151,15 @@ app.get('/ordercnt', async (req, res) => {
 
   let result = await db.connection('adminsql', 'orderListCount', data, where).catch(err => { console.log(err) });
   res.send(result);
+});
+
+// 주문 단건 조회
+app.get('/orderInfo/:order_code', async (request, response) => {
+  let data = request.params.order_code;
+  let result = await db
+    .connection('adminsql', 'orderInfo', data)
+    .catch((err) => console.log(err));
+  response.send(result);
 });
 
 module.exports = app;

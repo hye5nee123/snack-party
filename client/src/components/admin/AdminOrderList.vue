@@ -119,8 +119,7 @@
                 <td v-else>{{ list.product_name }} 외 {{ list.buy_cnt }}개</td>
                 <td>{{ $currencyFormat(list.total_price) }}원</td>
                 <td>{{ ordStatus(list.order_status) }}</td>
-                <td><button type="button" class="cnt-update-btn btn-sm detail-btn"
-                    @click="goToDetail(list.order_code)">상세조회</button></td>
+                <td><button type="button" class="cnt-update-btn btn-sm detail-btn" :orderList="list" @click="goToDetail(list.order_code, list.member_code)">상세조회</button></td>
               </tr>
             </tbody>
           </table>
@@ -143,6 +142,7 @@ export default {
   data() {
     return {
       orderList: [],
+      detailList: [],
       start_date: '',
       end_date: '',
       merchant_uid: '',
@@ -207,7 +207,8 @@ export default {
 
       let result = await axios.get(`/api/admin/orderlist${param}`)
         .catch(err => console.log(err));
-      this.orderList = result.data;
+      console.log(result)
+      this.orderList = result;
     },
 
     // 전체 데이터 갯수
@@ -223,8 +224,8 @@ export default {
       this.TOTAL_ARITCLES = result.data[0].count;
     },
 
-    goToDetail(order_code) {
-      this.$router.push({ path: '/myorderdetail', query: { order_code: order_code } });
+    async goToDetail(order_code, member_code) {
+      this.$router.push({ path: '/admin/order/orderdetail', query: { order_code: order_code, member_code: member_code } });
     },
 
     seacrhOrder() {
