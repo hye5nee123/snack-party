@@ -16,18 +16,18 @@
                     <div id="carouselId" class="carousel slide position-relative  " data-bs-ride="carousel">
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active rounded">
-                                <img src="img/hero-img-1.jpg" class="img-fluid w-100 h-100 rounded"
-                                    alt="First slide" style="top: 50%;">
+                                <img src="img/hero-img-1.jpg" class="img-fluid rounded"
+                                    alt="First slide">
                             </div>
                             <div class="carousel-item rounded">
-                                <img src="img/hero-img-2.jpg" class="img-fluid w-100 h-100 rounded" alt="Second slide" style="top: 50%;">
+                                <img src="img/hero-img-2.jpg" class="img-fluid rounded" alt="Second slide">
                             </div>
                         </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
+                        <button class="carousel-control-prev carousel-control" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselId" data-bs-slide="next">
+                        </button> 
+                        <button class="carousel-control-next carousel-control" type="button" data-bs-target="#carouselId" data-bs-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="visually-hidden">Next</span>
                         </button>
@@ -391,7 +391,18 @@ export default {
 </script>
 <style>
     .img-fluid {
-        height: 80% !important;
-        ;
+        /* height: 80% !important; */
+        
     }
+    .carousel-control {
+        top: 50% !important;
+        
+    }
+    .carousel {
+        /* height: 100px !important; */
+    }
+    /* .carousel-item {
+        height: 200px;
+        width: 200px;
+    } */
 </style>

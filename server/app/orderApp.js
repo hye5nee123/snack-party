@@ -254,16 +254,10 @@ app.post('/likes', async (request, response) => {
 app.get('/likes/:mcode/:pcode', async (request, response) => {
   let data = [request.params.mcode, request.params.pcode];
   let result = await db.connection('ordersql', 'likesCheck', data);
-  response.send(result);
-  console.log('찜 담긴 상품?', result);
+  console.log(result[0]? true : false, result[0]);
+  response.send(result[0]? true : false);
 });
 
-// //찜 삭제
-// app.delete('/likes/:lcode/:pcode', async (request, response) => {
-//   let data = request.params.lcode.pcode;
-//   let result = await db.connection('ordersql', 'likesDelte', data);
-//   response.send(result);
-// });
 //찜 삭제
 app.delete('/likes/:pcode', async (request, response) => {
   let data = request.params.pcode;

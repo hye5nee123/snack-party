@@ -95,8 +95,8 @@ export default {
     {
       path: "myorderlist",
       name: "MyOrderList",
-      component: import(/* webpackChunkName: "myorderlist", webpackPrefetch: false */ "../views/order/MyOrdListView.vue"),
-
+      component: import(/* webpackChunkName: "MyOrderList", webpackPrefetch: false */ "../views/order/MyOrdListView.vue"),
+    
       beforeEnter: (to, from, next) => {
         let loginStatus = Store.state.memberStore.loginStatus;
         console.log('loginStatus : ', loginStatus);
@@ -112,8 +112,8 @@ export default {
     {
       path: "myorderdetail",
       name: "MyOrderDetail",
-      component: import(/* webpackChunkName: "myorderdetail", webpackPrefetch: false */ "../views/order/MyOrdDetailView.vue"),
-
+      component: import(/* webpackChunkName: "MyOrderDetail", webpackPrefetch: false */ "../views/order/MyOrdDetailView.vue"),
+    
       beforeEnter: (to, from, next) => {
         let loginStatus = Store.state.memberStore.loginStatus;
         console.log('loginStatus : ', loginStatus);
@@ -129,8 +129,19 @@ export default {
     {
       path: "likes",
       name: "Likes",
-      component: import(/* webpackChunkName: "Cart", webpackPrefetch: false */ "../views/order/LikesView.vue"),
-
+      component: import(/* webpackChunkName: "Likes", webpackPrefetch: false */ "../views/order/LikesView.vue"),
+    
+      // beforeEnter: (to, from, next) => {
+      //   let loginStatus =  Store.state.memberStore.loginStatus;
+      //   console.log('loginStatus : ', loginStatus);
+      //   if(!loginStatus ){
+      //     alert('로그인 후 접근 가능한 페이지입니다.'),
+      //     next('/main');
+      //   }
+      //   else {
+      //     next();
+      //   }
+      // }
     },
 
     {
@@ -192,6 +203,11 @@ export default {
       path: 'proinquiryupdate',
       name: 'ProInquiryUpdate',
       component: import(/* webpackChunkName: "ProInquiryUpdate", webpackPrefetch: false */ "../views/inquiry/ProInquiryUpdate.vue")
+    },
+    { 
+      path: 'noticelist',
+      name: 'NoticeList',
+      component: import(/* webpackChunkName: "NoticeList", webpackPrefetch: false */ "../views/NoticeList.vue")
     },
   ],
 };

@@ -31,7 +31,8 @@
                 <input type="checkbox" v-model="selectList" :value="cart" />
               </td>
               <td>
-                <img :src="getImgUrl(cartList[i].path)" width="120px" class="img-fluid rounded-top" alt="" /> <!--class의 imghw 지우고 크기 조절-->
+                <img :src="getImgUrl(cartList[i].path)" width="120px" class="img-fluid rounded-top" 
+                  @click="gotodetail(cartList[i].product_code)"/>
               </td>
               <td>
                 <p class="mb-0 mt-4">{{ cart.product_name }}</p>
@@ -217,6 +218,10 @@ export default {
           this.$router.push({ path: '/checkout' })
         }
       }
+    },
+
+    gotodetail(pcode) {
+      this.$router.push({ name: 'ProductInfo', query: { 'product_code': pcode } });
     },
   },
 

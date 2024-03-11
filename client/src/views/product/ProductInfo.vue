@@ -95,9 +95,15 @@
                                 </tr>
                             </table>
                             <div class="col-lg-12">
-                                <a href="#"
-                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
-                                        class="fa-regular fa-heart" /> 관심상품</a>
+                                <!-- <button @click="addTolikes()"
+                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i :class="{red: isActive}"
+                                    class="fa-regular fa-heart" /> 관심상품
+                                </button> -->
+                                
+                                <button class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4" @click="addTolikes()">
+                                    <i :class="{ nondisplay: isActive, display:true }" class="fa-regular fa-heart"></i>
+                                    <i :class="{ red: isActive, nondisplay: !isActive, display:true }" class="fa-solid fa-heart"></i> 관심상품
+                                </button>
 
                                 <button type="button" v-if="productInfo[0].stock_cnt == 0"
                                     class="btn border rounded-pill px-4 py-2 mb-4 text-primary col-lg-4">품절</button>
@@ -108,9 +114,6 @@
                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4">
                                     <i class="fa-brands fa-shopify" /> 바로 구매하기
                                 </button>
-                                <!-- <a href="#"
-                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
-                                        class="fa-brands fa-shopify" /> 바로 구매하기</a> -->
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -228,7 +231,6 @@
             </div>
         </div>
     </div>
-    {{productInfo[0]  }}
 <!-- Single Product End -->
 </template>
 
@@ -283,6 +285,7 @@ export default {
             avgStars: 0,
 
             selectPro: [],
+            isActive: false,
 
         };
     },
@@ -291,10 +294,13 @@ export default {
         this.getProductInfo();
         this.getReviewCnt();
         this.getAvgStars();
+        this.getLikeList(this.memberCode); //찜
     },
     watch: {
-
-    },
+        "productInfo[0].product_code"(){ //객체 안의 필드 사용시 "" 따옴표로 감싸기
+            this.getLikeList(this.memberCode);
+        }
+  },
     methods: {
         async getProductInfo() {
             console.log('getProductInfo() 실행');
@@ -365,7 +371,7 @@ export default {
                 if(calquan == 0) {
                     alert('이미 담긴 상품이며\n재고가 부족하여 수량을 추가하실 수 없습니다.')
                 } else {
-                    alert('2이미 담긴 상품으로 ' + calquan + '개가 추가되었습니다.');
+                    alert('이미 담긴 상품으로 ' + calquan + '개가 추가되었습니다.');
                 }
             } 
             else if (cartCheck.data.length != 0) {
@@ -382,14 +388,10 @@ export default {
 
         //바로 구매하기
         goToCheckOut() { //주문하기로 이동
-            if(this.memberCode == null){
+            if(this.memberCode == ''){
                 alert('로그인 후 이용 가능')
                 this.$router.push({ path: '/login' })
-                // if(this.memberCode) {
-                //     this.$router.go(-1);
-                //     return
-                // }
-                return;
+                // return;
             }
 
             this.selectPro = this.changeField();
@@ -417,7 +419,56 @@ export default {
             return newArr;
         },
 
+        async addTolikes() { //찜 기능
+            //로그인 check
+            if(!this.loginStatus) {
+                alert('로그인 후 이용가능합니다.');
+                return;
+            }
 
+            let data = {
+                "param": {
+                    product_code: this.productInfo[0].product_code,
+                    member_code: this.memberCode
+                }
+            }
+
+            //찜 여부 확인 (있으면 클릭 시 삭제)
+            if (this.isActive == true){
+                this.isActive = false;
+
+                //단건삭제
+                let del = await axios.delete(`/apiorder/likes/${this.productInfo.product_code}`)
+                .catch((err) => console.log(err));
+                console.log('찜 삭제', del);
+                alert('찜 상품이 삭제되었습니다.');
+
+            } else{
+                this.isActive = true;
+
+                let add = await axios.post("/apiorder/likes", data).catch(err => console.log(err));
+                console.log('찜 등록' + add);
+                alert('찜 상품으로 추가되었습니다.');
+            }
+        },
+
+        async getLikeList(memberCode) {
+            if(memberCode == '') {
+                return;
+            } else {
+                let result = await axios
+                .get('/apiorder/likes/' + memberCode +'/'+ this.productInfo.product_code)
+                .catch((err) => console.log(err));
+                let list = result.data;
+                console.log('찜목록?',list);
+
+                if(list) {
+                this.isActive = true;
+                } else {
+                this.isActive = false;
+                }
+            }
+        },
 
         
         //상품평 개수 가져오기
@@ -454,5 +505,17 @@ export default {
 
 .tacenter {
     text-align: center;
+}
+.red {
+  color: red;
+}
+
+.nondisplay {
+  display: none;
+}
+
+.display {
+  line-height: inherit;
+  margin: auto 0;
 }
 </style>

@@ -209,7 +209,7 @@ export default {
                 alert('상품명을 입력해주세요.');
                 this.$refs.product_name.focus();
                 return '';
-            }else if(!this.productInfo.product_price){
+            } else if (!this.productInfo.product_price) {
                 alert('상품 가격을 입력해주세요.');
                 this.$refs.product_price.focus();
                 return '';
@@ -233,7 +233,7 @@ export default {
                 alert('등록되었습니다.');
                 this.$router.push({ path: '/admin/product' });
             }
-        }
+        },
     }
 }
 </script>

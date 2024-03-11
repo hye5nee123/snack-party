@@ -87,25 +87,19 @@
             </table>
           </div>
         </div>
-        <p>{{ order_code }}</p>
-        {{ mem_code }}
-        <OrderProducts :checkOutList="myOrdDetail" :review_show="review_show" />
+      <OrderProducts :checkOutList="myOrdDetail" :review_show="review_show"/>
 
-        <br />
-        <div>
-          {{ myOrdDetail }}
-          <!-- <PaymentInfo /> -->
-        </div>
-      </div>
-
-      <div style="text-align: center;">
-        <button @click="cancelOrd()"
-          class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문취소</button>
-        <button @click="this.$router.push({ path: '/myorderlist' })"
-          class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문목록 이동</button>
+      <br />
+      <div>
       </div>
     </div>
+    
+    <div style="text-align: center;">
+      <button @click="cancelOrd()" class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문취소</button>
+      <button @click="this.$router.push({ path: '/myorderlist' })" class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문목록 이동</button>
+    </div>
   </div>
+</div>
 </template>
 
 <script>
