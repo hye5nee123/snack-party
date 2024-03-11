@@ -22,13 +22,12 @@
             </table>
           </div>
         </div>
-        <button>수정</button>
-        <button  v-on:click="deleteInquiry( inquiryInfo.inquiry_code)">삭제</button>
+        <button v-on:click="goToUpdate()">수정</button>
+        <button v-on:click="deleteInquiry(inquiryInfo.inquiry_code)">삭제</button>
       </div>
     </div>
   </div>
 </template>
-
 <script>
 import axios from 'axios';
 
@@ -37,20 +36,20 @@ export default {
     return {
       iCode: this.$route.query.inquiry_code,
       inquiryInfo: {
-        inquiry_code: "",
+        inquiry_code: this.$route.query.inquiry_code,
         title: "",
         content: ""
       },
     };
   },
   created() {
-    console.log('this.$route.query : ' , this.iCode);
-  if (this.iCode) {
-    this.getInquiryInfo(this.iCode);
-  } else {
-    console.error("inquiry_code가 전달되지 않았습니다.");
-  }
-},
+    console.log('this.$route.query : ', this.iCode);
+    if (this.iCode) {
+      this.getInquiryInfo(this.iCode);
+    } else {
+      console.error("inquiry_code가 전달되지 않았습니다.");
+    }
+  },
   methods: {
     async getInquiryInfo(inquiry_code) {
       try {
@@ -60,12 +59,12 @@ export default {
         console.log(error);
       }
     },
-    async deleteInquiry(inquiry_code){
+    async deleteInquiry(inquiry_code) {
       let answer = confirm("문의를 삭제하시겠습니까?")
-      if(answer){
+      if (answer) {
         let result = await axios.delete('/api/inquiry/' + inquiry_code)
-                    .catch (error => console.log(error))
-                     this.$router.go(-1);
+          .catch(error => console.log(error))
+        this.$router.go(-1);
         console.log(result)
         // if(result.data.affectedRows != 0 && result.data.changedRows == 0){
         //   alert('정상적으로 삭제 되었습니다.');
@@ -76,9 +75,10 @@ export default {
         // }
       }
     },
-//     goBack() {
-//   this.$router.go(-1);
-// }
+    goToUpdate() {
+      //this.$router.push({ path: '/userUpdate', query: {'userId' : userId}});  
+      this.$router.push({ path: '/inquiryupdate', query: { 'inquiry_code': this.inquiryInfo.inquiry_code } });
+    }
   }
 }
 </script>

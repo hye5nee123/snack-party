@@ -39,12 +39,10 @@ export default {
   props: {
     checkOutList: Array,
   },
-  methods : {
+  methods: {
     getImgUrl(path) {
       return new URL(this.url + '/common/download?path=' + path);
     },
   }
 }
 </script>
-
-

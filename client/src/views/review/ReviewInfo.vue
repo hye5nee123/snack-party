@@ -24,8 +24,8 @@
             </table>
           </div>
         </div>
-        <button >수정</button>
-        <button  v-on:click="deleteReview(reviewInfo.review_code)">삭제</button>
+        <button v-on:click="goToUpdate()">수정</button>
+        <button v-on:click=" deleteReview(reviewInfo.review_code)">삭제</button>
       </div>
     </div>
   </div>
@@ -56,12 +56,17 @@ export default {
         console.log(error);
       }
     },
-    async deleteReview(review_code){
+    goToUpdate() {
+      // 수정폼 컴포넌트 호출
+      //this.$router.push({ path: '/userUpdate', query: {'userId' : userId}});  
+      this.$router.push({ path: '/reviewupdate', query: { 'review_code': this.reviewInfo.review_code } });
+    },
+    async deleteReview(review_code) {
       let answer = confirm("리뷰를 삭제하시겠습니까?")
-      if(answer){
+      if (answer) {
         let result = await axios.delete('/api/review/' + review_code)
-                    .catch (error => console.log(error))
-                    this.$router.go(-1);
+          .catch(error => console.log(error))
+        this.$router.go(-1);
         console.log(result)
         // if(result.data.affectedRows != 0 && result.data.changedRows == 0){
         //   alert('정상적으로 삭제 되었습니다.');

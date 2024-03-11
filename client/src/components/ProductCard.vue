@@ -24,8 +24,8 @@
         <!-- heart -->
         <!-- <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary" @click="likes()"> -->
         <button class="btn border border-secondary rounded-pill px-3 text-primary" @click="addTolikes()">
-          <i :class="{ nondisplay: isActive, display:true }" class="fa-regular fa-heart"></i>
-          <i :class="{ red: isActive, nondisplay: !isActive, display:true }" class="fa-solid fa-heart"></i> 관심상품
+          <i :class="{ nondisplay: isActive, display: true }" class="fa-regular fa-heart"></i>
+          <i :class="{ red: isActive, nondisplay: !isActive, display: true }" class="fa-solid fa-heart"></i> 관심상품
         </button>
         <div v-if="item">
           <button class="btn border border-secondary rounded-pill px-3 text-primary" @click="addToCart()">
@@ -57,7 +57,7 @@ export default {
       stockCnt: this.productInfo.stock_cnt,
       loginStatus: this.$store.state.memberStore.loginStatus,
       memberCode: this.$store.state.memberStore.memberInfo.member_code
-      
+
     };
   },
   watch: {
@@ -97,15 +97,15 @@ export default {
         let del = await axios.delete(`/apiorder/likes/${this.productInfo.product_code}`)
         .catch((err) => console.log(err));
         console.log('찜 삭제', del);
-          alert('찜 상품이 삭제되었습니다.');
+        alert('찜 상품이 삭제되었습니다.');
 
       } else{
           this.isActive = true;
           // this.pressLike = true;
 
-          let add = await axios.post("/apiorder/likes", data).catch(err => console.log(err));
-          console.log('찜 등록' + add);
-          alert('찜 상품으로 추가되었습니다.');
+        let add = await axios.post("/apiorder/likes", data).catch(err => console.log(err));
+        console.log('찜 등록' + add);
+        alert('찜 상품으로 추가되었습니다.');
       }
     },
     async getLikeList(memberCode) {
@@ -138,7 +138,7 @@ export default {
     },
 
     //장바구니 추가
-    async addToCart() { 
+    async addToCart() {
       let data = {
         "param": {
           cart_cnt: 1,
@@ -146,14 +146,14 @@ export default {
           product_code: this.productInfo.product_code
         }
       }
-      
+
       let mcode = this.memberCode;
       let pcode = this.productInfo.product_code;
       let cartCheck = await axios.get(`/apiorder/carts/${mcode}/${pcode}`).catch((err) => console.log(err));
 
-      if(!this.loginStatus) {
+      if (!this.loginStatus) {
         alert('로그인 후 이용가능합니다.');
-      }else if(cartCheck.data.length != 0){
+      } else if (cartCheck.data.length != 0) {
         alert('이미 담긴 상품입니다. 장바구니를 확인해 주세요');
       } else {
         let add = await axios.post("/apiorder/carts", data).catch(err => console.log(err));
@@ -162,7 +162,7 @@ export default {
       }
     }
   }
-    
+
 };
 </script>
 
@@ -180,7 +180,7 @@ export default {
   margin: auto 0;
 }
 
-.sheight{
+.sheight {
   height: 57.59px;
 }
 </style>
