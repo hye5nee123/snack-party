@@ -11,7 +11,16 @@
   <!-- Cart Page Start -->
   <div class="container-fluid py-5">
     <div class="container py-5">
-      <h4>나의 주문내역</h4>
+      <h4>주문내역</h4>
+      <br>
+
+      <div class="container" style="border: 1px solid #ccc; padding: 20px; border-radius: 20px; margin-bottom: 40px;">
+        <p style="font-weight: bold; font-size: large;">공지</p>
+        <p><span style="color: red; font-weight: bold;">* </span>주문상태가 '결제완료'인 경우에만 주문취소가 가능합니다</p>
+        <p><span style="color: red; font-weight: bold;">* </span>배송완료 시 결제금액의 1%가 적립됩니다.</p>
+        <p>모든 정보는 아래 상세조회 버튼 클릭 시 상세페이지에서 조회 가능합니다.</p>
+      </div>
+      <br>
       <br>
       <div class="table-responsive">
         <table class="table">
@@ -41,16 +50,6 @@
         <!-- 페이징 -->
         <PaginationComp :ITEM_PER_PAGE="ITEM_PER_PAGE" :PAGE_PER_SECTION="PAGE_PER_SECTION" :TOTAL_ARITCLES="TOTAL_ARITCLES"
             @change-page="onChangePage" style="margin-bottom: 50px;" />
-      </div>
-
-      <br>
-
-      <div class="container">
-        <h4>공지</h4>
-        <h1>{{ TOTAL_ARITCLES }}</h1>
-        <h1>{{ ITEM_PER_PAGE }}</h1>
-        <h1>{{ pageData }}</h1>
-
       </div>
     </div>
   </div>
@@ -131,7 +130,7 @@ export default {
     },
 
     goToDetail(order_code){
-      this.$router.push({path:'/myorderdetail', query:{order_code: order_code, review_show:'show'}});
+      this.$router.push({path:'/myorderdetail', query:{order_code: order_code}});
     }
   },//end methods
 

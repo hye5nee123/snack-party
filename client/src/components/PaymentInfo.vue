@@ -16,7 +16,7 @@
 
           <td v-if="pointInput == true">  
             <input type="text" v-model="usePoint" @input="point()">원 
-            <button type="button" @click="usePoint = point_value">모두사용</button>
+            <button type="button" class="cnt-update-btn btn-sm" @click="usePoint = point_value">모두사용</button>
             <br>보유적립금: {{ $currencyFormat(point_value - usePoint) }}원
           </td>
           <td v-else-if="minus_point != 0 && pointInput == false">- {{ minus_point }}원</td>
@@ -32,12 +32,27 @@
         </tr>
       </tbody>
     </table>
-    
+
+    <br>
     <!-- 차감:{{ minus_point }}원
-    추가:{{ plus_point }}원 -->
-    <p v-if="order_status == 'h05'">구매적립액 + {{ $currencyFormat(plus_point) }}원</p>
-    <!-- <p>구매적립액 + {{ $currencyFormat(plus_point) }}원</p> -->
+      추가:{{ plus_point }}원 -->
     
+    <!-- <div class="table-responsive" v-if="completepoint == false"> -->
+    <div class="table-responsive">
+      <table v-if="completepoint == true" class="table">
+        <tbody>
+          <tr>
+            <td colspan="2"></td>
+          </tr>
+          <tr>
+            <td>구매적립액</td>
+            <td>{{ $currencyFormat(plus_point) }}원</td>
+          </tr>
+        </tbody>
+      </table>
+      <p v-else></p>
+    </div>
+
     <br>
   </div>
 </template>
@@ -49,9 +64,9 @@ export default {
     checkOutList: Array,
     allPrice: Number,
     point_value: Number,
-    pointInput: Boolean,
     pointList: Array,
-    // pointList: Object,
+    pointInput: Boolean,
+    completepoint: Boolean,
   },
   emits: ['usePoint', 'deliveryFee'],
 
@@ -62,7 +77,7 @@ export default {
     }
   },
   computed: {
-    minus_point() {
+    minus_point() { //사용적립액
       let point =0;
       if(this.pointList != null) {
         for(let i=0; i < this.pointList.length; i++) {
@@ -75,7 +90,7 @@ export default {
       }
       return point
     },
-    plus_point() {
+    plus_point() { //구매적립액
       let point =0;
       if(this.pointList != null) {
         for(let i=0; i < this.pointList.length; i++) {
@@ -100,6 +115,7 @@ export default {
   created() {
     this.$emit('deliveryFee', this.deliveryFee);
     this.orderStatus();
+    console.log(this.plus_point)
   },
 
   updated() {
@@ -127,4 +143,11 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.cnt-update-btn {
+  background-color: #fff;
+  border: 1.2px solid #7087ee;
+  color: #5a5a5a;
+  /* font-weight: bold; */
+}
+</style>

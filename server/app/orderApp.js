@@ -259,8 +259,8 @@ app.get('/likes/:mcode/:pcode', async (request, response) => {
 });
 
 //찜 삭제
-app.delete('/likes/:pcode', async (request, response) => {
-  let data = request.params.pcode;
+app.delete('/likes/:mcode/:pcode', async (request, response) => {
+  let data = [request.params.mcode, request.params.pcode];
   let result = await db.connection('ordersql', 'likesDelete', data).catch((error) => {
     console.log(error);
   });

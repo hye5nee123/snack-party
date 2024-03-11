@@ -296,11 +296,11 @@ export default {
         this.getAvgStars();
         this.getLikeList(this.memberCode); //찜
     },
-    watch: {
-        "productInfo[0].product_code"(){ //객체 안의 필드 사용시 "" 따옴표로 감싸기
-            this.getLikeList(this.memberCode);
-        }
-  },
+//     watch: {
+//         "productInfo[0].product_code"(){ //객체 안의 필드 사용시 "" 따옴표로 감싸기
+//             this.getLikeList(this.memberCode);
+//         }
+//   },
     methods: {
         async getProductInfo() {
             console.log('getProductInfo() 실행');
@@ -312,6 +312,8 @@ export default {
             this.productInfo = result.data;
 
             console.log('this.productInfo : ', this.productInfo);
+
+            this.getLikeList();
         },
         getImgUrl(path) {
             if (path)
@@ -438,7 +440,7 @@ export default {
                 this.isActive = false;
 
                 //단건삭제
-                let del = await axios.delete(`/apiorder/likes/${this.productInfo.product_code}`)
+                let del = await axios.delete(`/apiorder/likes/${this.memberCode}/${this.productInfo[0].product_code}`)
                 .catch((err) => console.log(err));
                 console.log('찜 삭제', del);
                 alert('찜 상품이 삭제되었습니다.');
@@ -452,12 +454,12 @@ export default {
             }
         },
 
-        async getLikeList(memberCode) {
-            if(memberCode == '') {
+        async getLikeList() {
+            if(this.memberCode == '') {
                 return;
             } else {
                 let result = await axios
-                .get('/apiorder/likes/' + memberCode +'/'+ this.productInfo.product_code)
+                .get('/apiorder/likes/' + this.memberCode +'/'+ this.productInfo[0].product_code)
                 .catch((err) => console.log(err));
                 let list = result.data;
                 console.log('찜목록?',list);

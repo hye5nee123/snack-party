@@ -12,6 +12,7 @@
     <div class="container py-5">
       <h3>주문상세내역</h3>
       <br>
+
       <div class="right-div">
         <div class="col-md-12 col-lg-6 col-xl-7">
             <OrderProducts :checkOutList="myOrdDetail" />
@@ -40,7 +41,7 @@
       {{ myOrdDetail }} -->
       <div class="right-div">
         <div class="col-md-12 col-lg-6 col-xl-5">
-          <PaymentInfo :checkOutList="myOrdDetail" :pointList="pointList" :allPrice="allProPrice"
+          <PaymentInfo :checkOutList="myOrdDetail" :pointList="pointList" :allPrice="allProPrice" :completepoint="completepoint"
            @usePoint="usePoint" @deliveryFee="deliveryFee" @totalPrice="totalPrice"/>
         </div>
         <div class="col-md-12 col-lg-6 col-xl-5">
@@ -83,13 +84,11 @@
             </table>
           </div>
         </div>
-      <OrderProducts :checkOutList="myOrdDetail" :review_show="review_show"/>
-
       <br />
       <div>
       </div>
     </div>
-    
+    <br>
     <div style="text-align: center;">
       <button @click="cancelOrd()" class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문취소</button>
       <button @click="this.$router.push({ path: '/myorderlist' })" class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문목록 이동</button>
@@ -109,7 +108,6 @@ export default {
       myOrdDetail: [],
       order_code: '',
       userInfo: {},
-      review_show: '',
       mem_code: this.$store.state.memberStore.memberInfo.member_code,
 
       use_point: 0, //사용적립금
@@ -120,6 +118,7 @@ export default {
       pointList: [],
 
       deliveryInfo: {},
+      completepoint: true,
     }
   },
   components: {
@@ -131,13 +130,8 @@ export default {
     this.getMyOrdDetail(); //주문상세내역
     this.getPointInfo(); //포인트내역
     this.getDeliveryInfo(); //배송정보
-    this.getPoint(); //배송완료 시 포인트 적립?
-    this.review_show = this.$route.query.review_show;
     this.getMyOrdDetail()
   },
-  // updated() {
-  //   this.getPoint(); //배송완료 시 포인트 적립?
-  // },
   watch:{
 
   },
@@ -221,31 +215,13 @@ export default {
             alert('주문이 취소되었습니다.');
             this.$router.go(0);
           }
+        } else if(this.myOrdDetail[i].order_status == 'h02') {
+          alert('이미 주문취소된 상품입니다.')
         } else {
           alert('주문취소가 불가합니다.');
         }
       }
     },
-
-    //안 됨
-    async getPoint() { //배송완료 시 포인트 추가(리뷰작성 시 포인트 추가도 해야 됨
-      for(let i=0; i < this.myOrdDetail.length; i++) {
-        if(this.myOrdDetail[i].order_status == 'h05') {
-          let data = {
-            "param": {
-              order_code: this.order_code,
-              review_code: null,
-              point_status: 'd01', //적립
-              point_value: Math.round(this.total_price * 0.01),
-              member_code: this.mem_code
-            }
-          }
-          await axios.post('/apiorder/myord/pointplus', data).catch(err => console.log(err));
-        }
-      }
-    },
-
-
 
     //자식컴포넌트 데이터
     usePoint(data) {

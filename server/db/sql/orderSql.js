@@ -175,7 +175,7 @@ AND order_code = ?;`
 //===========================================
 // < 찜 상품 >
 
-//찜 목록
+//찜 페이지
 const likesList = 
 `SELECT l.like_code
 , l.product_code
@@ -196,22 +196,18 @@ const likesInsert =
 `INSERT INTO likes 
 SET like_code = snack.nextval('LIKE')
     , ?`
-//찜 목록 확인
+//찜 목록 확인(단건)
 const likesCheck =
 `SELECT *
 FROM likes
 WHERE member_code = ?
 AND product_code = ?`
 
-// //삭제
-// const likesDelete =
-// `DELETE FROM likes
-// WHERE like_code = ?
-// AND product_code = ?`
 //삭제
 const likesDelete =
 `DELETE FROM likes
-WHERE product_code = ?`
+WHERE member_code = ?
+AND product_code = ?`
 
 
 module.exports = {
