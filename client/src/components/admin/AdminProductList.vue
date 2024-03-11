@@ -95,7 +95,6 @@
         <tbody>
           <tr v-for="(product, i) in productList" :key="i" @click="goToInfo(product.product_code)">
             <td>{{ product.product_code }}</td>
-
             <!-- 카테고리명으로 출력 -->
             <td v-if="product.category == 'e01'">과자</td>
             <td v-if="product.category == 'e02'">비스킷/크래커</td>
@@ -113,7 +112,7 @@
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox"
                   :checked="product.product_display == 'f01' ? true : false"
-                  @change="changeDisplay(product.product_code, product.product_display)">
+                  @change.stop="changeDisplay(event, product.product_code, product.product_display)">
                 <label class="form-check-label" v-if="product.product_display == 'f01'">공개</label>
                 <label class="form-check-label" v-if="product.product_display == 'f02'">비공개</label>
               </div>
