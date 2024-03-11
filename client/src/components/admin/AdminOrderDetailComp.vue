@@ -139,28 +139,36 @@ export default {
             }
         },
         async changeStatus() {
+            let chk = 0;
+            if (this.order_status == 'h05') {
+                let check = await axios.get(`/api/admin/checkPoint/${this.oCode}`)
+                    .catch(err => console.log(err));
+                chk = check.data[0].count 
+            }
+
             let result = await axios.put(`/api/admin/updateOrderStatus/${this.order_status}/${this.oCode}`)
                 .catch(err => console.log(err));
             let info = result.data.affectedRows;
+
             if (info > 0) {
+
                 alert('주문상태가 수정되었습니다.');
+
                 if (this.order_status == 'h05') {
-                    console.log('this.oCode : ', this.oCode);
-                    let check = await axios.get(`/api/admin/checkPoint/${this.oCode}}`)
-                        .catch(err => console.log(err));
-                    console.log('check : ', check.data[0].count);
-                    if(check.data[0].count > 0){
+
+                    if (chk > 0) {
                         alert('이미 해당 주문에 포인트가 적립되었습니다.');
                     } else {
                         let result = await axios.post(`/api/admin/addPoint/${this.oCode}/${this.mCode}`)
                             .catch(err => console.log(err));
                         let info = result.data.changedRows;
-                        if(info > 0) {
+
+                        if (info > 0) {
                             alert('배송이 완료되어 포인트가 적립되었습니다.');
                         }
                     }
                 }
-                // this.$router.go(0);
+                this.$router.go(0);
             }
         },
         async getOrderInfo() {
