@@ -34,7 +34,7 @@ app.get('/orderlist', async (req, res) => {
 
   let start_date = queryData.start_date;
   let end_date = queryData.end_date;
-  let merchant_uid = queryData.merchant_uid;
+  let order_code = queryData.order_code;
   let member_code = queryData.member_code;
   let product_name = queryData.product_name;
   let order_status = queryData.order_status;
@@ -42,9 +42,11 @@ app.get('/orderlist', async (req, res) => {
 
   // 시작일자, 끝날짜 있을 경우
   if (start_date && end_date) {
-    let input = [start_date, end_date]
-    where += " AND order_date between ? and ?"
-    data.push(input);
+    // let input = [start_date, end_date]
+    where += " AND order_date BETWEEN ?"
+    data.push(start_date);
+    where += "AND ?"
+    data.push(end_date);
     // 끝날짜만 있을 경우
   } else if (!start_date && end_date) {
     where += " AND order_date between '2024-01-01' and ?"
@@ -56,9 +58,9 @@ app.get('/orderlist', async (req, res) => {
   }
 
   // 주문번호가 있을 경우
-  if (merchant_uid) {
-    where += " AND merchant_uid = ?"
-    data.push(merchant_uid);
+  if (order_code) {
+    where += " AND o.order_code = ?"
+    data.push(order_code);
   }
 
   // 주문자가 있을 경우
@@ -87,7 +89,7 @@ app.get('/orderlist', async (req, res) => {
     where += " LIMIT 10 OFFSET ?"
     data.push(Number(offset));
   }
-  
+
   let result = await db.connection('adminsql', 'orderListPage', data, where).catch(err => { console.log(err) });
   res.send(result);
 });
@@ -101,16 +103,18 @@ app.get('/ordercnt', async (req, res) => {
 
   let start_date = queryData.start_date;
   let end_date = queryData.end_date;
-  let merchant_uid = queryData.merchant_uid;
+  let order_code = queryData.order_code;
   let member_code = queryData.member_code;
   let product_name = queryData.product_name;
   let order_status = queryData.order_status;
 
   // 시작일자, 끝날짜 있을 경우
   if (start_date && end_date) {
-    let input = [start_date, end_date]
-    where += " AND order_date between ? and ?"
-    data.push(input);
+    // let input = [start_date, end_date]
+    where += " AND order_date BETWEEN ?"
+    data.push(start_date);
+    where += "AND ?"
+    data.push(end_date);
     // 끝날짜만 있을 경우
   } else if (!start_date && end_date) {
     where += " AND order_date between '2024-01-01' and ?"
@@ -122,9 +126,9 @@ app.get('/ordercnt', async (req, res) => {
   }
 
   // 주문번호가 있을 경우
-  if (merchant_uid) {
-    where += " AND merchant_uid = ?"
-    data.push(merchant_uid);
+  if (order_code) {
+    where += " AND order_code = ?"
+    data.push(order_code);
   }
 
   // 주문자가 있을 경우
@@ -147,6 +151,15 @@ app.get('/ordercnt', async (req, res) => {
 
   let result = await db.connection('adminsql', 'orderListCount', data, where).catch(err => { console.log(err) });
   res.send(result);
+});
+
+// 주문 단건 조회
+app.get('/orderInfo/:order_code', async (request, response) => {
+  let data = request.params.order_code;
+  let result = await db
+    .connection('adminsql', 'orderInfo', data)
+    .catch((err) => console.log(err));
+  response.send(result);
 });
 
 module.exports = app;
