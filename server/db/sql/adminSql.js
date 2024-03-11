@@ -20,7 +20,8 @@ WHERE  answer_status is null`;
 
 //나의 전체 주문 목록 (-외 몇 개) + 페이징
 const orderListPage =
-`SELECT o.order_code
+`SELECT row_number() over(order by o.order_date desc, order_code desc) as num
+      , o.order_code
       , member_code
       , DATE_FORMAT(order_date, '%Y-%m-%d') as order_date
       , merchant_uid
@@ -39,10 +40,27 @@ const orderListCount =
 `SELECT COUNT(*) count
 FROM orders`
 
+const orderInfo = 
+`SELECT  order_code,
+        member_code,
+        order_date,
+        delivery_fee,
+        order_price,
+        use_point,
+        total_price,
+        get_point,
+        order_status,
+        cancel_date,
+        imp_uid,
+        merchant_uid
+FROM    orders
+WHERE   order_code = ?`
+
 module.exports = {
     salesDaily,
     salesMonthly,
     inquiryNotAnswered,
     orderListPage,
     orderListCount,
+    orderInfo
 }

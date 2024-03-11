@@ -62,6 +62,13 @@ export default {
       name: 'OrderManage',
       component: import(/* webpackChunkName: "OrderManage", webpackPrefetch: false */ '../views/admin/OrderManage.vue'),
     },
+        {
+          path: '/admin/order/orderdetail',
+          name: 'AdminOrderDetail',
+          component: import(/* webpackChunkName: "AdminOrderDetail", webpackPrefetch: false */ '../views/admin/AdminOrderDetail.vue'),
+        }
+      
+    ,
 
     //리뷰관리 페이지
     {
