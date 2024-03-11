@@ -34,7 +34,7 @@ app.get('/orderlist', async (req, res) => {
 
   let start_date = queryData.start_date;
   let end_date = queryData.end_date;
-  let order_code = queryData.order_code;
+  let merchant_uid = queryData.merchant_uid;
   let member_code = queryData.member_code;
   let product_name = queryData.product_name;
   let order_status = queryData.order_status;
@@ -58,9 +58,9 @@ app.get('/orderlist', async (req, res) => {
   }
 
   // 주문번호가 있을 경우
-  if (order_code) {
-    where += " AND o.order_code = ?"
-    data.push(order_code);
+  if (merchant_uid) {
+    where += " AND merchant_uid = ?"
+    data.push(merchant_uid);
   }
 
   // 주문자가 있을 경우
@@ -103,7 +103,7 @@ app.get('/ordercnt', async (req, res) => {
 
   let start_date = queryData.start_date;
   let end_date = queryData.end_date;
-  let order_code = queryData.order_code;
+  let merchant_uid = queryData.merchant_uid;
   let member_code = queryData.member_code;
   let product_name = queryData.product_name;
   let order_status = queryData.order_status;
@@ -126,9 +126,9 @@ app.get('/ordercnt', async (req, res) => {
   }
 
   // 주문번호가 있을 경우
-  if (order_code) {
-    where += " AND order_code = ?"
-    data.push(order_code);
+  if (merchant_uid) {
+    where += " AND merchant_uid = ?"
+    data.push(merchant_uid);
   }
 
   // 주문자가 있을 경우
@@ -159,6 +159,27 @@ app.get('/orderInfo/:order_code', async (request, response) => {
   let result = await db
     .connection('adminsql', 'orderInfo', data)
     .catch((err) => console.log(err));
+  response.send(result);
+});
+
+// 주문상태 수정
+app.put('/updateOrderStatus/:order_status/:order_code', async (request, response) => {
+  let data = [request.params.order_status, request.params.order_code];
+  let result = await db.connection('adminsql', 'updateOrderStatus', data);
+  response.send(result);
+});
+
+// 적립금 추가
+app.post('/addPoint/:order_code/:member_code', async (request, response) => {
+  let data = [request.params.order_code, request.params.order_code, request.params.member_code];
+  let result = await db.connection('adminsql', 'addPoint', data);
+  response.send(result);
+});
+
+// 적립여부 체크
+app.get('/checkPoint/:order_code', async (request, response) => {
+  let data = request.params.order_code;
+  let result = await db.connection('adminsql', 'checkPoint', data);
   response.send(result);
 });
 

@@ -9,9 +9,8 @@
 </div>
 <!-- Single Page Header End -->
   
-    <!-- Content -->
-
-    <div class="container-xxl boxsize">
+  <!-- Content -->
+    <div  v-show="!member" class="container-xxl boxsize">
       <div class="container-p-y">
         <div class="authentication-inner">
           <!-- Register -->
@@ -28,28 +27,40 @@
                     type="text"
                     class="form-control"
                     id="id"
-                    name="email-username"
+                    name="id"
                     placeholder="아이디 입력"
                     autofocus
                     v-model="id"
                   />
                 </div>
+                <div class="mb-3">
+                  <label for="name" class="form-label">이름</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="name"
+                    name="name"
+                    placeholder="이름 입력"
+                    autofocus
+                    v-model="name"
+                  />
+                </div>
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
-                    <label class="form-label" for="pw">비밀번호</label>
+                    <label class="form-label" for="phone">휴대전화</label>
                     <!-- <a href="auth-forgot-password-basic.html">
                       <small>Forgot Password?</small>
                     </a> -->
                   </div>
-                  <div class="input-group input-group-merge">
+                  <div class="input-group-merge">
                     <input
                       type="password"
-                      id="pw"
+                      id="phone"
                       class="form-control"
-                      name="password"
-                      placeholder="비밀번호 입력"
+                      name="phone"
+                      placeholder="'-'없이 숫자만 입력"
                       aria-describedby="password"
-                      v-model="pw"
+                      v-model="phone"
                       @keyup.enter="memberLogin()"
                     />
                     <!-- <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span> -->
@@ -62,97 +73,119 @@
                   </div>
                 </div> -->
                 <div class="mb-3">
-                  <button class="btn btn-primary2 d-grid login center" type="button" @click="memberLogin()">로그인</button>
+                  <button class="btn btn-primary2 d-grid login center" type="button" @click="memberLogin()">다음</button>
                 </div>
-                <KakaoLogin />
               <!-- </form> -->
-
-              <p class="text-center form-label">
-                <span>아이디 찾기</span>
-                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <a href="auth-register-basic.html">
-                  <span>비밀번호 찾기</span>
-                </a>
-                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <router-link to="/signup">회원가입</router-link>
-              </p>
             </div>
           </div>
           <!-- /Register -->
         </div>
       </div>
     </div>
-
-    <!-- / Content -->
-
-
-
-  </template>
+  <!-- / Content -->
+  <div v-show="member">
+    <div v-show="!this.kakaoStatus">
+          <div class="form-item col-lg-6">
+              <label class="bold">비밀번호<sup>*</sup></label>
+              <input type="password" class="form-control" placeholder="비밀번호 입력" id="pw" v-model="pw">
+          </div>
+          <p class="form-label">- 8~16자, 영문 대/소문자, 숫자, 특수문자(~!@#$%^&*)만 사용 가능</p>
+          <div class="form-item col-lg-6 my-3">
+              <label class="bold">비밀번호 확인<sup>*</sup></label>
+              <input type="password" class="form-control" placeholder="비밀번호 입력" id="pw_confirm" v-model="pw_confirm">
+          </div>
+    </div>
+    <div class="mb-3">
+      <button class="btn btn-primary2 d-grid login center" type="button" @click="memberUpdate()">저장</button>
+    </div>
+  </div>
+</template>
 
 
 <script>
 import axios from 'axios';
-import KakaoLogin from '../../components/KakaoLogin.vue';
 
 export default {
   data() {
     return {
+        name : '',
+        phone : '',
         id : '',
-        pw : ''
+        member : false,
+        pw : '',
+        pw_confirm : ''
     }
   },
   created() {
         console.log(this.$store.state.memberStore.loginStatus);
         console.log(this.$store.state.memberStore.memberInfo);
     },
-  components : {
-    KakaoLogin
-  },
   methods : {
     async memberLogin() {
-      if(!this.validation()) return;
+      // if(!this.validation()) return;
 
-      let result = await axios.post('api/member/' + this.id)
-                    .catch(err => console.log(err));
-                       
       let data = {
-        member_code : result.data.member_code,
-        member_id : result.data.member_id,
-        pw : result.data.pw,
-        member_name : result.data.member_name,
-        member_phone : result.data.member_phone,
-        member_email : result.data.member_email,
-        birthday : result.data.birthday,
-        gender : result.data.gender,
-        postcode : result.data.postcode,
-        member_type : result.data.member_type,
-        join_date : result.data.join_date,
-        address : result.data.address,
-        address_detail : result.data.address_detail,
-        member_status : result.data.member_status,
-        quit_date : result.data.quit_date,
-        token : result.data.token
-      }                    
+        member_name : this.name,
+        member_phone : this.phone,
+        member_id : this.id
+      };
 
-      if(data.member_id == this.id && data.pw == this.pw) {
-        alert('로그인 되었습니다.');
+      let result = await axios.post('api/member/search', data)
+                    .catch(err => console.log(err));      
+      if(result.data.memberInfo == '2') {
+        alert('아이디 있음!')
+        // this.$store.commit('setMemberInfo', result.data.member);
+        this.id = result.data.member.member_id;
+        this.member = true;
 
-        this.$store.commit('setLoginStatus', true);
-        this.$store.commit('setMemberInfo', data);
-        console.log(this.$store.state.memberStore.loginStatus);
-        console.log(this.$store.state.memberStore.memberInfo);
-        this.$router.push({path : '/'})
       } else {
-        alert('아이디 또는 비밀번호가 일치하지 않습니다.')
+        alert('아이디 없음!')
+        this.name = '';
+        this.phone = '';
+        this.id = '';
       }
+
+      // if(data.member_name == this.name && data.member_phone == this.phone) {
+      //   alert('로그인 되었습니다.');
+
+        // this.$store.commit('setLoginStatus', true);
+        // this.$store.commit('setMemberInfo', data);
+        // console.log(this.$store.state.memberStore.loginStatus);
+        // console.log(this.$store.state.memberStore.memberInfo);
+        // this.$router.push({path : '/'})
+      // } else {
+      //   alert('이름 또는 휴대전화가 일치하지 않습니다.')
+      // }
+    },
+    async memberUpdate() {
+        // if(!this.validation()) return;
+
+        let data = {
+            param : {
+                pw : this.pw
+            }
+        };
+        let result = await axios.put("/api/member/" + this.id, data)
+                    .catch(err => console.log(err));
+        let info = result.data.affectedRows;
+        console.log(data);
+        if(info > 0) {
+            alert('비밀번호가 수정되었습니다.');
+            this.$store.commit('setMemberInfo', data.param);
+            this.$router.push({path : '/'})
+        }
     },
     validation() {
       if(this.id == '') {
         alert('아이디를 입력해주세요.');
         return false;
       }
-      if(this.pw == '') {
-        alert('비밀번호를 입력해주세요.');
+      if(this.name == '') {
+        alert('이름을 입력해주세요.');
+        return false;
+      }
+      if(this.phone == '') {
+        alert('휴대전화를 입력해주세요.');
         return false;
       }
 

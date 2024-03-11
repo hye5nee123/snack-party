@@ -41,7 +41,7 @@
                       <small>Forgot Password?</small>
                     </a> -->
                   </div>
-                  <div class="input-group input-group-merge">
+                  <div class="input-group-merge">
                     <input
                       type="password"
                       id="pw"
@@ -70,7 +70,7 @@
               <p class="text-center form-label">
                 <router-link to="/searchid">아이디 찾기</router-link>
                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                  <router-link to="/searchpw">비밀번호 찾기</router-link>
+                  <router-link to="/searchpw">비밀번호 재설정</router-link>
                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                 <router-link to="/signup">회원가입</router-link>
               </p>
@@ -97,7 +97,7 @@ export default {
   created() {
         console.log(this.$store.state.memberStore.loginStatus);
         console.log(this.$store.state.memberStore.memberInfo);
-    },
+  },
   components : {
     KakaoLogin
   },
@@ -114,6 +114,7 @@ export default {
                     .catch(err => console.log(err));
       if(result.data.loginStatus == '1') {
         alert('로그인 되었습니다.');
+        setTimeout(() => this.$store.commit('clearStore'), 300000);
 
         this.$store.commit('setLoginStatus', true);
         this.$store.commit('setMemberInfo', result.data.member);

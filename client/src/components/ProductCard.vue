@@ -68,6 +68,10 @@ export default {
   created() {
     if(this.stockCnt == 0) {this.item = false}
     this.getLikeList(this.memberCode);
+
+  },
+  mounted() {
+
   },
   methods: {
     async addTolikes() {

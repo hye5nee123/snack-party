@@ -199,5 +199,10 @@ export default {
       name: 'InquiryUpdate',
       component: import(/* webpackChunkName: "InquiryUpdate", webpackPrefetch: false */ "../views/inquiry/InquiryUpdate.vue")
     },
+    {
+      path: 'noticelist',
+      name: 'NoticeList',
+      component: import(/* webpackChunkName: "NoticeList", webpackPrefetch: false */ "../views/NoticeList.vue")
+    },
   ],
 };
