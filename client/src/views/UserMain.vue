@@ -23,6 +23,20 @@ export default {
   //   console.log('mounted');
   //   this.$router.push('/user/main')
   // }
+//   mounted() {
+//     window.addEventListener('beforeunload', this.unLoadEvent);
+//     window.addEventListener('keydown', (e) => {
+//       if(e.key == 'F5') {
+//         // alert('새로고침')
+//         event.preventDefault();
+//       }
+//     })
+//   },
+//   methods : {
+//     unLoadEvent : function() {
+//         this.$store.commit('clearStore');
+//     }
+//   }
   // mounted() {
   //   window.addEventListener('beforeunload', this.unLoadEvent);
   //   window.addEventListener('keydown', (e) => {

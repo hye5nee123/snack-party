@@ -83,14 +83,10 @@
             </table>
           </div>
         </div>
-      <p>{{ order_code }}</p>
-      {{ mem_code }}
       <OrderProducts :checkOutList="myOrdDetail" :review_show="review_show"/>
 
       <br />
       <div>
-        {{ myOrdDetail }}
-        <!-- <PaymentInfo /> -->
       </div>
     </div>
     

@@ -37,7 +37,7 @@
       </tbody>
     </table>
   </div>
-  {{ checkReview('DET00002') }}
+  <!-- {{ checkReview('DET00002') }} -->
 </template>
 
 <script>
