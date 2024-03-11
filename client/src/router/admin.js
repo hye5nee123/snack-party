@@ -75,6 +75,18 @@ export default {
       path: '/admin/review',
       name: 'BoardManage',
       component: import(/* webpackChunkName: "BoardManage", webpackPrefetch: false */ '../views/admin/BoardManage.vue'),
+    },
+
+    // 회원관리 페이지
+    {
+      path: '/admin/member',
+      name: 'MemberManage',
+      component: import(/* webpackChunkName: "OrderManage", webpackPrefetch: false */ '../views/admin/MemberManage.vue'),
+    },
+    {
+      path: '/admin/member/memberdetail',
+      name: 'AdminMemberDetail',
+      component: import(/* webpackChunkName: "AdminOrderDetail", webpackPrefetch: false */ '../views/admin/AdminMemberDetail.vue'),
     }
   ]
 }

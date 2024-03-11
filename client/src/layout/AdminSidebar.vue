@@ -72,6 +72,17 @@
       </li>
       <!-- 주문관리 end -->
 
+      <!-- 회원관리 start -->
+      <li class="menu-header small text-uppercase"><span class="menu-header-text">회원관리</span></li>
+      <!-- Cards -->
+      <li class="menu-item">
+        <router-link to="/admin/member" class="menu-link menu-toggle">
+          <i class="menu-icon tf-icons bx bx-collection"></i>
+          <span>회원조회</span>
+        </router-link>
+      </li>
+      <!-- 회원관리 end -->
+
       <!-- Layouts -->
     </ul>
   </div>
