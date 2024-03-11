@@ -17,6 +17,7 @@ export default {
         kakaoLogin() {
             window.Kakao.Auth.login({
                 scope : 'account_email',
+                // prompt : 'login',
                 success : this.getKakaoAccount,
             })
         },
@@ -24,6 +25,7 @@ export default {
             console.log(authObj);
             window.Kakao.API.request({
                 url: '/v2/user/me',
+                // prompt : 'login',
                 success : async res => {
                     this.$store.commit('setKakaoInfo', res);
 
