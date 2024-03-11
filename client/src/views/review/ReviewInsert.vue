@@ -38,7 +38,7 @@
                             v-model="reviewInfo.review_content"></textarea>
                     </td>
                 </tr>
-                <tr>
+                <tr align="left" class="starTr">
                     <td class="stars">
                         <p>별점</p>
                     </td>
@@ -57,12 +57,14 @@
                 </tr>
             </table>
             <div style="text-align: center">
-                <button type="button" class="btn btn-danger mt-2" @click="saveInfo()">
+                <button class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2" type="button"
+                    @click="saveInfo()">
                     작성
                 </button>
                 <!-- <a href="#" class="btn-gradient yellow">Button</a> -->
                 <!-- <a href="" title="Button push orange" class="button btnPush btnOrange" @click="saveInfo()">작성</a> -->
-                <button type="reset" class="btn btn-danger mt-2" @click="resetInfo()">취소</button>
+                <button type="reset" class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2"
+                    @click="resetInfo()">취소</button>
             </div>
         </div>
     </div>
@@ -198,7 +200,7 @@ export default {
     -webkit-text-fill-color: #fff58c;
 }
 
-.my_btn {
+/* .my_btn {
 
     background-color: yellow;
 
@@ -210,7 +212,7 @@ export default {
 
     padding: 10px 30px;
 
-}
+} */
 
 .star-rating space-x-4 mx-auto {
     padding: 0px;
@@ -220,4 +222,10 @@ export default {
     background-color: yellow;
     transition: 0.7s;
 }
+
+.stars {
+    max-width: 1000px;
+}
+
+.starTr {}
 </style>
