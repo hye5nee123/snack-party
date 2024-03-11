@@ -73,8 +73,8 @@ SET point_code = snack.nextval('POI')
 	, member_code = ?`
 
 const checkPoint = 
-`SELECT count(*) count
-FROM   point
+`SELECT COUNT(*) count 
+FROM   point 
 WHERE  order_code = ?`
 
 module.exports = {
