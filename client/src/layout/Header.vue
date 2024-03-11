@@ -23,9 +23,9 @@
         </div>
         <div class="container px-0">
             <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                <a href="/main" class="navbar-brand">
+                <router-link to="/main" class="navbar-brand">
                     <img src="../assets/img/과자파티_투명배경.png" />
-                </a>
+                </router-link>
                 <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                     <span class="fa fa-bars text-primary"></span>
