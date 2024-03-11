@@ -120,7 +120,7 @@ app.post('/', upload.fields([{ name: 'thumbnail' }, { name: 'detail' }]), async 
         data.category = req.body.category;
         data.product_name = req.body.product_name;
         data.product_price = req.body.product_price;
-        data.stock_cnt = req.body.stock_cnt;
+        data.stock_cnt = req.body.product_cnt;
         data.product_display = req.body.product_display;
         let result = await db.trConnection(conn, 'productsql', 'productInsert', data).catch(err => { console.log(err) });
 
@@ -184,10 +184,84 @@ app.post('/', upload.fields([{ name: 'thumbnail' }, { name: 'detail' }]), async 
 });
 
 // 수정
-app.put('/:product_code', async (req, res) => {
-    let data = [req.body.param, req.params.product_code];
-    let result = await db.connection('productsql', 'productUpdate', data)
-    res.send(result);
+app.put('/:product_code', upload.fields([{ name: 'thumbnail' }, { name: 'detail' }]), async (req, res) => {
+    let conn = null;
+    try {
+        //connection 가져오기
+        conn = await db.getConnecttion();
+
+        // transaction 시작
+        await db.excuteConnection(conn, 'START TRANSACTION');
+
+        // 1. 상품 테이블 상품 수정
+        const productCode = req.params.product_code;
+        let data = {};
+        data.category = req.body.category;
+        data.product_name = req.body.product_name;
+        data.product_price = req.body.product_price;
+        data.stock_cnt = req.body.product_cnt;
+        data.product_display = req.body.product_display;
+        let result = await db.trConnection(conn, 'productsql', 'productUpdate', [data, productCode]).catch(err => { console.log(err) });
+
+        // 상품 테이블 등록 후 생성된 상품 코드 불러오기
+        let product_code = await db
+            .trConnection(conn, 'commonsql', 'currval', ['PRO', 'PRO'])
+            .catch((error) => {
+                console.log(error);
+            });
+
+        // 2. 첨부파일 수정 - 썸네일 이미지
+        console.log(req.files['thumbnail']);
+        let thumbnailFile = {};
+        thumbnailFile.board_code = product_code[0].seq;
+        thumbnailFile.thumbnail = 'n01';
+        if (req.files['thumbnail']) {
+            console.log(req.files['thumbnail'][0]);
+            thumbnailFile.path = 'product/' + req.files['thumbnail'][0].filename;
+            let thumbnail_file = await db.trConnection(conn, 'productsql', 'fileUpdate', [thumbnailFile, productCode, 'n01']).catch(err => { console.log(err) });
+        }
+
+        // 3. 첨부파일 수정 - 상세 이미지
+        console.log(req.files['detail']);
+        if (req.files['detail']) {
+            let detailFile = {};
+            detailFile.board_code = product_code[0].seq;
+            detailFile.thumbnail = 'n02';
+            detailFile.path = 'product/' + req.files['detail'][0].filename;
+            let detail_file = await db.trConnection(conn, 'productsql', 'fileUpdate', [detailFile, productCode, 'n02']).catch(err => { console.log(err) });
+        }
+
+        // 4. 상세 정보 테이블 수정
+        let detail_data = {};
+        detail_data.product_code = product_code[0].seq;
+        detail_data.company = req.body.company;
+        detail_data.expire_date = req.body.expire_date;
+        detail_data.weight = req.body.weight;
+        detail_data.unit = req.body.unit;
+        detail_data.allergy = req.body.allergy;
+        detail_data.calorie = req.body.calorie;
+        detail_data.na = req.body.na;
+        detail_data.carbo = req.body.carbo;
+        detail_data.sugar = req.body.sugar;
+        detail_data.sfat = req.body.sfat;
+        detail_data.protein = req.body.protein;
+        let result_info = await db.trConnection(conn, 'productsql', 'infoUpdate', [detail_data, productCode]).catch(err => { console.log(err) });
+
+        //transaction commit
+        await db.excuteConnection(conn, 'COMMIT');
+
+        //실행 후 결과 반환
+        return res.send(result);
+
+    } catch (err) {
+        console.log(err);
+
+        //transaction rollback
+        await db.excuteConnection(conn, 'ROLLBACK');
+        return response.status(500).json(err);
+    } finally {
+        conn.release();
+    }
 });
 
 // 카테고리 리스트

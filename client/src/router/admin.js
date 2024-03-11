@@ -38,6 +38,11 @@ export default {
           component: import(/* webpackChunkName: "AdminProductList", webpackPrefetch: false */ '../components/admin/AdminProductList.vue'),
         },
         {
+          path: 'productinfo',
+          name: 'AdminProductInfo',
+          component: import(/* webpackChunkName: "AdminProductInfo", webpackPrefetch: false */ '../components/admin/AdminProductInfo.vue'),
+        },
+        {
           path: 'productform',
           name: 'AdminProductForm',
           component: import(/* webpackChunkName: "AdminProductForm", webpackPrefetch: false */ '../components/admin/AdminProductForm.vue'),
@@ -62,12 +67,12 @@ export default {
       name: 'OrderManage',
       component: import(/* webpackChunkName: "OrderManage", webpackPrefetch: false */ '../views/admin/OrderManage.vue'),
     },
-        {
-          path: '/admin/order/orderdetail',
-          name: 'AdminOrderDetail',
-          component: import(/* webpackChunkName: "AdminOrderDetail", webpackPrefetch: false */ '../views/admin/AdminOrderDetail.vue'),
-        }
-      
+    {
+      path: '/admin/order/orderdetail',
+      name: 'AdminOrderDetail',
+      component: import(/* webpackChunkName: "AdminOrderDetail", webpackPrefetch: false */ '../views/admin/AdminOrderDetail.vue'),
+    }
+
     ,
 
     //리뷰관리 페이지
