@@ -309,7 +309,6 @@ export default {
             }
 
             const formData = new FormData(document.productForm);
-            console.log(formData)
 
             let result = await axios.put("/api/product/" + this.productInfo[0].product_code, formData, {
                 headers: {

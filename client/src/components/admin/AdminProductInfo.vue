@@ -18,7 +18,7 @@
       </div>
       <div class="mb-3">
         <label class="form-label" for="product_price">가격</label>
-        <p>{{ productInfo[0].product_price }} 원</p>
+        <p>{{ $currencyFormat(productInfo[0].product_price) }} 원</p>
       </div>
       <div class="mb-3">
         <label class="form-label" for="product_cnt">수량</label>

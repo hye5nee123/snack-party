@@ -19,21 +19,6 @@
             </div>
           </td>
         </tr>
-        <!-- <tr>
-          <td>유통기한</td>
-          <td>
-            <div class="input-group w-300">
-              <input class="form-control w-150 inbl" type="date" aria-label="default input example" v-model="sDate">
-              <span style="margin: 0 5px;">~</span>
-              <input class="form-control w-150 inbl" type="date" aria-label="default input example" v-model="eDate">
-            </div>
-            <div class="inbl">
-              <button class="btn btn-outline-dark" @click="getOneMonthAfter">1개월</button>
-              <button class="btn btn-outline-dark mgrl" @click="getSixMonthAfter">6개월</button>
-              <button class="btn btn-outline-dark" @click="getOneYearAfter">12개월</button>
-            </div>
-          </td>
-        </tr> -->
         <tr>
           <td>상품상태</td>
           <td>
@@ -95,7 +80,6 @@
         <tbody>
           <tr v-for="(product, i) in productList" :key="i" @click="goToInfo(product.product_code)">
             <td>{{ product.product_code }}</td>
-
             <!-- 카테고리명으로 출력 -->
             <td v-if="product.category == 'e01'">과자</td>
             <td v-if="product.category == 'e02'">비스킷/크래커</td>
@@ -113,7 +97,7 @@
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox"
                   :checked="product.product_display == 'f01' ? true : false"
-                  @change="changeDisplay(product.product_code, product.product_display)">
+                  @click.capture.stop="changeDisplay(product.product_code, product.product_display, product.product_name, product.product_price, product.category, product.stock_cnt)">
                 <label class="form-check-label" v-if="product.product_display == 'f01'">공개</label>
                 <label class="form-check-label" v-if="product.product_display == 'f02'">비공개</label>
               </div>
@@ -234,15 +218,18 @@ export default {
       this.getProductList();
       this.getListCount();
     },
-    async changeDisplay(pcode, disp) {
+    // 상품 공개 여부 수정
+    async changeDisplay(pcode, disp, pname, price, cate, stock) {
       let cdisp = disp == 'f01' ? 'f02' : 'f01';
-      let data = {
-        param: {
-          product_display: cdisp
-        }
-      };
 
-      let result = await axios.put("/api/product/" + pcode, data)
+      const formData = new FormData();
+      formData.append('product_display', cdisp);
+      formData.append('product_name', pname);
+      formData.append('product_price', price);
+      formData.append('category', cate);
+      formData.append('product_cnt', stock);
+
+      let result = await axios.put("/api/product/" + pcode, formData)
         .catch(err => console.log(err));
 
       console.log(pcode);
