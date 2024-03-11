@@ -131,7 +131,7 @@ export default {
     },
 
     goToDetail(order_code){
-      this.$router.push({path:'/myorderdetail', query:{order_code: order_code}});
+      this.$router.push({path:'/myorderdetail', query:{order_code: order_code, review_show:'show'}});
     }
   },//end methods
 

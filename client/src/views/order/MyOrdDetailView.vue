@@ -83,6 +83,14 @@
             </table>
           </div>
         </div>
+      <p>{{ order_code }}</p>
+      {{ mem_code }}
+      <OrderProducts :checkOutList="myOrdDetail" :review_show="review_show"/>
+
+      <br />
+      <div>
+        {{ myOrdDetail }}
+        <!-- <PaymentInfo /> -->
       </div>
     </div>
     
@@ -105,6 +113,7 @@ export default {
       myOrdDetail: [],
       order_code: '',
       userInfo: {},
+      review_show: '',
       mem_code: this.$store.state.memberStore.memberInfo.member_code,
 
       use_point: 0, //사용적립금
@@ -127,6 +136,8 @@ export default {
     this.getPointInfo(); //포인트내역
     this.getDeliveryInfo(); //배송정보
     this.getPoint(); //배송완료 시 포인트 적립?
+    this.review_show = this.$route.query.review_show;
+    this.getMyOrdDetail()
   },
   // updated() {
   //   this.getPoint(); //배송완료 시 포인트 적립?

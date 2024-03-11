@@ -6,7 +6,7 @@ const url = require('url');
 // 게시물 수 조회
 app.get('/count', async (req, res) => {
     let data = [];
-    let where = " WHERE 1=1";
+    let where = "";
     var queryData = url.parse(req.url, true).query;
     let category = queryData.category;
     let keyword = queryData.keyword;
@@ -69,7 +69,7 @@ app.get('/', async (req, res) => {
         where += " AND stock_cnt = 0"
     }
 
-    // 공개유무 조건이 있을 경우
+    // 공개유무(userProductList->f01/adminProductList->null)
     if (display) {
         where += " AND product_display = ?"
         data.push(display);

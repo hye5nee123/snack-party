@@ -207,8 +207,8 @@
                                 </div>
                                 <div class="tab-pane" id="nav-review" role="tabpanel" aria-labelledby="nav-review-tab">
                                     <!-- 리뷰 컴포넌트 -->
-                                    <button type="button" class="btn btn-secondary"
-                                        @click="$router.push('/reviewinsert')">리뷰 작성</button>
+                                    <!-- <button type="button" class="btn btn-secondary"
+                                        @click="$router.push('/reviewinsert')">리뷰 작성</button> -->
                                     <ReviewListComp :pcode="pcode" type="product" />
                                 </div>
                                 <div class="tab-pane" id="nav-inquire" role="tabpanel"

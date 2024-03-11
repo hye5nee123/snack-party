@@ -42,7 +42,15 @@ const productInfo =
 
 const productInsert =
 `INSERT INTO product
-    SET ?`;
+    SET product_code = snack.nextval('PRO'), ?`;
+
+const infoInsert =
+`INSERT INTO info
+    SET info_code = snack.nextval('INFO'), ?`;
+
+const fileInsert =
+`INSERT INTO file
+    SET file_code = snack.nextval('FILE'), ?`;
 
 const productUpdate =
 `UPDATE product
@@ -67,5 +75,7 @@ module.exports = {
     productInsert,
     productUpdate,
     productReview,
-    productListCount
+    productListCount,
+    infoInsert,
+    fileInsert
 }

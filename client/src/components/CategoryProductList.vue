@@ -56,7 +56,7 @@ export default {
     methods: {
         async getProductList() {
             let param = '';
-            param = `?category=${this.cateProps}&keyword=${this.keyProps}&sort=${this.sortProps}&offset=${this.offset}`;
+            param = `?category=${this.cateProps}&keyword=${this.keyProps}&sort=${this.sortProps}&offset=${this.offset}&display=f01`;
             let result = await axios.get(`/api/product${param}`)
                 .catch(err => console.log(err));
             this.productList = result.data;
@@ -70,7 +70,7 @@ export default {
         // 전체 데이터 갯수
         async getListCount() {
             let param = '';
-            param = `?category=${this.cateProps}&keyword=${this.keyProps}`;
+            param = `?category=${this.cateProps}&keyword=${this.keyProps}&display=f01`;
             let result = await axios.get(`/api/product/count${param}`)
                 .catch(err => console.log(err));
             console.log('count : ', result.data[0].count);
