@@ -34,7 +34,7 @@ app.get('/orderlist', async (req, res) => {
 
   let start_date = queryData.start_date;
   let end_date = queryData.end_date;
-  let merchant_uid = queryData.merchant_uid;
+  let order_code = queryData.order_code;
   let member_code = queryData.member_code;
   let product_name = queryData.product_name;
   let order_status = queryData.order_status;
@@ -58,9 +58,9 @@ app.get('/orderlist', async (req, res) => {
   }
 
   // 주문번호가 있을 경우
-  if (merchant_uid) {
-    where += " AND merchant_uid = ?"
-    data.push(merchant_uid);
+  if (order_code) {
+    where += " AND o.order_code = ?"
+    data.push(order_code);
   }
 
   // 주문자가 있을 경우
@@ -103,7 +103,7 @@ app.get('/ordercnt', async (req, res) => {
 
   let start_date = queryData.start_date;
   let end_date = queryData.end_date;
-  let merchant_uid = queryData.merchant_uid;
+  let order_code = queryData.order_code;
   let member_code = queryData.member_code;
   let product_name = queryData.product_name;
   let order_status = queryData.order_status;
@@ -126,9 +126,9 @@ app.get('/ordercnt', async (req, res) => {
   }
 
   // 주문번호가 있을 경우
-  if (merchant_uid) {
-    where += " AND merchant_uid = ?"
-    data.push(merchant_uid);
+  if (order_code) {
+    where += " AND order_code = ?"
+    data.push(order_code);
   }
 
   // 주문자가 있을 경우

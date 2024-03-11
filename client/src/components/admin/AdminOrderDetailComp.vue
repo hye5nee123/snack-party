@@ -1,6 +1,5 @@
 <template>
     <div class="container-xxl flex-grow-1 container-p-y">
-        <!-- Product List Table -->
         <div class="card">
             <div class="table-responsive">
                 <table class="table">
@@ -11,31 +10,51 @@
                         </tr>
                         <tr>
                             <th>회원코드</th>
-                            <td></td>
+                            <td>{{ this.orderList.member_code }}</td>
                         </tr>
                         <tr>
                             <th>주문일자</th>
-                            <td></td>
+                            <td>{{ $formatDate(this.orderList.order_date) }}</td>
                         </tr>
                         <tr>
                             <th>상품금액</th>
-                            <td></td>
+                            <td>{{ $currencyFormat(this.orderList.order_price) }}원</td>
                         </tr>
                         <tr>
                             <th>배송비</th>
-                            <td></td>
+                            <td>{{ $currencyFormat(this.orderList.delivery_fee) }}원</td>
                         </tr>
                         <tr>
                             <th>적립금 사용</th>
-                            <td></td>
+                            <td>{{ $currencyFormat(this.orderList.use_point) }}원</td>
                         </tr>
                         <tr>
                             <th>총결제금액</th>
-                            <td></td>
+                            <td>{{ $currencyFormat(this.orderList.total_price) }}원</td>
+                        </tr>
+                        <tr>
+                            <th>적립금</th>
+                            <td>{{ $currencyFormat(this.orderList.get_point) }}원</td>
                         </tr>
                         <tr>
                             <th>주문상태</th>
-                            <td></td>
+                            <td>
+                                <div class="input-group w-300">
+                                    <select id="ProductCategory" class="form-select text-capitalize w-150"
+                                        v-model="order_status">
+                                        <option value="">전체 카테고리</option>
+                                        <option value="h01">결제완료</option>
+                                        <option value="h02">주문취소</option>
+                                        <option value="h03">배송준비중</option>
+                                        <option value="h04">배송중</option>
+                                        <option value="h05">배송완료</option>
+                                        <option value="h06">반품취소</option>
+                                        <option value="h07">반품완료</option>
+                                        <option value="h08">환불완료</option>
+                                    </select>
+                                </div>
+                            </td>
+                            <td>{{ this.ordStatus(this.orderList.order_status) }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -67,6 +86,7 @@
                         </tr>
                     </tbody>
                 </table>
+                
             </div>
         </div>
     </div>
@@ -87,25 +107,49 @@ export default {
             mCode: this.member_code,
 
             orderList: [],
-            detailList :[]
+            detailList: [],
+
+            order_status:'',
         };
     },
     created() {
-        this.getMyOrdDetail()
-     },
+        this.getOrderInfo();
+        this.getMyOrdDetail();
+    },
     methods: {
+        ordStatus(status) {
+            if (status == 'h01') {
+                return '결제완료'
+            } else if (status == 'h02') {
+                return '주문취소'
+            } else if (status == 'h03') {
+                return '배송준비중'
+            } else if (status == 'h04') {
+                return '배송중'
+            } else if (status == 'h05') {
+                return '배송완료'
+            } else if (status == 'h06') {
+                return '반품취소'
+            } else if (status == 'h07') {
+                return '반품완료'
+            } else {
+                return '환불완료'
+            }
+        },
         async getOrderInfo() {
             let result = await axios.get(`/api/admin/orderInfo/${this.oCode}`)
                 .catch(err => console.log(err));
-                this.orderList = result;
-                console.log(this.orderList)
+            this.orderList = result.data[0];
+            this.order_status = this.orderList.order_status;
+            console.log(this.orderList)
         },
 
         async getMyOrdDetail() {
             let result = await axios.get(`/api/order/myord/details/${this.oCode}/${this.mCode}`)
                 .catch(err => console.log(err));
-                this.detailList = this.changeField(result.data);
-                console.log(this.detailList)
+            console.log('getMyOrdDetail() : ', result);
+            this.detailList = this.changeField(result.data);
+            console.log(this.detailList)
         },
 
         changeField(objList) {
