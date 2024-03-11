@@ -1,20 +1,29 @@
 <template>
-<div>
-
-</div>
+  <div>
+    <h3>ProInquiryList.vue</h3>
+    <ProInquiryListComp />
+  </div>
 </template>
 <script>
-
-export default{ 
-  data(){
-    return{
-      sampleData:''
-    };
+import ProInquiryListComp from "../../components/ProInquiryListComp";
+export default {
+  components: {
+    ProInquiryListComp
   },
-  setup(){},
-  created(){},
-  mounted(){},
-  unmounted(){},
-  methods:{}
-}
+  data() {
+    return {
+
+    }
+  }
+};
 </script>
+<style scoped>
+.content-wrapper {
+  height: 200px;
+  margin-top: 200px;
+}
+
+.container {
+  margin-top: 200px;
+}
+</style>

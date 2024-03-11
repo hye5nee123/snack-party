@@ -15,7 +15,7 @@
           <td> 작성자 </td>
           <td>{{ this.$store.state.memberStore.memberInfo.member_name }}</td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>문의유형</td>
           <td>
             <select v-model="InquiryInfo.p_inquiry_type">
@@ -27,7 +27,7 @@
               <option value="서비스/오류/기타">서비스/오류/기타</option>
             </select>
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td>내용</td>
           <td colspan="2" id="textarea">
