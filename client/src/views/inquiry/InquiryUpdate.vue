@@ -6,9 +6,7 @@
     <form>
       <table>
         <tr>
-          <td>
-            <p>제목</p>
-          </td>
+          <td>제목</td>
           <td>
             <input v-model="InquiryInfo.title" type="text" class="form-control" required />
           </td>
@@ -65,6 +63,7 @@ export default {
     };
   },
   created() {
+    this.inquiry_code = this.$route.query.inquiry_code;
     this.getInquiryInfo();
   },
   methods: {
@@ -143,7 +142,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 200px;
 }
 
 table {
