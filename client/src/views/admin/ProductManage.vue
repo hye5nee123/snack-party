@@ -1,6 +1,9 @@
 <template>
-  <h1>ProductManage.vue</h1>
-  <router-view />
+  <div class="container">
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <router-view />
+    </div>
+  </div>
 </template>
 
 <script>

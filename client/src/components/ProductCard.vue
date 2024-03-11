@@ -68,7 +68,6 @@ export default {
   created() {
     if(this.stockCnt == 0) {this.item = false}
     this.getLikeList(this.memberCode);
-
   },
   mounted() {
 
@@ -108,6 +107,7 @@ export default {
         alert('찜 상품으로 추가되었습니다.');
       }
     },
+    
     async getLikeList(memberCode) {
       if(memberCode == '') {
         return;
