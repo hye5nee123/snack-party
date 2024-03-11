@@ -19,21 +19,6 @@
             </div>
           </td>
         </tr>
-        <!-- <tr>
-          <td>유통기한</td>
-          <td>
-            <div class="input-group w-300">
-              <input class="form-control w-150 inbl" type="date" aria-label="default input example" v-model="sDate">
-              <span style="margin: 0 5px;">~</span>
-              <input class="form-control w-150 inbl" type="date" aria-label="default input example" v-model="eDate">
-            </div>
-            <div class="inbl">
-              <button class="btn btn-outline-dark" @click="getOneMonthAfter">1개월</button>
-              <button class="btn btn-outline-dark mgrl" @click="getSixMonthAfter">6개월</button>
-              <button class="btn btn-outline-dark" @click="getOneYearAfter">12개월</button>
-            </div>
-          </td>
-        </tr> -->
         <tr>
           <td>상품상태</td>
           <td>
@@ -95,7 +80,6 @@
         <tbody>
           <tr v-for="(product, i) in productList" :key="i" @click="goToInfo(product.product_code)">
             <td>{{ product.product_code }}</td>
-
             <!-- 카테고리명으로 출력 -->
             <td v-if="product.category == 'e01'">과자</td>
             <td v-if="product.category == 'e02'">비스킷/크래커</td>
