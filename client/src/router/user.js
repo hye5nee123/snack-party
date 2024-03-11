@@ -209,5 +209,10 @@ export default {
       name: 'NoticeList',
       component: import(/* webpackChunkName: "NoticeList", webpackPrefetch: false */ "../views/NoticeList.vue")
     },
+    { 
+      path: 'contact',
+      name: 'ContactView',
+      component: import(/* webpackChunkName: "ContactView", webpackPrefetch: false */ "../views/ContactView.vue")
+    },
   ],
 };

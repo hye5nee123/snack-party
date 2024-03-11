@@ -41,20 +41,22 @@ const orderListCount =
 FROM orders`
 
 const orderInfo = 
-`SELECT  order_code,
-        member_code,
-        order_date,
-        delivery_fee,
-        order_price,
-        use_point,
-        total_price,
-        get_point,
-        order_status,
-        cancel_date,
-        imp_uid,
-        merchant_uid
-FROM    orders
-WHERE   order_code = ?`
+`SELECT  o.order_code
+, o.member_code
+, o.order_date
+, o.delivery_fee
+, o.order_price
+, o.use_point
+, o.total_price
+, o.get_point
+, o.order_status
+, o.cancel_date
+, o.imp_uid
+, o.merchant_uid
+, d.delivery_num
+FROM    orders o JOIN delivery d
+ON      o.order_code = d.order_code
+WHERE   o.order_code = ?`
 
 const updateOrderStatus = 
 `UPDATE orders
@@ -67,10 +69,17 @@ SET point_code = snack.nextval('POI')
 	, order_code = ?
 	, point_status = 'd01'
     , point_date = curdate()
-	, point_value = (SELECT NVL(total_price,0)*0.01 point
-					FROM   orders
-					WHERE  order_code = ?)
+	, point_value = (SELECT (NVL(total_price,0)-NVL(delivery_fee,0)-NVL(use_point,0))*0.01 point
+                    FROM   orders
+                    WHERE  order_code = ?)
 	, member_code = ?`
+
+const updateOrderPoint = 
+`UPDATE orders
+SET get_point = (SELECT point_value
+				FROM   point
+				WHERE  order_code = ?)
+WHERE order_code = ?`
 
 const checkPoint = 
 `SELECT COUNT(*) count 
@@ -97,6 +106,16 @@ const memberList =
         , token
 FROM member`
 
+const checkDeliveryNum = 
+`SELECT delivery_num
+FROM  delivery
+WHERE order_code = ?`
+
+const updateDeliveryNum = 
+`UPDATE delivery
+SET   delivery_num = ?
+WHERE order_code = ?`
+
 module.exports = {
     salesDaily,
     salesMonthly,
@@ -107,5 +126,8 @@ module.exports = {
     updateOrderStatus,
     addPoint,
     checkPoint,
-    memberList
+    memberList,
+    updateOrderPoint,
+    checkDeliveryNum,
+    updateDeliveryNum
 }

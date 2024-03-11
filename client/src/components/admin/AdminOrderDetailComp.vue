@@ -55,6 +55,10 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <th>운송장번호</th>
+                            <td><input type="text" class="form-control" v-model="orderList.delivery_num"></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -117,6 +121,7 @@ export default {
     created() {
         this.getOrderInfo();
         this.getMyOrdDetail();
+        this.validation();
     },
     methods: {
         ordStatus(status) {
@@ -143,13 +148,18 @@ export default {
             if (this.order_status == 'h05') {
                 let check = await axios.get(`/api/admin/checkPoint/${this.oCode}`)
                     .catch(err => console.log(err));
-                chk = check.data[0].count 
+                chk = check.data[0].count
+            }
+
+
+            if (this.order_status == 'h04' && !this.validation(this.orderList.delivery_num)) {
+                alert('올바른 운송장 정보를 입력해주세요');
+                return
             }
 
             let result = await axios.put(`/api/admin/updateOrderStatus/${this.order_status}/${this.oCode}`)
                 .catch(err => console.log(err));
             let info = result.data.affectedRows;
-
             if (info > 0) {
 
                 alert('주문상태가 수정되었습니다.');
@@ -159,21 +169,29 @@ export default {
                     if (chk > 0) {
                         alert('이미 해당 주문에 적립된 적립금이 있습니다.');
                     } else {
-                        let result = await axios.post(`/api/admin/addPoint/${this.oCode}/${this.mCode}`)
+                        let result1 = await axios.post(`/api/admin/addPoint/${this.oCode}/${this.mCode}`)
                             .catch(err => console.log(err));
-                        let info1 = result.data.changedRows;
+                        let info1 = result1.data.affectedRows;
 
-                        if (info1 > 0) {
+                        let result2 = await axios.put(`/api/admin/updateOrderPoint/${this.oCode}`)
+                            .catch(err => console.log(err));
+                        let info2 = result2.data.changedRows;
+
+                        if (info1 > 0 && info2 > 0) {
                             alert('배송이 완료되어 적립금이 적립되었습니다.');
                         }
                     }
-                }
 
-                if(this.order_status == 'h04') {
-                    return
                 }
-                this.$router.go(0);
+                if(this.orderList.delivery_num != null){
+                    console.log(`this.orderList.delivery_num : ${this.orderList.delivery_num}, this.oCode : ${this.oCode}`)
+                    await axios.put(`/api/admin/updateDeliveryNum/${this.orderList.delivery_num}/${this.oCode}`)
+                        .catch(err => console.log(err));
+                    
+                }
             }
+            this.$router.go(0);
+
         },
         async getOrderInfo() {
             let result = await axios.get(`/api/admin/orderInfo/${this.oCode}`)
@@ -207,18 +225,34 @@ export default {
             }
             return newArr;
         },
+
         getImgUrl(path) {
             if (path)
                 return new URL(this.url + '/common/download?path=' + path);
             else
                 return '';
         },
-    }
+
+        validation(delivery_num) {
+            const chk = /^[0-9]{12}$/;
+            if (chk.test(delivery_num)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+    },
 }
+
 </script>
 <style scoped>
 button {
     display: inline-block;
     width: 100px;
+}
+
+input {
+    width: 300px;
 }
 </style>
