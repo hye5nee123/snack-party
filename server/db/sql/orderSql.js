@@ -182,6 +182,7 @@ const likesList =
 , l.member_code
 , p.product_name
 , p.product_price
+, p.stock_cnt
 , f.path
 FROM likes l JOIN product p
               ON l.product_code = p.product_code
