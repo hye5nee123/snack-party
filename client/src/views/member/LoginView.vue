@@ -1,6 +1,6 @@
 <template>
-  <!-- Single Page Header start -->
-  <div class="container-fluid page-header py-5">
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
   <h1 class="text-center text-white display-6">로그인</h1>
   <ol class="breadcrumb justify-content-center mb-0">
       <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -9,19 +9,13 @@
 </div>
 <!-- Single Page Header End -->
   
-    <!-- Content -->
-
+<!-- Content -->
     <div class="container-xxl boxsize">
       <div class="container-p-y">
         <div class="authentication-inner">
           <!-- Register -->
           <div class="card">
             <div class="card-body">
-
-              <!-- <h4 class="mb-2 center">LOGIN</h4>
-              <p class="mb-4">Please sign-in to your account and start the adventure</p> -->
-
-              <!-- <form id="formAuthentication" class="mb-3" action="index.html" method="POST"> -->
                 <div class="mb-3">
                   <label for="id" class="form-label">아이디</label>
                   <input
@@ -37,9 +31,6 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="pw">비밀번호</label>
-                    <!-- <a href="auth-forgot-password-basic.html">
-                      <small>Forgot Password?</small>
-                    </a> -->
                   </div>
                   <div class="input-group-merge">
                     <input
@@ -52,27 +43,22 @@
                       v-model="pw"
                       @keyup.enter="memberLogin()"
                     />
-                    <!-- <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span> -->
                   </div>
                 </div>
-                <!-- <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                  </div>
-                </div> -->
-                <div class="mb-3">
-                  <button class="btn btn-primary2 d-grid login center" type="button" @click="memberLogin()">로그인</button>
+                <div class="center">
+                <div class="mb-2">
+                  <button class="btn btn-primary2 login" type="button" @click="memberLogin()">로그인</button>
                 </div>
                 <KakaoLogin />
+                </div>
               <!-- </form> -->
 
               <p class="text-center form-label">
-                <router-link to="/searchid">아이디 찾기</router-link>
-                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                  <router-link to="/searchpw">비밀번호 재설정</router-link>
-                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
-                <router-link to="/signup">회원가입</router-link>
+                <router-link to="/searchid" class="grey">아이디 찾기</router-link>
+                <span>&nbsp;｜&nbsp;</span>
+                  <router-link to="/searchpw" class="grey">비밀번호 재설정</router-link>
+                <span>&nbsp;｜&nbsp;</span>
+                <router-link to="/signup" class="grey">회원가입</router-link>
               </p>
             </div>
           </div>
@@ -80,8 +66,8 @@
         </div>
       </div>
     </div>
-    <!-- / Content -->
-  </template>
+<!-- / Content -->
+</template>
 
 <script>
 import axios from 'axios';
@@ -185,5 +171,9 @@ export default {
 
 input::placeholder {
     color: #cccccc;
+}
+
+.grey {
+  color : grey;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <!-- Single Page Header start -->
-  <div class="container-fluid page-header py-5">
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
   <h1 class="text-center text-white display-6">{{ this.title }}</h1>
   <ol class="breadcrumb justify-content-center mb-0">
       <li class="breadcrumb-item"><a href="/">Home</a></li>
@@ -11,7 +11,6 @@
 
 
 <!-- Checkout Page Start -->
-
 <div class="container-fluid py-5">
     <div class="container py-5">
         <form action="#">
