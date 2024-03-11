@@ -3,20 +3,22 @@
         <!-- Product Information -->
         <div class="card mb-4">
             <div class="card-header">
-                <h5 class="card-tile mb-0">상품 등록</h5>
+                <h5 class="card-tile mb-0" v-if="!isUpdated">상품 등록</h5>
+                <h5 class="card-tile mb-0" v-if="isUpdated">상품 수정</h5>
             </div>
             <div class="card-body">
                 <form name="productForm">
                     <div class="mb-3">
                         <label class="form-label" for="product_code">상품코드(필수)</label>
                         <input type="text" class="form-control" id="product_code" placeholder="등록하면 자동으로 생성됩니다."
-                            name="product_code" aria-label="product_code" v-model="productInfo.product_code" readonly>
+                            name="product_code" aria-label="product_code" v-model="productInfo[0].product_code"
+                            readonly>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="category">카테고리(필수)</label>
                         <div class="input-group">
                             <select ref="category" class="form-select text-capitalize w-150" name="category"
-                                v-model="productInfo.category">
+                                v-model="productInfo[0].category">
                                 <option value="e01">과자</option>
                                 <option value="e02">비스킷/크래커</option>
                                 <option value="e03">쿠키/파이</option>
@@ -29,13 +31,13 @@
                     <div class="mb-3">
                         <label class="form-label" for="product_name">상품명(필수)</label>
                         <input type="text" class="form-control" ref="product_name" placeholder="상품명을 입력하세요."
-                            name="product_name" aria-label="Product title" v-model="productInfo.product_name">
+                            name="product_name" aria-label="Product title" v-model="productInfo[0].product_name">
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="product_price">가격(필수)</label>
                         <div class="input-group">
                             <input type="number" class="form-control" ref="product_price" min="0" name="product_price"
-                                aria-label="product_price" v-model="productInfo.product_price">
+                                aria-label="product_price" v-model="productInfo[0].product_price">
                             <span class="input-group-text">원</span>
                         </div>
                     </div>
@@ -43,14 +45,14 @@
                         <label class="form-label" for="product_cnt">수량</label>
                         <div class="input-group">
                             <input type="number" class="form-control" ref="product_cnt" min="0" name="product_cnt"
-                                aria-label="product_cnt" v-model="productInfo.stock_cnt">
+                                aria-label="product_cnt" v-model="productInfo[0].stock_cnt">
                             <span class="input-group-text">개</span>
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="company">제조사</label>
                         <input type="text" class="form-control" ref="company" placeholder="제조사를 입력하세요." name="company"
-                            aria-label="company" v-model="productInfo.company">
+                            aria-label="company" v-model="productInfo[0].company">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">대표사진(필수)</label>
@@ -63,19 +65,19 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="expire_date">유통기한</label>
-                        <input type="date" class="form-control" ref="expire_date" v-model="productInfo.expire_date"
+                        <input type="date" class="form-control" ref="expire_date" v-model="productInfo[0].expire_date"
                             name="expire_date">
                     </div>
                     <div class="mb-3">
                         <label class="form-label">공개유무</label><br>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="product_display" id="inlineRadio1"
-                                value="f01" v-model="productInfo.product_display">
+                                value="f01" v-model="productInfo[0].product_display">
                             <label class="form-check-label" for="inlineRadio1">공개</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="product_display" id="inlineRadio2"
-                                value="f02" v-model="productInfo.product_display">
+                                value="f02" v-model="productInfo[0].product_display">
                             <label class="form-check-label" for="inlineRadio2">비공개</label>
                         </div>
                     </div>
@@ -94,31 +96,32 @@
                                 <div class="accordion-body">
                                     <div class="mb-3">
                                         <label class="form-label">중량</label>
-                                        <input type="number" class="form-control" min="0" v-model="productInfo.weight"
-                                            name="weight">
+                                        <input type="number" class="form-control" min="0"
+                                            v-model="productInfo[0].weight" name="weight">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">제공단위</label>
-                                        <input type="text" class="form-control" v-model="productInfo.unit" name="unit">
+                                        <input type="text" class="form-control" v-model="productInfo[0].unit"
+                                            name="unit">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">알레르기</label>
-                                        <input type="text" class="form-control" v-model="productInfo.allergy"
+                                        <input type="text" class="form-control" v-model="productInfo[0].allergy"
                                             name="allergy">
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">칼로리</label>
                                         <div class="input-group">
                                             <input type="number" class="form-control" min="0"
-                                                v-model="productInfo.calorie" name="calorie">
+                                                v-model="productInfo[0].calorie" name="calorie">
                                             <span class="input-group-text">kcal</span>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">나트륨</label>
                                         <div class="input-group">
-                                            <input type="number" class="form-control" min="0" v-model="productInfo.na"
-                                                name="na">
+                                            <input type="number" class="form-control" min="0"
+                                                v-model="productInfo[0].na" name="na">
                                             <span class="input-group-text">mg</span>
                                         </div>
                                     </div>
@@ -126,7 +129,7 @@
                                         <label class="form-label">탄수화물</label>
                                         <div class="input-group">
                                             <input type="number" class="form-control" min="0"
-                                                v-model="productInfo.carbo" name="carbo">
+                                                v-model="productInfo[0].carbo" name="carbo">
                                             <span class="input-group-text">g</span>
                                         </div>
                                     </div>
@@ -134,15 +137,15 @@
                                         <label class="form-label">당류</label>
                                         <div class="input-group">
                                             <input type="number" class="form-control" min="0"
-                                                v-model="productInfo.sugar" name="sugar">
+                                                v-model="productInfo[0].sugar" name="sugar">
                                             <span class="input-group-text">g</span>
                                         </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">포화지방</label>
                                         <div class="input-group">
-                                            <input type="number" class="form-control" min="0" v-model="productInfo.sfat"
-                                                name="sfat">
+                                            <input type="number" class="form-control" min="0"
+                                                v-model="productInfo[0].sfat" name="sfat">
                                             <span class="input-group-text">g</span>
                                         </div>
                                     </div>
@@ -150,7 +153,7 @@
                                         <label class="form-label">단백질</label>
                                         <div class="input-group">
                                             <input type="number" class="form-control" min="0"
-                                                v-model="productInfo.protein" name="protein">
+                                                v-model="productInfo[0].protein" name="protein">
                                             <span class="input-group-text">g</span>
                                         </div>
                                     </div>
@@ -177,7 +180,7 @@ export default {
     components: {},
     data() {
         return {
-            productInfo: {
+            productInfo: [{
                 product_code: '',
                 category: '',
                 product_name: '',
@@ -199,12 +202,35 @@ export default {
                 protein: 0,
                 expire_date: '',
             },
+            {
+                product_code: '',
+                category: '',
+                product_name: '',
+                product_price: 1500,
+                stock_cnt: 0,
+                product_display: 'f02',
+                thumbnail: '',
+                path: '',
+                info_code: '',
+                company: '',
+                weight: 0,
+                unit: '',
+                allergy: '',
+                calorie: 0,
+                na: 0,
+                carbo: 0,
+                sugar: 0,
+                sfat: 0,
+                protein: 0,
+                expire_date: '',
+            },
+            ],
             isUpdated: false,
         };
     },
     created() {
-        let productCode = this.$route.query.pcode;
-        if (productCode > 0) {
+        let productCode = this.$route.query.product_code;
+        if (productCode) {
             // 수정
             this.getProductInfo(productCode);
             this.isUpdated = true;
@@ -216,19 +242,19 @@ export default {
             this.$router.push({ path: '/admin/product' });
         },
         async productInsert() {
-            if (!this.productInfo.category) {
+            if (!this.productInfo[0].category) {
                 alert('카테고리를 선택해주세요.');
                 this.$refs.category.focus();
                 return '';
-            } else if (!this.productInfo.product_name) {
+            } else if (!this.productInfo[0].product_name) {
                 alert('상품명을 입력해주세요.');
                 this.$refs.product_name.focus();
                 return '';
-            } else if (!this.productInfo.product_price) {
+            } else if (!this.productInfo[0].product_price) {
                 alert('상품 가격을 입력해주세요.');
                 this.$refs.product_price.focus();
                 return '';
-            } if (!this.productInfo.path) {
+            } if (!this.productInfo[0].path) {
                 alert('대표사진을 설정해주세요.');
                 return '';
             }
@@ -251,14 +277,53 @@ export default {
         },
         async getThumbnail(files) {
             let fileName = files[0].name;
-            this.productInfo.path = `product/${fileName}`;
-            if (this.productInfo.path) {
-                this.productInfo.thumbnail = 'n01';
+            this.productInfo[0].path = `product/${fileName}`;
+            if (this.productInfo[0].path) {
+                this.productInfo[0].thumbnail = 'n01';
             }
-            console.log(this.productInfo.path);
-            console.log(this.productInfo.thumbnail);
+            console.log(this.productInfo[0].path);
+            console.log(this.productInfo[0].thumbnail);
         },
+        async getProductInfo(pcode) {
+            let result = await axios.get(`/api/product/info/${pcode}`)
+                .catch(err => console.log(err));
 
+            this.productInfo = result.data;
+        },
+        async productUpdate() {
+            if (!this.productInfo[0].category) {
+                alert('카테고리를 선택해주세요.');
+                this.$refs.category.focus();
+                return '';
+            } else if (!this.productInfo[0].product_name) {
+                alert('상품명을 입력해주세요.');
+                this.$refs.product_name.focus();
+                return '';
+            } else if (!this.productInfo[0].product_price) {
+                alert('상품 가격을 입력해주세요.');
+                this.$refs.product_price.focus();
+                return '';
+            } if (!this.productInfo[0].path) {
+                alert('대표사진을 설정해주세요.');
+                return '';
+            }
+
+            const formData = new FormData(document.productForm);
+            console.log(formData)
+
+            let result = await axios.put("/api/product/" + this.productInfo[0].product_code, formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                }
+            }).catch(err => console.log(err));
+
+            let info = result.data.changedRows;
+            console.log(info)
+            if (info > 0) {
+                alert('수정되었습니다.');
+                this.$router.push({ path: '/admin/product' });
+            }
+        }
     }
 }
 </script>

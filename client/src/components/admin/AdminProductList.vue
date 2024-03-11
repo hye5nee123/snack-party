@@ -93,16 +93,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(product, i) in productList" :key="i">
+          <tr v-for="(product, i) in productList" :key="i" @click="goToInfo(product.product_code)">
             <td>{{ product.product_code }}</td>
 
             <!-- 카테고리명으로 출력 -->
-            <td v-if="product.category=='e01'">과자</td>
-            <td v-if="product.category=='e02'">비스킷/크래커</td>
-            <td v-if="product.category=='e03'">쿠키/파이</td>
-            <td v-if="product.category=='e04'">유기농/전통과자</td>
-            <td v-if="product.category=='e05'">초콜릿</td>
-            <td v-if="product.category=='e06'">젤리/카라멜</td>
+            <td v-if="product.category == 'e01'">과자</td>
+            <td v-if="product.category == 'e02'">비스킷/크래커</td>
+            <td v-if="product.category == 'e03'">쿠키/파이</td>
+            <td v-if="product.category == 'e04'">유기농/전통과자</td>
+            <td v-if="product.category == 'e05'">초콜릿</td>
+            <td v-if="product.category == 'e06'">젤리/카라멜</td>
 
             <td>{{ product.product_name }}</td>
             <td>{{ $currencyFormat(product.product_price) }} 원</td>
@@ -253,6 +253,9 @@ export default {
         alert('수정되었습니다.');
         this.$router.go(0);
       }
+    },
+    goToInfo(pcode) {
+      this.$router.push({ path: '/admin/product/productinfo', query: { 'product_code': pcode } });
     }
   }
 }
