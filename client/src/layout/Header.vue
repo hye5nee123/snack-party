@@ -45,7 +45,8 @@
                                 <router-link to="/productlist/e06" class="nav-item nav-link">젤리/캐러멜</router-link>
                             </div>
                         </div>
-                        <div class="nav-item dropdown">
+                        <router-link to="/noticelist" class="nav-item nav-link">공지사항</router-link>
+                        <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                             <div class="dropdown-menu m-0 bg-secondary rounded-0">
                                 <a href="/cart" class="dropdown-item">Cart</a>
@@ -53,7 +54,7 @@
                                 <a href="testimonial.html" class="dropdown-item">Testimonial</a>
                                 <a href="404.html" class="dropdown-item">404 Page</a>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="d-flex m-3 me-0">
                         <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
@@ -134,5 +135,8 @@ export default {
 <style>
 .icon {
     color: #45595b
+}
+.nav-item{
+    margin-right: 30px;
 }
 </style>

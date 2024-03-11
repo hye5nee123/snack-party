@@ -56,11 +56,35 @@ const orderInfo =
 FROM    orders
 WHERE   order_code = ?`
 
+const updateOrderStatus = 
+`UPDATE orders
+SET order_status = ?
+WHERE order_code = ?`
+
+const addPoint = 
+`INSERT INTO point
+SET point_code = snack.nextval('POI')
+	, order_code = ?
+	, point_status = 'd01'
+    , point_date = curdate()
+	, point_value = (SELECT NVL(total_price,0)*0.01 point
+					FROM   orders
+					WHERE  order_code = ?)
+	, member_code = ?`
+
+const checkPoint = 
+`SELECT count(*) count
+FROM   point
+WHERE  order_code = ?`
+
 module.exports = {
     salesDaily,
     salesMonthly,
     inquiryNotAnswered,
     orderListPage,
     orderListCount,
-    orderInfo
+    orderInfo,
+    updateOrderStatus,
+    addPoint,
+    checkPoint
 }
