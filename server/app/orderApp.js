@@ -189,4 +189,88 @@ app.get('/myord/details/:ocode/:mcode', async (request, response) => {
   console.log('나의주문내역상세?', result);
 });
 
+//주문 후 포인트 처리
+app.get('/myord/details/point/:ocode/:mcode', async (request, response) => {
+  let data = [request.params.ocode, request.params.mcode];
+  let result = await db
+    .connection('ordersql', 'orderedPoint', data)
+    .catch((err) => console.log(err));
+  response.send(result);
+  console.log('주문 후 포인트? orderApp', result);
+});
+
+//주문 후 배송정보
+app.get('/myord/details/delivery/info/:ocode', async (request, response) => {
+  let ocode = request.params.ocode;
+  let result = await db.connection('ordersql', 'deliveryInfo', ocode)
+    .catch((err) => console.log(err));
+  response.send(result[0]);
+  console.log('주문 후 배송정보? orderApp', result);
+});
+
+//주문취소
+app.put('/myord/cancel/:ocode', async (request, response) => {
+  let ocode = request.params.ocode;
+  let result = await db.connection('ordersql', 'cancelOrd', ocode);
+  response.send(result);
+});
+
+//배송완료 시 포인트 적립
+app.post('/myord/pointplus', async (request, response) => {
+  let data = request.body.param;
+  let result = await db
+    .connection('ordersql', 'memUsedPointInsert', data)
+    .catch((error) => {
+      console.log(error);
+    });
+  response.send(result);
+});
+
+//=====================================================
+//< 찜 상품 >
+
+//찜 목록조회
+app.get('/likes/:mcode', async (request, response) => {
+  let data = request.params.mcode;
+  let result = await db.connection('ordersql', 'likesList', data).catch((error) => {
+    console.log(error);
+  });
+  console.log('찜목록?', result)
+  response.send(result);
+});
+
+//찜 추가
+app.post('/likes', async (request, response) => {
+  let data = request.body.param;
+  let result = await db
+    .connection('ordersql', 'likesInsert', data)
+    .catch((error) => {
+      console.log(error);
+    });
+  response.send(result);
+});
+
+//찜 목록 확인
+app.get('/likes/:mcode/:pcode', async (request, response) => {
+  let data = [request.params.mcode, request.params.pcode];
+  let result = await db.connection('ordersql', 'likesCheck', data);
+  response.send(result);
+  console.log('찜 담긴 상품?', result);
+});
+
+// //찜 삭제
+// app.delete('/likes/:lcode/:pcode', async (request, response) => {
+//   let data = request.params.lcode.pcode;
+//   let result = await db.connection('ordersql', 'likesDelte', data);
+//   response.send(result);
+// });
+//찜 삭제
+app.delete('/likes/:pcode', async (request, response) => {
+  let data = request.params.pcode;
+  let result = await db.connection('ordersql', 'likesDelete', data).catch((error) => {
+    console.log(error);
+  });
+  response.send(result);
+});
+
 module.exports = app;
