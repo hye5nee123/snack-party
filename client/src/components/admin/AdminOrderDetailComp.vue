@@ -157,16 +157,20 @@ export default {
                 if (this.order_status == 'h05') {
 
                     if (chk > 0) {
-                        alert('이미 해당 주문에 포인트가 적립되었습니다.');
+                        alert('이미 해당 주문에 적립된 적립금이 있습니다.');
                     } else {
                         let result = await axios.post(`/api/admin/addPoint/${this.oCode}/${this.mCode}`)
                             .catch(err => console.log(err));
-                        let info = result.data.changedRows;
+                        let info1 = result.data.changedRows;
 
-                        if (info > 0) {
-                            alert('배송이 완료되어 포인트가 적립되었습니다.');
+                        if (info1 > 0) {
+                            alert('배송이 완료되어 적립금이 적립되었습니다.');
                         }
                     }
+                }
+
+                if(this.order_status == 'h04') {
+                    return
                 }
                 this.$router.go(0);
             }

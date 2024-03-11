@@ -7,7 +7,7 @@
         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
 
           <!-- Contents START -->
-          <table class="datatables-products table border-top dataTable no-footer dtr-column collapsed"
+          <table class="datatables-products table border-top dataTable no-footer dtr-column collapsed "
             id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
             <thead>
               <tr>
@@ -33,15 +33,15 @@
             </thead>
 
             <tbody v-for="(notice, i) in noticeList" :key="i">
-              <tr>
+              <tr data-bs-toggle="modal" :data-bs-target="'#exampleModal'+i"
+                    :notice="notice" @click="noticeContentFunc(notice.notice_content)">
                 <td>{{ notice.notice_code }}</td>
                 <td>{{ notice.notice_title }}</td>
                 <td>{{ $formatDate(notice.notice_date) }}</td>
-                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" :data-bs-target="'#exampleModal'+i"
-                    :notice="notice" @click="noticeContentFunc(notice.notice_content)">
+                <!-- <td><button type="button" class="btn btn-primary">
                     내용보기
                   </button>
-                </td>
+                </td> -->
               </tr>
 
               <div class="modal fade" :id="'exampleModal'+i" tabindex="-1" aria-labelledby="exampleModalLabel"
@@ -64,7 +64,7 @@
                         </tr>
                         <tr>
                           <th>내용</th>
-                          <textarea rows="4" cols="50" v-model="content"></textarea>
+                          <textarea rows="4" cols="50" v-model="content" class="form-control"></textarea>
                         </tr>
                       </table>
                     </div>
@@ -151,3 +151,5 @@ export default {
   }
 }
 </script>
+<style scoped>
+</style>
