@@ -6,9 +6,7 @@
     <form>
       <table>
         <tr>
-          <td>
-            <p>제목</p>
-          </td>
+          <td>제목</td>
           <td>
             <input v-model="InquiryInfo.title" type="text" class="form-control" required />
           </td>
@@ -17,7 +15,7 @@
           <td> 작성자 </td>
           <td>{{ this.$store.state.memberStore.memberInfo.member_name }}</td>
         </tr>
-        <tr>
+        <!-- <tr>
           <td>문의유형</td>
           <td>
             <select v-model="InquiryInfo.p_inquiry_type">
@@ -29,7 +27,7 @@
               <option value="서비스/오류/기타">서비스/오류/기타</option>
             </select>
           </td>
-        </tr>
+        </tr> -->
         <tr>
           <td>내용</td>
           <td colspan="2" id="textarea">
@@ -65,6 +63,7 @@ export default {
     };
   },
   created() {
+    this.inquiry_code = this.$route.query.inquiry_code;
     this.getInquiryInfo();
   },
   methods: {
@@ -143,7 +142,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 200px;
 }
 
 table {

@@ -9,6 +9,12 @@ app.get("/", async (request, response) => {
   response.send(result);
 });
 
+//관리자용 급하게 만든 조회기능
+app.get("/manage/:member_code", async (request, response) => {
+  let result = await db.connection("reviewsql", "reviewManage").catch(err => console.log(err));
+  response.send(result);
+});
+
 //페이징된 전체조회
 app.get('/list/:limit/:offset', async (request, response) => {
   let limit = Number(request.params.limit);
