@@ -1,15 +1,19 @@
 <template>
-  <div class="container">
     <div class="container-xxl flex-grow-1 container-p-y">
-      <router-view />
+      <div class="card">
+        <h3>회원조회</h3>
+      </div>
     </div>
-  </div>
-</template>
+    <AdminMemberList />
+  </template>
 
 <script>
+import AdminMemberList from '../../components/admin/AdminMemberList.vue';
 
 export default {
-  name: 'ProductManage',
+  components: {
+    AdminMemberList
+  },
   data() {
     return {
     };
@@ -24,4 +28,3 @@ export default {
   }
 }
 </script>
-../../components/admin/AdminProductList.vue

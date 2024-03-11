@@ -12,7 +12,9 @@
                   <th>제목</th>
                   <td>{{ reviewInfo.review_title }}</td>
                   <th>작성자</th>
-                  <td>{{ this.$store.state.memberStore.memberInfo.member_name }}</td>
+                  <td>{{ reviewInfo.member_name }}</td>
+                  <th>별점</th>
+                  <td>{{ reviewInfo.stars }}</td>
                 </tr>
               </thead>
               <tbody>
@@ -24,8 +26,11 @@
             </table>
           </div>
         </div>
-        <button >수정</button>
-        <button  v-on:click="deleteReview(reviewInfo.review_code)">삭제</button>
+        <br>
+        <button class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2" v-on:click="goToUpdate()">
+          수정 </button>
+        <button class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2"
+          v-on:click=" deleteReview(reviewInfo.review_code)"> 삭제 </button>
       </div>
     </div>
   </div>
@@ -40,7 +45,10 @@ export default {
       reviewInfo: {
         review_code: this.$route.query.review_code,
         review_title: "",
-        review_content: ""
+        review_content: "",
+        stars: "",
+        member_code: "",
+        member_name: ""
       },
     };
   },
@@ -56,20 +64,30 @@ export default {
         console.log(error);
       }
     },
-    async deleteReview(review_code){
-      let answer = confirm("리뷰를 삭제하시겠습니까?")
-      if(answer){
-        let result = await axios.delete('/api/review/' + review_code)
-                    .catch (error => console.log(error))
-                    this.$router.go(-1);
-        console.log(result)
-        // if(result.data.affectedRows != 0 && result.data.changedRows == 0){
-        //   alert('정상적으로 삭제 되었습니다.');
-        //   this.$router.go(-1);
-        // }
-        // else{
-        //   alert('삭제 되지 않았습니다.');
-        // }
+    goToUpdate() {
+      if (this.$store.state.memberStore.memberInfo.member_code == this.reviewInfo.member_code) {
+
+        this.$router.push({ path: '/reviewupdate', query: { 'review_code': this.reviewInfo.review_code } });
+      } else {
+        alert("수정권한이 없습니다")
+      }
+      // 수정폼 컴포넌트 호출
+      //this.$router.push({ path: '/userUpdate', query: {'userId' : userId}});  
+    },
+    async deleteReview(review_code) {
+      if (this.$store.state.memberStore.memberInfo.member_code == this.reviewInfo.member_code) {
+        let answer = confirm("리뷰를 삭제하시겠습니까?");
+        if (answer) {
+          try {
+            console.log(review_code);
+            await axios.delete('/api/review/' + this.reviewInfo.review_code);
+            this.$router.go(-1);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      } else {
+        alert("삭제권한이 없습니다")
       }
     }
   }
@@ -85,5 +103,13 @@ export default {
 
 .container {
   margin-top: 200px;
+}
+
+.card {
+  width: 100%;
+}
+
+.btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2 {
+  padding: 1000px;
 }
 </style>

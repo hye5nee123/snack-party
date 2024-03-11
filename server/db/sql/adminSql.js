@@ -77,6 +77,26 @@ const checkPoint =
 FROM   point 
 WHERE  order_code = ?`
 
+const memberList =
+`SELECT row_number()
+        , member_code
+        , member_id
+        , pw
+        , member_name
+        , member_phone
+        , member_email
+        , DATE_FORMAT(birthday, '%Y-%m-%d')
+        , gender
+        , postcode
+        , member_type
+        , DATE_FORMAT(join_date, '%Y-%m-%d')
+        , address
+        , address_detail
+        , member_status
+        , DATE_FORMAT(quit_date, '%Y-%m-%d')
+        , token
+FROM member`
+
 module.exports = {
     salesDaily,
     salesMonthly,
@@ -86,5 +106,6 @@ module.exports = {
     orderInfo,
     updateOrderStatus,
     addPoint,
-    checkPoint
+    checkPoint,
+    memberList
 }

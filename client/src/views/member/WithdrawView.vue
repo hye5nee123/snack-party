@@ -10,6 +10,7 @@
 <!-- Single Page Header End -->
   
   <!-- Content -->
+  <div v-show="!kakaoStatus">
     <div  v-show="!member" class="container-xxl boxsize">
       <div class="container-p-y">
         <div class="authentication-inner">
@@ -50,11 +51,18 @@
         </div>
       </div>
     </div>
+  </div>
   <!-- / Content -->
   <div v-show="member">
     <div class="mb-3">
       <router-link to="/signup" class="btn btn-primary2 d-grid login center" type="button">취소</router-link>
       <button class="btn btn-primary2 d-grid login center" type="button" @click="memberUpdate()">확인</button>
+    </div>
+  </div>
+  <div v-show="kakaoStatus">
+    <div class="mb-3">
+      <router-link to="/signup" class="btn btn-primary2 d-grid login center" type="button">취소</router-link>
+      <button class="btn btn-primary2 d-grid login center" type="button" @click="memberUpdate2()">확인</button>
     </div>
   </div>
 </template>
@@ -71,7 +79,8 @@ export default {
         id : this.$store.state.memberStore.memberInfo.member_id,
         member : false,
         pw : '',
-        pw_confirm : ''
+        pw_confirm : '',
+        kakaoStatus : this.$store.state.memberStore.kakaoStatus
     }
   },
   created() {
@@ -122,7 +131,8 @@ export default {
         let data = {
             param : {
               // pw : this.pw
-              member_status : 'c02'
+              member_status : 'c02',
+              quit_date : this.getDate()
             }
         };
         let result = await axios.put("/api/member/" + this.$store.state.memberStore.memberInfo.member_id, data)
@@ -150,7 +160,34 @@ export default {
       }
 
       return true;
-    }
+    },
+    getDate() {
+      let dateValue = new Date();
+      let year = dateValue.getFullYear();
+      let month = ('0' + (dateValue.getMonth() + 1)).slice(-2);
+      let day = ('0' + dateValue.getDate()).slice(-2);
+      return `${year}-${month}-${day}`;
+    },
+    async memberUpdate2() {
+        // if(!this.validation()) return;
+
+        let data = {
+            param : {
+              member_id : this.id + '(탈퇴)',
+              member_status : 'c02',
+              quit_date : this.getDate()
+            }
+        };
+        let result = await axios.put("/api/member/" + this.$store.state.memberStore.memberInfo.member_id, data)
+                    .catch(err => console.log(err));
+        let info = result.data.affectedRows;
+        console.log(data);
+        if(info > 0) {
+            alert('비밀번호가 수정되었습니다.');
+            this.$store.commit('clearStore');
+            this.$router.push({path : '/'})
+        }
+    },
   }
 }
 </script>

@@ -91,6 +91,9 @@ WHERE
 //관리자 회원 상품문의 전체 조회.
 const proinquirylist = ``
 
+//수정(공통)
+const inquiryUpdate = `update inquiry set ? where inquiry_code = ?`;
+
 //문의 delete.
 const inquiryDelete = `DELETE FROM inquiry WHERE inquiry_code = ?`;
 
@@ -100,5 +103,7 @@ module.exports = {
     pInquiryInfo,
     sinquiryList,
     InquiryInfo,
-    InquiryAll
+    InquiryAll,
+    inquiryUpdate,
+    inquiryDelete
 };

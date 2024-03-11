@@ -339,6 +339,9 @@ export default {
             let month = ('0' + (dateValue.getMonth() + 1)).slice(-2);
             let day = ('0' + dateValue.getDate()).slice(-2);
             return `${year}-${month}-${day}`;
+        },
+        memberWithdraw(member_type) {
+            this.$router.push({path : '/withdraw', query : member_type});
         }
     }
 }

@@ -46,7 +46,6 @@ app.get("/member/:member_code", async (request, response) => {
 //관리자 문의 전체 조회.
 
 //상품 건별 조회.
-
 app.get("/:product_code", async (request, response) => {
   let data = request.params.product_code;
   let result = await db.connection("inquirysql", "inquirylist", data);
@@ -62,7 +61,6 @@ app.get("/detail/:inquiry_code", async (request, response) => {
 });
 
 //등록
-
 app.post("/", async (request, response) => {
   let data = request.body.param;
   let result = await db
@@ -79,5 +77,12 @@ app.delete("/:inquiry_code", async (request, response) => {
   let result = await db.connection("inquirysql", "inquiryDelete", data);
   response.send(result);
 });
+
+//수정
+app.put("/:inquiry_code", async (request, response) => {
+  let data = [request.body.param, request.params.inquiry_code];
+  let result = await db.connection("inquirysql", "inquiryUpdate", data);
+  response.send(result);
+})
 
 module.exports = app;

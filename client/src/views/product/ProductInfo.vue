@@ -99,10 +99,13 @@
                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i :class="{red: isActive}"
                                     class="fa-regular fa-heart" /> 관심상품
                                 </button> -->
-                                
-                                <button class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4" @click="addTolikes()">
-                                    <i :class="{ nondisplay: isActive, display:true }" class="fa-regular fa-heart"></i>
-                                    <i :class="{ red: isActive, nondisplay: !isActive, display:true }" class="fa-solid fa-heart"></i> 관심상품
+
+                                <button
+                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"
+                                    @click="addTolikes()">
+                                    <i :class="{ nondisplay: isActive, display: true }" class="fa-regular fa-heart"></i>
+                                    <i :class="{ red: isActive, nondisplay: !isActive, display: true }"
+                                        class="fa-solid fa-heart"></i> 관심상품
                                 </button>
 
                                 <button type="button" v-if="productInfo[0].stock_cnt == 0"
@@ -231,7 +234,7 @@
             </div>
         </div>
     </div>
-<!-- Single Product End -->
+    <!-- Single Product End -->
 </template>
 
 <script>
@@ -362,20 +365,20 @@ export default {
 
             if (!this.loginStatus) {
                 alert('로그인 후 이용가능합니다.');
-            } else if (cartCheck.data.length == this.productInfo[0].stock_cnt){
+            } else if (cartCheck.data.length == this.productInfo[0].stock_cnt) {
                 alert('재고 부족으로 수량을 추가하실 수 없습니다.')
 
-            } else if(cartCheck.data.length != 0 && cartCheck.data[0].cart_cnt + this.quantity >= this.productInfo[0].stock_cnt) {
+            } else if (cartCheck.data.length != 0 && cartCheck.data[0].cart_cnt + this.quantity >= this.productInfo[0].stock_cnt) {
                 let ccode = cartCheck.data[0].cart_code
                 let calquan = this.productInfo[0].stock_cnt - cartCheck.data[0].cart_cnt
                 await axios.put(`/apiorder/addCnt/${calquan}/${ccode}`).catch((err) => console.log(err));
-                
-                if(calquan == 0) {
+
+                if (calquan == 0) {
                     alert('이미 담긴 상품이며\n재고가 부족하여 수량을 추가하실 수 없습니다.')
                 } else {
                     alert('이미 담긴 상품으로 ' + calquan + '개가 추가되었습니다.');
                 }
-            } 
+            }
             else if (cartCheck.data.length != 0) {
                 //이미 담긴 수량에 원하는 수량 추가
                 let ccode = cartCheck.data[0].cart_code
@@ -390,14 +393,14 @@ export default {
 
         //바로 구매하기
         goToCheckOut() { //주문하기로 이동
-            if(this.memberCode == ''){
+            if (this.memberCode == '') {
                 alert('로그인 후 이용 가능')
                 this.$router.push({ path: '/login' })
                 // return;
             }
 
             this.selectPro = this.changeField();
-            if(this.productInfo[0].stock_cnt < this.selectPro.cart_cnt){
+            if (this.productInfo[0].stock_cnt < this.selectPro.cart_cnt) {
                 alert(this.selectPro.product_name + '의 재고량이 부족합니다.\n주문가능한 수량은 ' + this.productInfo[0].stock_cnt + '개로 수량이 변경됩니다.');
                 this.selectPro.cart_cnt = this.productInfo[0].stock_cnt;
             } else {
@@ -406,7 +409,7 @@ export default {
             }
             console.log('상품?', this.selectPro)
         },
-        
+
         changeField() {
             let selectPro = {
                 product_code: this.productInfo[0].product_code,
@@ -414,16 +417,16 @@ export default {
                 product_price: this.productInfo[0].product_price,
                 path: this.productInfo[0].path
             }
-            let info = {cart_cnt: this.quantity, member_code: this.memberCode}
-            
-            let newArr = [{...selectPro, ...info}];
+            let info = { cart_cnt: this.quantity, member_code: this.memberCode }
+
+            let newArr = [{ ...selectPro, ...info }];
 
             return newArr;
         },
 
         async addTolikes() { //찜 기능
             //로그인 check
-            if(!this.loginStatus) {
+            if (!this.loginStatus) {
                 alert('로그인 후 이용가능합니다.');
                 return;
             }
@@ -436,7 +439,7 @@ export default {
             }
 
             //찜 여부 확인 (있으면 클릭 시 삭제)
-            if (this.isActive == true){
+            if (this.isActive == true) {
                 this.isActive = false;
 
                 //단건삭제
@@ -445,7 +448,7 @@ export default {
                 console.log('찜 삭제', del);
                 alert('찜 상품이 삭제되었습니다.');
 
-            } else{
+            } else {
                 this.isActive = true;
 
                 let add = await axios.post("/apiorder/likes", data).catch(err => console.log(err));
@@ -462,17 +465,17 @@ export default {
                 .get('/apiorder/likes/' + this.memberCode +'/'+ this.productInfo[0].product_code)
                 .catch((err) => console.log(err));
                 let list = result.data;
-                console.log('찜목록?',list);
+                console.log('찜목록?', list);
 
-                if(list) {
-                this.isActive = true;
+                if (list) {
+                    this.isActive = true;
                 } else {
-                this.isActive = false;
+                    this.isActive = false;
                 }
             }
         },
 
-        
+
         //상품평 개수 가져오기
         async getReviewCnt() {
             let result = await axios.get(`/api/review/reviewCnt/${this.pcode}`)
@@ -508,16 +511,17 @@ export default {
 .tacenter {
     text-align: center;
 }
+
 .red {
-  color: red;
+    color: red;
 }
 
 .nondisplay {
-  display: none;
+    display: none;
 }
 
 .display {
-  line-height: inherit;
-  margin: auto 0;
+    line-height: inherit;
+    margin: auto 0;
 }
 </style>

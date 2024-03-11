@@ -23,43 +23,48 @@
                         <input v-model="reviewInfo.review_title" type="text" required />
                     </td>
                 </tr>
-                <tr>
+                <!--첨부파일 막아놓음.-->
+                <!-- <tr>
                     <td class="title">
                         <p>첨부</p>
                     </td>
                     <td>
                         <input type="file" ref="fileInput" @change="handleFileChange" multiple />
                     </td>
-                </tr>
+                </tr> -->
                 <tr>
                     <td colspan="2" id="textarea">
                         <textarea id="textarea2" cols="130" rows="15" name="content"
                             v-model="reviewInfo.review_content"></textarea>
                     </td>
                 </tr>
-                <tr>
+                <tr align="left" class="starTr">
                     <td class="stars">
                         <p>별점</p>
                     </td>
                     <div class="star-rating space-x-4 mx-auto">
-   <input type="radio" id="5-stars" name="rating" value="5" v-model="ratings"/>
-   <label for="5-stars" class="star pr-4">★</label>
-   <input type="radio" id="4-stars" name="rating" value="4" v-model="ratings"/>
-   <label for="4-stars" class="star">★</label>
-   <input type="radio" id="3-stars" name="rating" value="3" v-model="ratings"/>
-   <label for="3-stars" class="star">★</label>
-   <input type="radio" id="2-stars" name="rating" value="2" v-model="ratings"/>
-   <label for="2-stars" class="star">★</label>
-   <input type="radio" id="1-star" name="rating" value="1" v-model="ratings" />
-   <label for="1-star" class="star">★</label>
-    </div>
+                        <input type="radio" id="5-stars" name="rating" value="5" v-model="reviewInfo.stars" />
+                        <label for="5-stars" class="star pr-4">★</label>
+                        <input type="radio" id="4-stars" name="rating" value="4" v-model="reviewInfo.stars" />
+                        <label for="4-stars" class="star">★</label>
+                        <input type="radio" id="3-stars" name="rating" value="3" v-model="reviewInfo.stars" />
+                        <label for="3-stars" class="star">★</label>
+                        <input type="radio" id="2-stars" name="rating" value="2" v-model="reviewInfo.stars" />
+                        <label for="2-stars" class="star">★</label>
+                        <input type="radio" id="1-star" name="rating" value="1" v-model="reviewInfo.stars" />
+                        <label for="1-star" class="star">★</label>
+                    </div>
                 </tr>
             </table>
             <div style="text-align: center">
-                <button type="button" class="btn btn-outline-danger me-2 mt-2" @click="saveInfo()">
+                <button class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2" type="button"
+                    @click="saveInfo()">
                     작성
                 </button>
-                <button type="reset" class="btn btn-danger mt-2" @click="resetInfo()">취소</button>
+                <!-- <a href="#" class="btn-gradient yellow">Button</a> -->
+                <!-- <a href="" title="Button push orange" class="button btnPush btnOrange" @click="saveInfo()">작성</a> -->
+                <button type="reset" class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2"
+                    @click="resetInfo()">취소</button>
             </div>
         </div>
     </div>
@@ -78,13 +83,13 @@ export default {
                 detail_code: this.$route.query.detail_code,
                 stars: 5
             },
-            checkout:this.$route.query.checkout,
+            checkout: this.$route.query.checkout,
 
         };
     },
-      components: {
-    // OrderProducts
-  },
+    components: {
+        // OrderProducts
+    },
     methods: {
         saveInfo() {
             // 1) 유효성 체크
@@ -153,41 +158,74 @@ export default {
 .content-wrapper {
     height: 200px
 }
+
 .container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Adjust as needed */
+    height: 100vh;
+    /* Adjust as needed */
     margin-top: 200px;
 }
+
 .star-rating {
-  display: flex;
-  flex-direction: row-reverse;
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-  justify-content: space-around;
-  padding: 0 0.2em;
-  text-align: center;
-  width: 5em;
+    display: flex;
+    flex-direction: row-reverse;
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    justify-content: space-around;
+    padding: 0 0.2em;
+    text-align: center;
+    width: 5em;
 }
- 
+
 .star-rating input {
-  display: none;
+    display: none;
 }
- 
+
 .star-rating label {
-  -webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
-  -webkit-text-stroke-width: 2.3px;
-  -webkit-text-stroke-color: #2b2a29;
-  cursor: pointer;
+    -webkit-text-fill-color: transparent;
+    /* Will override color (regardless of order) */
+    -webkit-text-stroke-width: 2.3px;
+    -webkit-text-stroke-color: #2b2a29;
+    cursor: pointer;
 }
- 
-.star-rating :checked ~ label {
-  -webkit-text-fill-color: gold;
+
+.star-rating :checked~label {
+    -webkit-text-fill-color: gold;
 }
- 
+
 .star-rating label:hover,
-.star-rating label:hover ~ label {
-  -webkit-text-fill-color: #fff58c;
+.star-rating label:hover~label {
+    -webkit-text-fill-color: #fff58c;
 }
+
+/* .my_btn {
+
+    background-color: yellow;
+
+    color: yellowgreen;
+
+    border: none;
+
+
+
+    padding: 10px 30px;
+
+} */
+
+.star-rating space-x-4 mx-auto {
+    padding: 0px;
+}
+
+.btn btn-danger mt-2:hover {
+    background-color: yellow;
+    transition: 0.7s;
+}
+
+.stars {
+    max-width: 1000px;
+}
+
+.starTr {}
 </style>

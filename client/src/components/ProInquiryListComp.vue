@@ -15,7 +15,8 @@
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0">
-                <tr :key="i" v-for="(pInquiry, i) in pInquiryList" v-on:click="goToProInquiryInfo(pInquiry.inquiry_code)">
+                <tr :key="i" v-for="(pInquiry, i) in pInquiryList"
+                  v-on:click="goToProInquiryInfo(pInquiry.inquiry_code)">
                   <td>{{ pInquiry.inquiry_code }}</td>
                   <td>{{ pInquiry.inquiry_title }}</td>
                   <td>{{ pInquiry.member_name }}</td>

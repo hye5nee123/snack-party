@@ -12,6 +12,16 @@ const reviewList = `SELECT
   FROM review r
   JOIN member m ON r.member_code = m.member_code;`
 
+//관리자 페이지 급하게 만든 쿼리
+const reviewManage = `SELECT 
+  r.review_code,
+  r.review_title,
+  r.review_date,
+  m.member_id
+  FROM review r
+  LEFT JOIN member m ON r.member_code = m.member_code
+  WHERE r.member_code = ?`;
+
 //페이징 쿼리
 const reviewListPage = `SELECT
 r.review_code,
@@ -34,12 +44,15 @@ FROM  review `
 
 //게시글 단건조회.
 const reviewInfo = `SELECT 
-review_code,
-review_title,
-review_content,
-stars
-FROM review
-WHERE review_code = ?`;
+r.review_code,
+r.review_title,
+r.review_content,
+r.stars,
+m.member_code,
+m.member_name
+FROM review r JOIN member m
+ON r.member_code = m.member_code
+WHERE r.review_code = ?`;
 
 /*회원*/
 
