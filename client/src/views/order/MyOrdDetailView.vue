@@ -3,7 +3,9 @@
   <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6"></h1>
     <ol class="breadcrumb justify-content-center mb-0">
-      <h4><li class="breadcrumb-item active text-white">MyOrder</li></h4>
+      <h4>
+        <li class="breadcrumb-item active text-white">MyOrder</li>
+      </h4>
     </ol>
   </div>
   <!-- Single Page Header End -->
@@ -14,7 +16,7 @@
       <br>
       <div class="right-div">
         <div class="col-md-12 col-lg-6 col-xl-7">
-            <OrderProducts :checkOutList="myOrdDetail" />
+          <OrderProducts :checkOutList="myOrdDetail" />
         </div>
         <div class="table-responsive">
           <table class="table">
@@ -24,12 +26,14 @@
             </thead>
             <tbody>
               <tr v-for="(detail, i) in myOrdDetail" :key="i">
-                <td class="py-5">{{ordStatus(detail.order_status)}}</td>
-                <td class="py-5"><button type="button" class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2">리뷰작성</button></td>
+                <td class="py-5">{{ ordStatus(detail.order_status) }}</td>
+                <td class="py-5"><button type="button"
+                    class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2"
+                    v-on:click="goToReviewInsert(detail.detail_code)">리뷰작성</button></td>
               </tr>
             </tbody>
           </table>
-        </div> 
+        </div>
       </div>
 
       <br>
@@ -38,10 +42,10 @@
       <!-- 포인트?{{ use_point }} {{ plus_point }}
       주문금액?{{ allPrice }}
       {{ myOrdDetail }} -->
-      <div class="right-div">
+      <div class=" right-div">
         <div class="col-md-12 col-lg-6 col-xl-5">
-          <PaymentInfo :checkOutList="myOrdDetail" :pointList="pointList" :allPrice="allProPrice"
-           @usePoint="usePoint" @deliveryFee="deliveryFee" @totalPrice="totalPrice"/>
+          <PaymentInfo :checkOutList="myOrdDetail" :pointList="pointList" :allPrice="allProPrice" @usePoint="usePoint"
+            @deliveryFee="deliveryFee" @totalPrice="totalPrice" />
         </div>
         <div class="col-md-12 col-lg-6 col-xl-5">
           <div class="table-responsive" style="margin-left: 70px;">
@@ -58,15 +62,15 @@
                 </tr>
                 <tr>
                   <td>수령인 </td>
-                  <td>{{deliveryInfo.recipient}}</td>
+                  <td>{{ deliveryInfo.recipient }}</td>
                 </tr>
                 <tr>
                   <td>연락처 </td>
-                  <td>{{deliveryInfo.rec_phone}}</td>
+                  <td>{{ deliveryInfo.rec_phone }}</td>
                 </tr>
                 <tr>
                   <td rowspan="2">주소 </td>
-                  <td>{{deliveryInfo.rec_postcode}}</td>
+                  <td>{{ deliveryInfo.rec_postcode }}</td>
                 </tr>
                 <tr>
                   <td>{{ deliveryInfo.rec_address }}{{ deliveryInfo.rec_address_detail }}</td>
@@ -83,21 +87,23 @@
             </table>
           </div>
         </div>
-      <p>{{ order_code }}</p>
-      {{ mem_code }}
-      <OrderProducts :checkOutList="myOrdDetail" :review_show="review_show"/>
+        <p>{{ order_code }}</p>
+        {{ mem_code }}
+        <OrderProducts :checkOutList="myOrdDetail" :review_show="review_show" />
 
-      <br />
-      <div>
-        {{ myOrdDetail }}
-        <!-- <PaymentInfo /> -->
+        <br />
+        <div>
+          {{ myOrdDetail }}
+          <!-- <PaymentInfo /> -->
+        </div>
       </div>
-    </div>
-    
-    <div style="text-align: center;">
-      <button @click="cancelOrd()" class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문취소</button>
-      <button @click="this.$router.push({ path: '/myorderlist' })" class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문목록 이동</button>
-    </div>
+
+      <div style="text-align: center;">
+        <button @click="cancelOrd()"
+          class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문취소</button>
+        <button @click="this.$router.push({ path: '/myorderlist' })"
+          class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문목록 이동</button>
+      </div>
     </div>
   </div>
 </template>
@@ -142,13 +148,13 @@ export default {
   // updated() {
   //   this.getPoint(); //배송완료 시 포인트 적립?
   // },
-  watch:{
+  watch: {
 
   },
   computed: {
     allProPrice() {
       let allProPrice = 0;
-      for(let pro of this.myOrdDetail) {
+      for (let pro of this.myOrdDetail) {
         allProPrice += pro.product_price * pro.cart_cnt;
       }
       return allProPrice;
@@ -182,46 +188,46 @@ export default {
 
     async getPointInfo() { //주문 후 포인트내역
       let result = await axios.get(`/apiorder/myord/details/point/${this.order_code}/${this.mem_code}`)
-          .catch(err => console.log(err));
+        .catch(err => console.log(err));
       console.log('주문 후 포인트내역? detail : ', result);
       this.pointList = result.data;
     },
 
     async getDeliveryInfo() { //주문 후 배송
       let result = await axios.get(`/apiorder/myord/details/delivery/info/${this.order_code}`)
-          .catch(err => console.log(err));
+        .catch(err => console.log(err));
       console.log('주문 후 배송정보? ', result);
       let info = result.data;
       this.deliveryInfo = info;
     },
 
     ordStatus(status) {
-        if (status == 'h01') {
-          return '결제완료'
-        } else if (status == 'h02') {
-            return '주문취소'
-        } else if (status == 'h03') {
-            return '배송준비중'
-        } else if (status == 'h04') {
-            return '배송중'
-        } else if (status == 'h05') {
-            return '배송완료'
-        } else if (status == 'h06') {
-            return '반품취소'
-        } else if (status == 'h07') {
-            return '반품완료'
-        } else {
-            return '환불완료'
-        }
+      if (status == 'h01') {
+        return '결제완료'
+      } else if (status == 'h02') {
+        return '주문취소'
+      } else if (status == 'h03') {
+        return '배송준비중'
+      } else if (status == 'h04') {
+        return '배송중'
+      } else if (status == 'h05') {
+        return '배송완료'
+      } else if (status == 'h06') {
+        return '반품취소'
+      } else if (status == 'h07') {
+        return '반품완료'
+      } else {
+        return '환불완료'
+      }
     },
 
     async cancelOrd() {
-      for(let i=0; i < this.myOrdDetail.length; i++) {
-        if(this.myOrdDetail[i].order_status == 'h01') {
+      for (let i = 0; i < this.myOrdDetail.length; i++) {
+        if (this.myOrdDetail[i].order_status == 'h01') {
           let result = await axios.put(`/apiorder/myord/cancel/${this.order_code}`)
-                        .catch((err) => console.log(err));
+            .catch((err) => console.log(err));
           let info = result.data.changedRows;
-          if(info > 0) {
+          if (info > 0) {
             alert('주문이 취소되었습니다.');
             this.$router.go(0);
           }
@@ -230,11 +236,15 @@ export default {
         }
       }
     },
+    //리뷰 insert메소드 정의
+    goToReviewInsert(detail_code) {
+      this.$router.push({ path: '/reviewInsert', query: { 'detail_code': detail_code } });
+    },
 
     //안 됨
     async getPoint() { //배송완료 시 포인트 추가(리뷰작성 시 포인트 추가도 해야 됨
-      for(let i=0; i < this.myOrdDetail.length; i++) {
-        if(this.myOrdDetail[i].order_status == 'h05') {
+      for (let i = 0; i < this.myOrdDetail.length; i++) {
+        if (this.myOrdDetail[i].order_status == 'h05') {
           let data = {
             "param": {
               order_code: this.order_code,
@@ -267,41 +277,51 @@ export default {
 
 <style scoped>
 .col-xl-5 {
-    /* flex: 0 0 auto; */
-    width: 47%;
+  /* flex: 0 0 auto; */
+  width: 47%;
 }
+
 .col-xl-7 {
-    /* flex: 0 0 auto; */
-    width: 80%;
-    justify-content: center;
+  /* flex: 0 0 auto; */
+  width: 80%;
+  justify-content: center;
 }
+
 .right-div {
   display: flex;
 }
 
 .table:not(.table-dark) th {
-    color: #566a7f;
-}
-.table>:not(caption)>*>* {
-    padding: 0.4rem 0.45rem;
-    background-color: var(--bs-table-bg);
-    border-bottom-width: 1px;
-    box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
-}
-.table th {
-    text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 1px;
-    padding: 8px;
-}
-thead, tbody, tfoot, tr, td, th {
-    border-color: inherit;
-    border-style: solid;
-    border-width: 0;
-}
-.py-5 {
-    padding-top: 3rem !important;
-    padding-bottom: 2.33rem !important;
+  color: #566a7f;
 }
 
+.table>:not(caption)>*>* {
+  padding: 0.4rem 0.45rem;
+  background-color: var(--bs-table-bg);
+  border-bottom-width: 1px;
+  box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+}
+
+.table th {
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  padding: 8px;
+}
+
+thead,
+tbody,
+tfoot,
+tr,
+td,
+th {
+  border-color: inherit;
+  border-style: solid;
+  border-width: 0;
+}
+
+.py-5 {
+  padding-top: 3rem !important;
+  padding-bottom: 2.33rem !important;
+}
 </style>

@@ -62,13 +62,13 @@ export default {
       path: "cart",
       name: "Cart",
       component: import(/* webpackChunkName: "Cart", webpackPrefetch: false */ "../views/order/CartView.vue"),
-      
+
       beforeEnter: (to, from, next) => {
-        let loginStatus =  Store.state.memberStore.loginStatus;
+        let loginStatus = Store.state.memberStore.loginStatus;
         console.log('loginStatus : ', loginStatus);
-        if(!loginStatus ){
+        if (!loginStatus) {
           alert('로그인 후 접근 가능한 페이지입니다.'),
-          next('/main');
+            next('/main');
         }
         else {
           next();
@@ -79,13 +79,13 @@ export default {
       path: "checkout",
       name: "CheckOut",
       component: import(/* webpackChunkName: "CheckOut", webpackPrefetch: false */ "../views/order/CheckOutView.vue"),
-    
+
       beforeEnter: (to, from, next) => {
-        let loginStatus =  Store.state.memberStore.loginStatus;
+        let loginStatus = Store.state.memberStore.loginStatus;
         console.log('loginStatus : ', loginStatus);
-        if(!loginStatus ){
+        if (!loginStatus) {
           alert('로그인 후 접근 가능한 페이지입니다.'),
-          next('/main');
+            next('/main');
         }
         else {
           next();
@@ -96,13 +96,13 @@ export default {
       path: "myorderlist",
       name: "MyOrderList",
       component: import(/* webpackChunkName: "myorderlist", webpackPrefetch: false */ "../views/order/MyOrdListView.vue"),
-    
+
       beforeEnter: (to, from, next) => {
-        let loginStatus =  Store.state.memberStore.loginStatus;
+        let loginStatus = Store.state.memberStore.loginStatus;
         console.log('loginStatus : ', loginStatus);
-        if(!loginStatus ){
+        if (!loginStatus) {
           alert('로그인 후 접근 가능한 페이지입니다.'),
-          next('/main');
+            next('/main');
         }
         else {
           next();
@@ -113,13 +113,13 @@ export default {
       path: "myorderdetail",
       name: "MyOrderDetail",
       component: import(/* webpackChunkName: "myorderdetail", webpackPrefetch: false */ "../views/order/MyOrdDetailView.vue"),
-    
+
       beforeEnter: (to, from, next) => {
-        let loginStatus =  Store.state.memberStore.loginStatus;
+        let loginStatus = Store.state.memberStore.loginStatus;
         console.log('loginStatus : ', loginStatus);
-        if(!loginStatus ){
+        if (!loginStatus) {
           alert('로그인 후 접근 가능한 페이지입니다.'),
-          next('/main');
+            next('/main');
         }
         else {
           next();
@@ -130,9 +130,9 @@ export default {
       path: "likes",
       name: "Likes",
       component: import(/* webpackChunkName: "Cart", webpackPrefetch: false */ "../views/order/LikesView.vue"),
-    
+
     },
-    
+
     {
       path: "reviewlist",
       name: "ReviewList",
@@ -187,6 +187,11 @@ export default {
       path: 'inquiryupdate',
       name: 'InquiryUpdate',
       component: import(/* webpackChunkName: "InquiryUpdate", webpackPrefetch: false */ "../views/inquiry/InquiryUpdate.vue")
+    },
+    {
+      path: 'proinquiryupdate',
+      name: 'ProInquiryUpdate',
+      component: import(/* webpackChunkName: "ProInquiryUpdate", webpackPrefetch: false */ "../views/inquiry/ProInquiryUpdate.vue")
     },
   ],
 };
