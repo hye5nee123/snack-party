@@ -65,7 +65,7 @@ export default {
   },
   created() {
     if(this.stockCnt == 0) {this.item = false}
-    this.getLikeList(this.memberCode)
+    // this.getLikeList(this.memberCode)
 
   },
   mounted() {
@@ -108,25 +108,25 @@ export default {
           alert('찜 상품으로 추가되었습니다.');
       }
     },
-    async getLikeList(memberCode) {
-      let result = await axios
-        .get('/apiorder/likes/' + memberCode)
-        .catch((err) => console.log(err));
-      console.log('result : ', result);
-      let list = result.data;
-      this.likesList = list;
-      console.log('찜목록?',list);
+    // async getLikeList(memberCode) {
+    //   let result = await axios
+    //     .get('/apiorder/likes/' + memberCode)
+    //     .catch((err) => console.log(err));
+    //   console.log('result : ', result);
+    //   let list = result.data;
+    //   this.likesList = list;
+    //   console.log('찜목록?',list);
 
-        for(let pro of this.likesList) {
-          if(this.productInfo.product_code == pro.product_code) {
-            this.isActive = true;
-            this.pressLike = true;
-          } else {
-            this.isActive = false;
-            this.pressLike = false;
-          }
-        }
-    },
+    //     for(let pro of this.likesList) {
+    //       if(this.productInfo.product_code == pro.product_code) {
+    //         this.isActive = true;
+    //         this.pressLike = true;
+    //       } else {
+    //         this.isActive = false;
+    //         this.pressLike = false;
+    //       }
+    //     }
+    // },
   
     getImgUrl(path) {
       return new URL(this.url + '/common/download?path=' + path);

@@ -32,7 +32,7 @@
             <td>
               <div class="input-group w-300">
                 <input type="text" class="form-control" placeholder="주문코드를 입력하세요." aria-describedby="search-icon-1"
-                  v-model="order_code">
+                  v-model="merchant_uid">
               </div>
             </td>
           </tr>
@@ -79,7 +79,7 @@
             </td>
             <td>
               <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
-                @click="seacrhOrder()">
+                @click="searchOrder()">
                 <i class="fas fa-search text-primary" aria-hidden="true"></i>
               </button>
               <button class="btn border border-secondary rounded-pill px-3 text-primary" @click="clearSearch()">
@@ -109,14 +109,14 @@
             <tr v-for="(list, i) in orderList" :key="i">
               <td>{{ list.num }}</td>
               <td>{{ list.order_date }}</td>
-              <td>{{ list.order_code }}</td>
+              <td>{{ list.merchant_uid }}</td>
               <td>{{ list.member_code }}</td>
               <td v-if="list.buy_cnt == 0">{{ list.product_name }}</td>
               <td v-else>{{ list.product_name }} 외 {{ list.buy_cnt }}개</td>
               <td>{{ $currencyFormat(list.total_price) }}원</td>
               <td>{{ ordStatus(list.order_status) }}</td>
               <td><button type="button" class="cnt-update-btn btn-sm detail-btn" :orderList="list"
-                  @click="goToDetail(list.order_code, list.member_code)">상세조회</button></td>
+                  @click="goToDetail(list.merchant_uid, list.member_code, list.order_code)">상세조회</button></td>
             </tr>
           </tbody>
         </table>
@@ -141,7 +141,7 @@ export default {
       detailList: [],
       start_date: '',
       end_date: '',
-      order_code: '',
+      merchant_uid: '',
       member_code: '',
       product_name: '',
       order_status: '',
@@ -198,7 +198,7 @@ export default {
     //주문목록
     async getOrderList() {
       let param = '';
-      param = `?start_date=${this.start_date}&end_date=${this.end_date}&order_code=${this.order_code}`
+      param = `?start_date=${this.start_date}&end_date=${this.end_date}&merchant_uid=${this.merchant_uid}`
       param += `&member_code=${this.member_code}&product_name=${this.product_name}&order_status=${this.order_status}&offset=${this.pageData}`;
 
       let result = await axios.get(`/api/admin/orderlist${param}`)
@@ -210,7 +210,7 @@ export default {
     // 전체 데이터 갯수
     async getListCount() {
       let param = '';
-      param = `?start_date=${this.start_date}&end_date=${this.end_date}&order_code=${this.order_code}`
+      param = `?start_date=${this.start_date}&end_date=${this.end_date}&merchant_uid=${this.merchant_uid}`
       param += `&member_code=${this.member_code}&product_name=${this.product_name}&order_status=${this.order_status}`;
 
       console.log('param : ', param)
@@ -220,11 +220,11 @@ export default {
       this.TOTAL_ARITCLES = result.data[0].count;
     },
 
-    async goToDetail(order_code, member_code) {
-      this.$router.push({ path: '/admin/order/orderdetail', query: { order_code: order_code, member_code: member_code } });
+    async goToDetail(merchant_uid, member_code, order_code) {
+      this.$router.push({ path: '/admin/order/orderdetail', query: { merchant_uid: merchant_uid, member_code: member_code, order_code: order_code } });
     },
 
-    seacrhOrder() {
+    searchOrder() {
       this.getOrderList();
       this.getListCount();
     },

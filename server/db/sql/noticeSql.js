@@ -8,7 +8,7 @@ const noticeList =
         , notice_content
         , notice_date
 FROM    notice
-ORDER BY 1`;
+ORDER BY 1 DESC`;
 
 const noticeListPage = 
 `SELECT notice_code
@@ -16,7 +16,7 @@ const noticeListPage =
         , notice_content
         , notice_date
 FROM    notice
-ORDER BY 1
+ORDER BY 1 DESC
 LIMIT ? OFFSET ?`;
 
 const noticeInfo = 
