@@ -104,7 +104,6 @@
           class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문목록 이동</button>
       </div>
     </div>
-    </div>
   </div>
 </template>
 

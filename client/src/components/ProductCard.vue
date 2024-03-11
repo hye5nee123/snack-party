@@ -24,8 +24,8 @@
         <!-- heart -->
         <!-- <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary" @click="likes()"> -->
         <button class="btn border border-secondary rounded-pill px-3 text-primary" @click="addTolikes()">
-          <i :class="{ nondisplay: isActive, display:true }" class="fa-regular fa-heart"></i>
-          <i :class="{ red: isActive, nondisplay: !isActive, display:true }" class="fa-solid fa-heart"></i> 관심상품
+          <i :class="{ nondisplay: isActive, display: true }" class="fa-regular fa-heart"></i>
+          <i :class="{ red: isActive, nondisplay: !isActive, display: true }" class="fa-solid fa-heart"></i> 관심상품
         </button>
         <div v-if="item">
           <button class="btn border border-secondary rounded-pill px-3 text-primary" @click="addToCart()">
@@ -58,14 +58,14 @@ export default {
       stockCnt: this.productInfo.stock_cnt,
       loginStatus: this.$store.state.memberStore.loginStatus,
       memberCode: this.$store.state.memberStore.memberInfo.member_code
-      
+
     };
   },
   watch: {
   },
   created() {
-    if(this.stockCnt == 0) {this.item = false}
-    this.getLikeList(this.memberCode)
+    if (this.stockCnt == 0) { this.item = false }
+    // this.getLikeList(this.memberCode)
 
   },
   mounted() {
@@ -85,49 +85,49 @@ export default {
       let likesCheck = await axios.get(`/apiorder/likes/${mcode}/${pcode}`).catch((err) => console.log(err));
       console.log('확인?', likesCheck.data);
 
-      if(!this.loginStatus) {
+      if (!this.loginStatus) {
         alert('로그인 후 이용가능합니다.');
 
-      } else if (likesCheck.data.length == 1 && this.pressLike == true){
+      } else if (likesCheck.data.length == 1 && this.pressLike == true) {
         this.isActive = false;
         this.pressLike = false;
         // sessionStorage.setItem("likes", this.isActive, this.pressLike);
 
         //단건삭제
         let del = await axios.delete(`/apiorder/likes/${pcode}`)
-        .catch((err) => console.log(err));
+          .catch((err) => console.log(err));
         console.log('찜 삭제', del);
-          alert('찜 상품이 삭제되었습니다.');
+        alert('찜 상품이 삭제되었습니다.');
 
-      } else{
-          this.isActive = true;
-          this.pressLike = true;
+      } else {
+        this.isActive = true;
+        this.pressLike = true;
 
-          let add = await axios.post("/apiorder/likes", data).catch(err => console.log(err));
-          console.log('찜 등록' + add);
-          alert('찜 상품으로 추가되었습니다.');
+        let add = await axios.post("/apiorder/likes", data).catch(err => console.log(err));
+        console.log('찜 등록' + add);
+        alert('찜 상품으로 추가되었습니다.');
       }
     },
-    async getLikeList(memberCode) {
-      let result = await axios
-        .get('/apiorder/likes/' + memberCode)
-        .catch((err) => console.log(err));
-      console.log('result : ', result);
-      let list = result.data;
-      this.likesList = list;
-      console.log('찜목록?',list);
+    // async getLikeList(memberCode) {
+    //   let result = await axios
+    //     .get('/apiorder/likes/' + memberCode)
+    //     .catch((err) => console.log(err));
+    //   console.log('result : ', result);
+    //   let list = result.data;
+    //   this.likesList = list;
+    //   console.log('찜목록?',list);
 
-        for(let pro of this.likesList) {
-          if(this.productInfo.product_code == pro.product_code) {
-            this.isActive = true;
-            this.pressLike = true;
-          } else {
-            this.isActive = false;
-            this.pressLike = false;
-          }
-        }
-    },
-  
+    //     for(let pro of this.likesList) {
+    //       if(this.productInfo.product_code == pro.product_code) {
+    //         this.isActive = true;
+    //         this.pressLike = true;
+    //       } else {
+    //         this.isActive = false;
+    //         this.pressLike = false;
+    //       }
+    //     }
+    // },
+
     getImgUrl(path) {
       return new URL(this.url + '/common/download?path=' + path);
     },
@@ -139,7 +139,7 @@ export default {
     },
 
     //장바구니 추가
-    async addToCart() { 
+    async addToCart() {
       let data = {
         "param": {
           cart_cnt: 1,
@@ -147,14 +147,14 @@ export default {
           product_code: this.productInfo.product_code
         }
       }
-      
+
       let mcode = this.memberCode;
       let pcode = this.productInfo.product_code;
       let cartCheck = await axios.get(`/apiorder/carts/${mcode}/${pcode}`).catch((err) => console.log(err));
 
-      if(!this.loginStatus) {
+      if (!this.loginStatus) {
         alert('로그인 후 이용가능합니다.');
-      }else if(cartCheck.data.length != 0){
+      } else if (cartCheck.data.length != 0) {
         alert('이미 담긴 상품입니다. 장바구니를 확인해 주세요');
       } else {
         let add = await axios.post("/apiorder/carts", data).catch(err => console.log(err));
@@ -163,7 +163,7 @@ export default {
       }
     }
   }
-    
+
 };
 </script>
 
@@ -181,7 +181,7 @@ export default {
   margin: auto 0;
 }
 
-.sheight{
+.sheight {
   height: 57.59px;
 }
 </style>
