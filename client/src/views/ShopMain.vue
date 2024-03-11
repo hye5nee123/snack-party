@@ -16,11 +16,11 @@
                     <div id="carouselId" class="carousel slide position-relative  " data-bs-ride="carousel">
                         <div class="carousel-inner" role="listbox">
                             <div class="carousel-item active rounded">
-                                <img src="img/hero-img-1.jpg" class="img-fluid rounded"
+                                <img src="img/hero-img-1.jpg" class="img-fluid rounded heroImg"
                                     alt="First slide">
                             </div>
                             <div class="carousel-item rounded">
-                                <img src="img/hero-img-2.jpg" class="img-fluid rounded" alt="Second slide">
+                                <img src="img/hero-img-2.jpg" class="img-fluid rounded heroImg" alt="Second slide">
                             </div>
                         </div>
                         <button class="carousel-control-prev carousel-control" type="button" data-bs-target="#carouselId" data-bs-slide="prev">
@@ -401,8 +401,8 @@ export default {
     .carousel {
         /* height: 100px !important; */
     }
-    /* .carousel-item {
-        height: 200px;
-        width: 200px;
-    } */
+    .heroImg {
+        height: 400px;
+        width: 400px;
+    }
 </style>
