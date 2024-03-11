@@ -258,6 +258,7 @@ export default {
             console.log(this.productInfo.path);
             console.log(this.productInfo.thumbnail);
         },
+
     }
 }
 </script>

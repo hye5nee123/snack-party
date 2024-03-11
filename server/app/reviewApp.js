@@ -100,4 +100,11 @@ app.delete("/:review_code", async (request, response) => {
   let result = await db.connection("reviewsql", "reviewDelete", data);
   response.send(result);
 });
+
+//수정
+app.put("/:review_code", async (request, response) => {
+  let data = [request.body.param, request.params.review_code];
+  let result = await db.connection("reviewsql", "reviewUpdate", data);
+  response.send(result);
+})
 module.exports = app;

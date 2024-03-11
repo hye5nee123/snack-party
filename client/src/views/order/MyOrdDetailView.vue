@@ -28,7 +28,8 @@
               <tr v-for="(detail, i) in myOrdDetail" :key="i">
                 <td class="py-5">{{ ordStatus(detail.order_status) }}</td>
                 <td class="py-5"><button type="button"
-                    class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2">리뷰작성</button></td>
+                    class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2"
+                    v-on:click="goToReviewInsert(detail.detail_code)">리뷰작성</button></td>
               </tr>
             </tbody>
           </table>
@@ -41,7 +42,7 @@
       <!-- 포인트?{{ use_point }} {{ plus_point }}
       주문금액?{{ allPrice }}
       {{ myOrdDetail }} -->
-      <div class="right-div">
+      <div class=" right-div">
         <div class="col-md-12 col-lg-6 col-xl-5">
           <PaymentInfo :checkOutList="myOrdDetail" :pointList="pointList" :allPrice="allProPrice" @usePoint="usePoint"
             @deliveryFee="deliveryFee" @totalPrice="totalPrice" />
@@ -86,25 +87,19 @@
             </table>
           </div>
         </div>
-        <p>{{ order_code }}</p>
-        {{ mem_code }}
-        <OrderProducts :checkOutList="myOrdDetail" :review_show="review_show" />
+      <OrderProducts :checkOutList="myOrdDetail" :review_show="review_show"/>
 
-        <br />
-        <div>
-          {{ myOrdDetail }}
-          <!-- <PaymentInfo /> -->
-        </div>
-      </div>
-
-      <div style="text-align: center;">
-        <button @click="cancelOrd()"
-          class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문취소</button>
-        <button @click="this.$router.push({ path: '/myorderlist' })"
-          class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문목록 이동</button>
+      <br />
+      <div>
       </div>
     </div>
+    
+    <div style="text-align: center;">
+      <button @click="cancelOrd()" class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문취소</button>
+      <button @click="this.$router.push({ path: '/myorderlist' })" class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문목록 이동</button>
+    </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -234,6 +229,10 @@ export default {
           alert('주문취소가 불가합니다.');
         }
       }
+    },
+    //리뷰 insert메소드 정의
+    goToReviewInsert(detail_code) {
+      this.$router.push({ path: '/reviewInsert', query: { 'detail_code': detail_code } });
     },
 
     //안 됨

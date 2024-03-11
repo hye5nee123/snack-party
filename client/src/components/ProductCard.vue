@@ -51,9 +51,8 @@ export default {
   },
   data() {
     return {
-      pressLike: false,
+      // pressLike: false, //기본값으로 넣어놔
       isActive: false,
-      likesList: [],
       item: true,
       stockCnt: this.productInfo.stock_cnt,
       loginStatus: this.$store.state.memberStore.loginStatus,
@@ -62,17 +61,25 @@ export default {
     };
   },
   watch: {
+    "productInfo.product_code"(){ //객체 안의 필드 사용시 "" 따옴표로 감싸기
+      this.getLikeList(this.memberCode);
+    }
   },
   created() {
-    if (this.stockCnt == 0) { this.item = false }
-    // this.getLikeList(this.memberCode)
-
+    if(this.stockCnt == 0) {this.item = false}
+    this.getLikeList(this.memberCode);
   },
   mounted() {
 
   },
   methods: {
     async addTolikes() {
+      //로그인 check
+      if(!this.loginStatus) {
+        alert('로그인 후 이용가능합니다.');
+        return;
+      }
+
       let data = {
         "param": {
           product_code: this.productInfo.product_code,
@@ -80,54 +87,46 @@ export default {
         }
       }
 
-      let mcode = this.memberCode;
-      let pcode = this.productInfo.product_code;
-      let likesCheck = await axios.get(`/apiorder/likes/${mcode}/${pcode}`).catch((err) => console.log(err));
-      console.log('확인?', likesCheck.data);
-
-      if (!this.loginStatus) {
-        alert('로그인 후 이용가능합니다.');
-
-      } else if (likesCheck.data.length == 1 && this.pressLike == true) {
+      //찜 여부 확인 (있으면 클릭 시 삭제)
+      if (this.isActive == true){
         this.isActive = false;
-        this.pressLike = false;
-        // sessionStorage.setItem("likes", this.isActive, this.pressLike);
+        // this.pressLike = false;
 
         //단건삭제
-        let del = await axios.delete(`/apiorder/likes/${pcode}`)
-          .catch((err) => console.log(err));
+        let del = await axios.delete(`/apiorder/likes/${this.productInfo.product_code}`)
+        .catch((err) => console.log(err));
         console.log('찜 삭제', del);
         alert('찜 상품이 삭제되었습니다.');
 
-      } else {
-        this.isActive = true;
-        this.pressLike = true;
+      } else{
+          this.isActive = true;
+          // this.pressLike = true;
 
         let add = await axios.post("/apiorder/likes", data).catch(err => console.log(err));
         console.log('찜 등록' + add);
         alert('찜 상품으로 추가되었습니다.');
       }
     },
-    // async getLikeList(memberCode) {
-    //   let result = await axios
-    //     .get('/apiorder/likes/' + memberCode)
-    //     .catch((err) => console.log(err));
-    //   console.log('result : ', result);
-    //   let list = result.data;
-    //   this.likesList = list;
-    //   console.log('찜목록?',list);
-
-    //     for(let pro of this.likesList) {
-    //       if(this.productInfo.product_code == pro.product_code) {
-    //         this.isActive = true;
-    //         this.pressLike = true;
-    //       } else {
-    //         this.isActive = false;
-    //         this.pressLike = false;
-    //       }
-    //     }
-    // },
-
+    
+    async getLikeList(memberCode) {
+      if(memberCode == '') {
+        return;
+      } else {
+        let result = await axios
+          .get('/apiorder/likes/' + memberCode +'/'+ this.productInfo.product_code)
+          .catch((err) => console.log(err));
+        // console.log('result : ', result);
+        let list = result.data;
+        console.log('찜목록?',list);
+            if(list) {
+              this.isActive = true;
+              // this.pressLike = true;
+            } else {
+              this.isActive = false;
+              // this.pressLike = false;
+            }
+      }
+    },
     getImgUrl(path) {
       return new URL(this.url + '/common/download?path=' + path);
     },

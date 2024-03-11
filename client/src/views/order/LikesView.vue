@@ -30,7 +30,7 @@
                 <input type="checkbox" v-model="selectList" :value="like" />
               </td>
               <td>
-                <img :src="getImgUrl(likeList[i].path)" width="120px" class="img-fluid rounded-top" alt="" /> <!--class의 imghw 지우고 크기 조절-->
+                <img :src="getImgUrl(likeList[i].path)" width="120px" class="img-fluid rounded-top" @click="gotodetail(likeList[i].product_code)" /> <!--class의 imghw 지우고 크기 조절-->
               </td>
               <td>
                 <p class="mb-0 mt-4">{{ like.product_name }}</p>
@@ -42,7 +42,7 @@
                 </p>
               </td>
               <td>
-                <button @click="delCartOne(like)" class="btn btn-md rounded-circle bg-light border mt-4">
+                <button @click="delLikeOne(like)" class="btn btn-md rounded-circle bg-light border mt-4">
                   <i class="fa fa-times text-danger"></i>
                 </button>
               </td>
@@ -53,7 +53,7 @@
       <br />
 
       <div class="button-center">
-        <button @click="goToCart()"
+        <button @click="addToCart()"
           class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 ordBtn">
           장바구니 담기
         </button>
@@ -83,15 +83,15 @@ export default {
     this.getLikeList(this.mem_code);
   },
   computed: {
-    // selectAll: {
-    //   get: function () {
-    //     //getter
-    //     return this.likesList.length == this.selectList.length;
-    //   },
-    //   set(checked) {
-    //     this.selectList = checked ? this.likesList : [];
-    //   },
-    // },
+    selectAll: {
+      get: function () {
+        //getter
+        return this.likeList.length == this.selectList.length;
+      },
+      set(checked) {
+        this.selectList = checked ? this.likeList : [];
+      },
+    },
   },
   methods: {
     async getLikeList(mem_code) {
@@ -102,22 +102,53 @@ export default {
       let list = result.data;
       this.likeList = list;
     },
+    
     getImgUrl(path) {
       if (path)
         return new URL(this.url + '/common/download?path=' + path);
       else
         return '';
     },
-    // goToCart() {
-    //   if (this.selectList.length == 0) {
-    //     alert('주문하실 상품을 선택해주세요.');
-    //   } else {
-    //       sessionStorage.setItem("likes", JSON.stringify(this.selectList));
-    //       this.$router.push({ path: '/cart' })
-    //     }
-    // }
-  }
+    async addToCart() {
+      if (this.selectList.length == 0) {
+        alert('장바구니에 담을 상품을 선택해주세요.');
+        return;
+      }
+
+      let data = {
+        "param": {
+          cart_cnt: 1,
+          member_code: this.mem_code,
+          product_code: this.selectList.product_code
+        }
+      }
+
+      // let cartCheck = await axios.get(`/apiorder/carts/${this.mem_code}/${this.selectList.product_code}`).catch((err) => console.log(err));
+     
+      for(let selOrd of this.selectList) {
+        if(selOrd.stock_cnt < 1){
+          alert(selOrd.product_name + '의 재고량이 부족하여 장바구니에 담을 수 없습니다.');
+          return;
+        } 
+      }
+        let add = await axios.post("/apiorder/carts", data).catch(err => console.log(err));
+            console.log('장바구니등록' + add);
+            alert('장바구니에 추가되었습니다.');
+            // this.$router.push({ path: '/cart' });
+      },
+      async delLikeOne(likeOne) { //단건삭제
+      await axios
+        .delete(`/apiorder/likes/${likeOne.product_code}`)
+        .catch((err) => console.log(err));
+      this.$router.go(0);
+    },
+    gotodetail(pcode) {
+      this.$router.push({ name: 'ProductInfo', query: { 'product_code': pcode } });
+    },
+
+  }//end method
 }
+
 </script>
 <style lang="">
   

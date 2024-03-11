@@ -6,7 +6,7 @@
                     <tbody>
                         <tr>
                             <th>주문코드</th>
-                            <td>{{ this.orderList.order_code }}</td>
+                            <td>{{ this.orderList.merchant_uid }}</td>
                         </tr>
                         <tr>
                             <th>회원코드</th>
@@ -54,12 +54,11 @@
                                     </select>
                                 </div>
                             </td>
-                            <td>{{ this.ordStatus(this.orderList.order_status) }}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
-            <div class="table-responsive">
+            <div class="table-responsive" style="text-align: center;">
                 <table class="table">
                     <thead>
                         <tr>
@@ -86,7 +85,8 @@
                         </tr>
                     </tbody>
                 </table>
-                
+                <button type="button" class="form-control" @click="changeStatus">수정</button>
+                <button type="button" class="form-control" @click="$router.go(-1)">취소</button>
             </div>
         </div>
     </div>
@@ -99,17 +99,19 @@ export default {
     name: 'AdminOrderDetailComp',
     props: [
         "order_code",
+        "merchant_uid",
         "member_code"
     ],
     data() {
         return {
             oCode: this.order_code,
             mCode: this.member_code,
+            mUid: this.merchant_uid,
 
             orderList: [],
             detailList: [],
 
-            order_status:'',
+            order_status: '',
         };
     },
     created() {
@@ -136,6 +138,39 @@ export default {
                 return '환불완료'
             }
         },
+        async changeStatus() {
+            let chk = 0;
+            if (this.order_status == 'h05') {
+                let check = await axios.get(`/api/admin/checkPoint/${this.oCode}`)
+                    .catch(err => console.log(err));
+                chk = check.data[0].count 
+            }
+
+            let result = await axios.put(`/api/admin/updateOrderStatus/${this.order_status}/${this.oCode}`)
+                .catch(err => console.log(err));
+            let info = result.data.affectedRows;
+
+            if (info > 0) {
+
+                alert('주문상태가 수정되었습니다.');
+
+                if (this.order_status == 'h05') {
+
+                    if (chk > 0) {
+                        alert('이미 해당 주문에 포인트가 적립되었습니다.');
+                    } else {
+                        let result = await axios.post(`/api/admin/addPoint/${this.oCode}/${this.mCode}`)
+                            .catch(err => console.log(err));
+                        let info = result.data.changedRows;
+
+                        if (info > 0) {
+                            alert('배송이 완료되어 포인트가 적립되었습니다.');
+                        }
+                    }
+                }
+                this.$router.go(0);
+            }
+        },
         async getOrderInfo() {
             let result = await axios.get(`/api/admin/orderInfo/${this.oCode}`)
                 .catch(err => console.log(err));
@@ -157,7 +192,7 @@ export default {
             for (let obj of objList) {
                 newArr.push({
                     detail_code: obj.detail_code,
-                    order_code: obj.order_code,
+                    merchant_uid: obj.merchant_uid,
                     product_price: obj.product_price,
                     cart_cnt: obj.order_cnt,
                     detail_price: obj.detail_price,
@@ -177,3 +212,9 @@ export default {
     }
 }
 </script>
+<style scoped>
+button {
+    display: inline-block;
+    width: 100px;
+}
+</style>

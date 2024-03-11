@@ -40,7 +40,7 @@
                       <small>Forgot Password?</small>
                     </a> -->
                   </div>
-                  <div class="input-group input-group-merge">
+                  <div class="input-group-merge">
                     <input
                       type="password"
                       id="phone"
