@@ -75,7 +75,7 @@ export default {
       if (this.type == "product") {
         url = `/api/review/detaillist/${this.pcode}/${this.ITEM_PER_PAGE}/${this.pageData}`
       } else if (this.type == "admin") {
-        url = `/api/review/`;
+        url = `/api/review/list/${this.ITEM_PER_PAGE}/${this.pageData}`;
       } else {
         url = `/api/review/member_code`
       }
