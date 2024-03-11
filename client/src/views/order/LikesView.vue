@@ -109,38 +109,69 @@ export default {
       else
         return '';
     },
-    async addToCart() {
+
+    async addToCart() { //선택상품 담기
       if (this.selectList.length == 0) {
         alert('장바구니에 담을 상품을 선택해주세요.');
         return;
       }
 
-      let data = {
-        "param": {
-          cart_cnt: 1,
-          member_code: this.mem_code,
-          product_code: this.selectList.product_code
-        }
-      }
-
-      // let cartCheck = await axios.get(`/apiorder/carts/${this.mem_code}/${this.selectList.product_code}`).catch((err) => console.log(err));
-     
-      for(let selOrd of this.selectList) {
-        if(selOrd.stock_cnt < 1){
-          alert(selOrd.product_name + '의 재고량이 부족하여 장바구니에 담을 수 없습니다.');
+      //장바구니 재고,중복체크
+      for(let selLike of this.selectList) {
+        if(selLike.stock_cnt < 1) {
+          alert(selLike.product_name + '의 재고가 없습니다.\n해당 상품 선택을 취소 후 다시 담아주세요.');
           return;
-        } 
-      }
-        let add = await axios.post("/apiorder/carts", data).catch(err => console.log(err));
-            console.log('장바구니등록' + add);
-            alert('장바구니에 추가되었습니다.');
-            // this.$router.push({ path: '/cart' });
+        } else {
+          console.log(selLike.product_code)
+          let cartCheck = await axios.get(`/apiorder/carts/${this.mem_code}/${selLike.product_code}`).catch((err) => console.log(err));
+          console.log('??', cartCheck); //PRO00084 Array나옴
+          console.log('???', cartCheck.data.length); //1
+            let proName = '';
+            if(cartCheck.data.length == 1) {
+              let proCode = cartCheck.data[0].product_code;
+              if(selLike.product_code == proCode) {
+                proName = selLike.product_name;
+              }
+              alert(proName + '는 이미 장바구니에 담긴 상품입니다.\n해당 상품 선택을 취소 후 다시 담아주세요.');
+              return;
+            }
+        }
+        let data = {
+          "param": {
+            cart_cnt: 1,
+            member_code: this.mem_code,
+            product_code: selLike.product_code
+          }
+        }
+        console.log('selLike? ', selLike.product_code)
+          let add = await axios.post("/apiorder/carts", data).catch(err => console.log(err));
+              console.log('장바구니등록' + add);
+              alert('장바구니에 추가되었습니다.');
+
+      } //for문 끝
+
+
+
       },
-      async delLikeOne(likeOne) { //단건삭제
+
+    async delLikeOne(likeOne) { //단건삭제
       await axios
-        .delete(`/apiorder/likes/${likeOne.product_code}`)
+        .delete(`/apiorder/likes/${this.mem_code}/${likeOne.product_code}`)
         .catch((err) => console.log(err));
       this.$router.go(0);
+    },
+    async deleteSelected() { //선택상품들삭제
+      if(this.selectList.length == 0) {
+        alert('삭제할 상품을 선택해주세요.');
+      } else {
+        for (let selected of this.selectList) {
+          await axios
+            .delete(`/apiorder/likes/${this.mem_code}/${selected.product_code}`)
+            .catch((err) => console.log(err));
+        }
+        alert('삭제되었습니다.');
+        this.$router.go(0);
+      }
     },
     gotodetail(pcode) {
       this.$router.push({ name: 'ProductInfo', query: { 'product_code': pcode } });
@@ -150,6 +181,8 @@ export default {
 }
 
 </script>
-<style lang="">
-  
+<style scoped>
+.button-center {
+  text-align: center;
+}
 </style>
