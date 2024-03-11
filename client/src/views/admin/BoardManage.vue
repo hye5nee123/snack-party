@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h3>ReviewList.vue</h3>
+    <div class="container-xxl flex-grow-1 container-p-y">
+            <div class="card">
+                <h3>리뷰관리</h3>
+            </div>
+        </div>
     <ReviewListComp type="admin"/>
   </div>
 </template>

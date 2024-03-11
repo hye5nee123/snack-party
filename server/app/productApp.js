@@ -6,7 +6,7 @@ const url = require('url');
 // 게시물 수 조회
 app.get('/count', async (req, res) => {
     let data = [];
-    let where = "";
+    let where = " WHERE 1=1";
     var queryData = url.parse(req.url, true).query;
     let category = queryData.category;
     let keyword = queryData.keyword;
