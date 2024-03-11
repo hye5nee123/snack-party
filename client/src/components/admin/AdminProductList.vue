@@ -113,7 +113,7 @@
               <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox"
                   :checked="product.product_display == 'f01' ? true : false"
-                  @change="changeDisplay(product.product_code, product.product_display)">
+                  @click.capture.stop="changeDisplay(product.product_code, product.product_display, product.product_name, product.product_price, product.category, product.stock_cnt)">
                 <label class="form-check-label" v-if="product.product_display == 'f01'">공개</label>
                 <label class="form-check-label" v-if="product.product_display == 'f02'">비공개</label>
               </div>
@@ -234,15 +234,18 @@ export default {
       this.getProductList();
       this.getListCount();
     },
-    async changeDisplay(pcode, disp) {
+    // 상품 공개 여부 수정
+    async changeDisplay(pcode, disp, pname, price, cate, stock) {
       let cdisp = disp == 'f01' ? 'f02' : 'f01';
-      let data = {
-        param: {
-          product_display: cdisp
-        }
-      };
 
-      let result = await axios.put("/api/product/" + pcode, data)
+      const formData = new FormData();
+      formData.append('product_display', cdisp);
+      formData.append('product_name', pname);
+      formData.append('product_price', price);
+      formData.append('category', cate);
+      formData.append('product_cnt', stock);
+
+      let result = await axios.put("/api/product/" + pcode, formData)
         .catch(err => console.log(err));
 
       console.log(pcode);
