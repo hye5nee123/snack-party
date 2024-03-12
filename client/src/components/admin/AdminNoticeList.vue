@@ -7,7 +7,7 @@
         <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper dt-bootstrap5 no-footer">
 
           <!-- Contents START -->
-          <table class="datatables-products table border-top dataTable no-footer dtr-column collapsed "
+          <table class="table-hover datatables-products table border-top dataTable no-footer dtr-column collapsed "
             id="DataTables_Table_0" aria-describedby="DataTables_Table_0_info" style="width: 100%;">
             <thead>
               <tr>
@@ -26,9 +26,9 @@
                   style="width: 10%;" aria-label="product: activate to sort column descending" aria-sort="ascending">
                   작성일자</th>
 
-                <th class="sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                <!-- <th class="sorting sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
                   style="width: 10%;" aria-label="product: activate to sort column descending" aria-sort="ascending">
-                  내용</th>
+                  내용</th> -->
               </tr>
             </thead>
 
