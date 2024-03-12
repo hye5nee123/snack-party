@@ -104,7 +104,7 @@
                                 </button>
 
                                 <button type="button" v-if="productInfo[0].stock_cnt == 0"
-                                    class="btn border rounded-pill px-4 py-2 mb-4 text-primary col-lg-4">품절</button>
+                                    class="soldout-btn btn border rounded-pill px-4 py-2 mb-4 col-lg-4">품절</button>
                                 <button type="button" v-else @click="addToCart()"
                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i
                                         class="fa-solid fa-cart-plus" /> 장바구니</button>
@@ -519,5 +519,12 @@ export default {
 .display {
     line-height: inherit;
     margin: auto 0;
+}
+
+.soldout-btn {
+  /* border: 1px solid rgb(65, 64, 64); */
+  border: 1.2px solid #c7c7c7 !important;
+  color: #858585;
+  font-weight: bold;
 }
 </style>

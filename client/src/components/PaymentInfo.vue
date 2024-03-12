@@ -15,7 +15,7 @@
           <td v-if="minus_point != 0">적립금 사용</td>
 
           <td v-if="pointInput == true">  
-            <input type="text" v-model="usePoint" @input="point()">원 
+            <input type="text" v-model="usePoint" @input="point()" size=5>원 
             <button type="button" class="cnt-update-btn btn-sm" @click="usePoint = point_value">모두사용</button>
             <br>보유적립금: {{ $currencyFormat(point_value - usePoint) }}원
           </td>
@@ -34,10 +34,6 @@
     </table>
 
     <br>
-    <!-- 차감:{{ minus_point }}원
-      추가:{{ plus_point }}원 -->
-    
-    <!-- <div class="table-responsive" v-if="completepoint == false"> -->
     <div class="table-responsive">
       <table v-if="completepoint == true" class="table">
         <tbody>
@@ -45,7 +41,7 @@
             <td colspan="2"></td>
           </tr>
           <tr>
-            <td>구매적립액</td>
+            <td style="width: 380.33px;">구매적립액</td>
             <td>{{ $currencyFormat(plus_point) }}원</td>
           </tr>
         </tbody>
@@ -146,9 +142,14 @@ export default {
 <style scoped>
 .cnt-update-btn {
   background-color: #fff;
-  border: 1.2px solid #7087ee;
-  color: #5a5a5a;
-  /* font-weight: bold; */
+  border: 1px solid #93c5fff8;
+  color: #7e7c7c;
+  width: 80px;
+}
+.cnt-update-btn:hover {
+  background-color:#93c5fff8;
+  color: #fff;
+  transition: 0.3s;
 }
 th {
   font-size: 16px;

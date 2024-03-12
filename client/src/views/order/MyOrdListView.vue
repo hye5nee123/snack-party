@@ -32,7 +32,7 @@
               <th scope="col">상품명</th>
               <th scope="col">결제금액</th>
               <th scope="col">주문상태</th>
-              <th scope="col">상세조회</th>
+              <th scope="col" style="padding-left: 15px">상세조회</th>
             </tr>
           </thead>
           <!-- {{ myOrdList }} -->
@@ -140,6 +140,10 @@ export default {
 </script>
 
 <style scoped>
+th {
+  font-size: 16px;
+  color: #a19d9d;
+}
 td {
   padding: 10px;
 }
