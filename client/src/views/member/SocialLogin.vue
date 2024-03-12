@@ -1,17 +1,16 @@
 <template>
-    <!-- Single Page Header start -->
-    <div class="container-fluid page-header py-5">
+<!-- Single Page Header start -->
+  <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">소셜로그인 회원가입</h1>
     <ol class="breadcrumb justify-content-center mb-0">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
         <li class="breadcrumb-item text-white">Sign Up</li>
     </ol>
   </div>
-  <!-- Single Page Header End -->
+<!-- Single Page Header End -->
   
   
-  <!-- Checkout Page Start -->
-  
+<!-- Checkout Page Start -->
   <div class="container-fluid py-5">
       <div class="container py-5">
           <form action="#">
@@ -78,108 +77,108 @@
         </form>
     </div>
   </div>
-  <!-- Checkout Page End -->
-  </template>
+<!-- Checkout Page End -->
+</template>
   
-  <script>
-  import axios from 'axios';
-  import OpenPostcode from '../../components/OpenPostcode.vue';
-  
-  export default {
-      name: 'SignUp',
-      data() {
-          return {
-              memberInfo : {
-                  id : '',
-                  pw : '',
-                  pw_confirm : '',
-                  name : '',
-                  phone : '',
-                  email : '',
-                  birth : null,
-                  gender : '',
-                  postcode : '',
-                  type : 'b02',
-                  address : '',
-                  address_detail : '',
-                  status : 'c01',
-                  quit_date : null,
-                  token : ''
-              }
-          };
-      },
-      created() {
-          this.memberInfo.id = this.$store.state.memberStore.kakaoInfo.id;
-          this.memberInfo.email = this.$store.state.memberStore.kakaoInfo.kakao_account.email;
-      },
-      components : {
-          OpenPostcode
-      },
-      methods : {
-          async memberInsert() {
-              if(!this.validation()) return;
-  
-              let data = {
-                  param : {
-                      member_id : this.memberInfo.id,
-                      pw : this.memberInfo.pw,
-                      member_name : this.memberInfo.name,
-                      member_phone : this.memberInfo.phone,
-                      member_email : this.memberInfo.email,
-                      birthday : this.memberInfo.birth,
-                      gender : this.memberInfo.gender,
-                      postcode : this.memberInfo.postcode,
-                      member_type : this.memberInfo.type,
-                      address : this.memberInfo.address,
-                      address_detail : this.memberInfo.address_detail,
-                      member_status : this.memberInfo.status,
-                      quit_date : this.memberInfo.quit_date,
-                      token : this.memberInfo.token
-                  }
-              };
-              let result = await axios.post("/api/member", data)
-                          .catch(err => console.log(err));
-              let info = result.data.affectedRows;
-              if(info > 0) {
-                  alert('회원가입이 완료되었습니다.');
-                  this.$router.push({path : '/login'})
-              }
-          },
-          validation() {
-              if(this.memberInfo.id == '') {
-                  alert('아이디를 입력해주세요.');
-                  return false;
-              }
-              if(this.memberInfo.name == '') {
-                  alert('이름을 입력해주세요.');
-                  return false;
-              }
-              if(this.memberInfo.phone == '') {
-                  alert('휴대전화를 입력해주세요.');
-                  return false;
-              }
-              if(this.memberInfo.email == '') {
-                  alert('이메일을 입력해주세요.');
-                  return false;
-              }
-              if(this.memberInfo.postcode == '') {
-                  alert('기본주소를 입력해주세요.');
-                  return false;
-              }
-              if(this.memberInfo.address_detail == '') {
-                  alert('상세주소를 입력해주세요.');
-                  return false;
-              }
-  
-              return true;
-          },
-          getCode(zonecode, roadAddress) {
-              this.memberInfo.postcode = zonecode;
-              this.memberInfo.address = roadAddress;
-          }
-      }
-  }
-  </script>
+<script>
+import axios from 'axios';
+import OpenPostcode from '../../components/OpenPostcode.vue';
+
+export default {
+    name: 'SignUp',
+    data() {
+        return {
+            memberInfo : {
+                id : '',
+                pw : '',
+                pw_confirm : '',
+                name : '',
+                phone : '',
+                email : '',
+                birth : null,
+                gender : '',
+                postcode : '',
+                type : 'b02',
+                address : '',
+                address_detail : '',
+                status : 'c01',
+                quit_date : null,
+                token : ''
+            }
+        };
+    },
+    created() {
+        this.memberInfo.id = this.$store.state.memberStore.kakaoInfo.id;
+        this.memberInfo.email = this.$store.state.memberStore.kakaoInfo.kakao_account.email;
+    },
+    components : {
+        OpenPostcode
+    },
+    methods : {
+        async memberInsert() {
+            if(!this.validation()) return;
+
+            let data = {
+                param : {
+                    member_id : this.memberInfo.id,
+                    pw : this.memberInfo.pw,
+                    member_name : this.memberInfo.name,
+                    member_phone : this.memberInfo.phone,
+                    member_email : this.memberInfo.email,
+                    birthday : this.memberInfo.birth,
+                    gender : this.memberInfo.gender,
+                    postcode : this.memberInfo.postcode,
+                    member_type : this.memberInfo.type,
+                    address : this.memberInfo.address,
+                    address_detail : this.memberInfo.address_detail,
+                    member_status : this.memberInfo.status,
+                    quit_date : this.memberInfo.quit_date,
+                    token : this.memberInfo.token
+                }
+            };
+            let result = await axios.post("/api/member", data)
+                        .catch(err => console.log(err));
+            let info = result.data.affectedRows;
+            if(info > 0) {
+                alert('회원가입이 완료되었습니다.');
+                this.$router.push({path : '/login'})
+            }
+        },
+        validation() {
+            if(this.memberInfo.id == '') {
+                alert('아이디를 입력해주세요.');
+                return false;
+            }
+            if(this.memberInfo.name == '') {
+                alert('이름을 입력해주세요.');
+                return false;
+            }
+            if(this.memberInfo.phone == '') {
+                alert('휴대전화를 입력해주세요.');
+                return false;
+            }
+            if(this.memberInfo.email == '') {
+                alert('이메일을 입력해주세요.');
+                return false;
+            }
+            if(this.memberInfo.postcode == '') {
+                alert('기본주소를 입력해주세요.');
+                return false;
+            }
+            if(this.memberInfo.address_detail == '') {
+                alert('상세주소를 입력해주세요.');
+                return false;
+            }
+
+            return true;
+        },
+        getCode(zonecode, roadAddress) {
+            this.memberInfo.postcode = zonecode;
+            this.memberInfo.address = roadAddress;
+        }
+    }
+}
+</script>
   
 <style scoped>
 .center {

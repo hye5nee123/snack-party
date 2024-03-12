@@ -1,5 +1,6 @@
 // memberSql.js
 
+// 전체조회
 const memberList =
 `SELECT member_code
         , member_id
@@ -20,20 +21,24 @@ const memberList =
 FROM member
 ORDER BY member_code`;
 
+// 등록
 const memberInsert =
 `INSERT INTO member
 SET member_code = snack.nextval('MEM')
 , ?`
 
+// 수정
 const memberUpdate =
 `UPDATE member
 SET ?
 WHERE member_id = ?`
 
+// 삭제
 const memberDelete = 
 `DELETE FROM member
 WHERE member_code = ?`
 
+// 단건조회, 로그인, 아이디/비밀번호 찾기
 const memberLogin = 
 `SELECT member_code
         , member_id

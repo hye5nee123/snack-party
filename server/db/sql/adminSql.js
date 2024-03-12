@@ -86,25 +86,47 @@ const checkPoint =
 FROM   point 
 WHERE  order_code = ?`
 
+// 회원조회
 const memberList =
-`SELECT row_number()
+`SELECT row_number() over(order by member_code) AS num
         , member_code
         , member_id
         , pw
         , member_name
         , member_phone
         , member_email
-        , DATE_FORMAT(birthday, '%Y-%m-%d')
+        , DATE_FORMAT(birthday, '%Y-%m-%d') as birthday
         , gender
         , postcode
         , member_type
-        , DATE_FORMAT(join_date, '%Y-%m-%d')
+        , DATE_FORMAT(join_date, '%Y-%m-%d') as join_date
         , address
         , address_detail
         , member_status
-        , DATE_FORMAT(quit_date, '%Y-%m-%d')
+        , DATE_FORMAT(quit_date, '%Y-%m-%d') as quit_date
         , token
-FROM member`
+FROM member`;
+
+// 회원조회 상세
+const memberInfo =
+`SELECT member_code
+        , member_id
+        , pw
+        , member_name
+        , member_phone
+        , member_email
+        , DATE_FORMAT(birthday, '%Y-%m-%d') as birthday
+        , gender
+        , postcode
+        , member_type
+        , DATE_FORMAT(join_date, '%Y-%m-%d') as join_date
+        , address
+        , address_detail
+        , member_status
+        , DATE_FORMAT(quit_date, '%Y-%m-%d') as quit_date
+        , token
+FROM member
+WHERE member_code = ?`;
 
 const checkDeliveryNum = 
 `SELECT delivery_num
@@ -129,5 +151,6 @@ module.exports = {
     memberList,
     updateOrderPoint,
     checkDeliveryNum,
-    updateDeliveryNum
+    updateDeliveryNum,
+    memberInfo
 }
