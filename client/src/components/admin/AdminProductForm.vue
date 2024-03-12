@@ -316,11 +316,16 @@ export default {
                 }
             }).catch(err => console.log(err));
 
-            let info = result.data.changedRows;
-            console.log(info)
-            if (info > 0) {
+            let change = result.data.changedRows;
+            let affect = result.data.affectedRows;
+            
+            if (change > 0) {
                 alert('수정되었습니다.');
                 this.$router.push({ path: '/admin/product' });
+            } else if (affect > 0) {
+                alert('수정된 내용이 없습니다.');
+            } else {
+                alert('수정에 실패하였습니다.');
             }
         }
     }
