@@ -1,9 +1,10 @@
 <template>
   <!-- Single Page Header start -->
   <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6"></h1>
+    <h3 class="text-center text-white">주문목록</h3>
     <ol class="breadcrumb justify-content-center mb-0">
-      <h4><li class="breadcrumb-item active text-white">MyOrder</li></h4>
+      <li class="breadcrumb-item"><a href="/productlist">Product</a></li>
+      <li class="breadcrumb-item active text-white">MyOrder</li>
     </ol>
   </div>
   <!-- Single Page Header End -->
@@ -108,21 +109,22 @@ export default {
         }
     },
 
+    //주문목록
+    async getMyOrdList() {
+      let result = await axios.get(`/apiorder/myord/list/${this.memCode}/${this.ITEM_PER_PAGE}/${this.pageData}`)
+      .catch(err => console.log(err));
+      console.log('result : ', result)
+      this.myOrdList = result.data;
+    },
+    
     // 페이지네이션 컴포넌트에서 전달되는 emit event
     onChangePage(data) {
       this.curPage = data;
       this.pageData = (this.curPage - 1) * this.ITEM_PER_PAGE;
       this.getMyOrdList();
     },
-    //주문목록
-    async getMyOrdList() {
-      let result = await axios.get(`/apiorder/myord/list/${this.memCode}/${this.ITEM_PER_PAGE}/${this.pageData}`)
-        .catch(err => console.log(err));
-      console.log('result : ', result)
-      this.myOrdList = result.data;
-    },
-     // 전체 데이터 갯수
-     async getListCount() {
+    // 전체 데이터 갯수
+    async getListCount() {
       let result = await axios.get(`/apiorder/myord/count/${this.memCode}`)
         .catch(err => console.log(err));
       console.log('count : ', result.data[0].count)
@@ -140,5 +142,8 @@ export default {
 <style scoped>
 td {
   padding: 10px;
+}
+.text-primary {
+  font-weight: bold;
 }
 </style>

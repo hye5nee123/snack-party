@@ -46,3 +46,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+th {
+  font-size: 15px;
+}
+</style>

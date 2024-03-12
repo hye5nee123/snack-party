@@ -84,12 +84,33 @@ app.post("/search", async(request, response) => {
 })
 
 
-// 회원적립금 포함 조회(주문 시 변동 계산)
+// 회원정보 조회(총 적립금 포함 -> 주문 시 변동 계산)
 app.get("/:mcode", async(request, response) => {
     let data = [request.params.mcode, request.params.mcode, request.params.mcode];
     let result = (await db.connection('membersql', 'memberInfo', data))[0];
     response.send(result);
 })
+
+//회원 적립금 보유내역
+//*페이징
+app.get("/points/:mcode/:limit/:offset", async(request, response) => {
+    let mcode = request.params.mcode;
+    let limit = Number(request.params.limit);
+    let offset = Number(request.params.offset);
+  
+    let data = [mcode, limit, offset];
+    let result = await db.connection('membersql', 'memPointList', data).catch((error) => {
+        console.log(error);
+    });
+    response.send(result);
+});
+
+// 게시물 수 조회 (페이징처리)
+app.get('/points/count/:mcode', async (request, response) => {
+    let mcode = request.params.mcode;
+    let result = await db.connection('membersql', 'pointListCount', mcode).catch((err) => console.log(err));
+    response.send(result);
+  });
 
 
 

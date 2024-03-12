@@ -1,11 +1,10 @@
 <template>
   <!-- Single Page Header start -->
   <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6"></h1>
+    <h3 class="text-center text-white">주문상세</h3>
     <ol class="breadcrumb justify-content-center mb-0">
-      <h4>
-        <li class="breadcrumb-item active text-white">MyOrder</li>
-      </h4>
+      <li class="breadcrumb-item"><a href="/productlist">Product</a></li>
+      <li class="breadcrumb-item active text-white">MyOrder_detail</li>
     </ol>
   </div>
   <!-- Single Page Header End -->
@@ -22,8 +21,8 @@
         <div class="table-responsive">
           <table class="table">
             <thead>
-              <th>주문상태</th>
-              <th style="padding-left: 20px;">리뷰</th>
+              <th style="font-size: 15px">주문상태</th>
+              <th style="font-size: 15px; padding-left: 20px;">리뷰</th>
             </thead>
             <tbody>
               <tr v-for="(detail, i) in myOrdDetail" :key="i">
@@ -53,7 +52,7 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th scope="col" colspan="5">배송정보</th>
+                  <th scope="col" colspan="5" style="font-size: 16px">배송정보</th>
                 </tr>
               </thead>
               <tbody>
@@ -111,6 +110,7 @@ export default {
     return {
       myOrdDetail: [],
       order_code: '',
+      merchant_uid: '',
       userInfo: {},
       mem_code: this.$store.state.memberStore.memberInfo.member_code,
 
@@ -131,6 +131,7 @@ export default {
   },
   created() {
     this.order_code = this.$route.query.order_code;
+    
     this.getMyOrdDetail(); //주문상세내역
     this.getPointInfo(); //포인트내역
     this.getDeliveryInfo(); //배송정보
@@ -290,5 +291,8 @@ th {
 .py-5 {
   padding-top: 3rem !important;
   padding-bottom: 2.33rem !important;
+}
+.text-primary {
+  font-weight: bolder;
 }
 </style>
