@@ -10,7 +10,7 @@
                         <p>작성자</p>
                     </td>
                     <td>
-                        <span>{{ this.$store.state.memberStore.memberInfo.member_name }}</span>
+                        <span>{{ this.reviewInfo.member_name }}</span>
                     </td>
                 </tr>
                 <tr>
@@ -69,7 +69,7 @@ export default {
         return {
             reviewInfo: {
                 review_code: this.$route.query.review_code,
-                member_code: this.$store.state.memberStore.memberInfo.member_code,
+                member_code: "",
                 review_title: "",
                 review_content: "",
                 detail_code: '',
@@ -92,6 +92,7 @@ export default {
             try {
                 let result = await axios.get('/api/review/detail/' + this.$route.query.review_code);
                 this.reviewInfo = result.data;
+                console.log('this.reviewInfo: ', this.reviewInfo)
             } catch (error) {
                 console.log(error);
             }
@@ -100,6 +101,7 @@ export default {
             if (!this.validation()) return;
 
             let data = this.getSendData();
+            console.log('data : ', data);
 
             axios
                 .put("/api/review/" + this.reviewInfo.review_code, data)
@@ -112,7 +114,7 @@ export default {
                             `수정되지 않았습니다.\n메세지를 확인해주세요\n${result.data.message}`
                         );
 
-                        this.$router.push({ path: "/reviewlist" });
+                        this.$router.push({ path: "/productlist" });
                     } else {
                         this.$router.push({
                             path: "/reviewInfo",
@@ -139,7 +141,7 @@ export default {
         },
         getSendData() {
             let obj = this.reviewInfo;
-            let delData = ["review_code"];
+            let delData = ["review_code", "member_name"];
             let newObj = {};
             let isTargeted = null;
             for (let field in obj) {
