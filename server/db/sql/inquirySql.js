@@ -58,15 +58,16 @@ SET inquiry_code = snack.nextval('INQ')
 //상품 상세에서 insert를 위한 쿼리...&게시글 상세조회
 
 const pInquiryInfo = `
-                SELECT 
-                    inquiry_code,
-                    title,
-                    content,
-                    product_code,
-                    member_code
-                FROM inquiry 
-               
-                WHERE inquiry_code= ?`;
+        SELECT
+                i.inquiry_code,
+                i.title,
+                i.content,
+                i.product_code,
+                i.member_code,
+                m.member_name
+FROM inquiry i
+JOIN member m ON i.member_code = m.member_code
+WHERE i.inquiry_code = ?`;
 
 //상세 페이지에서 상품 조회
 
