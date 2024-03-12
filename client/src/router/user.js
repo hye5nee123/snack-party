@@ -58,6 +58,7 @@ export default {
       name: "WithdrawView",
       component: import(/* webpackChunkName: "withdraw", webpackPrefetch: false */ "../views/member/WithdrawView.vue"),
     },
+    //=== < 박정언 > ================
     {
       path: "cart",
       name: "Cart",
@@ -136,6 +137,7 @@ export default {
       name: "MyPoint",
       component: import(/* webpackChunkName: "MyPoint", webpackPrefetch: false */ "../views/member/MyPointView.vue"),
     },
+    //=== < 박정언 > ================
     {
       path: "reviewlist",
       name: "ReviewList",

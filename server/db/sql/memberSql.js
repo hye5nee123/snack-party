@@ -60,6 +60,7 @@ FROM member
 WHERE member_id = ?
 OR member_name = ?`;
 
+//==< 박정언 >===================================
 const memberInfo = //회원적립금(주문)
 `SELECT m.member_code
 , member_id

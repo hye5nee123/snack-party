@@ -123,8 +123,6 @@ export default {
         } else {
           console.log(selLike.product_code)
           let cartCheck = await axios.get(`/apiorder/carts/${this.mem_code}/${selLike.product_code}`).catch((err) => console.log(err));
-          console.log('??', cartCheck); //PRO00084 Array나옴
-          console.log('???', cartCheck.data.length); //1
             let proName = '';
             if(cartCheck.data.length == 1) {
               let proCode = cartCheck.data[0].product_code;

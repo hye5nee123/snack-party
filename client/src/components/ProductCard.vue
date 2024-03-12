@@ -1,3 +1,4 @@
+<!-- < 박정언 >: 상품상세목록으로 이동 제외 -->
 <template>
   <div class="rounded position-relative fruite-item border border-secondary">
     <div class="fruite-img">
