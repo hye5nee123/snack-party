@@ -50,14 +50,14 @@
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <span>리뷰 관리</span>
         </router-link>
-        <router-link to="/admin/proinquiry" class="menu-link menu-toggle">
+        <!-- <router-link to="/admin/proinquiry" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <span>상품문의 관리</span>
         </router-link>
         <router-link to="#" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <span>1:1 문의 관리</span>
-        </router-link>
+        </router-link> -->
       </li>
       <!-- 게시판 관리 end -->
 
