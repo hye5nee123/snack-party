@@ -16,11 +16,6 @@
           <!-- Register -->
           <div class="card">
             <div class="card-body">
-
-              <!-- <h4 class="mb-2 center">LOGIN</h4>
-              <p class="mb-4">Please sign-in to your account and start the adventure</p> -->
-
-              <!-- <form id="formAuthentication" class="mb-3" action="index.html" method="POST"> -->
                 <div class="mb-3">
                   <label for="name" class="form-label">이름</label>
                   <input
@@ -36,13 +31,10 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="phone">휴대전화</label>
-                    <!-- <a href="auth-forgot-password-basic.html">
-                      <small>Forgot Password?</small>
-                    </a> -->
                   </div>
                   <div class="input-group-merge">
                     <input
-                      type="password"
+                      type="text"
                       id="phone"
                       class="form-control"
                       name="phone"
@@ -51,19 +43,11 @@
                       v-model="phone"
                       @keyup.enter="memberLogin()"
                     />
-                    <!-- <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span> -->
                   </div>
                 </div>
-                <!-- <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                  </div>
-                </div> -->
-                <div class="mb-3">
-                  <button class="btn btn-primary2 d-grid login center" type="button" @click="memberLogin()">다음</button>
+                <div class="mb-3 center">
+                  <button class="btn btn-primary2 login" type="button" @click="memberLogin()">다음</button>
                 </div>
-              <!-- </form> -->
             </div>
           </div>
           <!-- /Register -->
@@ -71,9 +55,9 @@
       </div>
     </div>
   <!-- / Content -->
-  <div v-show="member">고객님의 정보와 일치하는 아이디는 {{ this.id }}입니다.</div>
+  <br>
+  <div v-show="member" class="center container-xxl boxsize2 container-p-y authentication-inner card card-body">고객님의 정보와 일치하는 아이디는 <h3>{{ this.id }}</h3>입니다.</div>
 </template>
-
 
 <script>
 import axios from 'axios';
@@ -93,7 +77,7 @@ export default {
     },
   methods : {
     async memberLogin() {
-      // if(!this.validation()) return;
+      if(!this.validation()) return;
 
       let data = {
         member_name : this.name,
@@ -103,28 +87,14 @@ export default {
       let result = await axios.post('api/member/search', data)
                     .catch(err => console.log(err));      
       if(result.data.memberInfo == '1') {
-        alert('아이디 있음!')
-        // this.$store.commit('setMemberInfo', result.data.member);
         this.id = result.data.member.member_id;
         this.member = true;
 
       } else {
-        alert('아이디 없음!')
+        alert('입력하신 정보와 일치하는 회원정보를 찾을 수 없습니다.')
         this.name = '';
         this.phone = '';
       }
-
-      // if(data.member_name == this.name && data.member_phone == this.phone) {
-      //   alert('로그인 되었습니다.');
-
-        // this.$store.commit('setLoginStatus', true);
-        // this.$store.commit('setMemberInfo', data);
-        // console.log(this.$store.state.memberStore.loginStatus);
-        // console.log(this.$store.state.memberStore.memberInfo);
-        // this.$router.push({path : '/'})
-      // } else {
-      //   alert('이름 또는 휴대전화가 일치하지 않습니다.')
-      // }
     },
     validation() {
       if(this.name == '') {
@@ -170,6 +140,10 @@ export default {
 
 .boxsize {
   max-width: 430px
+}
+
+.boxsize2 {
+  max-width: 700px
 }
 
 .login {
