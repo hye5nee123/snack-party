@@ -30,11 +30,11 @@
       </div>
       <div class="mb-3">
         <label class="form-label">대표사진</label>
-        <!-- <img /> -->
+        <img :src="getImgUrl(productInfo[0].path)" v-if="productInfo[0].path" />
       </div>
       <div class="mb-3">
         <label class="form-label">상세사진</label>
-        <!-- <img /> -->
+        <img :src="getImgUrl(productInfo[1].path)" v-if="productInfo[1]" />
       </div>
       <div class="mb-3">
         <label class="form-label" for="expire_date">유통기한</label>
@@ -176,6 +176,19 @@ export default {
     backToProductList() {
       this.$router.push({ path: '/admin/product' });
     },
+    getImgUrl(path) {
+      if (path)
+        return new URL(this.url + '/common/download?path=' + path);
+      else
+        return '';
+    },
   }
 }
 </script>
+
+<style scoped>
+img {
+  width: 500px;
+  display: block;
+}
+</style>
