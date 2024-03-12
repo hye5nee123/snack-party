@@ -148,6 +148,7 @@ module.exports = {
   detailReviewPage,
   reviewUpdate,
   reviewDelete,
-  checkReview
+  checkReview,
+  uReview
   // reviewImgInsert,
 };

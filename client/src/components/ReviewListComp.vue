@@ -77,7 +77,7 @@ export default {
       } else if (this.type == "admin") {
         url = `/api/review/list/${this.ITEM_PER_PAGE}/${this.pageData}`;
       } else {
-        url = `/api/review/member_code`
+        url = `/api/review/${this.$store.state.memberStore.memberInfo.member_code}`
       }
       let result = await axios.get(url)
         .catch(err => console.log(err));
