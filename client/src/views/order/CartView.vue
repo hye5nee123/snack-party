@@ -1,7 +1,7 @@
 <template>
   <!-- Single Page Header start -->
   <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">장바구니</h1>
+    <h3 class="text-center text-white">장바구니</h3>
     <ol class="breadcrumb justify-content-center mb-0">
       <li class="breadcrumb-item"><a href="/productlist">Product</a></li>
       <!-- <li class="breadcrumb-item"><a href="#">Pages</a></li> -->
@@ -40,24 +40,23 @@
               <td>
                 <div class="input-group quantity mt-4" style="width: 150px">
                   <div class="input-group-btn">
-                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" @click="
-                cart.cart_cnt <= 1 ? cart.cart_cnt : cart.cart_cnt--
-                ">
+                    <button class="btn btn-sm btn-minus rounded-circle bg-light border" 
+                      @click="cart.cart_cnt <= 1 ? cart.cart_cnt : cart.cart_cnt--">
                       <i class="fa fa-minus"></i>
                     </button>
                   </div>
-                  <input type="text" style="background: #fff" class="form-control form-control-sm text-center border-0"
-                    min="1" v-model="cart.cart_cnt" readonly />
+                  <input type="text" style="background: #fff" class="form-control form-control-sm text-center border-0" 
+                         min="1" v-model="cart.cart_cnt" v-bind:disabled="cart.stock_cnt == 0"/>
                   <div class="input-group-btn">
-                    <button class="btn btn-sm btn-plus rounded-circle bg-light border" @click="cart.cart_cnt++"
-                      v-bind:disabled="cart.stock_cnt <= cart.cart_cnt || cart.stock_cnt == 0
-                ">
+                    <!-- <button class="btn btn-sm btn-plus rounded-circle bg-light border" 
+                      @click="cart.cart_cnt++" v-bind:disabled="cart.stock_cnt < cart.cart_cnt || cart.stock_cnt == 0"> -->
+                      <button class="btn btn-sm btn-plus rounded-circle bg-light border" 
+                        @click="cart.cart_cnt++" v-bind:disabled="cart.stock_cnt == 0">
                       <i class="fa fa-plus"></i>
                     </button>
                   </div>
                   <div style="padding-left: 10px;">
                     <button type="button" class="cnt-update-btn btn-sm" @click="updateCnt(cart)">변경</button>
-                    <!--  class=btn-secondary 없앰 색깔 주황색버튼  -->
                   </div>
                 </div>
               </td>
@@ -96,11 +95,10 @@
           선택상품 주문하기
         </button>
         <button @click="deleteSelected()"
-          class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">
+          class="del-btn btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">
           장바구니 비우기
         </button>
       </div>
-      <p>{{ selectList }}</p>
     </div>
   </div>
   <!-- Cart Page End -->
@@ -115,6 +113,7 @@ export default {
       cartList: [],
       totalPrice: 0,
       selectList: [],
+      disabled: false,
       memId: this.$store.state.memberStore.memberInfo.member_id,
       loginStatus: this.$store.state.memberStore.loginStatus,
     };
@@ -162,7 +161,6 @@ export default {
         let result = await axios
           .put(`/apiorder/carts/${cart.cart_cnt}/${cart.cart_code}`)
           .catch((err) => console.log(err));
-        // console.log(`cart_cnt : ${cart.cart_cnt}, cart_code : ${cart.cart_code}`);
         let info = result.data.changedRows;
         if (info > 0) {
           alert('수정되었습니다.');
@@ -170,10 +168,10 @@ export default {
       } else if (cart.stock_cnt == 0) {
         alert('품절된 상품으로 주문이 불가합니다.');
         cart.cart_cnt = cart.stock_cnt;
-      } //else {
-      //   alert(cart.product_name + '의 재고량이 부족합니다. 주문가능한 수량은 ' + cart.stock_cnt + '개 입니다.');
-      //   cart.cart_cnt = cart.stock_cnt;
-      // }
+      } else {
+          alert(cart.product_name + '의 재고량이 부족합니다. 주문가능한 수량은 ' + cart.stock_cnt + '개 입니다.');
+          cart.cart_cnt = cart.stock_cnt;
+      }
     },
 
     allProPrice() { //총 상품금액
@@ -260,5 +258,8 @@ td {
   border: 1px solid #8299ff;
   color: #5a5a5a;
   font-weight: bold;
+}
+.text-primary {
+  font-weight: bolder;
 }
 </style>

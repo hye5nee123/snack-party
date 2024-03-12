@@ -78,15 +78,41 @@ const memberInfo = //회원적립금(주문)
     WHERE point_status = 'd01'
     AND member_code = ? ), 0)
     - 
-                NVL(( SELECT sum(point_value) 
-     FROM point
-     WHERE point_status = 'd02'
-     AND member_code = ? ), 0) AS point_value
+  NVL(( SELECT sum(point_value) 
+        FROM point
+        WHERE point_status = 'd02'
+        AND member_code = ? ), 0) AS point_value
 FROM member m LEFT OUTER JOIN point p
 ON m.member_code = p.member_code
 WHERE m.member_code =  ? 
-LIMIT 1`;
+LIMIT 1`
 
+//보유적립금 내역
+const memPointList =
+`SELECT point_code
+      , order_code
+      , review_code
+      , point_status
+      , DATE_FORMAT(point_date, '%Y-%m-%d') as point_date
+      , point_value
+      , member_code
+      , NVL(( SELECT sum(point_value)
+	      FROM point
+	      WHERE point_status = 'd01'), 0)
+	- 
+	NVL(( SELECT sum(point_value) 
+	      FROM point
+              WHERE point_status = 'd02'), 0) AS total_point
+FROM point
+WHERE member_code = ?
+ORDER BY point_date DESC
+LIMIT ? OFFSET ?`
+
+//페이징용 개수
+const pointListCount = 
+`SELECT COUNT(*) count
+FROM point
+WHERE member_code = ?`
 
 module.exports = {
     memberList,
@@ -94,5 +120,8 @@ module.exports = {
     memberUpdate,
     memberDelete,
     memberLogin,
+
     memberInfo,
+    memPointList,
+    pointListCount
 }

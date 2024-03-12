@@ -1,7 +1,7 @@
 <template>
   <!-- Single Page Header start -->
   <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">찜 상품</h1>
+    <h3 class="text-center text-white">찜 상품</h3>
     <ol class="breadcrumb justify-content-center mb-0">
       <li class="breadcrumb-item"><a href="/productlist">Product</a></li>
       <!-- <li class="breadcrumb-item"><a href="#">Pages</a></li> -->
@@ -62,7 +62,6 @@
           찜 상품 비우기
         </button>
       </div>
-      <p>{{ selectList }}</p>
     </div>
   </div>
   <!-- Cart Page End -->
@@ -110,7 +109,7 @@ export default {
         return '';
     },
 
-    async addToCart() { //선택상품 담기
+    async addToCart() { //찜 선택상품 -> 장바구니 담기
       if (this.selectList.length == 0) {
         alert('장바구니에 담을 상품을 선택해주세요.');
         return;
@@ -146,13 +145,9 @@ export default {
         console.log('selLike? ', selLike.product_code)
           let add = await axios.post("/apiorder/carts", data).catch(err => console.log(err));
               console.log('장바구니등록' + add);
-              alert('장바구니에 추가되었습니다.');
-
       } //for문 끝
-
-
-
-      },
+            alert('장바구니에 추가되었습니다.');
+    },
 
     async delLikeOne(likeOne) { //단건삭제
       await axios
@@ -184,5 +179,8 @@ export default {
 <style scoped>
 .button-center {
   text-align: center;
+}
+.text-primary {
+  font-weight: bolder;
 }
 </style>

@@ -21,8 +21,6 @@
       <br>
       <!--  -->
       <div class="d-flex justify-content-between flex-lg-wrap">
-        <!-- heart -->
-        <!-- <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary" @click="likes()"> -->
         <button class="btn border border-secondary rounded-pill px-3 text-primary" @click="addTolikes()">
           <i :class="{ nondisplay: isActive, display: true }" class="fa-regular fa-heart"></i>
           <i :class="{ red: isActive, nondisplay: !isActive, display: true }" class="fa-solid fa-heart"></i> 관심상품
@@ -51,7 +49,6 @@ export default {
   },
   data() {
     return {
-      // pressLike: false, //기본값으로 넣어놔
       isActive: false,
       item: true,
       stockCnt: this.productInfo.stock_cnt,
@@ -90,10 +87,9 @@ export default {
       //찜 여부 확인 (있으면 클릭 시 삭제)
       if (this.isActive == true){
         this.isActive = false;
-        // this.pressLike = false;
 
         //단건삭제
-        let del = await axios.delete(`/apiorder/likes/${this.productInfo.product_code}`)
+        let del = await axios.delete(`/apiorder/likes/${this.memberCode}/${this.productInfo.product_code}`)
         .catch((err) => console.log(err));
         console.log('찜 삭제', del);
         alert('찜 상품이 삭제되었습니다.');
@@ -120,10 +116,8 @@ export default {
         console.log('찜목록?',list);
             if(list) {
               this.isActive = true;
-              // this.pressLike = true;
             } else {
               this.isActive = false;
-              // this.pressLike = false;
             }
       }
     },

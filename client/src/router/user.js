@@ -130,20 +130,12 @@ export default {
       path: "likes",
       name: "Likes",
       component: import(/* webpackChunkName: "Likes", webpackPrefetch: false */ "../views/order/LikesView.vue"),
-    
-      // beforeEnter: (to, from, next) => {
-      //   let loginStatus =  Store.state.memberStore.loginStatus;
-      //   console.log('loginStatus : ', loginStatus);
-      //   if(!loginStatus ){
-      //     alert('로그인 후 접근 가능한 페이지입니다.'),
-      //     next('/main');
-      //   }
-      //   else {
-      //     next();
-      //   }
-      // }
     },
-
+    {
+      path: "mypoint",
+      name: "MyPoint",
+      component: import(/* webpackChunkName: "MyPoint", webpackPrefetch: false */ "../views/member/MyPointView.vue"),
+    },
     {
       path: "reviewlist",
       name: "ReviewList",

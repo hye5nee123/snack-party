@@ -150,4 +150,7 @@ export default {
   color: #5a5a5a;
   /* font-weight: bold; */
 }
+th {
+  font-size: 16px;
+}
 </style>

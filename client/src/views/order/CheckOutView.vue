@@ -1,7 +1,7 @@
 <template>
   <!-- Single Page Header start -->
   <div class="container-fluid page-header py-5">
-    <h1 class="text-center text-white display-6">Checkout</h1>
+    <h3 class="text-center text-white">주문/결제</h3>
     <ol class="breadcrumb justify-content-center mb-0">
       <li class="breadcrumb-item"><a href="#">Home</a></li>
       <li class="breadcrumb-item"><a href="#">Pages</a></li>
@@ -110,7 +110,6 @@
         </div>
         <div class="col-md-12 col-lg-6 col-xl-5">
           <OrderProducts v-bind:checkOutList="checkOutList" />
-
           <br>
           <PaymentInfo
             v-bind:checkOutList="checkOutList"
@@ -122,14 +121,8 @@
             @totalPrice="totalPrice"
           />
 
-          <div
-            class="row g-4 text-center align-items-center justify-content-center pt-4"
-          >
-            <button
-              type="button"
-              @click="onPayment()"
-              class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary"
-            >
+          <div class="row g-4 text-center align-items-center justify-content-center pt-4">
+            <button type="button" @click="onPayment()" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">
               결제하기
             </button>
           </div>
@@ -153,6 +146,7 @@ export default {
     return {
       userInfo: {},
       userId: '',
+      order_code: '',
       checkOutList: [],
 
       allPrice: 0, //주문상품금액
@@ -198,11 +192,6 @@ export default {
       this.userInfo = info;
       this.mcode = info.member_code;
     },
-
-    // getPoint() {
-    //   // h05 '배송완료'시 결제금액의 1%적립 ----수정
-    //   this.get_point = this.total_price * 0.01;
-    // },
 
     newInfo() {
       //새로운 배송지
@@ -270,7 +259,8 @@ export default {
           vue.orderInsert(rsp); //주문,상세,배송 테이블 등록
           vue.changeInfo(rsp); //장바구니삭제, 재고량&회원포인트수정
 
-          vue.merchant_uid = rsp.merchant_uid;  
+          vue.merchant_uid = rsp.merchant_uid;
+ 
             Swal.fire({
                 title: '주문이 완료되었습니다.',
                 text: `주문번호: ${rsp.merchant_uid}`,
@@ -289,14 +279,11 @@ export default {
                 });
                 
         } else {
-        //   var msg2 = '결제에 실패하였습니다.';
-        //   msg2 += '에러내용 : ' + rsp.error_msg;
-        //   alert(msg2);
-          Swal.fire({
-            icon: "error",
-            title: "결제 실패",
-            text: `오류 메세지: ${rsp.error_msg}`,
-            });
+            Swal.fire({
+              icon: "error",
+              title: "결제 실패",
+              text: `오류 메세지: ${rsp.error_msg}`,
+              });
         }
       });
     },

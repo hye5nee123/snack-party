@@ -95,11 +95,6 @@
                                 </tr>
                             </table>
                             <div class="col-lg-12">
-                                <!-- <button @click="addTolikes()"
-                                    class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"><i :class="{red: isActive}"
-                                    class="fa-regular fa-heart" /> 관심상품
-                                </button> -->
-
                                 <button
                                     class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary col-lg-4"
                                     @click="addTolikes()">
@@ -366,8 +361,8 @@ export default {
             if (!this.loginStatus) {
                 alert('로그인 후 이용가능합니다.');
             } else if (cartCheck.data.length == this.productInfo[0].stock_cnt) {
-                alert('재고 부족으로 수량을 추가하실 수 없습니다.')
-
+                alert('재고 부족으로 주문가능한 수량은 ' + this.productInfo[0].stock_cnt + '개 입니다.');
+                this.quantity = this.productInfo[0].stock_cnt;
             } else if (cartCheck.data.length != 0 && cartCheck.data[0].cart_cnt + this.quantity >= this.productInfo[0].stock_cnt) {
                 let ccode = cartCheck.data[0].cart_code
                 let calquan = this.productInfo[0].stock_cnt - cartCheck.data[0].cart_cnt
@@ -393,10 +388,11 @@ export default {
 
         //바로 구매하기
         goToCheckOut() { //주문하기로 이동
-            if (this.memberCode == '') {
-                alert('로그인 후 이용 가능')
-                this.$router.push({ path: '/login' })
-                // return;
+            if(!this.loginStatus) {
+                alert('로그인 후 이용가능합니다.');
+                this.$router.push({ path: '/login' });
+                // this.$router.go(-2);
+                return;
             }
 
             this.selectPro = this.changeField();
