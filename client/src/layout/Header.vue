@@ -8,13 +8,14 @@
                 </div>
                 <div class="top-link pe-2">
 
-                    <router-link to="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white"><small class="text-white mx-2">{{ this.$store.state.memberStore.memberInfo.member_name }}님</small>/</router-link>
+                    <router-link to="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white"><small class="text-header mx-2">{{ this.$store.state.memberStore.memberInfo.member_name }}님</small>/</router-link>
                     <router-link to="/login" v-else class="text-white"><small class="text-white mx-2">로그인</small>/</router-link>
-                    <router-link to="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white" @click.prevent="memberLogout()"><small class="text-white mx-2">로그아웃</small>/</router-link>
+                    <router-link to="/" v-if="this.$store.state.memberStore.loginStatus" class="text-white" @click.prevent="memberLogout()"><small class="text-header mx-2">로그아웃</small>/</router-link>
                     <router-link to="/signup" v-else class="text-white"><small class="text-white mx-2">회원가입</small></router-link>
-                    <router-link to="/mypoint"  v-if="$store.state.memberStore.memberInfo.member_id" class="text-white"><small class="text-white ms-2">보유적립금 </small>/</router-link>
-                    <router-link to="/myorderlist" v-if="$store.state.memberStore.memberInfo.member_id" class="text-white"><small class="text-white ms-2">주문내역</small></router-link>
-                    <router-link to="/admin" v-if="this.$store.state.memberStore.memberInfo.member_type == 'b03'" class="text-white">/<small class="text-white mx-2">관리자 페이지</small></router-link>
+                    <router-link to="/mypoint"  v-if="$store.state.memberStore.memberInfo.member_id" class="text-white"><small class="text-header ms-2">보유적립금 </small>/</router-link>
+                    <router-link to="/myorderlist" v-if="$store.state.memberStore.memberInfo.member_id" class="text-white"><small class="text-header ms-2">주문내역 </small>/</router-link>
+                    <router-link to="/inquirylist" v-if="$store.state.memberStore.memberInfo.member_id" class="text-white"><small class="text-header ms-2">1:1문의</small></router-link>
+                    <router-link to="/admin" v-if="this.$store.state.memberStore.memberInfo.member_type == 'b03'" class="text-white">/<small class="text-header mx-2">관리자 페이지</small></router-link>
                 </div>
             </div>
         </div>
@@ -43,20 +44,11 @@
                             </div>
                         </div>
                         <router-link to="/noticelist" class="nav-item nav-link">공지사항</router-link>
-                        <!-- <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                            <div class="dropdown-menu m-0 bg-secondary rounded-0">
-                                <a href="/cart" class="dropdown-item">Cart</a>
-                                <a href="chackout.html" class="dropdown-item">Chackout</a>
-                                <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                                <a href="404.html" class="dropdown-item">404 Page</a>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="d-flex m-3 me-0">
-                        <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
+                        <!-- <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4" data-bs-toggle="modal" data-bs-target="#searchModal">
                             <i class="fas fa-search text-primary"></i>
-                        </button>
+                        </button> -->
 
                         <!-- 찜 -->
                         <router-link to="/likes" v-if="$store.state.memberStore.memberInfo.member_id" class="position-relative me-4 my-auto icon">
@@ -131,9 +123,17 @@ export default {
 
 <style>
 .icon {
-    color: #45595b
+    color: #646b6b
 }
 .nav-item{
     margin-right: 30px;
+    font-weight: bold;
+}
+.text-header {
+    font-weight: bold;
+    font-size: 14px;
+}
+.topbar {
+    padding: 25px;
 }
 </style>

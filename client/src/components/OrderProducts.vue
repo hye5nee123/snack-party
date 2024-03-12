@@ -14,12 +14,6 @@
         <tr v-for="(checkout, i) in checkOutList" :key="i">
           <th scope="row">
             <div class="d-flex align-items-center mt-2">
-              <!-- <img
-                src="img/vegetable-item-2.jpg"
-                class="img-fluid rounded-circle"
-                style="width: 90px; height: 90px"
-                alt=""
-              /> -->
               <img :src="getImgUrl(checkOutList[i].path)" width="100px" class="img-fluid rounded-top" alt="" />
             </div>
           </th>
@@ -48,6 +42,6 @@ export default {
 </script>
 <style scoped>
 th {
-  font-size: 15px;
+  font-size: 14px;
 }
 </style>

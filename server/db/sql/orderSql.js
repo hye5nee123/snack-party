@@ -20,7 +20,6 @@ WHERE member_code = ( SELECT member_code
                       WHERE member_id = ? )
 AND f.thumbnail = 'n01'`
 
-
 //장바구니 담기
 const cartInsert =
 `INSERT INTO cart 
@@ -88,7 +87,7 @@ SET point_code = snack.nextval('POI')
 
 /* < 나의 주문내역 > */
 
-//나의 전체 주문 목록 (-외 몇 개) + 페이징
+//나의 전체 주문 목록(최근6개월) + 페이징
 const orderListPage =
 `SELECT o.order_code
       , member_code
@@ -105,15 +104,17 @@ FROM orders o JOIN detail d
               JOIN product p
 				        ON d.product_code = p.product_code
 WHERE member_code = ?
+AND order_date BETWEEN DATE_ADD(NOW(), INTERVAL -6 MONTH) AND NOW()
 GROUP BY d.order_code
 ORDER BY order_date desc, order_code desc
 LIMIT ? OFFSET ?`
 
-//페이징용 개수
+//페이징용 개수(최근6개월)
 const orderListCount = 
 `SELECT COUNT(*) count
 FROM orders
-WHERE member_code = ?`
+WHERE member_code = ?
+AND order_date BETWEEN DATE_ADD(NOW(), INTERVAL -6 MONTH) AND NOW()`
 
 
 //주문상세 목록
@@ -238,5 +239,5 @@ module.exports = {
   likesList,
   likesInsert,
   likesCheck,
-  likesDelete,
+  likesDelete
 }

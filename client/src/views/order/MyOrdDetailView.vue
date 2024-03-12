@@ -21,14 +21,14 @@
         <div class="table-responsive">
           <table class="table">
             <thead>
-              <th style="font-size: 15px">주문상태</th>
-              <th style="font-size: 15px; padding-left: 20px;">리뷰</th>
+              <th style="font-size: 14px">주문상태</th>
+              <th style="font-size: 14px; padding-left: 20px;">리뷰</th>
             </thead>
             <tbody>
               <tr v-for="(detail, i) in myOrdDetail" :key="i">
                 <td class="py-5">{{ ordStatus(detail.order_status) }}</td>
-                <td class="py-5"><button type="button"
-                    class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2"
+                <td style="padding-top: 40px;">
+                  <button type="button" class="btn btn-sm border-secondary rounded-pill px-3 py-2 text-primary ms-2"
                     v-on:click="goToReviewInsert(detail.detail_code)">리뷰작성</button></td>
               </tr>
             </tbody>
@@ -93,8 +93,8 @@
     </div>
     <br>
     <div style="text-align: center;">
-      <button @click="cancelOrd()" class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문취소</button>
       <button @click="this.$router.push({ path: '/myorderlist' })" class="btn border-secondary rounded-pill px-4 py-2 text-primary text-uppercase mb-4 ms-4">주문목록 이동</button>
+      <button @click="cancelOrd()" class="del-btn btn rounded-pill px-4 py-2 text-uppercase mb-4 ms-4">주문취소</button>
     </div>
   </div>
 </div>
@@ -145,7 +145,6 @@ export default {
       }
       return allProPrice;
     },
-
   },
   methods: {
     async getMyOrdDetail() {
@@ -245,12 +244,10 @@ export default {
 
 <style scoped>
 .col-xl-5 {
-  /* flex: 0 0 auto; */
   width: 47%;
 }
 
 .col-xl-7 {
-  /* flex: 0 0 auto; */
   width: 80%;
   justify-content: center;
 }
@@ -290,9 +287,20 @@ th {
 
 .py-5 {
   padding-top: 3rem !important;
-  padding-bottom: 2.33rem !important;
+  padding-bottom: 3.2rem !important;
+  /* 3 / 2.33 */
 }
 .text-primary {
   font-weight: bolder;
+}
+.del-btn {
+  border: 1px solid #ee9d9d;
+  color: #ee9d9d;
+  font-weight: 600;
+}
+.del-btn:hover {
+  background-color:#f78c8c;
+  color: #fff;
+  transition: 0.7s;
 }
 </style>

@@ -122,7 +122,7 @@
           />
 
           <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-            <button type="button" @click="onPayment()" class="btn border-secondary py-3 px-4 text-uppercase w-100 text-primary">
+            <button type="button" @click="onPayment()" class="btn border-secondary rounded-pill py-3 px-4 text-uppercase w-100 text-primary">
               결제하기
             </button>
           </div>

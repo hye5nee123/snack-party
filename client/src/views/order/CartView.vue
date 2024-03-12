@@ -3,8 +3,7 @@
   <div class="container-fluid page-header py-5">
     <h3 class="text-center text-white">장바구니</h3>
     <ol class="breadcrumb justify-content-center mb-0">
-      <li class="breadcrumb-item"><a href="/productlist">Product</a></li>
-      <!-- <li class="breadcrumb-item"><a href="#">Pages</a></li> -->
+      <li class="breadcrumb-item"><a href="/productlist">Product</a></li>\
       <li class="breadcrumb-item active text-white">Cart</li>
     </ol>
   </div>
@@ -38,6 +37,7 @@
                 <p class="mb-0 mt-4">{{ cart.product_name }}</p>
               </td>
               <td>
+                <!-- 수량START -->
                 <div class="input-group quantity mt-4" style="width: 150px">
                   <div class="input-group-btn">
                     <button class="btn btn-sm btn-minus rounded-circle bg-light border" 
@@ -48,8 +48,6 @@
                   <input type="text" style="background: #fff" class="form-control form-control-sm text-center border-0" 
                          min="1" v-model="cart.cart_cnt" v-bind:disabled="cart.stock_cnt == 0"/>
                   <div class="input-group-btn">
-                    <!-- <button class="btn btn-sm btn-plus rounded-circle bg-light border" 
-                      @click="cart.cart_cnt++" v-bind:disabled="cart.stock_cnt < cart.cart_cnt || cart.stock_cnt == 0"> -->
                       <button class="btn btn-sm btn-plus rounded-circle bg-light border" 
                         @click="cart.cart_cnt++" v-bind:disabled="cart.stock_cnt == 0">
                       <i class="fa fa-plus"></i>
@@ -59,6 +57,7 @@
                     <button type="button" class="cnt-update-btn btn-sm" @click="updateCnt(cart)">변경</button>
                   </div>
                 </div>
+                <!-- 수량END -->
               </td>
               <td>
                 <p class="mb-0 mt-4">
@@ -90,12 +89,10 @@
         </table>
       </div>
       <div class="button-center">
-        <button @click="goToCheckOut()"
-          class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4 ordBtn">
+        <button type="button" @click="goToCheckOut()" class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">
           선택상품 주문하기
         </button>
-        <button @click="deleteSelected()"
-          class="del-btn btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">
+        <button type="button" @click="deleteSelected()" class="btn del-btn rounded-pill px-4 py-3 text-uppercase mb-4 ms-4">
           장바구니 비우기
         </button>
       </div>
@@ -135,7 +132,7 @@ export default {
       },
       set(checked) {
         this.selectList = checked ? this.cartList : [];
-      },
+      }
     },
   },
 
@@ -222,44 +219,53 @@ export default {
       this.$router.push({ name: 'ProductInfo', query: { 'product_code': pcode } });
     },
   },
-
-
 }; //end
 </script>
 
 <style scoped>
 .cart-list-table th,
 td {
-  font-size: 17px;
+  font-size: 15px;
 }
-
 #total {
   border: 1px solid #ccc;
 }
-
 #total th {
   text-align: center;
   padding: 20px;
-  font-size: 17px;
+  font-size: 16px;
 }
-
 #total td {
   text-align: center;
   padding: 35px;
   font-size: 19px;
 }
-
 .button-center {
   text-align: center;
 }
-
 .cnt-update-btn {
   background-color: #fff;
-  border: 1px solid #8299ff;
-  color: #5a5a5a;
+  border: 1px solid #93c5fff8;
+  color: #7e7c7c;
   font-weight: bold;
+  width: 50px;
+}
+.cnt-update-btn:hover {
+  background-color:#93c5fff8;
+  color: #fff;
+  transition: 0.3s;
 }
 .text-primary {
   font-weight: bolder;
+}
+.del-btn {
+  border: 1px solid #ee9d9d;
+  color: #ee9d9d;
+  font-weight: 600;
+}
+.del-btn:hover {
+  background-color:#f78c8c;
+  color: #fff;
+  transition: 0.7s;
 }
 </style>
