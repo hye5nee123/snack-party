@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunksnack_party"]=self["webpackChunksnack_party"]||[]).push([[427],{8216:function(n,e,t){t.r(e),t.d(e,{default:function(){return i}});var u=t(6768);const r=(0,u.Lk)("p",null,"AdminProductWarehousing.vue",-1),a=[r];function s(n,e,t,r,s,c){return(0,u.uX)(),(0,u.CE)("div",null,a)}var c={name:"AdminProductWarehousing",components:{},data(){return{sampleData:""}},setup(){},created(){},mounted(){},unmounted(){},methods:{}},o=t(1241);const d=(0,o.A)(c,[["render",s]]);var i=d}}]);
+//# sourceMappingURL=AdminProductWarehousing.dc39bc8c.js.map

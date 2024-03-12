@@ -2,6 +2,7 @@ require("dotenv").config({ path: "./db/db.env" });
 const express = require("express");
 const app = express();
 const cors = require('cors'); //결제api초기설정
+var path = require('path');
 
 const adminRouter = require('./app/adminApp.js');
 const inquiryRouter = require('./app/inquiryApp.js');
@@ -13,6 +14,7 @@ const reviewRouter = require('./app/reviewApp.js');
 const commonRouter = require('./app/commonApp.js');
 const mainRouter = require('./app/mainApp.js');
 
+app.use(express.static("public"));
 app.use(
   express.json({
     limit: "50mb",
@@ -20,7 +22,6 @@ app.use(
 );
 
 app.use(express.urlencoded({ extended: false }));
-
 
 //CORS 허용
 app.use(cors({ 
