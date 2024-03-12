@@ -25,6 +25,7 @@ app.get('/inquirynotanswered', async (request, response) => {
   response.send(result);
 });
 
+
 // 전체조회(페이징)
 app.get('/orderlist', async (req, res) => {
   let data = [];
@@ -182,5 +183,42 @@ app.get('/checkPoint/:order_code', async (request, response) => {
   let result = await db.connection('adminsql', 'checkPoint', data);
   response.send(result);
 });
+
+// 회원조회
+app.get('/memberlist', async(request, response) => {
+  let data = [];
+  let where = ' WHERE 1=1';
+
+  var queryData = url.parse(request.url, true).query;
+
+  let keyword = queryData.keyword;
+  let type = queryData.type;
+  let status = queryData.status;
+
+  if(keyword) {
+    where += ' AND (member_code = ? OR member_id = ? OR member_name = ?)'
+    data.push(keyword, keyword, keyword);
+  }
+
+  if(type) {
+    where += ' AND member_type = ?'
+    data.push(type);
+  }
+
+  if(status) {
+    where += ' AND member_status = ?'
+    data.push(status);
+  }
+
+  let result = await db.connection('adminsql', 'memberList', data, where).catch(err => { console.log(err) });
+  response.send(result);
+})
+
+// 회원조회 상세
+app.get('/memberinfo/:member_code', async (request, response) => {
+  let data = request.params.member_code;
+  let result = (await db.connection('adminsql', 'memberInfo', data))[0];
+  response.send(result);
+})
 
 module.exports = app;

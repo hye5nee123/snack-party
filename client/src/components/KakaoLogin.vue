@@ -17,7 +17,6 @@ export default {
         kakaoLogin() {
             window.Kakao.Auth.login({
                 scope : 'account_email',
-                // prompt : 'login',
                 success : this.getKakaoAccount,
             })
         },

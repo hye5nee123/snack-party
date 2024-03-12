@@ -10,17 +10,12 @@
 <!-- Single Page Header End -->
   
   <!-- Content -->
-    <div  v-show="!member" class="container-xxl boxsize">
+    <div v-show="!member" class="container-xxl boxsize">
       <div class="container-p-y">
         <div class="authentication-inner">
           <!-- Register -->
           <div class="card">
             <div class="card-body">
-
-              <!-- <h4 class="mb-2 center">LOGIN</h4>
-              <p class="mb-4">Please sign-in to your account and start the adventure</p> -->
-
-              <!-- <form id="formAuthentication" class="mb-3" action="index.html" method="POST"> -->
                 <div class="mb-3">
                   <label for="id" class="form-label">아이디</label>
                   <input
@@ -48,13 +43,10 @@
                 <div class="mb-3 form-password-toggle">
                   <div class="d-flex justify-content-between">
                     <label class="form-label" for="phone">휴대전화</label>
-                    <!-- <a href="auth-forgot-password-basic.html">
-                      <small>Forgot Password?</small>
-                    </a> -->
                   </div>
                   <div class="input-group-merge">
                     <input
-                      type="password"
+                      type="text"
                       id="phone"
                       class="form-control"
                       name="phone"
@@ -63,19 +55,11 @@
                       v-model="phone"
                       @keyup.enter="memberLogin()"
                     />
-                    <!-- <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span> -->
                   </div>
                 </div>
-                <!-- <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember-me" />
-                    <label class="form-check-label" for="remember-me"> Remember Me </label>
-                  </div>
-                </div> -->
-                <div class="mb-3">
-                  <button class="btn btn-primary2 d-grid login center" type="button" @click="memberLogin()">다음</button>
+                <div class="mb-3 center">
+                  <button class="btn btn-primary2 login " type="button" @click="memberLogin()">다음</button>
                 </div>
-              <!-- </form> -->
             </div>
           </div>
           <!-- /Register -->
@@ -83,20 +67,21 @@
       </div>
     </div>
   <!-- / Content -->
-  <div v-show="member">
+  <br>
+  <div v-show="member" class="container-xxl boxsize container-p-y authentication-inner card card-body">
     <div v-show="!this.kakaoStatus">
-          <div class="form-item col-lg-6">
-              <label class="bold">비밀번호<sup>*</sup></label>
+          <div class="form-item">
+              <label class="bold form-label">비밀번호<sup>*</sup></label>
               <input type="password" class="form-control" placeholder="비밀번호 입력" id="pw" v-model="pw">
           </div>
           <p class="form-label">- 8~16자, 영문 대/소문자, 숫자, 특수문자(~!@#$%^&*)만 사용 가능</p>
-          <div class="form-item col-lg-6 my-3">
-              <label class="bold">비밀번호 확인<sup>*</sup></label>
+          <div class="form-item my-3">
+              <label class="bold form-label">비밀번호 확인<sup>*</sup></label>
               <input type="password" class="form-control" placeholder="비밀번호 입력" id="pw_confirm" v-model="pw_confirm">
           </div>
     </div>
-    <div class="mb-3">
-      <button class="btn btn-primary2 d-grid login center" type="button" @click="memberUpdate()">저장</button>
+    <div class="mb-3 center">
+      <button class="btn btn-primary2 login " type="button" @click="memberUpdate()">저장</button>
     </div>
   </div>
 </template>
@@ -122,7 +107,7 @@ export default {
     },
   methods : {
     async memberLogin() {
-      // if(!this.validation()) return;
+      if(!this.validation()) return;
 
       let data = {
         member_name : this.name,
@@ -133,13 +118,13 @@ export default {
       let result = await axios.post('api/member/search', data)
                     .catch(err => console.log(err));      
       if(result.data.memberInfo == '2') {
-        alert('아이디 있음!')
+        // alert('아이디 있음!')
         // this.$store.commit('setMemberInfo', result.data.member);
         this.id = result.data.member.member_id;
         this.member = true;
 
       } else {
-        alert('아이디 없음!')
+        alert('입력하신 정보와 일치하는 회원정보를 찾을 수 없습니다.')
         this.name = '';
         this.phone = '';
         this.id = '';
@@ -158,7 +143,7 @@ export default {
       // }
     },
     async memberUpdate() {
-        // if(!this.validation()) return;
+        if(!this.validation2()) return;
 
         let data = {
             param : {
@@ -186,6 +171,18 @@ export default {
       }
       if(this.phone == '') {
         alert('휴대전화를 입력해주세요.');
+        return false;
+      }
+
+      return true;
+    },
+    validation2() {
+      if(this.pw == '') {
+        alert('비밀번호를 입력해주세요.');
+        return false;
+      }
+      if(this.pw_confirm == '') {
+        alert('비밀번호 확인을 입력해주세요.');
         return false;
       }
 
@@ -222,7 +219,7 @@ export default {
 }
 
 .boxsize {
-  max-width: 430px
+  max-width: 440px
 }
 
 .login {
