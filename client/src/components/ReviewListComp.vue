@@ -8,7 +8,7 @@
               <thead>
                 <tr>
                   <th>제목</th>
-                  <th>내용</th>
+                  <!-- <th>내용</th> -->
                   <th>작성자</th>
                   <th>별점</th>
                 </tr>
@@ -16,7 +16,7 @@
               <tbody class="table-border-bottom-0">
                 <tr :key="i" v-for="(review, i) in reviewList" v-on:click="goToReviewInfo(review.review_code)">
                   <td>{{ review.review_title }}</td>
-                  <td>{{ review.review_content }}</td>
+                  <!-- <td>{{ review.review_content }}</td> -->
                   <td>{{ review.member_id }}</td>
                   <td>{{ review.stars }}</td>
                 </tr>
