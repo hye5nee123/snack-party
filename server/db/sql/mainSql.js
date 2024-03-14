@@ -19,6 +19,7 @@ FROM product p LEFT OUTER JOIN detail d ON p.product_code = d.product_code
             LEFT OUTER JOIN file f ON p.product_code = f.board_code
             JOIN orders o ON d.order_code = o.order_code
 WHERE thumbnail='n01'
+AND   p.product_display = 'f01'
 GROUP BY p.product_code
 ORDER BY sum DESC
 LIMIT 8`;
@@ -38,6 +39,7 @@ const productListNew =
 , f.path
 FROM product p LEFT OUTER JOIN file f ON p.product_code = f.board_code
 WHERE thumbnail='n01'
+AND   p.product_display = 'f01'
 ORDER BY register_date DESC
 LIMIT 8`;
 

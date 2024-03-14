@@ -12,7 +12,7 @@
                   <th>제목</th>
                   <td>{{ pInquiryInfo.title }}</td>
                   <th>작성자</th>
-                  <td>{{ this.$store.state.memberStore.memberInfo.member_name }}</td>
+                  <td>{{ pInquiryInfo.member_name }}</td>
                 </tr>
                 <tr>
                   <th>내용</th>
@@ -23,8 +23,10 @@
 
           </div>
         </div>
-        <button v-on:click="goToUpdate()">수정</button>
-        <button v-on:click="deleteInquiry(pInquiryInfo.inquiry_code)">삭제</button>
+        <button class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2"
+          v-on:click="goToUpdate()">수정</button>
+        <button class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2"
+          v-on:click="deleteInquiry(pInquiryInfo.inquiry_code)">삭제</button>
       </div>
     </div>
   </div>

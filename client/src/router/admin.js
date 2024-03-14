@@ -89,9 +89,9 @@ export default {
       component: import(/* webpackChunkName: "OrderManage", webpackPrefetch: false */ '../views/admin/MemberManage.vue'),
     },
     {
-      path: '/admin/member/memberdetail',
-      name: 'AdminMemberDetail',
-      component: import(/* webpackChunkName: "AdminOrderDetail", webpackPrefetch: false */ '../views/admin/AdminMemberDetail.vue'),
+      path: '/admin/member/memberinfo',
+      name: 'AdminMemberInfo',
+      component: import(/* webpackChunkName: "AdminMemberInfo", webpackPrefetch: false */ '../views/admin/AdminMemberInfo.vue'),
     }
   ]
 }

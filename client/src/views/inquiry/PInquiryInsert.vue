@@ -27,14 +27,6 @@
                         v-model="pInquiryInfo.content"></textarea>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <p>첨부</p>
-                </td>
-                <td>
-                    <input type="file" ref="fileInput" @change="handleFileChange" multiple />
-                </td>
-            </tr>
         </table>
         <div style="text-align: center">
             <button type="button" class="btn btn-outline-danger me-2 mt-2" @click="saveInfo">

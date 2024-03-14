@@ -22,8 +22,10 @@
             </table>
           </div>
         </div>
-        <button v-on:click="goToUpdate()">수정</button>
-        <button v-on:click="deleteInquiry(inquiryInfo.inquiry_code)">삭제</button>
+        <button class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2"
+          v-on:click="goToUpdate()">수정</button>
+        <button class="btn btn-sm border-secondary rounded-pill px-2 py-2 text-primary ms-2"
+          v-on:click="deleteInquiry(inquiryInfo.inquiry_code)">삭제</button>
       </div>
     </div>
   </div>

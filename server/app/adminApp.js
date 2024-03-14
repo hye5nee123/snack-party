@@ -25,6 +25,7 @@ app.get('/inquirynotanswered', async (request, response) => {
   response.send(result);
 });
 
+
 // 전체조회(페이징)
 app.get('/orderlist', async (req, res) => {
   let data = [];
@@ -36,7 +37,6 @@ app.get('/orderlist', async (req, res) => {
   let end_date = queryData.end_date;
   let merchant_uid = queryData.merchant_uid;
   let member_code = queryData.member_code;
-  let product_name = queryData.product_name;
   let order_status = queryData.order_status;
   let offset = queryData.offset;
 
@@ -69,12 +69,6 @@ app.get('/orderlist', async (req, res) => {
     data.push(member_code);
   }
 
-  // 상품명이 있을 경우
-  if (product_name) {
-    where += " AND product_name LIKE ?"
-    data.push("%" + product_name + "%");
-  }
-
   // 상품상태 조건이 있을 경우
   if (order_status) {
     where += " AND order_status = ?"
@@ -105,7 +99,6 @@ app.get('/ordercnt', async (req, res) => {
   let end_date = queryData.end_date;
   let merchant_uid = queryData.merchant_uid;
   let member_code = queryData.member_code;
-  let product_name = queryData.product_name;
   let order_status = queryData.order_status;
 
   // 시작일자, 끝날짜 있을 경우
@@ -135,12 +128,6 @@ app.get('/ordercnt', async (req, res) => {
   if (member_code) {
     where += " AND member_code = ?"
     data.push(member_code);
-  }
-
-  // 상품명이 있을 경우
-  if (product_name) {
-    where += " AND product_name LIKE ?"
-    data.push("%" + product_name + "%");
   }
 
   // 상품상태 조건이 있을 경우
@@ -176,11 +163,68 @@ app.post('/addPoint/:order_code/:member_code', async (request, response) => {
   response.send(result);
 });
 
+// 주문테이블 적립금 변경
+app.put('/updateOrderPoint/:order_code', async (request, response) => {
+  let data = [request.params.order_code, request.params.order_code];
+  let result = await db.connection('adminsql', 'updateOrderPoint', data);
+  response.send(result);
+});
+
 // 적립여부 체크
 app.get('/checkPoint/:order_code', async (request, response) => {
   let data = request.params.order_code;
   let result = await db.connection('adminsql', 'checkPoint', data);
   response.send(result);
 });
+
+// 운송장번호 여부 체크
+app.get('/checkDeliveryNum/:order_code', async (request, response) => {
+  let data = request.params.order_code;
+  let result = await db.connection('adminsql', 'checkDeliveryNum', data);
+  response.send(result);
+});
+
+// 운송장번호 수정
+app.put('/updateDeliveryNum/:delivery_num/:order_code', async (request, response) => {
+  let data = [request.params.delivery_num, request.params.order_code];
+  let result = await db.connection('adminsql', 'updateDeliveryNum', data);
+  response.send(result);
+});
+// 회원조회
+app.get('/memberlist', async(request, response) => {
+  let data = [];
+  let where = ' WHERE 1=1';
+
+  var queryData = url.parse(request.url, true).query;
+
+  let keyword = queryData.keyword;
+  let type = queryData.type;
+  let status = queryData.status;
+
+  if(keyword) {
+    where += ' AND (member_code = ? OR member_id = ? OR member_name = ?)'
+    data.push(keyword, keyword, keyword);
+  }
+
+  if(type) {
+    where += ' AND member_type = ?'
+    data.push(type);
+  }
+
+  if(status) {
+    where += ' AND member_status = ?'
+    data.push(status);
+  }
+
+  let result = await db.connection('adminsql', 'memberList', data, where).catch(err => { console.log(err) });
+  response.send(result);
+})
+
+// 회원조회 상세
+app.get('/memberinfo/:member_code', async (request, response) => {
+  let data = request.params.member_code;
+  let result = (await db.connection('adminsql', 'memberInfo', data))[0];
+  response.send(result);
+})
 
 module.exports = app;

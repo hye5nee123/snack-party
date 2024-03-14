@@ -48,17 +48,6 @@
             </td>
           </tr>
 
-          <!-- 상품명 -->
-          <tr>
-            <td>상품명</td>
-            <td>
-              <div class="input-group w-300">
-                <input type="text" class="form-control" placeholder="상품명을 입력하세요." aria-describedby="search-icon-1"
-                  v-model="product_name">
-              </div>
-            </td>
-          </tr>
-
           <!-- 주문 상태 -->
           <tr>
             <td>주문상태</td>
@@ -199,7 +188,7 @@ export default {
     async getOrderList() {
       let param = '';
       param = `?start_date=${this.start_date}&end_date=${this.end_date}&merchant_uid=${this.merchant_uid}`
-      param += `&member_code=${this.member_code}&product_name=${this.product_name}&order_status=${this.order_status}&offset=${this.pageData}`;
+      param += `&member_code=${this.member_code}&order_status=${this.order_status}&offset=${this.pageData}`;
 
       let result = await axios.get(`/api/admin/orderlist${param}`)
         .catch(err => console.log(err));
@@ -211,7 +200,7 @@ export default {
     async getListCount() {
       let param = '';
       param = `?start_date=${this.start_date}&end_date=${this.end_date}&merchant_uid=${this.merchant_uid}`
-      param += `&member_code=${this.member_code}&product_name=${this.product_name}&order_status=${this.order_status}`;
+      param += `&member_code=${this.member_code}&order_status=${this.order_status}`;
 
       console.log('param : ', param)
       let result = await axios.get(`/api/admin/ordercnt${param}`)

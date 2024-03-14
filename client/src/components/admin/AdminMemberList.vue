@@ -11,10 +11,17 @@
             <tr>
               <td>회원검색</td>
               <td>
-                <div class="input-group w-300">
-                  <input type="text" class="form-control" placeholder="회원코드/아이디/이름 입력" aria-describedby="search-icon-1"
-                    v-model="merchant_uid">
+                <div>
+                  <input type="text" class="form-control" placeholder="회원코드 / 아이디 / 이름 입력" aria-describedby="search-icon-1"
+                    v-model="keyword" @keyup.enter="searchOrder()">
                 </div>
+              </td>
+              <td>
+                <button class="btn-search btn border border-secondary btn-md-square rounded-circle bg-white me-4"
+                  @click="searchOrder()">
+                  <i class="fas fa-search text-primary" aria-hidden="true"></i>
+                </button>
+                <button type="button" class="btn border-secondary px-4 text-primary bg-white" @click="clearSearch()">검색조건 초기화</button>
               </td>
             </tr>
 
@@ -23,18 +30,18 @@
           <td>회원구분</td>
           <td>
             <div class="form-check form-check-inline" style="margin-left: 25px;">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value=""
-                v-model="display">
+              <input class="form-check-input" type="radio" name="memberType" id="inlineRadio1" value=""
+                v-model="type">
               <label class="form-check-label" for="inlineRadio1">전체</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="f01"
-                v-model="display">
+              <input class="form-check-input" type="radio" name="memberType" id="inlineRadio1" value="b01"
+                v-model="type">
               <label class="form-check-label" for="inlineRadio1">일반회원</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="f02"
-                v-model="display">
+              <input class="form-check-input" type="radio" name="memberType" id="inlineRadio2" value="b02"
+                v-model="type">
               <label class="form-check-label" for="inlineRadio2">소셜회원</label>
             </div>
           </td>
@@ -45,18 +52,18 @@
           <td>계정상태</td>
           <td>
             <div class="form-check form-check-inline" style="margin-left: 25px;">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value=""
-                v-model="display">
+              <input class="form-check-input" type="radio" name="memberStatus" id="inlineRadio1" value=""
+                v-model="status">
               <label class="form-check-label" for="inlineRadio1">전체</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="f01"
-                v-model="display">
-              <label class="form-check-label" for="inlineRadio1">활성계정</label>
+              <input class="form-check-input" type="radio" name="memberStatus" id="inlineRadio1" value="c01"
+                v-model="status">
+              <label class="form-check-label" for="inlineRadio1">회원계정</label>
             </div>
             <div class="form-check form-check-inline">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="f02"
-                v-model="display">
+              <input class="form-check-input" type="radio" name="memberStatus" id="inlineRadio2" value="c02"
+                v-model="status">
               <label class="form-check-label" for="inlineRadio2">탈퇴계정</label>
             </div>
           </td>
@@ -94,7 +101,7 @@
                 <th scope="col">아이디</th>
                 <th scope="col">이름</th>
                 <th scope="col">회원구분</th>
-                <th scope="col">회원상태</th>
+                <th scope="col">계정상태</th>
                 <th scope="col">가입일자</th>
                 <th scope="col">탈퇴일자</th>
               </tr>
@@ -102,17 +109,17 @@
   
             <!-- {{ orderList }} -->
             <tbody>
-              <tr v-for="(list, i) in orderList" :key="i">
+              <tr v-for="(list, i) in memberList" :key="i" @click="goToInfo(list.member_code)">
                 <td>{{ list.num }}</td>
-                <td>{{ list.order_date }}</td>
-                <td>{{ list.merchant_uid }}</td>
                 <td>{{ list.member_code }}</td>
-                <td v-if="list.buy_cnt == 0">{{ list.product_name }}</td>
-                <td v-else>{{ list.product_name }} 외 {{ list.buy_cnt }}개</td>
-                <td>{{ $currencyFormat(list.total_price) }}원</td>
-                <td>{{ ordStatus(list.order_status) }}</td>
-                <td><button type="button" class="cnt-update-btn btn-sm detail-btn" :orderList="list"
-                    @click="goToDetail(list.merchant_uid, list.member_code, list.order_code)">상세조회</button></td>
+                <td>{{ list.member_id }}</td>
+                <td>{{ list.member_name }}</td>
+                <td>{{ memberType(list.member_type) }}</td>
+                <td>{{ memberStatus(list.member_status) }}</td>
+                <td>{{ list.join_date }}</td>
+                <td>{{ list.quit_date }}</td>
+                <!-- <td><button type="button" class="cnt-update-btn btn-sm detail-btn" :orderList="list"
+                    @click="goToDetail(list.merchant_uid, list.member_code, list.order_code)">상세조회</button></td> -->
               </tr>
             </tbody>
           </table>
@@ -138,7 +145,7 @@
         start_date: '',
         end_date: '',
         merchant_uid: '',
-        member_code: '',
+        // member_code: '',
         product_name: '',
         order_status: '',
   
@@ -150,6 +157,7 @@
         curPage: 1,       // 현재 페이지
         pageData: 0,      // offset에 전달할 페이징 데이터
 
+        memberList : [],
         keyword : '',
         type : '',
         status : ''
@@ -159,8 +167,9 @@
       PaginationComp
     },
     created() {
-      this.getOrderList();
-      this.getListCount();
+      // this.getOrderList();
+      // this.getListCount();
+      this.getMemberList();
     },
     computed: {
       pageStartIdx() {
@@ -211,8 +220,10 @@
       async getMemberList() {
         let param = '';
         param = `?keyword=${this.keyword}&type=${this.type}&status=${this.status}`;
-        let result = await axios.get(`api/admin/memberlist${param}`)
+        console.log(param);
+        let result = await axios.get(`/api/admin/memberlist${param}`)
             .catch(err => console.log(err));
+        console.log('================', result)
         this.memberList = result.data;
       },
   
@@ -232,20 +243,23 @@
       async goToDetail(merchant_uid, member_code, order_code) {
         this.$router.push({ path: '/admin/order/orderdetail', query: { merchant_uid: merchant_uid, member_code: member_code, order_code: order_code } });
       },
+
+      async goToInfo(member_code) {
+        this.$router.push({path : '/admin/member/memberinfo', query : {member_code : member_code}});
+      },
   
       searchOrder() {
-        this.getOrderList();
-        this.getListCount();
+        // this.getOrderList();
+        // this.getListCount();
+        this.getMemberList();
       },
   
       clearSearch() {
         console.log('clearSearch()')
-        this.start_date = '';
-        this.end_date = '';
-        this.merchant_uid = '';
-        this.member_code = '';
-        this.product_name = '';
-        this.order_status = '';
+        this.keyword = '';
+        this.type = '';
+        this.status = '';
+        this.getMemberList();
       },
       // 기간 자동 설정
       getOneMonth() {
@@ -278,13 +292,29 @@
   
         return `${year}-${month}-${day}`;
       },
+      memberType(member) {
+        if(member == 'b01') {
+          return '일반회원';
+        } else if(member == 'b02') {
+          return '소셜회원';
+        } else if(member == 'b03') {
+          return '관리자';
+        }
+      },
+      memberStatus(member) {
+        if(member == 'c01') {
+          return '회원계정';
+        } else if(member == 'c02') {
+          return '탈퇴계정';
+        }
+      }
     },//end methods
   
   
   }//END
   </script>
   
-<style>
+<style scoped>
 input::placeholder {
     color: #cccccc;
 }

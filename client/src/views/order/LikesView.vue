@@ -50,7 +50,7 @@
           </tbody>
         </table>
       </div>
-      <br />
+      <br><br>
 
       <div class="button-center">
         <button @click="addToCart()"
@@ -58,7 +58,7 @@
           장바구니 담기
         </button>
         <button @click="deleteSelected()"
-          class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4" type="button">
+          class="btn del-btn rounded-pill px-4 py-3 text-uppercase mb-4 ms-4" type="button">
           찜 상품 비우기
         </button>
       </div>
@@ -123,8 +123,6 @@ export default {
         } else {
           console.log(selLike.product_code)
           let cartCheck = await axios.get(`/apiorder/carts/${this.mem_code}/${selLike.product_code}`).catch((err) => console.log(err));
-          console.log('??', cartCheck); //PRO00084 Array나옴
-          console.log('???', cartCheck.data.length); //1
             let proName = '';
             if(cartCheck.data.length == 1) {
               let proCode = cartCheck.data[0].product_code;
@@ -182,5 +180,15 @@ export default {
 }
 .text-primary {
   font-weight: bolder;
+}
+.del-btn {
+  border: 1px solid #ee9d9d;
+  color: #ee9d9d;
+  font-weight: 600;
+}
+.del-btn:hover {
+  background-color:#f78c8c;
+  color: #fff;
+  transition: 0.7s;
 }
 </style>

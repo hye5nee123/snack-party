@@ -1,3 +1,4 @@
+<!-- < 박정언 >: 상품상세목록으로 이동 제외 -->
 <template>
   <div class="rounded position-relative fruite-item border border-secondary">
     <div class="fruite-img">
@@ -30,7 +31,7 @@
             <i class="fa fa-shopping-bag me-2 text-primary"></i>장바구니</button>
         </div>
         <div v-else>
-          <button type="button" class="btn border rounded-pill px-3 text-primary">품절</button>
+          <button type="button" class="soldout-btn rounded-pill px-3">품절</button>
         </div>
 
       </div>
@@ -176,5 +177,14 @@ export default {
 
 .sheight {
   height: 57.59px;
+}
+
+.soldout-btn {
+  /* border: 1px solid rgb(65, 64, 64); */
+  border: 1.2px solid #c7c7c7 !important;
+  color: #858585;
+  font-weight: bold;
+  width: 100px;
+  height: 40px;
 }
 </style>

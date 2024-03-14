@@ -8,7 +8,7 @@
               <thead>
                 <tr>
                   <th>제목</th>
-                  <th>내용</th>
+                  <!-- <th>내용</th> -->
                   <th>작성자</th>
                   <th>별점</th>
                 </tr>
@@ -16,7 +16,7 @@
               <tbody class="table-border-bottom-0">
                 <tr :key="i" v-for="(review, i) in reviewList" v-on:click="goToReviewInfo(review.review_code)">
                   <td>{{ review.review_title }}</td>
-                  <td>{{ review.review_content }}</td>
+                  <!-- <td>{{ review.review_content }}</td> -->
                   <td>{{ review.member_id }}</td>
                   <td>{{ review.stars }}</td>
                 </tr>
@@ -77,7 +77,7 @@ export default {
       } else if (this.type == "admin") {
         url = `/api/review/list/${this.ITEM_PER_PAGE}/${this.pageData}`;
       } else {
-        url = `/api/review/member_code`
+        url = `/api/review/${this.$store.state.memberStore.memberInfo.member_code}`
       }
       let result = await axios.get(url)
         .catch(err => console.log(err));

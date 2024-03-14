@@ -1,5 +1,5 @@
 <template>
-  
+
   <!-- Menu -->
 
   <div id="layout-menu" class="menu-vertical menu bg-menu-theme">
@@ -16,7 +16,7 @@
     <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
-  
+
       <!-- 상품 관리 start -->
       <li class="menu-header small text-uppercase">
         <span class="menu-header-text">상품 관리</span>
@@ -30,10 +30,10 @@
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <span>상품 등록</span>
         </router-link>
-        <router-link to="/admin/product/productwarehousing" class="menu-link menu-toggle">
+        <!-- <router-link to="/admin/product/productwarehousing" class="menu-link menu-toggle">
           <i class="menu-icon tf-icons bx bx-dock-top"></i>
           <span>상품 입고</span>
-        </router-link>
+        </router-link> -->
       </li>
       <!-- 게시판 관리 end -->
 
@@ -86,7 +86,7 @@
       <!-- Layouts -->
     </ul>
   </div>
-  
+
   <!-- / Menu -->
 </template>
 
@@ -100,6 +100,7 @@ export default {
 #layout-menu {
   background-color: #333333 !important;
 }
+
 span {
   font-size: 1.1rem !important;
 }

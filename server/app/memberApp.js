@@ -91,6 +91,7 @@ app.get("/:mcode", async(request, response) => {
     response.send(result);
 })
 
+//===< 박정언 >============================================================
 //회원 적립금 보유내역
 //*페이징
 app.get("/points/:mcode/:limit/:offset", async(request, response) => {
