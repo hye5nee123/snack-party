@@ -98,7 +98,7 @@ app.get("/points/:mcode/:limit/:offset", async(request, response) => {
     let limit = Number(request.params.limit);
     let offset = Number(request.params.offset);
   
-    let data = [mcode, limit, offset];
+    let data = [mcode, mcode, mcode, limit, offset];
     let result = await db.connection('membersql', 'memPointList', data).catch((error) => {
         console.log(error);
     });

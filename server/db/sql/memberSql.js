@@ -93,11 +93,13 @@ const memPointList =
       , member_code
       , NVL(( SELECT sum(point_value)
 	      FROM point
-	      WHERE point_status = 'd01'), 0)
+	      WHERE point_status = 'd01'
+              AND member_code = ?), 0)
 	- 
 	NVL(( SELECT sum(point_value) 
 	      FROM point
-              WHERE point_status = 'd02'), 0) AS total_point
+              WHERE point_status = 'd02'
+              AND member_code = ?), 0) AS total_point
 FROM point
 WHERE member_code = ?
 ORDER BY point_date DESC
